@@ -1,0 +1,17 @@
+{
+  "identical": true,
+  "resources": [
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+      "binary_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+      "pipl_size": 310,
+      "pipl_sha256": "3bdc27c22e780cb5c14f9edefce91340f4a8b82005b59854bf573fef0774f89d"
+    },
+    {
+      "path": "D:\\olm-rs-target\\P-dblur\\OLMDirectionalBlur-qualified.aex",
+      "binary_sha256": "9cb49720dd34ac114436904bd040eaaa517371fed9747228dcf41b61348a3297",
+      "pipl_size": 310,
+      "pipl_sha256": "3bdc27c22e780cb5c14f9edefce91340f4a8b82005b59854bf573fef0774f89d"
+    }
+  ]
+}

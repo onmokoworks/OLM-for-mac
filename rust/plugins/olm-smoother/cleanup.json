@@ -1,0 +1,50 @@
+﻿{
+    "checked_at":  "2026-11-12T14:12:32.9879102+09:00",
+    "tracked_harness_pids":  766,
+    "ownership_check":  "Exact task validation path in live command lines plus parent PID for workers; recycled harness PIDs running other task paths are excluded.",
+    "remaining_owned_processes":  [
+
+                                  ],
+    "recycled_pids_observed":  [
+                                   {
+                                       "ProcessId":  48460,
+                                       "ParentProcessId":  14920,
+                                       "CreationDate":  "\/Date(1794460347680)\/"
+                                   },
+                                   {
+                                       "ProcessId":  2820,
+                                       "ParentProcessId":  14924,
+                                       "CreationDate":  "\/Date(1794460348941)\/"
+                                   },
+                                   {
+                                       "ProcessId":  57948,
+                                       "ParentProcessId":  14924,
+                                       "CreationDate":  "\/Date(1794460349592)\/"
+                                   },
+                                   {
+                                       "ProcessId":  62612,
+                                       "ParentProcessId":  14920,
+                                       "CreationDate":  "\/Date(1794460349791)\/"
+                                   },
+                                   {
+                                       "ProcessId":  32404,
+                                       "ParentProcessId":  21056,
+                                       "CreationDate":  "\/Date(1794460349969)\/"
+                                   },
+                                   {
+                                       "ProcessId":  13840,
+                                       "ParentProcessId":  21056,
+                                       "CreationDate":  "\/Date(1794460349995)\/"
+                                   },
+                                   {
+                                       "ProcessId":  42848,
+                                       "ParentProcessId":  32316,
+                                       "CreationDate":  "\/Date(1794460351051)\/"
+                                   }
+                               ],
+    "oracle_exit_codes":  [
+                              0,
+                              0
+                          ],
+    "stopped_unrelated_processes":  false
+}

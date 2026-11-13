@@ -1,0 +1,270 @@
+{
+  "schema_version": 1,
+  "job": "P-kira",
+  "identities": {
+    "original": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMKiraKira.aex",
+      "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-kirakira\\validation\\OLMKiraKira-verified.aex",
+      "sha256": "443084c071e40268f64f82215b0db5facb0f4596688fab87dba54740ab906611"
+    },
+    "harness": {
+      "path": "D:\\AEXCompatWorktrees\\olm-diag-kirakira\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "41a939afc290a750a698a9ec55ea09431bf9a0291e85ebd08bbf3f46f0c2fee7"
+    },
+    "worker": {
+      "path": "D:\\AEXCompatWorktrees\\olm-diag-kirakira\\target\\minihost-build\\aex_worker.exe",
+      "sha256": "1ee0a3d824b677be551d1d3ee69aa0a00602ca7d750d6eb3836417e859bbca93"
+    },
+    "oracle": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+      "sha256": "657b40b68902ac64a9c3d2175e383ae97b9940f2d30a817b9962b350d76b5ab3"
+    },
+    "default_transport_adapter": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-kirakira\\validate.py",
+      "sha256": "c7cf76cdc162fdf2b2e8ea990c2defb26a3e6b33b1e3b13cc4e7347307ceb001"
+    },
+    "pipl": {
+      "original": {
+        "length": 298,
+        "sha256": "1d3ffb7c9189da6d6a14ae253ff82821f239f3c902456157cba2595cb492b97f",
+        "hex": "0100000000000c0000004d494238646e696b0000000004000000544b46654d494238656d616e00000000100000000d4f4c4d204b697261204b69726100004d4942386774616300000000100000000c4f4c4d20506c75672d696e730000004d49423834363638000000000c000000656e7472795f706f696e74004d494238525650650000000004000000020000004d4942385256536500000000040000000d001c004d494238524556650000000004000000000019004d494238464e49650000000002000000000000004d4942384f4c47650000000004000000408000024d494238324c47650000000004000000001400084d494238414e4d650000000014000000114f4c4d204f4c4d204b697261204b69726100004d4942384c466561000000000400000000000000"
+      },
+      "candidate": {
+        "length": 298,
+        "sha256": "1d3ffb7c9189da6d6a14ae253ff82821f239f3c902456157cba2595cb492b97f",
+        "hex": "0100000000000c0000004d494238646e696b0000000004000000544b46654d494238656d616e00000000100000000d4f4c4d204b697261204b69726100004d4942386774616300000000100000000c4f4c4d20506c75672d696e730000004d49423834363638000000000c000000656e7472795f706f696e74004d494238525650650000000004000000020000004d4942385256536500000000040000000d001c004d494238524556650000000004000000000019004d494238464e49650000000002000000000000004d4942384f4c47650000000004000000408000024d494238324c47650000000004000000001400084d494238414e4d650000000014000000114f4c4d204f4c4d204b697261204b69726100004d4942384c466561000000000400000000000000"
+      }
+    }
+  },
+  "runs": [
+    {
+      "seed": 20261112,
+      "summary": "validation\\verified-20261112\\summary.json",
+      "summary_sha256": "b4b49186c5b447a5e3b2a784f81c3b2ee7e3d09e6b837b88e2469039eb29446c",
+      "cases_sha256": "6e2da152cef8160f29b3e3b9a3098af70ef01d1281e17c2062263eba0f068fff",
+      "cases": 120,
+      "empty_assignment_defaults": 1,
+      "boundary_parameter_cases": 2,
+      "random_parameter_cases": 117,
+      "sizes": [
+        [
+          5,
+          5
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          97,
+          61
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 120,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 120,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 120,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 120,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 120,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 120,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      }
+    },
+    {
+      "seed": 20261113,
+      "summary": "validation\\verified-20261113\\summary.json",
+      "summary_sha256": "d9ba094ac578e9d4db72c258399ee1246787be343fd8e815c200d312ccf43a72",
+      "cases_sha256": "57a42c92f387c33b53cc231e945949e309e9ab2105733925afaeb554bf350fee",
+      "cases": 120,
+      "empty_assignment_defaults": 1,
+      "boundary_parameter_cases": 2,
+      "random_parameter_cases": 117,
+      "sizes": [
+        [
+          5,
+          5
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          97,
+          61
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 120,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 120,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 120,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 120,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 120,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 120,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      }
+    }
+  ],
+  "totals_per_depth": {
+    "cases": 240,
+    "random_parameter_cases": 234,
+    "boundary_parameter_cases": 4,
+    "independent_defaults": 2,
+    "exact": 240,
+    "mismatch": 0,
+    "reference_failure": 0,
+    "candidate_failure": 0
+  },
+  "inventory_verification": {
+    "summary": "validation\\inventory-verified\\summary.json",
+    "sha256": "8bf521195162483bb6167fc6ac7457924b443e2b187e37c67a41026dd0757832"
+  },
+  "test_log_sha256": {
+    "test.log": "71f72668608a1f7f2a9168f4745cc6ba2cfc024701d937a429203b006fb19269",
+    "original-ramp-test.log": "5da1255bce6a19fa6df531e06cd1e59fa4f6a914b4818158980cc01438c12814",
+    "candidate-ramp-test.log": "8804c7a7b8b9fb168c4c8c1b59dd51beab8007412298f342477e0e7d07dd1b25"
+  },
+  "cpp_reference_tests": 8,
+  "ui_event_and_draw_comparisons": 2017,
+  "native_ramp_callbacks": {
+    "plugins": [
+      "original",
+      "candidate"
+    ],
+    "defaults_each": 5,
+    "unflatten_copy_flatten_each": 255,
+    "flat_size": 325,
+    "compare": "header and active records; inactive capacity is zeroed"
+  },
+  "source_sha256": {
+    "Cargo.toml": "692f8fa61921cb336ce21a422064fe42e9e3639becf1ff3778a72cb935c30a1d",
+    "build.rs": "aee139f2f70d72de0047598a87ba8e374123342ff93cfb76339c3505286dabb1",
+    "validate.py": "c7cf76cdc162fdf2b2e8ea990c2defb26a3e6b33b1e3b13cc4e7347307ceb001",
+    "summarize.py": "3521f383f4622bc59b441a6b7af7381f2a0a414b92eff355edb7bf8291dcc94b",
+    "revalidate.py": "0667cdbb3d3a029d15e8b34f56584997cd9dcd1d2de9f1fbc50288bee899846d",
+    "isolate.py": "17f0f151621ed35609cfce9e010b29c58c53db5264b7a8f0db3f5f9f95aa1fdc",
+    "src\\adapter.rs": "aa6d76f1f3e0458f2314a753cfb318a39f4a827a3ac2b853bbca74199a051b51",
+    "src\\ae.rs": "8b9080de0a1a4e175e66b6d3bb038fea199404389de90a71621da25d7af7d5a2",
+    "src\\ae_ui.rs": "46702efef94fa5a9bde0a212648ec61addf2a5590f83240fa05a81c4ae10a656",
+    "src\\algorithm.rs": "7e2281bf07eb8215ff65f855d07b9f21fd819e6b67bb980e900b299fec94b621",
+    "src\\editor.rs": "9256a5ea4877f5fb243ccafbce88ab10dfde60c753e85582723dc896eee8534a",
+    "src\\filters.rs": "5ba98966ad093945dc0729d05e365d2398801d7be2c1289b638fadfd8fc4cb9e",
+    "src\\lib.rs": "fa50667f2c701df5fa97a74d2dea1f95ac2e58142a506fa39cb8ee7b8e191ac3",
+    "src\\params.rs": "026616dc9a5ebac8c035c252d6cada5ede0ae7c3f4687914953cc4d86bf57ea0",
+    "src\\presets.rs": "750a06820069cc22501a6136887cabf1c891110fc3dd915822cec8c49f939994",
+    "src\\ramp.rs": "cd6c2802576535175e602112bb665057a42dcc13e63915321eba33fd231555a7",
+    "src\\trig.rs": "ec5315733f2c6fc00fcd09fe93d16b2160cb941c2beab11985f90db54325c854",
+    "src\\trig_tables.rs": "2652c0b804183e276cafd463c5eee4d111db9dfb6f808d0858e4ecf75a4d0382",
+    "tests\\original_ramp.rs": "388d1b3ab994d74d473bddf090127d6bcd181a29b4d8f949d1973181658bbf45",
+    "tests\\reference.cpp": "da1626c607d235261c4b080df8327bd67089561b3795b11958b545f5bde20cea",
+    "tests\\reference.rs": "6310a66bc8faaf12ccbc0bb8eccbdcb5d71cd462225a3c5233aa6ac64c475a58"
+  }
+}

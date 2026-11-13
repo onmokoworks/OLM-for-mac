@@ -1,0 +1,112 @@
+{
+  "qualification": "release, debug=0, deterministic linker, identical frozen resource input; raw DLL bytes",
+  "production_build_scripts_modified": false,
+  "resources": {
+    "olm-directional-blur": "0149c981748b9a4af0e0ad25068458c343e7a93f7be88a3d714cc92cb48c630e",
+    "olm-distance-gradation": "18a38d84dcc0de5377e67c1ec01e5c0f94c2acd0273e43ca42623f6a2fdf74bf"
+  },
+  "builds": {
+    "before": {
+      "command": [
+        "cargo",
+        "build",
+        "--manifest-path",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\diverge\\local\\build-tree\\rust\\Cargo.toml",
+        "--release",
+        "--offline",
+        "-p",
+        "olm-directional-blur",
+        "-p",
+        "olm-distance-gradation",
+        "--jobs",
+        "2"
+      ],
+      "env": {
+        "CARGO_TARGET_DIR": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\diverge\\target",
+        "CARGO_PROFILE_RELEASE_DEBUG": "0",
+        "RUSTFLAGS": "-C link-arg=/Brepro -C link-arg=/DEBUG:NONE -C link-arg=/INCREMENTAL:NO"
+      },
+      "process": {
+        "pid": 49668,
+        "returncode": 0,
+        "exit_hex": "0x00000000",
+        "timeout": false,
+        "elapsed_seconds": 5.969000000000051,
+        "cleanup_verified": true
+      },
+      "source_hashes": {
+        "olm-directional-blur": {
+          "Cargo.toml": "5ffad9bc1cb2d2b6d8543c20b01d827e43b5b8ae69ca3ff7b9e78bbbe3ba93e5",
+          "lib.rs": "63dec8a33755d45e2985cbf36726c2130b8b5c0e16a39df7d73059c65844c4c5"
+        },
+        "olm-distance-gradation": {
+          "Cargo.toml": "f6bb5ae2c31076791ff01a9518dc3ca74c3c1cc8f951f540232a63bb89948290",
+          "lib.rs": "555b943574e6130cba5aef364e755bfd6846cd1944b8b99439e6ad094b71862c"
+        }
+      },
+      "dlls": {
+        "olm-directional-blur": {
+          "sha256": "81c19c8525254604e57776bd923c5fa0c44e5a85e2c1c5279f6aa8223539ebad",
+          "bytes": 260608
+        },
+        "olm-distance-gradation": {
+          "sha256": "d355e0d29eebd1ca6236b19ee4f12972a656ba4f4ebb9af9d723f6ab0be758e6",
+          "bytes": 247808
+        }
+      }
+    },
+    "after": {
+      "command": [
+        "cargo",
+        "build",
+        "--manifest-path",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\diverge\\local\\build-tree\\rust\\Cargo.toml",
+        "--release",
+        "--offline",
+        "-p",
+        "olm-directional-blur",
+        "-p",
+        "olm-distance-gradation",
+        "--jobs",
+        "2"
+      ],
+      "env": {
+        "CARGO_TARGET_DIR": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\diverge\\target",
+        "CARGO_PROFILE_RELEASE_DEBUG": "0",
+        "RUSTFLAGS": "-C link-arg=/Brepro -C link-arg=/DEBUG:NONE -C link-arg=/INCREMENTAL:NO"
+      },
+      "process": {
+        "pid": 57136,
+        "returncode": 0,
+        "exit_hex": "0x00000000",
+        "timeout": false,
+        "elapsed_seconds": 6.015999999999622,
+        "cleanup_verified": true
+      },
+      "source_hashes": {
+        "olm-directional-blur": {
+          "Cargo.toml": "b4c1c599c1ef0736760132d66f942474d360363365eab4105668d0739865f69b",
+          "lib.rs": "9e99d85f661cdc2349045f87c3f75a70cb00f33fe5517ad214a566eaef77c971"
+        },
+        "olm-distance-gradation": {
+          "Cargo.toml": "6d8318a4c09a7b0b64ad3ea91f9d06a3c905231e71f2b66d69d2fcf3727b5756",
+          "lib.rs": "9530e153952223107c5721bb0c82212f0f42564a28409d7ce2b75c9ae5e4e92e"
+        }
+      },
+      "dlls": {
+        "olm-directional-blur": {
+          "sha256": "81c19c8525254604e57776bd923c5fa0c44e5a85e2c1c5279f6aa8223539ebad",
+          "bytes": 260608
+        },
+        "olm-distance-gradation": {
+          "sha256": "d355e0d29eebd1ca6236b19ee4f12972a656ba4f4ebb9af9d723f6ab0be758e6",
+          "bytes": 247808
+        }
+      }
+    }
+  },
+  "byte_identical": {
+    "olm-directional-blur": true,
+    "olm-distance-gradation": true
+  }
+}

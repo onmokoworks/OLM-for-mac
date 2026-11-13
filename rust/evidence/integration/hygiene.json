@@ -1,0 +1,1454 @@
+{
+  "scope": "rust/ only; git add -n does not stage",
+  "file_count": 246,
+  "total_bytes": 6736385,
+  "existing_tracked_files": [
+    "rust/olmcolorkey_cli/Cargo.lock",
+    "rust/olmcolorkey_cli/Cargo.toml",
+    "rust/olmcolorkey_cli/src/main.rs"
+  ],
+  "counts_by_area": {
+    "rust/.gitignore": 1,
+    "rust/Cargo.lock": 1,
+    "rust/Cargo.toml": 1,
+    "rust/INTEGRATION.md": 1,
+    "rust/README.md": 1,
+    "rust/crates/olm-ae": 2,
+    "rust/crates/olm-core": 2,
+    "rust/crates/olm-math": 6,
+    "rust/evidence": 6,
+    "rust/plugins/color-keep": 9,
+    "rust/plugins/olm-blur": 16,
+    "rust/plugins/olm-color-key": 16,
+    "rust/plugins/olm-directional-blur": 24,
+    "rust/plugins/olm-distance-gradation": 31,
+    "rust/plugins/olm-kirakira": 24,
+    "rust/plugins/olm-radial-blur": 22,
+    "rust/plugins/olm-smoother": 18,
+    "rust/plugins/olm-smoother2": 38,
+    "rust/plugins/olm-toon-dilate": 12,
+    "rust/tools": 15
+  },
+  "largest_files": [
+    {
+      "path": "rust/plugins/olm-smoother/src/generated.rs",
+      "bytes": 1266649
+    },
+    {
+      "path": "rust/tools/oracle/evidence/review-radial-diagnostics.json",
+      "bytes": 633600
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/validation-report.json",
+      "bytes": 625500
+    },
+    {
+      "path": "rust/tools/oracle/evidence/review-120-results.json",
+      "bytes": 567420
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/tests/native-gaussian.bin",
+      "bytes": 516528
+    },
+    {
+      "path": "rust/tools/oracle/evidence/all-ten-20261112.json",
+      "bytes": 346103
+    },
+    {
+      "path": "rust/tools/oracle/evidence/review-max32-300.json",
+      "bytes": 199683
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/tests/native-ipp-fma.bin",
+      "bytes": 150192
+    },
+    {
+      "path": "rust/evidence/integration/cross-check.json",
+      "bytes": 135493
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/inventory-comparison.json",
+      "bytes": 119514
+    },
+    {
+      "path": "rust/plugins/olm-color-key/original-inventory.json",
+      "bytes": 116676
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/tests/native-gaussian-kernels.bin",
+      "bytes": 87808
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/tests/native-ipp-exp.bin",
+      "bytes": 80008
+    },
+    {
+      "path": "rust/evidence/integration/process-cleanup.json",
+      "bytes": 76253
+    },
+    {
+      "path": "rust/plugins/olm-blur/validation-report.json",
+      "bytes": 74866
+    }
+  ],
+  "over_1_MB": [
+    {
+      "path": "rust/plugins/olm-smoother/src/generated.rs",
+      "bytes": 1266649,
+      "justification": "Required mechanical C++/instruction translation imported by lib.rs; preserve operation order and generated structure. Regenerator tools/translate.py is retained."
+    }
+  ],
+  "forbidden_artifacts": [],
+  "pe_executables": [],
+  "validation_links": [
+    {
+      "document": "rust/plugins/color-keep/VALIDATION.md",
+      "target": "validation-report.json",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/color-keep/VALIDATION.md",
+      "target": "pipl-comparison.json",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/color-keep/VALIDATION.md",
+      "target": "build-equivalence.json",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/color-keep/VALIDATION.md",
+      "target": "../olm-color-key/validate_pilots.py",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/color-keep/VALIDATION.md",
+      "target": "../../INTEGRATION.md",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/olm-blur/VALIDATION.md",
+      "target": "validation-report.json",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/olm-blur/VALIDATION.md",
+      "target": "../../INTEGRATION.md",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/olm-color-key/VALIDATION.md",
+      "target": "validation-report.json",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/olm-color-key/VALIDATION.md",
+      "target": "pipl-comparison.json",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/olm-color-key/VALIDATION.md",
+      "target": "build-equivalence.json",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/olm-color-key/VALIDATION.md",
+      "target": "../olm-color-key/validate_pilots.py",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/olm-color-key/VALIDATION.md",
+      "target": "../../INTEGRATION.md",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/olm-directional-blur/VALIDATION.md",
+      "target": "../../INTEGRATION.md",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/olm-distance-gradation/VALIDATION.md",
+      "target": "../../INTEGRATION.md",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/olm-kirakira/VALIDATION.md",
+      "target": "../../INTEGRATION.md",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/olm-radial-blur/VALIDATION.md",
+      "target": "../../INTEGRATION.md",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/olm-smoother/VALIDATION.md",
+      "target": "environment.json",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/olm-smoother/VALIDATION.md",
+      "target": "pipl-comparison.json",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/olm-smoother/VALIDATION.md",
+      "target": "validation-report.json",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/olm-smoother/VALIDATION.md",
+      "target": "cleanup.json",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/olm-smoother/VALIDATION.md",
+      "target": "../../INTEGRATION.md",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/olm-smoother2/VALIDATION.md",
+      "target": "../../INTEGRATION.md",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/olm-toon-dilate/VALIDATION.md",
+      "target": "../../INTEGRATION.md",
+      "versionable": true
+    }
+  ],
+  "git_add_dry_run": [
+    "add 'rust/.gitignore'",
+    "add 'rust/Cargo.lock'",
+    "add 'rust/Cargo.toml'",
+    "add 'rust/INTEGRATION.md'",
+    "add 'rust/README.md'",
+    "add 'rust/crates/olm-ae/Cargo.toml'",
+    "add 'rust/crates/olm-ae/src/lib.rs'",
+    "add 'rust/crates/olm-core/Cargo.toml'",
+    "add 'rust/crates/olm-core/src/lib.rs'",
+    "add 'rust/crates/olm-math/Cargo.toml'",
+    "add 'rust/crates/olm-math/build.rs'",
+    "add 'rust/crates/olm-math/reference.cpp'",
+    "add 'rust/crates/olm-math/src/lib.rs'",
+    "add 'rust/crates/olm-math/tests/cpp_reference.rs'",
+    "add 'rust/crates/olm-math/tests/native_ucrt.rs'",
+    "add 'rust/evidence/integration/checks.json'",
+    "add 'rust/evidence/integration/cross-check.json'",
+    "add 'rust/evidence/integration/hygiene.json'",
+    "add 'rust/evidence/integration/process-cleanup.json'",
+    "add 'rust/evidence/integration/radial-triage.json'",
+    "add 'rust/evidence/integration/staged-identities.json'",
+    "add 'rust/plugins/color-keep/.gitignore'",
+    "add 'rust/plugins/color-keep/Cargo.toml'",
+    "add 'rust/plugins/color-keep/VALIDATION.md'",
+    "add 'rust/plugins/color-keep/build-equivalence.json'",
+    "add 'rust/plugins/color-keep/build.rs'",
+    "add 'rust/plugins/color-keep/original-inventory.json'",
+    "add 'rust/plugins/color-keep/pipl-comparison.json'",
+    "add 'rust/plugins/color-keep/src/lib.rs'",
+    "add 'rust/plugins/color-keep/validation-report.json'",
+    "add 'rust/plugins/olm-blur/.gitignore'",
+    "add 'rust/plugins/olm-blur/Cargo.toml'",
+    "add 'rust/plugins/olm-blur/VALIDATION.md'",
+    "add 'rust/plugins/olm-blur/build-equivalence.json'",
+    "add 'rust/plugins/olm-blur/build.rs'",
+    "add 'rust/plugins/olm-blur/collect_validation.py'",
+    "add 'rust/plugins/olm-blur/original-inventory.json'",
+    "add 'rust/plugins/olm-blur/pipl-comparison.json'",
+    "add 'rust/plugins/olm-blur/src/ae.rs'",
+    "add 'rust/plugins/olm-blur/src/ae_support.rs'",
+    "add 'rust/plugins/olm-blur/src/algorithm.rs'",
+    "add 'rust/plugins/olm-blur/src/lib.rs'",
+    "add 'rust/plugins/olm-blur/src/reference_tests.rs'",
+    "add 'rust/plugins/olm-blur/tests/reference.cpp'",
+    "add 'rust/plugins/olm-blur/validate_supplemental.py'",
+    "add 'rust/plugins/olm-blur/validation-report.json'",
+    "add 'rust/plugins/olm-color-key/.gitignore'",
+    "add 'rust/plugins/olm-color-key/Cargo.toml'",
+    "add 'rust/plugins/olm-color-key/VALIDATION.md'",
+    "add 'rust/plugins/olm-color-key/build-equivalence.json'",
+    "add 'rust/plugins/olm-color-key/build.rs'",
+    "add 'rust/plugins/olm-color-key/original-inventory.json'",
+    "add 'rust/plugins/olm-color-key/pipl-comparison.json'",
+    "add 'rust/plugins/olm-color-key/src/ae.rs'",
+    "add 'rust/plugins/olm-color-key/src/algorithm.rs'",
+    "add 'rust/plugins/olm-color-key/src/color.rs'",
+    "add 'rust/plugins/olm-color-key/src/distance.rs'",
+    "add 'rust/plugins/olm-color-key/src/lib.rs'",
+    "add 'rust/plugins/olm-color-key/src/reference_tests.rs'",
+    "add 'rust/plugins/olm-color-key/tests/reference.cpp'",
+    "add 'rust/plugins/olm-color-key/validate_pilots.py'",
+    "add 'rust/plugins/olm-color-key/validation-report.json'",
+    "add 'rust/plugins/olm-directional-blur/.gitignore'",
+    "add 'rust/plugins/olm-directional-blur/Cargo.toml'",
+    "add 'rust/plugins/olm-directional-blur/VALIDATION.md'",
+    "add 'rust/plugins/olm-directional-blur/build.rs'",
+    "add 'rust/plugins/olm-directional-blur/classify_mismatches.py'",
+    "add 'rust/plugins/olm-directional-blur/diagnose.py'",
+    "add 'rust/plugins/olm-directional-blur/inventory-comparison.json'",
+    "add 'rust/plugins/olm-directional-blur/pipl-comparison.json'",
+    "add 'rust/plugins/olm-directional-blur/runtime-identities.json'",
+    "add 'rust/plugins/olm-directional-blur/source-identities.json'",
+    "add 'rust/plugins/olm-directional-blur/src/admission.rs'",
+    "add 'rust/plugins/olm-directional-blur/src/ae.rs'",
+    "add 'rust/plugins/olm-directional-blur/src/algorithm.rs'",
+    "add 'rust/plugins/olm-directional-blur/src/host.rs'",
+    "add 'rust/plugins/olm-directional-blur/src/lib.rs'",
+    "add 'rust/plugins/olm-directional-blur/src/noise.rs'",
+    "add 'rust/plugins/olm-directional-blur/src/rotate.rs'",
+    "add 'rust/plugins/olm-directional-blur/src/rowdriver.rs'",
+    "add 'rust/plugins/olm-directional-blur/src/sha256.rs'",
+    "add 'rust/plugins/olm-directional-blur/src/ui.rs'",
+    "add 'rust/plugins/olm-directional-blur/summarize_validation.py'",
+    "add 'rust/plugins/olm-directional-blur/tests/conformance.rs'",
+    "add 'rust/plugins/olm-directional-blur/tests/reference.cpp'",
+    "add 'rust/plugins/olm-directional-blur/validation-report.json'",
+    "add 'rust/plugins/olm-distance-gradation/.gitignore'",
+    "add 'rust/plugins/olm-distance-gradation/Cargo.toml'",
+    "add 'rust/plugins/olm-distance-gradation/VALIDATION.md'",
+    "add 'rust/plugins/olm-distance-gradation/build.rs'",
+    "add 'rust/plugins/olm-distance-gradation/original-inventory.json'",
+    "add 'rust/plugins/olm-distance-gradation/pipl-comparison.json'",
+    "add 'rust/plugins/olm-distance-gradation/src/ae.rs'",
+    "add 'rust/plugins/olm-distance-gradation/src/algorithm.rs'",
+    "add 'rust/plugins/olm-distance-gradation/src/bilateral.rs'",
+    "add 'rust/plugins/olm-distance-gradation/src/bilateral_fma_table.rs'",
+    "add 'rust/plugins/olm-distance-gradation/src/bilateral_table.rs'",
+    "add 'rust/plugins/olm-distance-gradation/src/field.rs'",
+    "add 'rust/plugins/olm-distance-gradation/src/filters.rs'",
+    "add 'rust/plugins/olm-distance-gradation/src/lib.rs'",
+    "add 'rust/plugins/olm-distance-gradation/src/reference_tests.rs'",
+    "add 'rust/plugins/olm-distance-gradation/src/shared_candidates.rs'",
+    "add 'rust/plugins/olm-distance-gradation/src/ui.rs'",
+    "add 'rust/plugins/olm-distance-gradation/tests/capture_native_gaussian.py'",
+    "add 'rust/plugins/olm-distance-gradation/tests/capture_native_ipp.py'",
+    "add 'rust/plugins/olm-distance-gradation/tests/native-gaussian-kernels.bin'",
+    "add 'rust/plugins/olm-distance-gradation/tests/native-gaussian-provenance.json'",
+    "add 'rust/plugins/olm-distance-gradation/tests/native-gaussian.bin'",
+    "add 'rust/plugins/olm-distance-gradation/tests/native-ipp-exp.bin'",
+    "add 'rust/plugins/olm-distance-gradation/tests/native-ipp-fma.bin'",
+    "add 'rust/plugins/olm-distance-gradation/tests/native-ipp-provenance.json'",
+    "add 'rust/plugins/olm-distance-gradation/tests/reference.cpp'",
+    "add 'rust/plugins/olm-distance-gradation/tests/requalify_candidate.py'",
+    "add 'rust/plugins/olm-distance-gradation/tests/summarize_validation.py'",
+    "add 'rust/plugins/olm-distance-gradation/unit-test-report.json'",
+    "add 'rust/plugins/olm-distance-gradation/validation-report.json'",
+    "add 'rust/plugins/olm-distance-gradation/worker-identity.json'",
+    "add 'rust/plugins/olm-kirakira/.gitignore'",
+    "add 'rust/plugins/olm-kirakira/Cargo.toml'",
+    "add 'rust/plugins/olm-kirakira/VALIDATION.md'",
+    "add 'rust/plugins/olm-kirakira/build.rs'",
+    "add 'rust/plugins/olm-kirakira/isolate.py'",
+    "add 'rust/plugins/olm-kirakira/revalidate.py'",
+    "add 'rust/plugins/olm-kirakira/src/adapter.rs'",
+    "add 'rust/plugins/olm-kirakira/src/ae.rs'",
+    "add 'rust/plugins/olm-kirakira/src/ae_ui.rs'",
+    "add 'rust/plugins/olm-kirakira/src/algorithm.rs'",
+    "add 'rust/plugins/olm-kirakira/src/editor.rs'",
+    "add 'rust/plugins/olm-kirakira/src/filters.rs'",
+    "add 'rust/plugins/olm-kirakira/src/lib.rs'",
+    "add 'rust/plugins/olm-kirakira/src/params.rs'",
+    "add 'rust/plugins/olm-kirakira/src/presets.rs'",
+    "add 'rust/plugins/olm-kirakira/src/ramp.rs'",
+    "add 'rust/plugins/olm-kirakira/src/trig.rs'",
+    "add 'rust/plugins/olm-kirakira/src/trig_tables.rs'",
+    "add 'rust/plugins/olm-kirakira/summarize.py'",
+    "add 'rust/plugins/olm-kirakira/tests/original_ramp.rs'",
+    "add 'rust/plugins/olm-kirakira/tests/reference.cpp'",
+    "add 'rust/plugins/olm-kirakira/tests/reference.rs'",
+    "add 'rust/plugins/olm-kirakira/validate.py'",
+    "add 'rust/plugins/olm-kirakira/validation-report.json'",
+    "add 'rust/plugins/olm-radial-blur/.gitignore'",
+    "add 'rust/plugins/olm-radial-blur/Cargo.toml'",
+    "add 'rust/plugins/olm-radial-blur/README.md'",
+    "add 'rust/plugins/olm-radial-blur/VALIDATION.md'",
+    "add 'rust/plugins/olm-radial-blur/audit_processes.py'",
+    "add 'rust/plugins/olm-radial-blur/build.rs'",
+    "add 'rust/plugins/olm-radial-blur/collect_report.py'",
+    "add 'rust/plugins/olm-radial-blur/original-inspect.json'",
+    "add 'rust/plugins/olm-radial-blur/pipl-comparison.json'",
+    "add 'rust/plugins/olm-radial-blur/src/ae.rs'",
+    "add 'rust/plugins/olm-radial-blur/src/algorithm.rs'",
+    "add 'rust/plugins/olm-radial-blur/src/glue.rs'",
+    "add 'rust/plugins/olm-radial-blur/src/lib.rs'",
+    "add 'rust/plugins/olm-radial-blur/src/math.rs'",
+    "add 'rust/plugins/olm-radial-blur/src/noise.rs'",
+    "add 'rust/plugins/olm-radial-blur/src/reciprocal_table.rs'",
+    "add 'rust/plugins/olm-radial-blur/src/reference_tests.rs'",
+    "add 'rust/plugins/olm-radial-blur/src/ui.rs'",
+    "add 'rust/plugins/olm-radial-blur/tests/reference.cpp'",
+    "add 'rust/plugins/olm-radial-blur/triage.py'",
+    "add 'rust/plugins/olm-radial-blur/validate.py'",
+    "add 'rust/plugins/olm-radial-blur/validation-report.json'",
+    "add 'rust/plugins/olm-smoother/.gitignore'",
+    "add 'rust/plugins/olm-smoother/Cargo.toml'",
+    "add 'rust/plugins/olm-smoother/README.md'",
+    "add 'rust/plugins/olm-smoother/VALIDATION.md'",
+    "add 'rust/plugins/olm-smoother/build.rs'",
+    "add 'rust/plugins/olm-smoother/cleanup.json'",
+    "add 'rust/plugins/olm-smoother/environment.json'",
+    "add 'rust/plugins/olm-smoother/pipl-comparison.json'",
+    "add 'rust/plugins/olm-smoother/src/ae.rs'",
+    "add 'rust/plugins/olm-smoother/src/algorithm.rs'",
+    "add 'rust/plugins/olm-smoother/src/generated.rs'",
+    "add 'rust/plugins/olm-smoother/src/lib.rs'",
+    "add 'rust/plugins/olm-smoother/src/reference_tests.rs'",
+    "add 'rust/plugins/olm-smoother/src/support.rs'",
+    "add 'rust/plugins/olm-smoother/tests/reference.cpp'",
+    "add 'rust/plugins/olm-smoother/tools/collect_validation.py'",
+    "add 'rust/plugins/olm-smoother/tools/translate.py'",
+    "add 'rust/plugins/olm-smoother/validation-report.json'",
+    "add 'rust/plugins/olm-smoother2/Cargo.toml'",
+    "add 'rust/plugins/olm-smoother2/VALIDATION.md'",
+    "add 'rust/plugins/olm-smoother2/build.rs'",
+    "add 'rust/plugins/olm-smoother2/campaign-processes.json'",
+    "add 'rust/plugins/olm-smoother2/campaign-summary.json'",
+    "add 'rust/plugins/olm-smoother2/cancelled-processes.json'",
+    "add 'rust/plugins/olm-smoother2/generate_geometry.py'",
+    "add 'rust/plugins/olm-smoother2/geometry-generation.json'",
+    "add 'rust/plugins/olm-smoother2/pipl-comparison.json'",
+    "add 'rust/plugins/olm-smoother2/pipl_build.rs'",
+    "add 'rust/plugins/olm-smoother2/process-cleanup.json'",
+    "add 'rust/plugins/olm-smoother2/rebuild-equivalence.json'",
+    "add 'rust/plugins/olm-smoother2/rebuild-sections.json'",
+    "add 'rust/plugins/olm-smoother2/run_campaign.py'",
+    "add 'rust/plugins/olm-smoother2/src/admission.rs'",
+    "add 'rust/plugins/olm-smoother2/src/ae.rs'",
+    "add 'rust/plugins/olm-smoother2/src/ae_boundary.rs'",
+    "add 'rust/plugins/olm-smoother2/src/ae_setup.rs'",
+    "add 'rust/plugins/olm-smoother2/src/algorithm.rs'",
+    "add 'rust/plugins/olm-smoother2/src/class_plane.rs'",
+    "add 'rust/plugins/olm-smoother2/src/dynamic.rs'",
+    "add 'rust/plugins/olm-smoother2/src/frame.rs'",
+    "add 'rust/plugins/olm-smoother2/src/gamma.rs'",
+    "add 'rust/plugins/olm-smoother2/src/geometry.rs'",
+    "add 'rust/plugins/olm-smoother2/src/geometry_generated.rs'",
+    "add 'rust/plugins/olm-smoother2/src/lib.rs'",
+    "add 'rust/plugins/olm-smoother2/src/lut.rs'",
+    "add 'rust/plugins/olm-smoother2/src/polygon.rs'",
+    "add 'rust/plugins/olm-smoother2/src/reference_tests.rs'",
+    "add 'rust/plugins/olm-smoother2/src/scan.rs'",
+    "add 'rust/plugins/olm-smoother2/src/sha256.rs'",
+    "add 'rust/plugins/olm-smoother2/src/types.rs'",
+    "add 'rust/plugins/olm-smoother2/src/weights.rs'",
+    "add 'rust/plugins/olm-smoother2/summarize_campaign.py'",
+    "add 'rust/plugins/olm-smoother2/tests/leaf_reference.inc'",
+    "add 'rust/plugins/olm-smoother2/tests/reference.cpp'",
+    "add 'rust/plugins/olm-smoother2/validate.py'",
+    "add 'rust/plugins/olm-smoother2/validation-report.json'",
+    "add 'rust/plugins/olm-toon-dilate/.gitignore'",
+    "add 'rust/plugins/olm-toon-dilate/Cargo.toml'",
+    "add 'rust/plugins/olm-toon-dilate/VALIDATION.md'",
+    "add 'rust/plugins/olm-toon-dilate/build.rs'",
+    "add 'rust/plugins/olm-toon-dilate/collect_validation.py'",
+    "add 'rust/plugins/olm-toon-dilate/pipl-comparison.json'",
+    "add 'rust/plugins/olm-toon-dilate/src/ae.rs'",
+    "add 'rust/plugins/olm-toon-dilate/src/algorithm.rs'",
+    "add 'rust/plugins/olm-toon-dilate/src/lib.rs'",
+    "add 'rust/plugins/olm-toon-dilate/tests/kernel.rs'",
+    "add 'rust/plugins/olm-toon-dilate/tests/reference.cpp'",
+    "add 'rust/plugins/olm-toon-dilate/validation-report.json'",
+    "add 'rust/tools/audit_hygiene.py'",
+    "add 'rust/tools/oracle/.gitignore'",
+    "add 'rust/tools/oracle/README.md'",
+    "add 'rust/tools/oracle/collect_results.py'",
+    "add 'rust/tools/oracle/evidence/all-ten-20261112.json'",
+    "add 'rust/tools/oracle/evidence/olm_oracle.campaign.py.txt'",
+    "add 'rust/tools/oracle/evidence/review-120-results.json'",
+    "add 'rust/tools/oracle/evidence/review-max32-300.json'",
+    "add 'rust/tools/oracle/evidence/review-radial-diagnostics.json'",
+    "add 'rust/tools/oracle/evidence/validation.json'",
+    "add 'rust/tools/oracle/olm_oracle.py'",
+    "add 'rust/tools/oracle/self_test.py'",
+    "add 'rust/tools/oracle/test_oracle.py'",
+    "add 'rust/tools/stage_windows.ps1'",
+    "add 'rust/tools/validate_windows.py'"
+  ],
+  "files": [
+    {
+      "path": "rust/.gitignore",
+      "bytes": 515
+    },
+    {
+      "path": "rust/Cargo.lock",
+      "bytes": 21485
+    },
+    {
+      "path": "rust/Cargo.toml",
+      "bytes": 695
+    },
+    {
+      "path": "rust/INTEGRATION.md",
+      "bytes": 12220
+    },
+    {
+      "path": "rust/README.md",
+      "bytes": 16460
+    },
+    {
+      "path": "rust/crates/olm-ae/Cargo.toml",
+      "bytes": 200
+    },
+    {
+      "path": "rust/crates/olm-ae/src/lib.rs",
+      "bytes": 20914
+    },
+    {
+      "path": "rust/crates/olm-core/Cargo.toml",
+      "bytes": 129
+    },
+    {
+      "path": "rust/crates/olm-core/src/lib.rs",
+      "bytes": 12611
+    },
+    {
+      "path": "rust/crates/olm-math/Cargo.toml",
+      "bytes": 210
+    },
+    {
+      "path": "rust/crates/olm-math/build.rs",
+      "bytes": 1911
+    },
+    {
+      "path": "rust/crates/olm-math/reference.cpp",
+      "bytes": 985
+    },
+    {
+      "path": "rust/crates/olm-math/src/lib.rs",
+      "bytes": 3423
+    },
+    {
+      "path": "rust/crates/olm-math/tests/cpp_reference.rs",
+      "bytes": 1855
+    },
+    {
+      "path": "rust/crates/olm-math/tests/native_ucrt.rs",
+      "bytes": 4757
+    },
+    {
+      "path": "rust/evidence/integration/checks.json",
+      "bytes": 5260
+    },
+    {
+      "path": "rust/evidence/integration/cross-check.json",
+      "bytes": 135493
+    },
+    {
+      "path": "rust/evidence/integration/hygiene.json",
+      "bytes": 43530
+    },
+    {
+      "path": "rust/evidence/integration/process-cleanup.json",
+      "bytes": 76253
+    },
+    {
+      "path": "rust/evidence/integration/radial-triage.json",
+      "bytes": 15184
+    },
+    {
+      "path": "rust/evidence/integration/staged-identities.json",
+      "bytes": 4019
+    },
+    {
+      "path": "rust/plugins/color-keep/.gitignore",
+      "bytes": 56
+    },
+    {
+      "path": "rust/plugins/color-keep/Cargo.toml",
+      "bytes": 321
+    },
+    {
+      "path": "rust/plugins/color-keep/VALIDATION.md",
+      "bytes": 3356
+    },
+    {
+      "path": "rust/plugins/color-keep/build-equivalence.json",
+      "bytes": 2450
+    },
+    {
+      "path": "rust/plugins/color-keep/build.rs",
+      "bytes": 2474
+    },
+    {
+      "path": "rust/plugins/color-keep/original-inventory.json",
+      "bytes": 51422
+    },
+    {
+      "path": "rust/plugins/color-keep/pipl-comparison.json",
+      "bytes": 1301
+    },
+    {
+      "path": "rust/plugins/color-keep/src/lib.rs",
+      "bytes": 3977
+    },
+    {
+      "path": "rust/plugins/color-keep/validation-report.json",
+      "bytes": 26716
+    },
+    {
+      "path": "rust/plugins/olm-blur/.gitignore",
+      "bytes": 14
+    },
+    {
+      "path": "rust/plugins/olm-blur/Cargo.toml",
+      "bytes": 359
+    },
+    {
+      "path": "rust/plugins/olm-blur/VALIDATION.md",
+      "bytes": 8816
+    },
+    {
+      "path": "rust/plugins/olm-blur/build-equivalence.json",
+      "bytes": 1731
+    },
+    {
+      "path": "rust/plugins/olm-blur/build.rs",
+      "bytes": 5346
+    },
+    {
+      "path": "rust/plugins/olm-blur/collect_validation.py",
+      "bytes": 12322
+    },
+    {
+      "path": "rust/plugins/olm-blur/original-inventory.json",
+      "bytes": 2641
+    },
+    {
+      "path": "rust/plugins/olm-blur/pipl-comparison.json",
+      "bytes": 1062
+    },
+    {
+      "path": "rust/plugins/olm-blur/src/ae.rs",
+      "bytes": 3515
+    },
+    {
+      "path": "rust/plugins/olm-blur/src/ae_support.rs",
+      "bytes": 23331
+    },
+    {
+      "path": "rust/plugins/olm-blur/src/algorithm.rs",
+      "bytes": 10398
+    },
+    {
+      "path": "rust/plugins/olm-blur/src/lib.rs",
+      "bytes": 288
+    },
+    {
+      "path": "rust/plugins/olm-blur/src/reference_tests.rs",
+      "bytes": 10293
+    },
+    {
+      "path": "rust/plugins/olm-blur/tests/reference.cpp",
+      "bytes": 1274
+    },
+    {
+      "path": "rust/plugins/olm-blur/validate_supplemental.py",
+      "bytes": 3074
+    },
+    {
+      "path": "rust/plugins/olm-blur/validation-report.json",
+      "bytes": 74866
+    },
+    {
+      "path": "rust/plugins/olm-color-key/.gitignore",
+      "bytes": 56
+    },
+    {
+      "path": "rust/plugins/olm-color-key/Cargo.toml",
+      "bytes": 344
+    },
+    {
+      "path": "rust/plugins/olm-color-key/VALIDATION.md",
+      "bytes": 3490
+    },
+    {
+      "path": "rust/plugins/olm-color-key/build-equivalence.json",
+      "bytes": 2452
+    },
+    {
+      "path": "rust/plugins/olm-color-key/build.rs",
+      "bytes": 3734
+    },
+    {
+      "path": "rust/plugins/olm-color-key/original-inventory.json",
+      "bytes": 116676
+    },
+    {
+      "path": "rust/plugins/olm-color-key/pipl-comparison.json",
+      "bytes": 1301
+    },
+    {
+      "path": "rust/plugins/olm-color-key/src/ae.rs",
+      "bytes": 5838
+    },
+    {
+      "path": "rust/plugins/olm-color-key/src/algorithm.rs",
+      "bytes": 11102
+    },
+    {
+      "path": "rust/plugins/olm-color-key/src/color.rs",
+      "bytes": 5337
+    },
+    {
+      "path": "rust/plugins/olm-color-key/src/distance.rs",
+      "bytes": 5313
+    },
+    {
+      "path": "rust/plugins/olm-color-key/src/lib.rs",
+      "bytes": 193
+    },
+    {
+      "path": "rust/plugins/olm-color-key/src/reference_tests.rs",
+      "bytes": 2712
+    },
+    {
+      "path": "rust/plugins/olm-color-key/tests/reference.cpp",
+      "bytes": 1212
+    },
+    {
+      "path": "rust/plugins/olm-color-key/validate_pilots.py",
+      "bytes": 7384
+    },
+    {
+      "path": "rust/plugins/olm-color-key/validation-report.json",
+      "bytes": 30108
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/.gitignore",
+      "bytes": 14
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/Cargo.toml",
+      "bytes": 360
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/VALIDATION.md",
+      "bytes": 12800
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/build.rs",
+      "bytes": 4023
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/classify_mismatches.py",
+      "bytes": 2966
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/diagnose.py",
+      "bytes": 828
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/inventory-comparison.json",
+      "bytes": 119514
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/pipl-comparison.json",
+      "bytes": 681
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/runtime-identities.json",
+      "bytes": 599
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/source-identities.json",
+      "bytes": 1713
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/src/admission.rs",
+      "bytes": 10242
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/src/ae.rs",
+      "bytes": 8660
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/src/algorithm.rs",
+      "bytes": 10102
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/src/host.rs",
+      "bytes": 19149
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/src/lib.rs",
+      "bytes": 119
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/src/noise.rs",
+      "bytes": 4342
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/src/rotate.rs",
+      "bytes": 3415
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/src/rowdriver.rs",
+      "bytes": 5447
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/src/sha256.rs",
+      "bytes": 3069
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/src/ui.rs",
+      "bytes": 4212
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/summarize_validation.py",
+      "bytes": 6437
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/tests/conformance.rs",
+      "bytes": 9904
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/tests/reference.cpp",
+      "bytes": 1001
+    },
+    {
+      "path": "rust/plugins/olm-directional-blur/validation-report.json",
+      "bytes": 27775
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/.gitignore",
+      "bytes": 30
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/Cargo.toml",
+      "bytes": 373
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/VALIDATION.md",
+      "bytes": 13825
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/build.rs",
+      "bytes": 3965
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/original-inventory.json",
+      "bytes": 6464
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/pipl-comparison.json",
+      "bytes": 1826
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/src/ae.rs",
+      "bytes": 5741
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/src/algorithm.rs",
+      "bytes": 10549
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/src/bilateral.rs",
+      "bytes": 13177
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/src/bilateral_fma_table.rs",
+      "bytes": 918
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/src/bilateral_table.rs",
+      "bytes": 5494
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/src/field.rs",
+      "bytes": 4973
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/src/filters.rs",
+      "bytes": 8422
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/src/lib.rs",
+      "bytes": 249
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/src/reference_tests.rs",
+      "bytes": 10564
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/src/shared_candidates.rs",
+      "bytes": 3260
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/src/ui.rs",
+      "bytes": 6466
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/tests/capture_native_gaussian.py",
+      "bytes": 1976
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/tests/capture_native_ipp.py",
+      "bytes": 1859
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/tests/native-gaussian-kernels.bin",
+      "bytes": 87808
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/tests/native-gaussian-provenance.json",
+      "bytes": 6072
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/tests/native-gaussian.bin",
+      "bytes": 516528
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/tests/native-ipp-exp.bin",
+      "bytes": 80008
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/tests/native-ipp-fma.bin",
+      "bytes": 150192
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/tests/native-ipp-provenance.json",
+      "bytes": 7756
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/tests/reference.cpp",
+      "bytes": 4223
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/tests/requalify_candidate.py",
+      "bytes": 4308
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/tests/summarize_validation.py",
+      "bytes": 7001
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/unit-test-report.json",
+      "bytes": 2021
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/validation-report.json",
+      "bytes": 625500
+    },
+    {
+      "path": "rust/plugins/olm-distance-gradation/worker-identity.json",
+      "bytes": 1287
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/.gitignore",
+      "bytes": 29
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/Cargo.toml",
+      "bytes": 365
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/VALIDATION.md",
+      "bytes": 16388
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/build.rs",
+      "bytes": 4250
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/isolate.py",
+      "bytes": 1565
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/revalidate.py",
+      "bytes": 5526
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/src/adapter.rs",
+      "bytes": 23795
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/src/ae.rs",
+      "bytes": 2791
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/src/ae_ui.rs",
+      "bytes": 12947
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/src/algorithm.rs",
+      "bytes": 15272
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/src/editor.rs",
+      "bytes": 13166
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/src/filters.rs",
+      "bytes": 15119
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/src/lib.rs",
+      "bytes": 470
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/src/params.rs",
+      "bytes": 7901
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/src/presets.rs",
+      "bytes": 37083
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/src/ramp.rs",
+      "bytes": 3654
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/src/trig.rs",
+      "bytes": 3744
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/src/trig_tables.rs",
+      "bytes": 24765
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/summarize.py",
+      "bytes": 3378
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/tests/original_ramp.rs",
+      "bytes": 10612
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/tests/reference.cpp",
+      "bytes": 8021
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/tests/reference.rs",
+      "bytes": 14991
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/validate.py",
+      "bytes": 1300
+    },
+    {
+      "path": "rust/plugins/olm-kirakira/validation-report.json",
+      "bytes": 10856
+    },
+    {
+      "path": "rust/plugins/olm-radial-blur/.gitignore",
+      "bytes": 25
+    },
+    {
+      "path": "rust/plugins/olm-radial-blur/Cargo.toml",
+      "bytes": 334
+    },
+    {
+      "path": "rust/plugins/olm-radial-blur/README.md",
+      "bytes": 2782
+    },
+    {
+      "path": "rust/plugins/olm-radial-blur/VALIDATION.md",
+      "bytes": 14899
+    },
+    {
+      "path": "rust/plugins/olm-radial-blur/audit_processes.py",
+      "bytes": 5198
+    },
+    {
+      "path": "rust/plugins/olm-radial-blur/build.rs",
+      "bytes": 3805
+    },
+    {
+      "path": "rust/plugins/olm-radial-blur/collect_report.py",
+      "bytes": 5662
+    },
+    {
+      "path": "rust/plugins/olm-radial-blur/original-inspect.json",
+      "bytes": 15647
+    },
+    {
+      "path": "rust/plugins/olm-radial-blur/pipl-comparison.json",
+      "bytes": 1933
+    },
+    {
+      "path": "rust/plugins/olm-radial-blur/src/ae.rs",
+      "bytes": 5581
+    },
+    {
+      "path": "rust/plugins/olm-radial-blur/src/algorithm.rs",
+      "bytes": 25541
+    },
+    {
+      "path": "rust/plugins/olm-radial-blur/src/glue.rs",
+      "bytes": 16773
+    },
+    {
+      "path": "rust/plugins/olm-radial-blur/src/lib.rs",
+      "bytes": 198
+    },
+    {
+      "path": "rust/plugins/olm-radial-blur/src/math.rs",
+      "bytes": 4969
+    },
+    {
+      "path": "rust/plugins/olm-radial-blur/src/noise.rs",
+      "bytes": 2988
+    },
+    {
+      "path": "rust/plugins/olm-radial-blur/src/reciprocal_table.rs",
+      "bytes": 51397
+    },
+    {
+      "path": "rust/plugins/olm-radial-blur/src/reference_tests.rs",
+      "bytes": 9436
+    },
+    {
+      "path": "rust/plugins/olm-radial-blur/src/ui.rs",
+      "bytes": 3840
+    },
+    {
+      "path": "rust/plugins/olm-radial-blur/tests/reference.cpp",
+      "bytes": 2310
+    },
+    {
+      "path": "rust/plugins/olm-radial-blur/triage.py",
+      "bytes": 3938
+    },
+    {
+      "path": "rust/plugins/olm-radial-blur/validate.py",
+      "bytes": 1604
+    },
+    {
+      "path": "rust/plugins/olm-radial-blur/validation-report.json",
+      "bytes": 68000
+    },
+    {
+      "path": "rust/plugins/olm-smoother/.gitignore",
+      "bytes": 26
+    },
+    {
+      "path": "rust/plugins/olm-smoother/Cargo.toml",
+      "bytes": 342
+    },
+    {
+      "path": "rust/plugins/olm-smoother/README.md",
+      "bytes": 3117
+    },
+    {
+      "path": "rust/plugins/olm-smoother/VALIDATION.md",
+      "bytes": 9294
+    },
+    {
+      "path": "rust/plugins/olm-smoother/build.rs",
+      "bytes": 4293
+    },
+    {
+      "path": "rust/plugins/olm-smoother/cleanup.json",
+      "bytes": 2597
+    },
+    {
+      "path": "rust/plugins/olm-smoother/environment.json",
+      "bytes": 1209
+    },
+    {
+      "path": "rust/plugins/olm-smoother/pipl-comparison.json",
+      "bytes": 1023
+    },
+    {
+      "path": "rust/plugins/olm-smoother/src/ae.rs",
+      "bytes": 3154
+    },
+    {
+      "path": "rust/plugins/olm-smoother/src/algorithm.rs",
+      "bytes": 2953
+    },
+    {
+      "path": "rust/plugins/olm-smoother/src/generated.rs",
+      "bytes": 1266649
+    },
+    {
+      "path": "rust/plugins/olm-smoother/src/lib.rs",
+      "bytes": 507
+    },
+    {
+      "path": "rust/plugins/olm-smoother/src/reference_tests.rs",
+      "bytes": 9083
+    },
+    {
+      "path": "rust/plugins/olm-smoother/src/support.rs",
+      "bytes": 6509
+    },
+    {
+      "path": "rust/plugins/olm-smoother/tests/reference.cpp",
+      "bytes": 4027
+    },
+    {
+      "path": "rust/plugins/olm-smoother/tools/collect_validation.py",
+      "bytes": 2678
+    },
+    {
+      "path": "rust/plugins/olm-smoother/tools/translate.py",
+      "bytes": 15407
+    },
+    {
+      "path": "rust/plugins/olm-smoother/validation-report.json",
+      "bytes": 20445
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/Cargo.toml",
+      "bytes": 343
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/VALIDATION.md",
+      "bytes": 14516
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/build.rs",
+      "bytes": 5230
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/campaign-processes.json",
+      "bytes": 1963
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/campaign-summary.json",
+      "bytes": 4975
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/cancelled-processes.json",
+      "bytes": 1459
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/generate_geometry.py",
+      "bytes": 13241
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/geometry-generation.json",
+      "bytes": 13162
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/pipl-comparison.json",
+      "bytes": 355
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/pipl_build.rs",
+      "bytes": 2543
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/process-cleanup.json",
+      "bytes": 189
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/rebuild-equivalence.json",
+      "bytes": 466
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/rebuild-sections.json",
+      "bytes": 1435
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/run_campaign.py",
+      "bytes": 1321
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/src/admission.rs",
+      "bytes": 2330
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/src/ae.rs",
+      "bytes": 5118
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/src/ae_boundary.rs",
+      "bytes": 19771
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/src/ae_setup.rs",
+      "bytes": 3156
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/src/algorithm.rs",
+      "bytes": 2726
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/src/class_plane.rs",
+      "bytes": 2244
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/src/dynamic.rs",
+      "bytes": 2416
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/src/frame.rs",
+      "bytes": 2978
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/src/gamma.rs",
+      "bytes": 4768
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/src/geometry.rs",
+      "bytes": 5374
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/src/geometry_generated.rs",
+      "bytes": 56292
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/src/lib.rs",
+      "bytes": 383
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/src/lut.rs",
+      "bytes": 956
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/src/polygon.rs",
+      "bytes": 3702
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/src/reference_tests.rs",
+      "bytes": 29649
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/src/scan.rs",
+      "bytes": 10065
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/src/sha256.rs",
+      "bytes": 2711
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/src/types.rs",
+      "bytes": 587
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/src/weights.rs",
+      "bytes": 7615
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/summarize_campaign.py",
+      "bytes": 3197
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/tests/leaf_reference.inc",
+      "bytes": 2179
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/tests/reference.cpp",
+      "bytes": 6975
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/validate.py",
+      "bytes": 5977
+    },
+    {
+      "path": "rust/plugins/olm-smoother2/validation-report.json",
+      "bytes": 20187
+    },
+    {
+      "path": "rust/plugins/olm-toon-dilate/.gitignore",
+      "bytes": 13
+    },
+    {
+      "path": "rust/plugins/olm-toon-dilate/Cargo.toml",
+      "bytes": 319
+    },
+    {
+      "path": "rust/plugins/olm-toon-dilate/VALIDATION.md",
+      "bytes": 9939
+    },
+    {
+      "path": "rust/plugins/olm-toon-dilate/build.rs",
+      "bytes": 4234
+    },
+    {
+      "path": "rust/plugins/olm-toon-dilate/collect_validation.py",
+      "bytes": 4694
+    },
+    {
+      "path": "rust/plugins/olm-toon-dilate/pipl-comparison.json",
+      "bytes": 1498
+    },
+    {
+      "path": "rust/plugins/olm-toon-dilate/src/ae.rs",
+      "bytes": 21007
+    },
+    {
+      "path": "rust/plugins/olm-toon-dilate/src/algorithm.rs",
+      "bytes": 4900
+    },
+    {
+      "path": "rust/plugins/olm-toon-dilate/src/lib.rs",
+      "bytes": 105
+    },
+    {
+      "path": "rust/plugins/olm-toon-dilate/tests/kernel.rs",
+      "bytes": 5177
+    },
+    {
+      "path": "rust/plugins/olm-toon-dilate/tests/reference.cpp",
+      "bytes": 1529
+    },
+    {
+      "path": "rust/plugins/olm-toon-dilate/validation-report.json",
+      "bytes": 8249
+    },
+    {
+      "path": "rust/tools/audit_hygiene.py",
+      "bytes": 4447
+    },
+    {
+      "path": "rust/tools/oracle/.gitignore",
+      "bytes": 34
+    },
+    {
+      "path": "rust/tools/oracle/README.md",
+      "bytes": 34005
+    },
+    {
+      "path": "rust/tools/oracle/collect_results.py",
+      "bytes": 3146
+    },
+    {
+      "path": "rust/tools/oracle/evidence/all-ten-20261112.json",
+      "bytes": 346103
+    },
+    {
+      "path": "rust/tools/oracle/evidence/olm_oracle.campaign.py.txt",
+      "bytes": 26690
+    },
+    {
+      "path": "rust/tools/oracle/evidence/review-120-results.json",
+      "bytes": 567420
+    },
+    {
+      "path": "rust/tools/oracle/evidence/review-max32-300.json",
+      "bytes": 199683
+    },
+    {
+      "path": "rust/tools/oracle/evidence/review-radial-diagnostics.json",
+      "bytes": 633600
+    },
+    {
+      "path": "rust/tools/oracle/evidence/validation.json",
+      "bytes": 27142
+    },
+    {
+      "path": "rust/tools/oracle/olm_oracle.py",
+      "bytes": 31175
+    },
+    {
+      "path": "rust/tools/oracle/self_test.py",
+      "bytes": 2227
+    },
+    {
+      "path": "rust/tools/oracle/test_oracle.py",
+      "bytes": 12514
+    },
+    {
+      "path": "rust/tools/stage_windows.ps1",
+      "bytes": 2713
+    },
+    {
+      "path": "rust/tools/validate_windows.py",
+      "bytes": 6136
+    }
+  ]
+}

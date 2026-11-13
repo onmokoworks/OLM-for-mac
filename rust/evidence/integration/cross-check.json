@@ -1,0 +1,3698 @@
+{
+  "seed": 20261120,
+  "cases": 12,
+  "jobs": 4,
+  "runner_pid": 4432,
+  "downsample": [
+    "1",
+    "1/2",
+    "1/4"
+  ],
+  "runner": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\validate_windows.py",
+    "sha256": "a760c5f7973cb3ee154ffa39a3e95b97323becc36be850e355a9574c806c39d8"
+  },
+  "oracle": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+    "sha256": "c77044d8f77eef6929575f2bc2538725f80a279b37ffe2724b46abcf312e1fb7"
+  },
+  "raw_artifacts": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final",
+    "local_only": true
+  },
+  "plugins": [
+    {
+      "crate": "color-keep",
+      "name": "ColorKeep",
+      "commands": [
+        {
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "-X",
+            "utf8",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "inventory",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\ColorKeep.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\ColorKeep.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\ColorKeep\\inventory"
+          ],
+          "pid": 3716,
+          "returncode": 0,
+          "log": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\ColorKeep-inventory.log",
+            "sha256": "cadd4cc1a03dcfbe49db6f9234f703a582bfe4022bea6a2a2d9673bee6a6ebc4"
+          }
+        },
+        {
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "-X",
+            "utf8",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "render",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\ColorKeep.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\ColorKeep.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--seed",
+            "20261120",
+            "--cases",
+            "12",
+            "--jobs",
+            "4",
+            "--downsample",
+            "1,1/2,1/4",
+            "--routes",
+            "smart8,smart16,smart32",
+            "--timeout",
+            "120",
+            "--sizes",
+            "1x1,3x7,11x7,31x19,97x61",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\ColorKeep\\render"
+          ],
+          "pid": 48596,
+          "returncode": 0,
+          "log": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\ColorKeep-render.log",
+            "sha256": "ba281f6ba725eee0a6785bd4db5d37322f0fa14acad0e2ccf8bcdb6da6bfdecc"
+          }
+        }
+      ],
+      "worker_file_identity": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\target\\minihost-build\\aex_worker.exe",
+        "sha256": "0481df5fa425af28f0e8a39ea9386185de13656c3c9d488042bed2244bdf8302"
+      },
+      "worker_provenance": "default-path file hash; not observed module mapping",
+      "inventory": {
+        "schema_version": 1,
+        "identical": true,
+        "diff": [],
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\ColorKeep.aex",
+          "sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\ColorKeep.aex",
+          "sha256": "2bcfc5a746c503deba995cfc6cab5500a5b1b61584b4b6a5cf079223e5d235ae"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c77044d8f77eef6929575f2bc2538725f80a279b37ffe2724b46abcf312e1fb7"
+        },
+        "summary_identity": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\ColorKeep\\inventory\\summary.json",
+          "sha256": "93d4b2d3a56f5292f082392e51c374aa2aed4ae45174d052070fb05c6cf0e501"
+        }
+      },
+      "render": {
+        "schema_version": 1,
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\ColorKeep.aex",
+          "sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\ColorKeep.aex",
+          "sha256": "2bcfc5a746c503deba995cfc6cab5500a5b1b61584b4b6a5cf079223e5d235ae"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c77044d8f77eef6929575f2bc2538725f80a279b37ffe2724b46abcf312e1fb7"
+        },
+        "non_ae_debug_routes": [],
+        "seed": 20261120,
+        "cases": 12,
+        "timeout_seconds": 120.0,
+        "force_classic": false,
+        "render_environment_overrides": {
+          "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+        },
+        "jobs": 4,
+        "sizes": [
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            11,
+            7
+          ],
+          [
+            31,
+            19
+          ],
+          [
+            97,
+            61
+          ]
+        ],
+        "downsample": [
+          "1",
+          "1/2",
+          "1/4"
+        ],
+        "extent": null,
+        "perturb_candidate": [],
+        "inventory_diff": [],
+        "same_binary": false,
+        "routes": {
+          "smart8": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "smart16": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "smart32": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          }
+        },
+        "complete": true,
+        "exit_code": 0,
+        "summary_identity": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\ColorKeep\\render\\summary.json",
+          "sha256": "3570632f27324cd987131e5dbff810e6d444c4c1f4754c2e544b31227ca29565"
+        }
+      },
+      "nonexact": [],
+      "case_plans_identity": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\ColorKeep\\render\\cases.json",
+        "sha256": "ddaafc5f84e9fb657f2378175a2821f958a75c1f9e636e7d1648228426592095"
+      }
+    },
+    {
+      "crate": "olm-distance-gradation",
+      "name": "DistanceGradation",
+      "commands": [
+        {
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "-X",
+            "utf8",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "inventory",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\DistanceGradation.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\DistanceGradation.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\DistanceGradation\\inventory"
+          ],
+          "pid": 61272,
+          "returncode": 0,
+          "log": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\DistanceGradation-inventory.log",
+            "sha256": "cadd4cc1a03dcfbe49db6f9234f703a582bfe4022bea6a2a2d9673bee6a6ebc4"
+          }
+        },
+        {
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "-X",
+            "utf8",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "render",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\DistanceGradation.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\DistanceGradation.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--seed",
+            "20261120",
+            "--cases",
+            "12",
+            "--jobs",
+            "4",
+            "--downsample",
+            "1,1/2,1/4",
+            "--routes",
+            "smart8,smart16,smart32",
+            "--timeout",
+            "300",
+            "--sizes",
+            "1x1,3x7,11x7,31x19,97x61",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\DistanceGradation\\render"
+          ],
+          "pid": 49040,
+          "returncode": 0,
+          "log": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\DistanceGradation-render.log",
+            "sha256": "02f262c26eee7183bb5fb5bc458037e86878277c91c0c84aedf9bc5feafeb258"
+          }
+        }
+      ],
+      "worker_file_identity": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\target\\minihost-build\\aex_worker.exe",
+        "sha256": "0481df5fa425af28f0e8a39ea9386185de13656c3c9d488042bed2244bdf8302"
+      },
+      "worker_provenance": "default-path file hash; not observed module mapping",
+      "inventory": {
+        "schema_version": 1,
+        "identical": true,
+        "diff": [],
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\DistanceGradation.aex",
+          "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\DistanceGradation.aex",
+          "sha256": "f0ab528e73378255e96fe0931a2f1e0307e0ec71df1cb2b05f60958a4800574f"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c77044d8f77eef6929575f2bc2538725f80a279b37ffe2724b46abcf312e1fb7"
+        },
+        "summary_identity": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\DistanceGradation\\inventory\\summary.json",
+          "sha256": "2cfd58912c27aee88f0ca2fb3cd77d30463d74b9e79c71d40f0a64dc5439642c"
+        }
+      },
+      "render": {
+        "schema_version": 1,
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\DistanceGradation.aex",
+          "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\DistanceGradation.aex",
+          "sha256": "f0ab528e73378255e96fe0931a2f1e0307e0ec71df1cb2b05f60958a4800574f"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c77044d8f77eef6929575f2bc2538725f80a279b37ffe2724b46abcf312e1fb7"
+        },
+        "non_ae_debug_routes": [],
+        "seed": 20261120,
+        "cases": 12,
+        "timeout_seconds": 300.0,
+        "force_classic": false,
+        "render_environment_overrides": {
+          "AEXCOMPAT_FRAME_DEADLINE_MS": "300000"
+        },
+        "jobs": 4,
+        "sizes": [
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            11,
+            7
+          ],
+          [
+            31,
+            19
+          ],
+          [
+            97,
+            61
+          ]
+        ],
+        "downsample": [
+          "1",
+          "1/2",
+          "1/4"
+        ],
+        "extent": null,
+        "perturb_candidate": [],
+        "inventory_diff": [],
+        "same_binary": false,
+        "routes": {
+          "smart8": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "smart16": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "smart32": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          }
+        },
+        "complete": true,
+        "exit_code": 0,
+        "summary_identity": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\DistanceGradation\\render\\summary.json",
+          "sha256": "90085272b654cb6b8be9f509553c2700492d3598709d25538dca9d6494cd9c72"
+        }
+      },
+      "nonexact": [],
+      "case_plans_identity": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\DistanceGradation\\render\\cases.json",
+        "sha256": "767ec4cd415520a00f8d69021a6bd320f45c1bbc9cf28fad6429f2b3f1d18392"
+      }
+    },
+    {
+      "crate": "olm-blur",
+      "name": "OLMBlur",
+      "commands": [
+        {
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "-X",
+            "utf8",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "inventory",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMBlur.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMBlur\\inventory"
+          ],
+          "pid": 65096,
+          "returncode": 0,
+          "log": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMBlur-inventory.log",
+            "sha256": "cadd4cc1a03dcfbe49db6f9234f703a582bfe4022bea6a2a2d9673bee6a6ebc4"
+          }
+        },
+        {
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "-X",
+            "utf8",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "render",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMBlur.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--seed",
+            "20261120",
+            "--cases",
+            "12",
+            "--jobs",
+            "4",
+            "--downsample",
+            "1,1/2,1/4",
+            "--routes",
+            "smart8,smart16,smart32",
+            "--timeout",
+            "120",
+            "--sizes",
+            "1x1,3x7,11x7,31x19,97x61",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMBlur\\render"
+          ],
+          "pid": 58868,
+          "returncode": 0,
+          "log": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMBlur-render.log",
+            "sha256": "d73d3aa2b5284d42f864433e0d6e71c57fea283ad18814ad0b03d97ecf46dcbe"
+          }
+        }
+      ],
+      "worker_file_identity": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\target\\minihost-build\\aex_worker.exe",
+        "sha256": "0481df5fa425af28f0e8a39ea9386185de13656c3c9d488042bed2244bdf8302"
+      },
+      "worker_provenance": "default-path file hash; not observed module mapping",
+      "inventory": {
+        "schema_version": 1,
+        "identical": true,
+        "diff": [],
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+          "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMBlur.aex",
+          "sha256": "b5894283c866ac86850ccc9c1aa9d91f2b51d1fba432982484c8c52ca721f54b"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c77044d8f77eef6929575f2bc2538725f80a279b37ffe2724b46abcf312e1fb7"
+        },
+        "summary_identity": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMBlur\\inventory\\summary.json",
+          "sha256": "c85154f3de1ef98bd24d6771221b1fc3fa1d0f33cadfc6e1804488daee45b75b"
+        }
+      },
+      "render": {
+        "schema_version": 1,
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+          "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMBlur.aex",
+          "sha256": "b5894283c866ac86850ccc9c1aa9d91f2b51d1fba432982484c8c52ca721f54b"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c77044d8f77eef6929575f2bc2538725f80a279b37ffe2724b46abcf312e1fb7"
+        },
+        "non_ae_debug_routes": [],
+        "seed": 20261120,
+        "cases": 12,
+        "timeout_seconds": 120.0,
+        "force_classic": false,
+        "render_environment_overrides": {
+          "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+        },
+        "jobs": 4,
+        "sizes": [
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            11,
+            7
+          ],
+          [
+            31,
+            19
+          ],
+          [
+            97,
+            61
+          ]
+        ],
+        "downsample": [
+          "1",
+          "1/2",
+          "1/4"
+        ],
+        "extent": null,
+        "perturb_candidate": [],
+        "inventory_diff": [],
+        "same_binary": false,
+        "routes": {
+          "smart8": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "smart16": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "smart32": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          }
+        },
+        "complete": true,
+        "exit_code": 0,
+        "summary_identity": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMBlur\\render\\summary.json",
+          "sha256": "93b7c3d5c14fa8bcd124698e347926878c61d317ca6e3aafc602129b14696ecb"
+        }
+      },
+      "nonexact": [],
+      "case_plans_identity": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMBlur\\render\\cases.json",
+        "sha256": "63bf580d0153a50ddc148ca33d02946269824ae4545028c77c09bfafb7444f43"
+      }
+    },
+    {
+      "crate": "olm-color-key",
+      "name": "OLMColorKey",
+      "commands": [
+        {
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "-X",
+            "utf8",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "inventory",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMColorKey.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMColorKey.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMColorKey\\inventory"
+          ],
+          "pid": 66636,
+          "returncode": 0,
+          "log": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMColorKey-inventory.log",
+            "sha256": "cadd4cc1a03dcfbe49db6f9234f703a582bfe4022bea6a2a2d9673bee6a6ebc4"
+          }
+        },
+        {
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "-X",
+            "utf8",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "render",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMColorKey.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMColorKey.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--seed",
+            "20261120",
+            "--cases",
+            "12",
+            "--jobs",
+            "4",
+            "--downsample",
+            "1,1/2,1/4",
+            "--routes",
+            "smart8,smart16,smart32",
+            "--timeout",
+            "120",
+            "--sizes",
+            "1x1,3x7,11x7,31x19,97x61",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMColorKey\\render"
+          ],
+          "pid": 16528,
+          "returncode": 0,
+          "log": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMColorKey-render.log",
+            "sha256": "7237b014ae99e5b6148d8661ff6634aaddcb5227d3531ce2c88a5ce3abcff28a"
+          }
+        }
+      ],
+      "worker_file_identity": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\target\\minihost-build\\aex_worker.exe",
+        "sha256": "0481df5fa425af28f0e8a39ea9386185de13656c3c9d488042bed2244bdf8302"
+      },
+      "worker_provenance": "default-path file hash; not observed module mapping",
+      "inventory": {
+        "schema_version": 1,
+        "identical": true,
+        "diff": [],
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMColorKey.aex",
+          "sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMColorKey.aex",
+          "sha256": "82f84ceb68cccd18693c0883bda970a0420596a88d52c60d55379f7df43d6262"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c77044d8f77eef6929575f2bc2538725f80a279b37ffe2724b46abcf312e1fb7"
+        },
+        "summary_identity": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMColorKey\\inventory\\summary.json",
+          "sha256": "81d5c93fc7dad0c6b85f5feb90f9da001f78ef41279036492f0c894b91756575"
+        }
+      },
+      "render": {
+        "schema_version": 1,
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMColorKey.aex",
+          "sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMColorKey.aex",
+          "sha256": "82f84ceb68cccd18693c0883bda970a0420596a88d52c60d55379f7df43d6262"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c77044d8f77eef6929575f2bc2538725f80a279b37ffe2724b46abcf312e1fb7"
+        },
+        "non_ae_debug_routes": [],
+        "seed": 20261120,
+        "cases": 12,
+        "timeout_seconds": 120.0,
+        "force_classic": false,
+        "render_environment_overrides": {
+          "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+        },
+        "jobs": 4,
+        "sizes": [
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            11,
+            7
+          ],
+          [
+            31,
+            19
+          ],
+          [
+            97,
+            61
+          ]
+        ],
+        "downsample": [
+          "1",
+          "1/2",
+          "1/4"
+        ],
+        "extent": null,
+        "perturb_candidate": [],
+        "inventory_diff": [],
+        "same_binary": false,
+        "routes": {
+          "smart8": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "smart16": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "smart32": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          }
+        },
+        "complete": true,
+        "exit_code": 0,
+        "summary_identity": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMColorKey\\render\\summary.json",
+          "sha256": "e3db362bbfe8306bdcfb9522cc0423a6f4d6e86000d59852dc4b07e74936e1aa"
+        }
+      },
+      "nonexact": [],
+      "case_plans_identity": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMColorKey\\render\\cases.json",
+        "sha256": "4aa1cc5a2bd39b26fd04e0cfc7d6ad9dba335a2ff45f470a90662bccf164d0fa"
+      }
+    },
+    {
+      "crate": "olm-directional-blur",
+      "name": "OLMDirectionalBlur",
+      "commands": [
+        {
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "-X",
+            "utf8",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "inventory",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMDirectionalBlur.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMDirectionalBlur\\inventory"
+          ],
+          "pid": 67280,
+          "returncode": 0,
+          "log": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMDirectionalBlur-inventory.log",
+            "sha256": "cadd4cc1a03dcfbe49db6f9234f703a582bfe4022bea6a2a2d9673bee6a6ebc4"
+          }
+        },
+        {
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "-X",
+            "utf8",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "render",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMDirectionalBlur.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--seed",
+            "20261120",
+            "--cases",
+            "12",
+            "--jobs",
+            "4",
+            "--downsample",
+            "1,1/2,1/4",
+            "--routes",
+            "smart8,smart16,smart32",
+            "--timeout",
+            "120",
+            "--sizes",
+            "1x1,3x7,11x7,31x19,97x61",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMDirectionalBlur\\render"
+          ],
+          "pid": 63964,
+          "returncode": 0,
+          "log": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMDirectionalBlur-render.log",
+            "sha256": "7183341dd19154098d8c5034d48c53d54322aa9f4e2af5cf1e51ab92baf704ed"
+          }
+        }
+      ],
+      "worker_file_identity": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\target\\minihost-build\\aex_worker.exe",
+        "sha256": "0481df5fa425af28f0e8a39ea9386185de13656c3c9d488042bed2244bdf8302"
+      },
+      "worker_provenance": "default-path file hash; not observed module mapping",
+      "inventory": {
+        "schema_version": 1,
+        "identical": true,
+        "diff": [],
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+          "sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMDirectionalBlur.aex",
+          "sha256": "d8139a723847a60d98424ba9bfba3c627e46fb2edc299e0832c8c4bdf235b94b"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c77044d8f77eef6929575f2bc2538725f80a279b37ffe2724b46abcf312e1fb7"
+        },
+        "summary_identity": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMDirectionalBlur\\inventory\\summary.json",
+          "sha256": "4a1d2182073bb234bf48309b364761684d59eb6f6ffa7dd432ec3f0ea44dd5ce"
+        }
+      },
+      "render": {
+        "schema_version": 1,
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+          "sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMDirectionalBlur.aex",
+          "sha256": "d8139a723847a60d98424ba9bfba3c627e46fb2edc299e0832c8c4bdf235b94b"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c77044d8f77eef6929575f2bc2538725f80a279b37ffe2724b46abcf312e1fb7"
+        },
+        "non_ae_debug_routes": [],
+        "seed": 20261120,
+        "cases": 12,
+        "timeout_seconds": 120.0,
+        "force_classic": false,
+        "render_environment_overrides": {
+          "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+        },
+        "jobs": 4,
+        "sizes": [
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            11,
+            7
+          ],
+          [
+            31,
+            19
+          ],
+          [
+            97,
+            61
+          ]
+        ],
+        "downsample": [
+          "1",
+          "1/2",
+          "1/4"
+        ],
+        "extent": null,
+        "perturb_candidate": [],
+        "inventory_diff": [],
+        "same_binary": false,
+        "routes": {
+          "smart8": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "smart16": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "smart32": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          }
+        },
+        "complete": true,
+        "exit_code": 0,
+        "summary_identity": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMDirectionalBlur\\render\\summary.json",
+          "sha256": "171ca7983e748af00de39d2506dbcc22e49cd6e165920003944f649b10eb1766"
+        }
+      },
+      "nonexact": [],
+      "case_plans_identity": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMDirectionalBlur\\render\\cases.json",
+        "sha256": "a8f2b0d9e76c1a6a685565dce2870eb1164e23c2cac24b6cb19526eacd34ef34"
+      },
+      "noise_type_audit": {
+        "slot": 16,
+        "admitted_values": [
+          1,
+          1,
+          2,
+          1,
+          2,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "rule": "Exclude Type 3. Directional declared popup count is 2; Radial wrapper records skipped plans."
+      }
+    },
+    {
+      "crate": "olm-kirakira",
+      "name": "OLMKiraKira",
+      "commands": [
+        {
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "-X",
+            "utf8",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "inventory",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMKiraKira.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMKiraKira.aex",
+            "--harness",
+            "D:\\AEXCompatWorktrees\\olm-diag-kirakira\\broker\\target\\release\\aexcompat-harness.exe",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMKiraKira\\inventory"
+          ],
+          "pid": 11828,
+          "returncode": 0,
+          "log": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMKiraKira-inventory.log",
+            "sha256": "cadd4cc1a03dcfbe49db6f9234f703a582bfe4022bea6a2a2d9673bee6a6ebc4"
+          }
+        },
+        {
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "-X",
+            "utf8",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-kirakira\\validate.py",
+            "render",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMKiraKira.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMKiraKira.aex",
+            "--harness",
+            "D:\\AEXCompatWorktrees\\olm-diag-kirakira\\broker\\target\\release\\aexcompat-harness.exe",
+            "--seed",
+            "20261120",
+            "--cases",
+            "12",
+            "--jobs",
+            "4",
+            "--downsample",
+            "1,1/2,1/4",
+            "--routes",
+            "smart8,smart16,smart32",
+            "--timeout",
+            "120",
+            "--sizes",
+            "5x5,11x7,31x19,97x61",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMKiraKira\\render"
+          ],
+          "pid": 65676,
+          "returncode": 0,
+          "log": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMKiraKira-render.log",
+            "sha256": "3945ffeaed4c998ce5dc2e24bde1ee8579a9b3e54ac2aab84d8f9fb588b6ca12"
+          }
+        }
+      ],
+      "worker_file_identity": {
+        "path": "D:\\AEXCompatWorktrees\\olm-diag-kirakira\\target\\minihost-build\\aex_worker.exe",
+        "sha256": "1ee0a3d824b677be551d1d3ee69aa0a00602ca7d750d6eb3836417e859bbca93"
+      },
+      "worker_provenance": "default-path file hash; not observed module mapping",
+      "inventory": {
+        "schema_version": 1,
+        "identical": true,
+        "diff": [],
+        "harness": {
+          "path": "D:\\AEXCompatWorktrees\\olm-diag-kirakira\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "41a939afc290a750a698a9ec55ea09431bf9a0291e85ebd08bbf3f46f0c2fee7"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMKiraKira.aex",
+          "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMKiraKira.aex",
+          "sha256": "62d7173c26c4e08137a0f662f31b8f0242cbc8ba30583eb526105a69bb119e2f"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c77044d8f77eef6929575f2bc2538725f80a279b37ffe2724b46abcf312e1fb7"
+        },
+        "summary_identity": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMKiraKira\\inventory\\summary.json",
+          "sha256": "687bc1faf07774a0b5df71693ddcfa98a52697e66909fca1eb3e181cb9c23235"
+        }
+      },
+      "render": {
+        "schema_version": 1,
+        "harness": {
+          "path": "D:\\AEXCompatWorktrees\\olm-diag-kirakira\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "41a939afc290a750a698a9ec55ea09431bf9a0291e85ebd08bbf3f46f0c2fee7"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMKiraKira.aex",
+          "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMKiraKira.aex",
+          "sha256": "62d7173c26c4e08137a0f662f31b8f0242cbc8ba30583eb526105a69bb119e2f"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c77044d8f77eef6929575f2bc2538725f80a279b37ffe2724b46abcf312e1fb7"
+        },
+        "non_ae_debug_routes": [],
+        "seed": 20261120,
+        "cases": 12,
+        "timeout_seconds": 120.0,
+        "force_classic": false,
+        "render_environment_overrides": {
+          "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+        },
+        "jobs": 4,
+        "sizes": [
+          [
+            5,
+            5
+          ],
+          [
+            11,
+            7
+          ],
+          [
+            31,
+            19
+          ],
+          [
+            97,
+            61
+          ]
+        ],
+        "downsample": [
+          "1",
+          "1/2",
+          "1/4"
+        ],
+        "extent": null,
+        "perturb_candidate": [],
+        "inventory_diff": [],
+        "same_binary": false,
+        "routes": {
+          "smart8": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "smart16": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "smart32": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          }
+        },
+        "complete": true,
+        "exit_code": 0,
+        "summary_identity": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMKiraKira\\render\\summary.json",
+          "sha256": "cf496a08f80e1bc00c32131ddbe60f07bf01f84dd1ce1d097fd33a05a0564cd8"
+        }
+      },
+      "nonexact": [],
+      "case_plans_identity": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMKiraKira\\render\\cases.json",
+        "sha256": "271eca5d021183f5b9be2153ad60beeaf68571a4326707cfb80e466d3d52f65c"
+      }
+    },
+    {
+      "crate": "olm-radial-blur",
+      "name": "OLMRadialBlur",
+      "commands": [
+        {
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "-X",
+            "utf8",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "inventory",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMRadialBlur.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMRadialBlur\\inventory"
+          ],
+          "pid": 59316,
+          "returncode": 0,
+          "log": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMRadialBlur-inventory.log",
+            "sha256": "cadd4cc1a03dcfbe49db6f9234f703a582bfe4022bea6a2a2d9673bee6a6ebc4"
+          }
+        },
+        {
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "-X",
+            "utf8",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validate.py",
+            "render",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMRadialBlur.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--seed",
+            "20261120",
+            "--cases",
+            "12",
+            "--jobs",
+            "4",
+            "--downsample",
+            "1,1/2,1/4",
+            "--routes",
+            "smart8,smart16,smart32",
+            "--timeout",
+            "600",
+            "--sizes",
+            "1x1,3x7,11x7,17x9",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMRadialBlur\\render"
+          ],
+          "pid": 21844,
+          "returncode": 1,
+          "log": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMRadialBlur-render.log",
+            "sha256": "f8db8944f73f6ce51d62ac78b34aae7387b8b882ca983813b0e68ab295616b79"
+          }
+        }
+      ],
+      "worker_file_identity": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\target\\minihost-build\\aex_worker.exe",
+        "sha256": "0481df5fa425af28f0e8a39ea9386185de13656c3c9d488042bed2244bdf8302"
+      },
+      "worker_provenance": "default-path file hash; not observed module mapping",
+      "inventory": {
+        "schema_version": 1,
+        "identical": true,
+        "diff": [],
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+          "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMRadialBlur.aex",
+          "sha256": "51eaea21f9bd0e0e00c69fa2ab402947cfc8af5c75e17f05afbd217f86c366f3"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c77044d8f77eef6929575f2bc2538725f80a279b37ffe2724b46abcf312e1fb7"
+        },
+        "summary_identity": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMRadialBlur\\inventory\\summary.json",
+          "sha256": "75cb22a1a74a3cc25a3bf508af4eba41e856cb83b0beb4fb402206a2e844fe88"
+        }
+      },
+      "render": {
+        "schema_version": 1,
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+          "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMRadialBlur.aex",
+          "sha256": "51eaea21f9bd0e0e00c69fa2ab402947cfc8af5c75e17f05afbd217f86c366f3"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c77044d8f77eef6929575f2bc2538725f80a279b37ffe2724b46abcf312e1fb7"
+        },
+        "non_ae_debug_routes": [],
+        "seed": 20261120,
+        "cases": 12,
+        "timeout_seconds": 600.0,
+        "force_classic": false,
+        "render_environment_overrides": {
+          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+        },
+        "jobs": 4,
+        "sizes": [
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            11,
+            7
+          ],
+          [
+            17,
+            9
+          ]
+        ],
+        "downsample": [
+          "1",
+          "1/2",
+          "1/4"
+        ],
+        "extent": null,
+        "perturb_candidate": [],
+        "inventory_diff": [],
+        "same_binary": false,
+        "routes": {
+          "smart8": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 10,
+            "mismatched": 2,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 179.0,
+            "mismatching_pixels": 9,
+            "first_coordinates": [
+              {
+                "case": 3,
+                "x": 16,
+                "y": 7
+              },
+              {
+                "case": 3,
+                "x": 15,
+                "y": 8
+              },
+              {
+                "case": 3,
+                "x": 16,
+                "y": 8
+              },
+              {
+                "case": 17,
+                "x": 0,
+                "y": 4
+              },
+              {
+                "case": 17,
+                "x": 0,
+                "y": 5
+              },
+              {
+                "case": 17,
+                "x": 1,
+                "y": 5
+              },
+              {
+                "case": 17,
+                "x": 0,
+                "y": 6
+              },
+              {
+                "case": 17,
+                "x": 1,
+                "y": 6
+              }
+            ]
+          },
+          "smart16": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "smart32": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 11,
+            "mismatched": 1,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.4191911220550537,
+            "mismatching_pixels": 6,
+            "first_coordinates": [
+              {
+                "case": 17,
+                "x": 0,
+                "y": 4
+              },
+              {
+                "case": 17,
+                "x": 0,
+                "y": 5
+              },
+              {
+                "case": 17,
+                "x": 1,
+                "y": 5
+              },
+              {
+                "case": 17,
+                "x": 0,
+                "y": 6
+              },
+              {
+                "case": 17,
+                "x": 1,
+                "y": 6
+              },
+              {
+                "case": 17,
+                "x": 2,
+                "y": 6
+              }
+            ]
+          }
+        },
+        "complete": true,
+        "exit_code": 1,
+        "summary_identity": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMRadialBlur\\render\\summary.json",
+          "sha256": "7fd84dac1c66bef34100cced8ce79603ab09aa1163fdf9e9502645f9875357e8"
+        }
+      },
+      "nonexact": [
+        {
+          "case": 3,
+          "route": "smart8",
+          "directory": "case-0003-smart8",
+          "status": "mismatched"
+        },
+        {
+          "case": 17,
+          "route": "smart32",
+          "directory": "case-0017-smart32",
+          "status": "mismatched"
+        },
+        {
+          "case": 17,
+          "route": "smart8",
+          "directory": "case-0017-smart8",
+          "status": "mismatched"
+        }
+      ],
+      "case_plans_identity": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMRadialBlur\\render\\cases.json",
+        "sha256": "8282afecd1130f9d21600a3e0800a517028b08be68978bb287a2e805c67e7c4a"
+      },
+      "noise_type_audit": {
+        "slot": 25,
+        "admitted_values": [
+          1,
+          1,
+          2,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2
+        ],
+        "rule": "Exclude Type 3. Directional declared popup count is 2; Radial wrapper records skipped plans."
+      },
+      "exclusions": {
+        "wrapper": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validate.py",
+          "sha256": "0388973940f161e1aeec431c34adc7ccd5a07429a3103e370e5be1d4390a585e"
+        },
+        "point_units": "percent of layer extent",
+        "excluded": [
+          {
+            "reason": "Original uninitialised Type-3 destination / dirty lifecycle; C++ documented refusal",
+            "plan": {
+              "index": 2,
+              "size": [
+                11,
+                7
+              ],
+              "input_seed": 13259839443141739804,
+              "downsample": "1/4",
+              "assignments": [
+                {
+                  "slot": 1,
+                  "value": 2
+                },
+                {
+                  "slot": 2,
+                  "components": [
+                    11,
+                    7
+                  ]
+                },
+                {
+                  "slot": 4,
+                  "value": 2000
+                },
+                {
+                  "slot": 5,
+                  "value": 3
+                },
+                {
+                  "slot": 6,
+                  "value": 500
+                },
+                {
+                  "slot": 7,
+                  "value": 100
+                },
+                {
+                  "slot": 10,
+                  "value": 2000
+                },
+                {
+                  "slot": 11,
+                  "value": 3
+                },
+                {
+                  "slot": 12,
+                  "value": 500
+                },
+                {
+                  "slot": 13,
+                  "value": 100
+                },
+                {
+                  "slot": 15,
+                  "value": 1
+                },
+                {
+                  "slot": 17,
+                  "value": 5.0
+                },
+                {
+                  "slot": 18,
+                  "components": [
+                    360
+                  ]
+                },
+                {
+                  "slot": 20,
+                  "value": 50.0
+                },
+                {
+                  "slot": 21,
+                  "value": 10.0
+                },
+                {
+                  "slot": 22,
+                  "value": 100.0
+                },
+                {
+                  "slot": 24,
+                  "value": 100.0
+                },
+                {
+                  "slot": 25,
+                  "value": 3
+                },
+                {
+                  "slot": 26,
+                  "layer": "layer-26.png"
+                },
+                {
+                  "slot": 27,
+                  "value": 1000
+                },
+                {
+                  "slot": 28,
+                  "components": [
+                    360
+                  ]
+                },
+                {
+                  "slot": 29,
+                  "value": 100.0
+                }
+              ],
+              "unassigned": [
+                {
+                  "slot": 3,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 8,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 9,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 14,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 16,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 19,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 23,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 30,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                }
+              ]
+            }
+          },
+          {
+            "reason": "Original uninitialised Type-3 destination / dirty lifecycle; C++ documented refusal",
+            "plan": {
+              "index": 5,
+              "size": [
+                3,
+                7
+              ],
+              "input_seed": 15272189518739103563,
+              "downsample": "1/4",
+              "assignments": [
+                {
+                  "slot": 1,
+                  "value": 1
+                },
+                {
+                  "slot": 2,
+                  "components": [
+                    2.5737521291090664,
+                    6.068318843251673
+                  ]
+                },
+                {
+                  "slot": 4,
+                  "value": 1031
+                },
+                {
+                  "slot": 5,
+                  "value": 1
+                },
+                {
+                  "slot": 6,
+                  "value": 164
+                },
+                {
+                  "slot": 7,
+                  "value": 0
+                },
+                {
+                  "slot": 10,
+                  "value": 0
+                },
+                {
+                  "slot": 11,
+                  "value": 1
+                },
+                {
+                  "slot": 12,
+                  "value": 202
+                },
+                {
+                  "slot": 13,
+                  "value": 0
+                },
+                {
+                  "slot": 15,
+                  "value": 0
+                },
+                {
+                  "slot": 17,
+                  "value": 1.0
+                },
+                {
+                  "slot": 18,
+                  "components": [
+                    -5.129796398677854
+                  ]
+                },
+                {
+                  "slot": 20,
+                  "value": 5.0
+                },
+                {
+                  "slot": 21,
+                  "value": 0.0
+                },
+                {
+                  "slot": 22,
+                  "value": 54.54159352047993
+                },
+                {
+                  "slot": 24,
+                  "value": 43.03777463731551
+                },
+                {
+                  "slot": 25,
+                  "value": 3
+                },
+                {
+                  "slot": 26,
+                  "layer": "layer-26.png"
+                },
+                {
+                  "slot": 27,
+                  "value": 1
+                },
+                {
+                  "slot": 28,
+                  "components": [
+                    222.04815150852698
+                  ]
+                },
+                {
+                  "slot": 29,
+                  "value": 100.0
+                }
+              ],
+              "unassigned": [
+                {
+                  "slot": 3,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 8,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 9,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 14,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 16,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 19,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 23,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 30,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                }
+              ]
+            }
+          },
+          {
+            "reason": "Original uninitialised Type-3 destination / dirty lifecycle; C++ documented refusal",
+            "plan": {
+              "index": 6,
+              "size": [
+                11,
+                7
+              ],
+              "input_seed": 2703744883543195023,
+              "downsample": "1",
+              "assignments": [
+                {
+                  "slot": 1,
+                  "value": 1
+                },
+                {
+                  "slot": 2,
+                  "components": [
+                    9.876339666768182,
+                    -1.075777374018509
+                  ]
+                },
+                {
+                  "slot": 4,
+                  "value": 0
+                },
+                {
+                  "slot": 5,
+                  "value": 1
+                },
+                {
+                  "slot": 6,
+                  "value": 13
+                },
+                {
+                  "slot": 7,
+                  "value": 100
+                },
+                {
+                  "slot": 10,
+                  "value": 2000
+                },
+                {
+                  "slot": 11,
+                  "value": 2
+                },
+                {
+                  "slot": 12,
+                  "value": 0
+                },
+                {
+                  "slot": 13,
+                  "value": 0
+                },
+                {
+                  "slot": 15,
+                  "value": 0
+                },
+                {
+                  "slot": 17,
+                  "value": 1.0
+                },
+                {
+                  "slot": 18,
+                  "components": [
+                    123.20320584707787
+                  ]
+                },
+                {
+                  "slot": 20,
+                  "value": 5.0
+                },
+                {
+                  "slot": 21,
+                  "value": 1.0
+                },
+                {
+                  "slot": 22,
+                  "value": 100.0
+                },
+                {
+                  "slot": 24,
+                  "value": 0.0
+                },
+                {
+                  "slot": 25,
+                  "value": 3
+                },
+                {
+                  "slot": 26,
+                  "layer": "layer-26.png"
+                },
+                {
+                  "slot": 27,
+                  "value": 1
+                },
+                {
+                  "slot": 28,
+                  "components": [
+                    32.19023393145335
+                  ]
+                },
+                {
+                  "slot": 29,
+                  "value": 100.0
+                }
+              ],
+              "unassigned": [
+                {
+                  "slot": 3,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 8,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 9,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 14,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 16,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 19,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 23,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 30,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                }
+              ]
+            }
+          },
+          {
+            "reason": "Original uninitialised Type-3 destination / dirty lifecycle; C++ documented refusal",
+            "plan": {
+              "index": 7,
+              "size": [
+                17,
+                9
+              ],
+              "input_seed": 18202183330476601812,
+              "downsample": "1/2",
+              "assignments": [
+                {
+                  "slot": 1,
+                  "value": 1
+                },
+                {
+                  "slot": 2,
+                  "components": [
+                    11.01434407468981,
+                    -6.368494799529705
+                  ]
+                },
+                {
+                  "slot": 4,
+                  "value": 0
+                },
+                {
+                  "slot": 5,
+                  "value": 1
+                },
+                {
+                  "slot": 6,
+                  "value": 0
+                },
+                {
+                  "slot": 7,
+                  "value": 100
+                },
+                {
+                  "slot": 10,
+                  "value": 1326
+                },
+                {
+                  "slot": 11,
+                  "value": 2
+                },
+                {
+                  "slot": 12,
+                  "value": 0
+                },
+                {
+                  "slot": 13,
+                  "value": 0
+                },
+                {
+                  "slot": 15,
+                  "value": 1
+                },
+                {
+                  "slot": 17,
+                  "value": 5.0
+                },
+                {
+                  "slot": 18,
+                  "components": [
+                    -323.31153597963
+                  ]
+                },
+                {
+                  "slot": 20,
+                  "value": 28.43286050082927
+                },
+                {
+                  "slot": 21,
+                  "value": 1.0
+                },
+                {
+                  "slot": 22,
+                  "value": 67.72520990469968
+                },
+                {
+                  "slot": 24,
+                  "value": 45.145917618930135
+                },
+                {
+                  "slot": 25,
+                  "value": 3
+                },
+                {
+                  "slot": 26,
+                  "layer": "layer-26.png"
+                },
+                {
+                  "slot": 27,
+                  "value": 1
+                },
+                {
+                  "slot": 28,
+                  "components": [
+                    -91.97967284405195
+                  ]
+                },
+                {
+                  "slot": 29,
+                  "value": 1.0
+                }
+              ],
+              "unassigned": [
+                {
+                  "slot": 3,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 8,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 9,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 14,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 16,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 19,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 23,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 30,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                }
+              ]
+            }
+          },
+          {
+            "reason": "Original uninitialised Type-3 destination / dirty lifecycle; C++ documented refusal",
+            "plan": {
+              "index": 9,
+              "size": [
+                3,
+                7
+              ],
+              "input_seed": 11671665329715037237,
+              "downsample": "1",
+              "assignments": [
+                {
+                  "slot": 1,
+                  "value": 2
+                },
+                {
+                  "slot": 2,
+                  "components": [
+                    1.5944139179058112,
+                    -2.0740184645629602
+                  ]
+                },
+                {
+                  "slot": 4,
+                  "value": 0
+                },
+                {
+                  "slot": 5,
+                  "value": 2
+                },
+                {
+                  "slot": 6,
+                  "value": 0
+                },
+                {
+                  "slot": 7,
+                  "value": 100
+                },
+                {
+                  "slot": 10,
+                  "value": 0
+                },
+                {
+                  "slot": 11,
+                  "value": 1
+                },
+                {
+                  "slot": 12,
+                  "value": 0
+                },
+                {
+                  "slot": 13,
+                  "value": 0
+                },
+                {
+                  "slot": 15,
+                  "value": 1
+                },
+                {
+                  "slot": 17,
+                  "value": 1.0
+                },
+                {
+                  "slot": 18,
+                  "components": [
+                    -54.71567594050077
+                  ]
+                },
+                {
+                  "slot": 20,
+                  "value": 5.0
+                },
+                {
+                  "slot": 21,
+                  "value": 1.0
+                },
+                {
+                  "slot": 22,
+                  "value": 100.0
+                },
+                {
+                  "slot": 24,
+                  "value": 100.0
+                },
+                {
+                  "slot": 25,
+                  "value": 3
+                },
+                {
+                  "slot": 26,
+                  "layer": "layer-26.png"
+                },
+                {
+                  "slot": 27,
+                  "value": 1
+                },
+                {
+                  "slot": 28,
+                  "components": [
+                    -175.9308157248003
+                  ]
+                },
+                {
+                  "slot": 29,
+                  "value": 1.0
+                }
+              ],
+              "unassigned": [
+                {
+                  "slot": 3,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 8,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 9,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 14,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 16,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 19,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 23,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 30,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                }
+              ]
+            }
+          },
+          {
+            "reason": "Original uninitialised Type-3 destination / dirty lifecycle; C++ documented refusal",
+            "plan": {
+              "index": 11,
+              "size": [
+                17,
+                9
+              ],
+              "input_seed": 15791701830613469112,
+              "downsample": "1/4",
+              "assignments": [
+                {
+                  "slot": 1,
+                  "value": 2
+                },
+                {
+                  "slot": 2,
+                  "components": [
+                    6.475540618316927,
+                    1.7489195906573496
+                  ]
+                },
+                {
+                  "slot": 4,
+                  "value": 2000
+                },
+                {
+                  "slot": 5,
+                  "value": 3
+                },
+                {
+                  "slot": 6,
+                  "value": 500
+                },
+                {
+                  "slot": 7,
+                  "value": 100
+                },
+                {
+                  "slot": 10,
+                  "value": 2000
+                },
+                {
+                  "slot": 11,
+                  "value": 2
+                },
+                {
+                  "slot": 12,
+                  "value": 500
+                },
+                {
+                  "slot": 13,
+                  "value": 0
+                },
+                {
+                  "slot": 15,
+                  "value": 0
+                },
+                {
+                  "slot": 17,
+                  "value": 4.495516899772615
+                },
+                {
+                  "slot": 18,
+                  "components": [
+                    318.91856222671925
+                  ]
+                },
+                {
+                  "slot": 20,
+                  "value": 1.0
+                },
+                {
+                  "slot": 21,
+                  "value": 0.0
+                },
+                {
+                  "slot": 22,
+                  "value": 100.0
+                },
+                {
+                  "slot": 24,
+                  "value": 0.0
+                },
+                {
+                  "slot": 25,
+                  "value": 3
+                },
+                {
+                  "slot": 26,
+                  "layer": "layer-26.png"
+                },
+                {
+                  "slot": 27,
+                  "value": 1000
+                },
+                {
+                  "slot": 28,
+                  "components": [
+                    -341.27387789566234
+                  ]
+                },
+                {
+                  "slot": 29,
+                  "value": 29.28236131545428
+                }
+              ],
+              "unassigned": [
+                {
+                  "slot": 3,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 8,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 9,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 14,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 16,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 19,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 23,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 30,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                }
+              ]
+            }
+          },
+          {
+            "reason": "Original uninitialised Type-3 destination / dirty lifecycle; C++ documented refusal",
+            "plan": {
+              "index": 14,
+              "size": [
+                11,
+                7
+              ],
+              "input_seed": 2691183642237983516,
+              "downsample": "1/4",
+              "assignments": [
+                {
+                  "slot": 1,
+                  "value": 1
+                },
+                {
+                  "slot": 2,
+                  "components": [
+                    -8.13575431586435,
+                    -0.0979152247034687
+                  ]
+                },
+                {
+                  "slot": 4,
+                  "value": 2000
+                },
+                {
+                  "slot": 5,
+                  "value": 1
+                },
+                {
+                  "slot": 6,
+                  "value": 0
+                },
+                {
+                  "slot": 7,
+                  "value": 0
+                },
+                {
+                  "slot": 10,
+                  "value": 2000
+                },
+                {
+                  "slot": 11,
+                  "value": 1
+                },
+                {
+                  "slot": 12,
+                  "value": 0
+                },
+                {
+                  "slot": 13,
+                  "value": 0
+                },
+                {
+                  "slot": 15,
+                  "value": 0
+                },
+                {
+                  "slot": 17,
+                  "value": 1.0
+                },
+                {
+                  "slot": 18,
+                  "components": [
+                    253.8488732517128
+                  ]
+                },
+                {
+                  "slot": 20,
+                  "value": 5.0
+                },
+                {
+                  "slot": 21,
+                  "value": 1.0090056428790417
+                },
+                {
+                  "slot": 22,
+                  "value": 0.0
+                },
+                {
+                  "slot": 24,
+                  "value": 100.0
+                },
+                {
+                  "slot": 25,
+                  "value": 3
+                },
+                {
+                  "slot": 26,
+                  "layer": "layer-26.png"
+                },
+                {
+                  "slot": 27,
+                  "value": 1
+                },
+                {
+                  "slot": 28,
+                  "components": [
+                    -263.5725832308783
+                  ]
+                },
+                {
+                  "slot": 29,
+                  "value": 1.0
+                }
+              ],
+              "unassigned": [
+                {
+                  "slot": 3,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 8,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 9,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 14,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 16,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 19,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 23,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 30,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                }
+              ]
+            }
+          },
+          {
+            "reason": "Original uninitialised Type-3 destination / dirty lifecycle; C++ documented refusal",
+            "plan": {
+              "index": 15,
+              "size": [
+                17,
+                9
+              ],
+              "input_seed": 9494345422317352718,
+              "downsample": "1",
+              "assignments": [
+                {
+                  "slot": 1,
+                  "value": 2
+                },
+                {
+                  "slot": 2,
+                  "components": [
+                    8.599685063928753,
+                    -0.6435293404608764
+                  ]
+                },
+                {
+                  "slot": 4,
+                  "value": 0
+                },
+                {
+                  "slot": 5,
+                  "value": 1
+                },
+                {
+                  "slot": 6,
+                  "value": 490
+                },
+                {
+                  "slot": 7,
+                  "value": 100
+                },
+                {
+                  "slot": 10,
+                  "value": 0
+                },
+                {
+                  "slot": 11,
+                  "value": 1
+                },
+                {
+                  "slot": 12,
+                  "value": 0
+                },
+                {
+                  "slot": 13,
+                  "value": 46
+                },
+                {
+                  "slot": 15,
+                  "value": 0
+                },
+                {
+                  "slot": 17,
+                  "value": 3.1106266129733133
+                },
+                {
+                  "slot": 18,
+                  "components": [
+                    -312.2071865953277
+                  ]
+                },
+                {
+                  "slot": 20,
+                  "value": 1.0
+                },
+                {
+                  "slot": 21,
+                  "value": 0.0
+                },
+                {
+                  "slot": 22,
+                  "value": 100.0
+                },
+                {
+                  "slot": 24,
+                  "value": 0.0
+                },
+                {
+                  "slot": 25,
+                  "value": 3
+                },
+                {
+                  "slot": 26,
+                  "layer": "layer-26.png"
+                },
+                {
+                  "slot": 27,
+                  "value": 1
+                },
+                {
+                  "slot": 28,
+                  "components": [
+                    -91.05094926844191
+                  ]
+                },
+                {
+                  "slot": 29,
+                  "value": 1.0
+                }
+              ],
+              "unassigned": [
+                {
+                  "slot": 3,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 8,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 9,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 14,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 16,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 19,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 23,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 30,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                }
+              ]
+            }
+          },
+          {
+            "reason": "Original uninitialised Type-3 destination / dirty lifecycle; C++ documented refusal",
+            "plan": {
+              "index": 18,
+              "size": [
+                11,
+                7
+              ],
+              "input_seed": 540575809287577353,
+              "downsample": "1",
+              "assignments": [
+                {
+                  "slot": 1,
+                  "value": 2
+                },
+                {
+                  "slot": 2,
+                  "components": [
+                    -9.106927664985447,
+                    -5.154519457525596
+                  ]
+                },
+                {
+                  "slot": 4,
+                  "value": 0
+                },
+                {
+                  "slot": 5,
+                  "value": 2
+                },
+                {
+                  "slot": 6,
+                  "value": 0
+                },
+                {
+                  "slot": 7,
+                  "value": 0
+                },
+                {
+                  "slot": 10,
+                  "value": 2000
+                },
+                {
+                  "slot": 11,
+                  "value": 3
+                },
+                {
+                  "slot": 12,
+                  "value": 500
+                },
+                {
+                  "slot": 13,
+                  "value": 0
+                },
+                {
+                  "slot": 15,
+                  "value": 1
+                },
+                {
+                  "slot": 17,
+                  "value": 5.0
+                },
+                {
+                  "slot": 18,
+                  "components": [
+                    -268.6329339276369
+                  ]
+                },
+                {
+                  "slot": 20,
+                  "value": 1.0
+                },
+                {
+                  "slot": 21,
+                  "value": 1.0
+                },
+                {
+                  "slot": 22,
+                  "value": 0.0
+                },
+                {
+                  "slot": 24,
+                  "value": 62.453653894539016
+                },
+                {
+                  "slot": 25,
+                  "value": 3
+                },
+                {
+                  "slot": 26,
+                  "layer": "layer-26.png"
+                },
+                {
+                  "slot": 27,
+                  "value": 1
+                },
+                {
+                  "slot": 28,
+                  "components": [
+                    32.15620243651006
+                  ]
+                },
+                {
+                  "slot": 29,
+                  "value": 46.019840783675114
+                }
+              ],
+              "unassigned": [
+                {
+                  "slot": 3,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 8,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 9,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 14,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 16,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 19,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 23,
+                  "kind": "group_start",
+                  "reason": "retained declared default; no generic authored payload"
+                },
+                {
+                  "slot": 30,
+                  "kind": "group_end",
+                  "reason": "retained declared default; no generic authored payload"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "crate": "olm-smoother",
+      "name": "OLMSmoother",
+      "commands": [
+        {
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "-X",
+            "utf8",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "inventory",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMSmoother.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMSmoother\\inventory"
+          ],
+          "pid": 57376,
+          "returncode": 0,
+          "log": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMSmoother-inventory.log",
+            "sha256": "cadd4cc1a03dcfbe49db6f9234f703a582bfe4022bea6a2a2d9673bee6a6ebc4"
+          }
+        },
+        {
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "-X",
+            "utf8",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "render",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMSmoother.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--seed",
+            "20261120",
+            "--cases",
+            "12",
+            "--jobs",
+            "4",
+            "--downsample",
+            "1,1/2,1/4",
+            "--routes",
+            "classic8,classic16",
+            "--timeout",
+            "120",
+            "--sizes",
+            "1x1,3x7,11x7,31x19,97x61",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMSmoother\\render"
+          ],
+          "pid": 56636,
+          "returncode": 0,
+          "log": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMSmoother-render.log",
+            "sha256": "9315d445407fd852991938e333c334fd5778406d59482f517e2b3b33e3c00a71"
+          }
+        }
+      ],
+      "worker_file_identity": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\target\\minihost-build\\aex_worker.exe",
+        "sha256": "0481df5fa425af28f0e8a39ea9386185de13656c3c9d488042bed2244bdf8302"
+      },
+      "worker_provenance": "default-path file hash; not observed module mapping",
+      "inventory": {
+        "schema_version": 1,
+        "identical": true,
+        "diff": [],
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother.aex",
+          "sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMSmoother.aex",
+          "sha256": "623e29b1b779f56350e1b56ac63cafadd8212e70d2acb451fa3395afaefa0abb"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c77044d8f77eef6929575f2bc2538725f80a279b37ffe2724b46abcf312e1fb7"
+        },
+        "summary_identity": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMSmoother\\inventory\\summary.json",
+          "sha256": "2ef5a3848899cea074288410eed2384574bf6ca9accfae14fd26a1da49889a77"
+        }
+      },
+      "render": {
+        "schema_version": 1,
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother.aex",
+          "sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMSmoother.aex",
+          "sha256": "623e29b1b779f56350e1b56ac63cafadd8212e70d2acb451fa3395afaefa0abb"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c77044d8f77eef6929575f2bc2538725f80a279b37ffe2724b46abcf312e1fb7"
+        },
+        "non_ae_debug_routes": [],
+        "seed": 20261120,
+        "cases": 12,
+        "timeout_seconds": 120.0,
+        "force_classic": false,
+        "render_environment_overrides": {
+          "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+        },
+        "jobs": 4,
+        "sizes": [
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            11,
+            7
+          ],
+          [
+            31,
+            19
+          ],
+          [
+            97,
+            61
+          ]
+        ],
+        "downsample": [
+          "1",
+          "1/2",
+          "1/4"
+        ],
+        "extent": null,
+        "perturb_candidate": [],
+        "inventory_diff": [],
+        "same_binary": false,
+        "routes": {
+          "classic8": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "classic16": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          }
+        },
+        "complete": true,
+        "exit_code": 0,
+        "summary_identity": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMSmoother\\render\\summary.json",
+          "sha256": "2a0a238c727d4fc496c85b7190a5b39b8b41e38899ee0e381509f0774fbe876e"
+        }
+      },
+      "nonexact": [],
+      "case_plans_identity": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMSmoother\\render\\cases.json",
+        "sha256": "ef968b3a3f1958696db0725f79e48701f6fcc67a4ea2e10a150218688a76bee1"
+      }
+    },
+    {
+      "crate": "olm-smoother2",
+      "name": "OLMSmoother2",
+      "commands": [
+        {
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "-X",
+            "utf8",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "inventory",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother2.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMSmoother2.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMSmoother2\\inventory"
+          ],
+          "pid": 44924,
+          "returncode": 0,
+          "log": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMSmoother2-inventory.log",
+            "sha256": "cadd4cc1a03dcfbe49db6f9234f703a582bfe4022bea6a2a2d9673bee6a6ebc4"
+          }
+        },
+        {
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "-X",
+            "utf8",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "render",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother2.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMSmoother2.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--seed",
+            "20261120",
+            "--cases",
+            "12",
+            "--jobs",
+            "4",
+            "--downsample",
+            "1,1/2,1/4",
+            "--routes",
+            "smart8,smart16,smart32",
+            "--timeout",
+            "120",
+            "--sizes",
+            "1x1,3x7,11x7,31x19,97x61",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMSmoother2\\render"
+          ],
+          "pid": 41884,
+          "returncode": 0,
+          "log": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMSmoother2-render.log",
+            "sha256": "88cbc47857990aac8fb976bab7c4da56270bf70599f8f76893638fc24f807308"
+          }
+        }
+      ],
+      "worker_file_identity": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\target\\minihost-build\\aex_worker.exe",
+        "sha256": "0481df5fa425af28f0e8a39ea9386185de13656c3c9d488042bed2244bdf8302"
+      },
+      "worker_provenance": "default-path file hash; not observed module mapping",
+      "inventory": {
+        "schema_version": 1,
+        "identical": true,
+        "diff": [],
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother2.aex",
+          "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMSmoother2.aex",
+          "sha256": "5a006ae7cf7129374041b315bc816a22668a4d42de3b569a83c49054d3eb16e7"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c77044d8f77eef6929575f2bc2538725f80a279b37ffe2724b46abcf312e1fb7"
+        },
+        "summary_identity": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMSmoother2\\inventory\\summary.json",
+          "sha256": "e394b30c539347f49973a3f58d63387067f60ef71b64b0f02a47df55c3ea18d5"
+        }
+      },
+      "render": {
+        "schema_version": 1,
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother2.aex",
+          "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMSmoother2.aex",
+          "sha256": "5a006ae7cf7129374041b315bc816a22668a4d42de3b569a83c49054d3eb16e7"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c77044d8f77eef6929575f2bc2538725f80a279b37ffe2724b46abcf312e1fb7"
+        },
+        "non_ae_debug_routes": [],
+        "seed": 20261120,
+        "cases": 12,
+        "timeout_seconds": 120.0,
+        "force_classic": false,
+        "render_environment_overrides": {
+          "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+        },
+        "jobs": 4,
+        "sizes": [
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            11,
+            7
+          ],
+          [
+            31,
+            19
+          ],
+          [
+            97,
+            61
+          ]
+        ],
+        "downsample": [
+          "1",
+          "1/2",
+          "1/4"
+        ],
+        "extent": null,
+        "perturb_candidate": [],
+        "inventory_diff": [],
+        "same_binary": false,
+        "routes": {
+          "smart8": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "smart16": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "smart32": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          }
+        },
+        "complete": true,
+        "exit_code": 0,
+        "summary_identity": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMSmoother2\\render\\summary.json",
+          "sha256": "47c92b1ab73e6669285af5e877f188f8d14c7b36854496584a168e578518c956"
+        }
+      },
+      "nonexact": [],
+      "case_plans_identity": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMSmoother2\\render\\cases.json",
+        "sha256": "c247a3063c3057c749a9dcd59263c89e5e626e167eff5372575081e23136fa5a"
+      }
+    },
+    {
+      "crate": "olm-toon-dilate",
+      "name": "OLMToonDilate",
+      "commands": [
+        {
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "-X",
+            "utf8",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "inventory",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMToonDilate.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMToonDilate.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMToonDilate\\inventory"
+          ],
+          "pid": 44372,
+          "returncode": 0,
+          "log": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMToonDilate-inventory.log",
+            "sha256": "cadd4cc1a03dcfbe49db6f9234f703a582bfe4022bea6a2a2d9673bee6a6ebc4"
+          }
+        },
+        {
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "-X",
+            "utf8",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "render",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMToonDilate.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMToonDilate.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--seed",
+            "20261120",
+            "--cases",
+            "12",
+            "--jobs",
+            "4",
+            "--downsample",
+            "1,1/2,1/4",
+            "--routes",
+            "smart8,smart16,smart32",
+            "--timeout",
+            "120",
+            "--sizes",
+            "1x1,3x7,11x7,31x19,97x61",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMToonDilate\\render"
+          ],
+          "pid": 33516,
+          "returncode": 0,
+          "log": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMToonDilate-render.log",
+            "sha256": "d53dc1021846bebb8fea724829e37f0a37db832d98ef29160f4316f16b552f29"
+          }
+        }
+      ],
+      "worker_file_identity": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\target\\minihost-build\\aex_worker.exe",
+        "sha256": "0481df5fa425af28f0e8a39ea9386185de13656c3c9d488042bed2244bdf8302"
+      },
+      "worker_provenance": "default-path file hash; not observed module mapping",
+      "inventory": {
+        "schema_version": 1,
+        "identical": true,
+        "diff": [],
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMToonDilate.aex",
+          "sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMToonDilate.aex",
+          "sha256": "36ca7c763a202d190ca39b279baada58149e721c991c6c72f6b546783a7a279b"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c77044d8f77eef6929575f2bc2538725f80a279b37ffe2724b46abcf312e1fb7"
+        },
+        "summary_identity": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMToonDilate\\inventory\\summary.json",
+          "sha256": "c299ae5ebca3c9251d872ac667e834556af4fcdecb917fb8cb58e5f909c62cb1"
+        }
+      },
+      "render": {
+        "schema_version": 1,
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMToonDilate.aex",
+          "sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMToonDilate.aex",
+          "sha256": "36ca7c763a202d190ca39b279baada58149e721c991c6c72f6b546783a7a279b"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c77044d8f77eef6929575f2bc2538725f80a279b37ffe2724b46abcf312e1fb7"
+        },
+        "non_ae_debug_routes": [],
+        "seed": 20261120,
+        "cases": 12,
+        "timeout_seconds": 120.0,
+        "force_classic": false,
+        "render_environment_overrides": {
+          "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+        },
+        "jobs": 4,
+        "sizes": [
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            11,
+            7
+          ],
+          [
+            31,
+            19
+          ],
+          [
+            97,
+            61
+          ]
+        ],
+        "downsample": [
+          "1",
+          "1/2",
+          "1/4"
+        ],
+        "extent": null,
+        "perturb_candidate": [],
+        "inventory_diff": [],
+        "same_binary": false,
+        "routes": {
+          "smart8": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "smart16": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "smart32": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 12,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 12,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          }
+        },
+        "complete": true,
+        "exit_code": 0,
+        "summary_identity": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMToonDilate\\render\\summary.json",
+          "sha256": "1f8b3a6af1554cde603d756b5c6ba588381594d55bc0b1043b9cfba152e5d126"
+        }
+      },
+      "nonexact": [],
+      "case_plans_identity": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMToonDilate\\render\\cases.json",
+        "sha256": "f0197c8f27a32b63b9a25090c3e3b6db7fd93b77d1a9d6812c1da624030515e0"
+      }
+    }
+  ],
+  "complete": true,
+  "assessment": {
+    "baseline_exact_route_cases": 345,
+    "baseline_mismatched_route_cases": 3,
+    "excluded_original_nondeterminism_route_cases": 2,
+    "unresolved_route_cases": 1,
+    "qualification_passed": false,
+    "radial_type3_plans_excluded": 9,
+    "original_errors": 0,
+    "original_timeouts": 0,
+    "candidate_failures": 0,
+    "note": "No numeric/algorithm change. Radial case 17 smart32 fails the at-least-one-exact-replay exclusion condition. Initial pre-lint-annotation run is local-only and not added to totals."
+  }
+}

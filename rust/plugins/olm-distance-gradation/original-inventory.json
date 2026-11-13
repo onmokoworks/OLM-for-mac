@@ -1,0 +1,390 @@
+﻿[
+  {
+    "slot": 1,
+    "name": "Invert",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 2,
+    "name": "In/Out",
+    "kind": "integer",
+    "minimum": 1.0,
+    "maximum": 3.0,
+    "value": 1.0,
+    "choices": [
+      "Inside",
+      "Outside",
+      "Both"
+    ],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 3,
+    "name": "Inside Threshold",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1000.0,
+    "value": 128.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 4,
+    "name": "Outside Threshold",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1000.0,
+    "value": 128.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 5,
+    "name": "Render Mode",
+    "kind": "integer",
+    "minimum": 1.0,
+    "maximum": 2.0,
+    "value": 1.0,
+    "choices": [
+      "RGB",
+      "Layer"
+    ],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 6,
+    "name": "Use Background Color",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 7,
+    "name": "Gradation Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      255,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 8,
+    "name": "BG Color ",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 9,
+    "name": "Interpolation Mode",
+    "kind": "integer",
+    "minimum": 1.0,
+    "maximum": 4.0,
+    "value": 2.0,
+    "choices": [
+      "Constant",
+      "Linear",
+      "Sphere",
+      "Power"
+    ],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 10,
+    "name": "Power",
+    "kind": "float",
+    "minimum": 0.009999999776482582,
+    "maximum": 5.0,
+    "value": 1.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 11,
+    "name": "Blur Mode",
+    "kind": "integer",
+    "minimum": 1.0,
+    "maximum": 5.0,
+    "value": 1.0,
+    "choices": [
+      "No Blur",
+      "Blur No Scale",
+      "Blur"
+    ],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 12,
+    "name": "Blur Size",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 4096.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  }
+]

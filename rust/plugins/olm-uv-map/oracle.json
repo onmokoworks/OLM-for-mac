@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "reference": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2025\\OLMUVMap.aex",
+  "candidate": "D:/olm-rs-target/N-uvmap/release/olm_uv_map.dll",
+  "harness": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+  "oracle": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+  "routes": [
+    "smart8",
+    "smart16",
+    "smart32"
+  ],
+  "jobs": 1,
+  "cases": 12,
+  "seed": 20261112,
+  "downsample": "1,1/2,1/4",
+  "expect_render_match": true
+}

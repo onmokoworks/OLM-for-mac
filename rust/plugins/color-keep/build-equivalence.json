@@ -1,0 +1,50 @@
+{
+  "campaign": {
+    "path": "C:\\Users\\optim\\AppData\\Local\\Temp\\olm-rust-fcore-final-nx44fe6i\\ColorKeep.aex",
+    "sha256": "39e64f8adf8f4960c5cbe3619248d1001997b791ae6544e88ef071d45f3989ed"
+  },
+  "current": {
+    "path": "C:\\Users\\optim\\AppData\\Local\\Temp\\olm-rust-fcore-verified-build-zcw63b3s\\ColorKeep.aex",
+    "sha256": "06271255fff325808fe1a385fda39e7a4dd8970fb10e0e70ec1210b72789050c"
+  },
+  "sections": {
+    ".text": {
+      "identical": true,
+      "campaign_sha256": "ddf718af4f7824e6b1ed291729605c8487c963946d513a9bb441d59949cfe00e",
+      "current_sha256": "ddf718af4f7824e6b1ed291729605c8487c963946d513a9bb441d59949cfe00e",
+      "differing_bytes": 0
+    },
+    ".rdata": {
+      "identical": false,
+      "campaign_sha256": "b88844d228dd2bffca3da3ad1145ef703a5a19eb315cf4229a9b2aea3b9a095f",
+      "current_sha256": "002cf8b211a0c7a69490a82a43efa2675e548f30595eaed2c995d4250a0de389",
+      "differing_bytes": 28
+    },
+    ".data": {
+      "identical": true,
+      "campaign_sha256": "ae2dcd3ca188f72a85a6c438897cd930c028ff43155aa79b3421ff844cec9b11",
+      "current_sha256": "ae2dcd3ca188f72a85a6c438897cd930c028ff43155aa79b3421ff844cec9b11",
+      "differing_bytes": 0
+    },
+    ".pdata": {
+      "identical": true,
+      "campaign_sha256": "f8a67b9feadc351573d4dda07f830902f714ca61b266886abf01e8c831b1cc04",
+      "current_sha256": "f8a67b9feadc351573d4dda07f830902f714ca61b266886abf01e8c831b1cc04",
+      "differing_bytes": 0
+    },
+    ".rsrc": {
+      "identical": false,
+      "campaign_sha256": "5859d59110ae7b700d3406c408f0630f4ece2adf9973e67a0141e507d0ddaa54",
+      "current_sha256": "1abaaad62d26543872f3f91a7e7cad138df203fbef0b59ee57c9ab3c84741171",
+      "differing_bytes": 42
+    },
+    ".reloc": {
+      "identical": true,
+      "campaign_sha256": "2a98122659bc232ad402dca5b6befc68b7c23ec70f193e965d65dd1f84ed3054",
+      "current_sha256": "2a98122659bc232ad402dca5b6befc68b7c23ec70f193e965d65dd1f84ed3054",
+      "differing_bytes": 0
+    }
+  },
+  "pipl_identical": true,
+  "note": "The final source adds rejection of an empty checkout_plan output; this helper is unused by either pilot. Executable and writable-data/unwind/relocation sections are identical. Read-only panic location/debug/link metadata and VERSIONINFO serialization may differ. The full oracle campaign is bound to the campaign binary; current build gets a separate smoke corpus."
+}

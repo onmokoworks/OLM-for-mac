@@ -1,0 +1,9 @@
+[package]
+name = "olm-scaffold-marker"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+# The parent workspace includes tools/*. The actual CLI is Python.
+[lib]
+path = "marker.rs"

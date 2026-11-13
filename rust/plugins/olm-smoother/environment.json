@@ -1,0 +1,26 @@
+{
+  "platform": "Windows-10-10.0.26200-SP0",
+  "architecture": "AMD64",
+  "rustc": "1.88.0 (6b00bc388 2025-06-23), x86_64-pc-windows-msvc, LLVM 20.1.5",
+  "cpp_reference_compiler": "clang-cl 22.1.1, x86_64-pc-windows-msvc; contraction off, fast math disabled",
+  "worker_default_path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\target\\minihost-build\\aex_worker.exe",
+  "worker_default_path_sha256": "0481df5fa425af28f0e8a39ea9386185de13656c3c9d488042bed2244bdf8302",
+  "worker_path_provenance": "Existing default native-worker path from the shared host diagnostic report; no runtime loaded-module path is emitted in these request logs.",
+  "worker_freshness_warning": "source_newer_than_worker",
+  "test_results": {
+    "tests_passed": 6,
+    "tests_failed": 0,
+    "cpp_frame_cases": 480,
+    "cpp_pixel_compare_vectors": 16384,
+    "cpp_alpha_blend_vectors": 16384,
+    "cpp_step_frames": 80,
+    "cpp_walker_frames": 20,
+    "thread_schedules": [
+      1,
+      2,
+      4
+    ]
+  },
+  "test_log_sha256": "ec09c93989d73761893b11b3e64acdebaf56576be6eafa6c66e23190a1ef0979",
+  "build_log_sha256": "1397071897440672ddeacae6e7f64dff4cc1437e8a9b3233321e30e606a7d4d1"
+}

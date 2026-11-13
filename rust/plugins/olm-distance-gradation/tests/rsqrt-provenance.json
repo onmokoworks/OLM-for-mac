@@ -1,0 +1,10 @@
+{
+  "instruction": "RSQRTSS (same per-lane result as RSQRTPS)",
+  "plugin_sqrt_rva": "0x2f1e20",
+  "seed": 20261113,
+  "validated_vectors": 140960,
+  "module_sha256": "35d4977818ca771c53100320c2e63704d60bdf2d8ed9d141d4d08a7c06191365",
+  "table_sha256": "e9924dc2cb78a254c738c19b3ebf9ceefeda65ff6c925a36d7dec277cd459c65",
+  "domain": "positive finite normal f32; 8192 table bins, five low-mantissa probes per bin and 100000 random exponent/mantissa probes",
+  "qualification": "This CPU profile only; no claim that other x86 implementations use the same approximation."
+}

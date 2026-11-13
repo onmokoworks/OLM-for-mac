@@ -1,0 +1,191 @@
+{
+  "build": {
+    "exit_code": 0,
+    "log_local_only": "rust\\local\\integration\\build.log",
+    "sha256": "db05ec36a406d74acfbcc0287aab8c5252629b787d8bc7556090d7379ff2929f",
+    "warning_headers": 8,
+    "error_headers": 0
+  },
+  "stage-final": {
+    "exit_code": 0,
+    "log_local_only": "rust\\local\\integration\\stage-final.log",
+    "sha256": "1037abe3080e476f3a273847d51a7a42e01b799139a1144b9ad015d7b276a11d",
+    "warning_headers": 8,
+    "error_headers": 0
+  },
+  "test-final": {
+    "exit_code": 0,
+    "log_local_only": "rust\\local\\integration\\test-final.log",
+    "sha256": "f2da3ce1adf5ef5d4c0d57032403d8a99f75433960932939e7ab26d772cee684",
+    "warning_headers": 8,
+    "error_headers": 0,
+    "passed": 80,
+    "failed": 0,
+    "ignored": 2
+  },
+  "fmt-final": {
+    "exit_code": 1,
+    "log_local_only": "rust\\local\\integration\\fmt-final.log",
+    "sha256": "ba94225746c9e4f071402543e08424a4ff4bdabb9c033d4dca559e582e078055",
+    "warning_headers": 0,
+    "error_headers": 0,
+    "diff_blocks": 60,
+    "files": [
+      "rust/plugins/olm-distance-gradation/src/bilateral.rs",
+      "rust/plugins/olm-smoother/build.rs",
+      "rust/plugins/olm-smoother/src/ae.rs",
+      "rust/plugins/olm-smoother/src/algorithm.rs",
+      "rust/plugins/olm-smoother/src/generated.rs",
+      "rust/plugins/olm-smoother/src/lib.rs",
+      "rust/plugins/olm-smoother/src/reference_tests.rs",
+      "rust/plugins/olm-smoother/src/support.rs",
+      "rust/plugins/olm-smoother2/build.rs",
+      "rust/plugins/olm-smoother2/src/admission.rs",
+      "rust/plugins/olm-smoother2/src/ae.rs",
+      "rust/plugins/olm-smoother2/src/ae_boundary.rs",
+      "rust/plugins/olm-smoother2/src/algorithm.rs",
+      "rust/plugins/olm-smoother2/src/dynamic.rs",
+      "rust/plugins/olm-smoother2/src/geometry.rs",
+      "rust/plugins/olm-smoother2/src/geometry_generated.rs",
+      "rust/plugins/olm-smoother2/src/lib.rs",
+      "rust/plugins/olm-smoother2/src/reference_tests.rs",
+      "rust/plugins/olm-smoother2/src/sha256.rs"
+    ]
+  },
+  "clippy-final": {
+    "exit_code": 0,
+    "log_local_only": "rust\\local\\integration\\clippy-final.log",
+    "sha256": "be883472241863713b7f9e22f63c10affdd960a13ce312452ee6470d6a0e4de3",
+    "warning_headers": 13730,
+    "error_headers": 0,
+    "warnings_by_crate_summary": {
+      "olm-core": 1,
+      "olm-smoother2": 625,
+      "olm-distance-gradation": 7,
+      "olm-kirakira": 27,
+      "color-keep": 1,
+      "olm-color-key": 67,
+      "olm-radial-blur": 22,
+      "olm-smoother": 12921,
+      "olm-toon-dilate": 1,
+      "olm-directional-blur": 9,
+      "olm-blur": 9,
+      "olm-ae": 6
+    },
+    "warning_summaries": [
+      {
+        "crate": "olm-core",
+        "target": "lib",
+        "count": 1
+      },
+      {
+        "crate": "olm-smoother2",
+        "target": "build script",
+        "count": 1
+      },
+      {
+        "crate": "olm-distance-gradation",
+        "target": "build script",
+        "count": 1
+      },
+      {
+        "crate": "olm-kirakira",
+        "target": "build script",
+        "count": 1
+      },
+      {
+        "crate": "color-keep",
+        "target": "build script",
+        "count": 1
+      },
+      {
+        "crate": "olm-color-key",
+        "target": "build script",
+        "count": 1
+      },
+      {
+        "crate": "olm-radial-blur",
+        "target": "build script",
+        "count": 1
+      },
+      {
+        "crate": "olm-smoother",
+        "target": "build script",
+        "count": 1
+      },
+      {
+        "crate": "olm-toon-dilate",
+        "target": "build script",
+        "count": 1
+      },
+      {
+        "crate": "olm-directional-blur",
+        "target": "build script",
+        "count": 1
+      },
+      {
+        "crate": "olm-blur",
+        "target": "build script",
+        "count": 1
+      },
+      {
+        "crate": "olm-ae",
+        "target": "lib",
+        "count": 6
+      },
+      {
+        "crate": "olm-distance-gradation",
+        "target": "lib",
+        "count": 7
+      },
+      {
+        "crate": "olm-color-key",
+        "target": "lib",
+        "count": 67
+      },
+      {
+        "crate": "olm-smoother2",
+        "target": "lib",
+        "count": 625
+      },
+      {
+        "crate": "color-keep",
+        "target": "lib",
+        "count": 1
+      },
+      {
+        "crate": "olm-kirakira",
+        "target": "lib",
+        "count": 27
+      },
+      {
+        "crate": "olm-blur",
+        "target": "lib",
+        "count": 9
+      },
+      {
+        "crate": "olm-directional-blur",
+        "target": "lib",
+        "count": 9
+      },
+      {
+        "crate": "olm-radial-blur",
+        "target": "lib",
+        "count": 22
+      },
+      {
+        "crate": "olm-smoother",
+        "target": "lib",
+        "count": 12921
+      }
+    ],
+    "rust_diagnostics_from_cargo_summaries": 13705
+  },
+  "oracle-tests": {
+    "exit_code": 0,
+    "log_local_only": "rust\\local\\integration\\oracle-tests.log",
+    "sha256": "7b623fbfb3a4a7523f35f903d94cc0cefe7d6aba525d5336150fe5419d42b795",
+    "warning_headers": 0,
+    "error_headers": 0
+  }
+}

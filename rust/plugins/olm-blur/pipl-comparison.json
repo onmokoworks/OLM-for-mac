@@ -1,0 +1,29 @@
+{
+  "identical": true,
+  "binaries": [
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+      "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+      "pipl_size": 294,
+      "pipl_sha256": "147f220be4bb05cb95d845c71699015a86deb41fe544fb55afa0a3fbe695f78e",
+      "exports": [
+        "entryPointFunc"
+      ]
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-blur\\validation\\final-bin\\OLMBlur.aex",
+      "sha256": "d374df21e013d5c78dbae6370b55a86f51ceb952ac660410b47cbcbc9b6bbec0",
+      "pipl_size": 294,
+      "pipl_sha256": "147f220be4bb05cb95d845c71699015a86deb41fe544fb55afa0a3fbe695f78e",
+      "exports": [
+        "EffectMain",
+        "entryPointFunc",
+        "rust_win_dbg_logger_init_debug",
+        "rust_win_dbg_logger_init_error",
+        "rust_win_dbg_logger_init_info",
+        "rust_win_dbg_logger_init_trace",
+        "rust_win_dbg_logger_init_warn"
+      ]
+    }
+  ]
+}

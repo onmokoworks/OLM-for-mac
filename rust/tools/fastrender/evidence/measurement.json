@@ -1,0 +1,2501 @@
+{
+  "schema_version": 1,
+  "result": "upstream_change_required_no_resident_oracle_implemented",
+  "measurement": {
+    "schema_version": 1,
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d"
+    },
+    "tool": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\fastrender\\measure.py",
+      "sha256": "caff41918827e77c055af502addf634240603786616801f15d65e4d1c40c8c54"
+    },
+    "oracle": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+      "sha256": "7efea931782efb6c1bc064bf8e336e9e586aa724a80b19226a2e88d237029413"
+    },
+    "seed": 20261112,
+    "jobs": 1,
+    "repeats": 3,
+    "parameters": "all untouched defaults",
+    "scope": "existing per-process self comparisons and advisory repeated-frame timing",
+    "complete": true,
+    "cases": {
+      "ColorKeep-97x61": {
+        "plugin": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\ColorKeep.aex",
+          "sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86"
+        },
+        "route": "smart8",
+        "rows": [
+          {
+            "case": 0,
+            "status": "exact",
+            "pair_wall_ms": 877.268100000947,
+            "sides": {
+              "reference": {
+                "pid": 53324,
+                "wall_ms": 438.00000000010186,
+                "render_worker_lifetime_ms": 102,
+                "outside_render_worker_ms": 336.00000000010186,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 56328,
+                "wall_ms": 421.9999999986612,
+                "render_worker_lifetime_ms": 102,
+                "outside_render_worker_ms": 319.9999999986612,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          },
+          {
+            "case": 1,
+            "status": "exact",
+            "pair_wall_ms": 863.863800001127,
+            "sides": {
+              "reference": {
+                "pid": 47532,
+                "wall_ms": 438.00000000010186,
+                "render_worker_lifetime_ms": 102,
+                "outside_render_worker_ms": 336.00000000010186,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 47940,
+                "wall_ms": 421.9999999986612,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 320.9999999986612,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          },
+          {
+            "case": 2,
+            "status": "exact",
+            "pair_wall_ms": 876.9788000008703,
+            "sides": {
+              "reference": {
+                "pid": 59408,
+                "wall_ms": 422.0000000004802,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 321.0000000004802,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 60952,
+                "wall_ms": 436.99999999989814,
+                "render_worker_lifetime_ms": 102,
+                "outside_render_worker_ms": 334.99999999989814,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          }
+        ],
+        "stats": {
+          "pairs": 3,
+          "exact_pairs": 3,
+          "failures": [],
+          "wall_ms": {
+            "count": 6,
+            "median": 429.5000000001892,
+            "min": 421.9999999986612,
+            "max": 438.00000000010186
+          },
+          "render_worker_lifetime_ms": {
+            "count": 6,
+            "median": 102.0,
+            "min": 101,
+            "max": 102
+          },
+          "outside_render_worker_ms": {
+            "count": 6,
+            "median": 328.0000000001892,
+            "min": 319.9999999986612,
+            "max": 336.00000000010186
+          }
+        }
+      },
+      "DistanceGradation-97x61": {
+        "plugin": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\DistanceGradation.aex",
+          "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+        },
+        "route": "smart8",
+        "rows": [
+          {
+            "case": 0,
+            "status": "exact",
+            "pair_wall_ms": 1204.790599998887,
+            "sides": {
+              "reference": {
+                "pid": 5500,
+                "wall_ms": 594.0000000009604,
+                "render_worker_lifetime_ms": 202,
+                "outside_render_worker_ms": 392.0000000009604,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 52604,
+                "wall_ms": 593.9999999991414,
+                "render_worker_lifetime_ms": 202,
+                "outside_render_worker_ms": 391.99999999914144,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          },
+          {
+            "case": 1,
+            "status": "exact",
+            "pair_wall_ms": 986.5871999991214,
+            "sides": {
+              "reference": {
+                "pid": 6760,
+                "wall_ms": 500.0,
+                "render_worker_lifetime_ms": 102,
+                "outside_render_worker_ms": 398.0,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 39284,
+                "wall_ms": 484.9999999987631,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 383.9999999987631,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          },
+          {
+            "case": 2,
+            "status": "exact",
+            "pair_wall_ms": 985.850200000641,
+            "sides": {
+              "reference": {
+                "pid": 60128,
+                "wall_ms": 484.9999999987631,
+                "render_worker_lifetime_ms": 102,
+                "outside_render_worker_ms": 382.9999999987631,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 62560,
+                "wall_ms": 484.9999999987631,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 383.9999999987631,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          }
+        ],
+        "stats": {
+          "pairs": 3,
+          "exact_pairs": 3,
+          "failures": [],
+          "wall_ms": {
+            "count": 6,
+            "median": 492.49999999938154,
+            "min": 484.9999999987631,
+            "max": 594.0000000009604
+          },
+          "render_worker_lifetime_ms": {
+            "count": 6,
+            "median": 102.0,
+            "min": 101,
+            "max": 202
+          },
+          "outside_render_worker_ms": {
+            "count": 6,
+            "median": 387.99999999895226,
+            "min": 382.9999999987631,
+            "max": 398.0
+          }
+        }
+      },
+      "OLMBlur-97x61": {
+        "plugin": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+          "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+        },
+        "route": "smart8",
+        "rows": [
+          {
+            "case": 0,
+            "status": "exact",
+            "pair_wall_ms": 862.9240999998729,
+            "sides": {
+              "reference": {
+                "pid": 51812,
+                "wall_ms": 438.00000000010186,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 337.00000000010186,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 21280,
+                "wall_ms": 421.9999999986612,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 320.9999999986612,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          },
+          {
+            "case": 1,
+            "status": "exact",
+            "pair_wall_ms": 862.1034999996482,
+            "sides": {
+              "reference": {
+                "pid": 49128,
+                "wall_ms": 422.0000000004802,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 321.0000000004802,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 55248,
+                "wall_ms": 421.9999999986612,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 320.9999999986612,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          },
+          {
+            "case": 2,
+            "status": "exact",
+            "pair_wall_ms": 878.6879999988741,
+            "sides": {
+              "reference": {
+                "pid": 54980,
+                "wall_ms": 422.0000000004802,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 321.0000000004802,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 51908,
+                "wall_ms": 436.99999999989814,
+                "render_worker_lifetime_ms": 102,
+                "outside_render_worker_ms": 334.99999999989814,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          }
+        ],
+        "stats": {
+          "pairs": 3,
+          "exact_pairs": 3,
+          "failures": [],
+          "wall_ms": {
+            "count": 6,
+            "median": 422.0000000004802,
+            "min": 421.9999999986612,
+            "max": 438.00000000010186
+          },
+          "render_worker_lifetime_ms": {
+            "count": 6,
+            "median": 101.0,
+            "min": 101,
+            "max": 102
+          },
+          "outside_render_worker_ms": {
+            "count": 6,
+            "median": 321.0000000004802,
+            "min": 320.9999999986612,
+            "max": 337.00000000010186
+          }
+        }
+      },
+      "OLMBlur-320x180": {
+        "plugin": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+          "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+        },
+        "route": "smart8",
+        "rows": [
+          {
+            "case": 0,
+            "status": "exact",
+            "pair_wall_ms": 888.169800000469,
+            "sides": {
+              "reference": {
+                "pid": 58152,
+                "wall_ms": 421.0000000002765,
+                "render_worker_lifetime_ms": 102,
+                "outside_render_worker_ms": 319.0000000002765,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 47304,
+                "wall_ms": 422.0000000004802,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 321.0000000004802,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          },
+          {
+            "case": 1,
+            "status": "exact",
+            "pair_wall_ms": 875.5627000009554,
+            "sides": {
+              "reference": {
+                "pid": 26516,
+                "wall_ms": 421.9999999986612,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 320.9999999986612,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 60456,
+                "wall_ms": 422.0000000004802,
+                "render_worker_lifetime_ms": 102,
+                "outside_render_worker_ms": 320.0000000004802,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          },
+          {
+            "case": 2,
+            "status": "exact",
+            "pair_wall_ms": 894.3390000004001,
+            "sides": {
+              "reference": {
+                "pid": 54232,
+                "wall_ms": 422.0000000004802,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 321.0000000004802,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 10532,
+                "wall_ms": 438.00000000010186,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 337.00000000010186,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          }
+        ],
+        "stats": {
+          "pairs": 3,
+          "exact_pairs": 3,
+          "failures": [],
+          "wall_ms": {
+            "count": 6,
+            "median": 422.0000000004802,
+            "min": 421.0000000002765,
+            "max": 438.00000000010186
+          },
+          "render_worker_lifetime_ms": {
+            "count": 6,
+            "median": 101.0,
+            "min": 101,
+            "max": 102
+          },
+          "outside_render_worker_ms": {
+            "count": 6,
+            "median": 320.9999999995707,
+            "min": 319.0000000002765,
+            "max": 337.00000000010186
+          }
+        }
+      },
+      "OLMColorKey-97x61": {
+        "plugin": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMColorKey.aex",
+          "sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c"
+        },
+        "route": "smart8",
+        "rows": [
+          {
+            "case": 0,
+            "status": "exact",
+            "pair_wall_ms": 882.2956000003614,
+            "sides": {
+              "reference": {
+                "pid": 49648,
+                "wall_ms": 438.00000000010186,
+                "render_worker_lifetime_ms": 102,
+                "outside_render_worker_ms": 336.00000000010186,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 21384,
+                "wall_ms": 436.99999999989814,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 335.99999999989814,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          },
+          {
+            "case": 1,
+            "status": "exact",
+            "pair_wall_ms": 862.5828999993246,
+            "sides": {
+              "reference": {
+                "pid": 55364,
+                "wall_ms": 421.9999999986612,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 320.9999999986612,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 47220,
+                "wall_ms": 422.0000000004802,
+                "render_worker_lifetime_ms": 102,
+                "outside_render_worker_ms": 320.0000000004802,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          },
+          {
+            "case": 2,
+            "status": "exact",
+            "pair_wall_ms": 858.6150999999518,
+            "sides": {
+              "reference": {
+                "pid": 62172,
+                "wall_ms": 421.9999999986612,
+                "render_worker_lifetime_ms": 102,
+                "outside_render_worker_ms": 319.9999999986612,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 56596,
+                "wall_ms": 422.0000000004802,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 321.0000000004802,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          }
+        ],
+        "stats": {
+          "pairs": 3,
+          "exact_pairs": 3,
+          "failures": [],
+          "wall_ms": {
+            "count": 6,
+            "median": 422.0000000004802,
+            "min": 421.9999999986612,
+            "max": 438.00000000010186
+          },
+          "render_worker_lifetime_ms": {
+            "count": 6,
+            "median": 101.5,
+            "min": 101,
+            "max": 102
+          },
+          "outside_render_worker_ms": {
+            "count": 6,
+            "median": 320.9999999995707,
+            "min": 319.9999999986612,
+            "max": 336.00000000010186
+          }
+        }
+      },
+      "OLMDirectionalBlur-97x61": {
+        "plugin": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+          "sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+        },
+        "route": "smart8",
+        "rows": [
+          {
+            "case": 0,
+            "status": "exact",
+            "pair_wall_ms": 869.7548000000097,
+            "sides": {
+              "reference": {
+                "pid": 47700,
+                "wall_ms": 421.9999999986612,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 320.9999999986612,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 60544,
+                "wall_ms": 438.00000000010186,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 337.00000000010186,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          },
+          {
+            "case": 1,
+            "status": "exact",
+            "pair_wall_ms": 858.4789000015007,
+            "sides": {
+              "reference": {
+                "pid": 9108,
+                "wall_ms": 421.9999999986612,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 320.9999999986612,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 38696,
+                "wall_ms": 405.9999999990396,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 304.9999999990396,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          },
+          {
+            "case": 2,
+            "status": "exact",
+            "pair_wall_ms": 863.3126999993692,
+            "sides": {
+              "reference": {
+                "pid": 53440,
+                "wall_ms": 421.9999999986612,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 320.9999999986612,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 23688,
+                "wall_ms": 422.0000000004802,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 321.0000000004802,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          }
+        ],
+        "stats": {
+          "pairs": 3,
+          "exact_pairs": 3,
+          "failures": [],
+          "wall_ms": {
+            "count": 6,
+            "median": 421.9999999986612,
+            "min": 405.9999999990396,
+            "max": 438.00000000010186
+          },
+          "render_worker_lifetime_ms": {
+            "count": 6,
+            "median": 101.0,
+            "min": 101,
+            "max": 101
+          },
+          "outside_render_worker_ms": {
+            "count": 6,
+            "median": 320.9999999986612,
+            "min": 304.9999999990396,
+            "max": 337.00000000010186
+          }
+        }
+      },
+      "OLMKiraKira-97x61": {
+        "plugin": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMKiraKira.aex",
+          "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+        },
+        "route": "smart8",
+        "rows": [
+          {
+            "case": 0,
+            "status": "exact",
+            "pair_wall_ms": 1582.1975999988354,
+            "sides": {
+              "reference": {
+                "pid": 61544,
+                "wall_ms": 780.9999999990396,
+                "render_worker_lifetime_ms": 302,
+                "outside_render_worker_ms": 478.9999999990396,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 57320,
+                "wall_ms": 764.9999999994179,
+                "render_worker_lifetime_ms": 302,
+                "outside_render_worker_ms": 462.9999999994179,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          },
+          {
+            "case": 1,
+            "status": "exact",
+            "pair_wall_ms": 1605.4880000010598,
+            "sides": {
+              "reference": {
+                "pid": 44320,
+                "wall_ms": 797.0000000004802,
+                "render_worker_lifetime_ms": 302,
+                "outside_render_worker_ms": 495.0000000004802,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 47752,
+                "wall_ms": 796.0000000002765,
+                "render_worker_lifetime_ms": 303,
+                "outside_render_worker_ms": 493.0000000002765,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          },
+          {
+            "case": 2,
+            "status": "exact",
+            "pair_wall_ms": 1608.4336000003532,
+            "sides": {
+              "reference": {
+                "pid": 3128,
+                "wall_ms": 797.0000000004802,
+                "render_worker_lifetime_ms": 302,
+                "outside_render_worker_ms": 495.0000000004802,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 62652,
+                "wall_ms": 796.0000000002765,
+                "render_worker_lifetime_ms": 302,
+                "outside_render_worker_ms": 494.0000000002765,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          }
+        ],
+        "stats": {
+          "pairs": 3,
+          "exact_pairs": 3,
+          "failures": [],
+          "wall_ms": {
+            "count": 6,
+            "median": 796.0000000002765,
+            "min": 764.9999999994179,
+            "max": 797.0000000004802
+          },
+          "render_worker_lifetime_ms": {
+            "count": 6,
+            "median": 302.0,
+            "min": 302,
+            "max": 303
+          },
+          "outside_render_worker_ms": {
+            "count": 6,
+            "median": 493.5000000002765,
+            "min": 462.9999999994179,
+            "max": 495.0000000004802
+          }
+        }
+      },
+      "OLMRadialBlur-97x61": {
+        "plugin": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+          "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+        },
+        "route": "smart8",
+        "rows": [
+          {
+            "case": 0,
+            "status": "exact",
+            "pair_wall_ms": 868.5358000002452,
+            "sides": {
+              "reference": {
+                "pid": 3240,
+                "wall_ms": 436.99999999989814,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 335.99999999989814,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 62564,
+                "wall_ms": 422.0000000004802,
+                "render_worker_lifetime_ms": 102,
+                "outside_render_worker_ms": 320.0000000004802,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          },
+          {
+            "case": 1,
+            "status": "exact",
+            "pair_wall_ms": 866.4372999992338,
+            "sides": {
+              "reference": {
+                "pid": 64504,
+                "wall_ms": 436.99999999989814,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 335.99999999989814,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 64008,
+                "wall_ms": 422.0000000004802,
+                "render_worker_lifetime_ms": 102,
+                "outside_render_worker_ms": 320.0000000004802,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          },
+          {
+            "case": 2,
+            "status": "exact",
+            "pair_wall_ms": 845.4843999988952,
+            "sides": {
+              "reference": {
+                "pid": 52152,
+                "wall_ms": 406.9999999992433,
+                "render_worker_lifetime_ms": 102,
+                "outside_render_worker_ms": 304.9999999992433,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 49432,
+                "wall_ms": 421.0000000002765,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 320.0000000002765,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          }
+        ],
+        "stats": {
+          "pairs": 3,
+          "exact_pairs": 3,
+          "failures": [],
+          "wall_ms": {
+            "count": 6,
+            "median": 422.0000000004802,
+            "min": 406.9999999992433,
+            "max": 436.99999999989814
+          },
+          "render_worker_lifetime_ms": {
+            "count": 6,
+            "median": 101.5,
+            "min": 101,
+            "max": 102
+          },
+          "outside_render_worker_ms": {
+            "count": 6,
+            "median": 320.0000000004802,
+            "min": 304.9999999992433,
+            "max": 335.99999999989814
+          }
+        }
+      },
+      "OLMSmoother-97x61": {
+        "plugin": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother.aex",
+          "sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
+        },
+        "route": "classic8",
+        "rows": [
+          {
+            "case": 0,
+            "status": "exact",
+            "pair_wall_ms": 842.4744000003557,
+            "sides": {
+              "reference": {
+                "pid": 61760,
+                "wall_ms": 406.00000000085856,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 305.00000000085856,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 51072,
+                "wall_ms": 422.0000000004802,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 321.0000000004802,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          },
+          {
+            "case": 1,
+            "status": "exact",
+            "pair_wall_ms": 848.5322999986238,
+            "sides": {
+              "reference": {
+                "pid": 50328,
+                "wall_ms": 422.0000000004802,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 321.0000000004802,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 56336,
+                "wall_ms": 421.9999999986612,
+                "render_worker_lifetime_ms": 102,
+                "outside_render_worker_ms": 319.9999999986612,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          },
+          {
+            "case": 2,
+            "status": "exact",
+            "pair_wall_ms": 848.3718999996199,
+            "sides": {
+              "reference": {
+                "pid": 46504,
+                "wall_ms": 421.9999999986612,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 320.9999999986612,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 52848,
+                "wall_ms": 422.0000000004802,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 321.0000000004802,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          }
+        ],
+        "stats": {
+          "pairs": 3,
+          "exact_pairs": 3,
+          "failures": [],
+          "wall_ms": {
+            "count": 6,
+            "median": 421.9999999995707,
+            "min": 406.00000000085856,
+            "max": 422.0000000004802
+          },
+          "render_worker_lifetime_ms": {
+            "count": 6,
+            "median": 101.0,
+            "min": 101,
+            "max": 102
+          },
+          "outside_render_worker_ms": {
+            "count": 6,
+            "median": 320.9999999995707,
+            "min": 305.00000000085856,
+            "max": 321.0000000004802
+          }
+        }
+      },
+      "OLMSmoother2-97x61": {
+        "plugin": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother2.aex",
+          "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+        },
+        "route": "smart8",
+        "rows": [
+          {
+            "case": 0,
+            "status": "exact",
+            "pair_wall_ms": 859.9659999999858,
+            "sides": {
+              "reference": {
+                "pid": 32800,
+                "wall_ms": 421.9999999986612,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 320.9999999986612,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 50008,
+                "wall_ms": 422.0000000004802,
+                "render_worker_lifetime_ms": 102,
+                "outside_render_worker_ms": 320.0000000004802,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          },
+          {
+            "case": 1,
+            "status": "exact",
+            "pair_wall_ms": 847.3912000008568,
+            "sides": {
+              "reference": {
+                "pid": 18744,
+                "wall_ms": 422.0000000004802,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 321.0000000004802,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 39812,
+                "wall_ms": 422.0000000004802,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 321.0000000004802,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          },
+          {
+            "case": 2,
+            "status": "exact",
+            "pair_wall_ms": 863.0646999990859,
+            "sides": {
+              "reference": {
+                "pid": 26400,
+                "wall_ms": 421.0000000002765,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 320.0000000002765,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 30692,
+                "wall_ms": 422.0000000004802,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 321.0000000004802,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          }
+        ],
+        "stats": {
+          "pairs": 3,
+          "exact_pairs": 3,
+          "failures": [],
+          "wall_ms": {
+            "count": 6,
+            "median": 422.0000000004802,
+            "min": 421.0000000002765,
+            "max": 422.0000000004802
+          },
+          "render_worker_lifetime_ms": {
+            "count": 6,
+            "median": 101.0,
+            "min": 101,
+            "max": 102
+          },
+          "outside_render_worker_ms": {
+            "count": 6,
+            "median": 320.9999999995707,
+            "min": 320.0000000002765,
+            "max": 321.0000000004802
+          }
+        }
+      },
+      "OLMToonDilate-97x61": {
+        "plugin": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMToonDilate.aex",
+          "sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
+        },
+        "route": "smart8",
+        "rows": [
+          {
+            "case": 0,
+            "status": "exact",
+            "pair_wall_ms": 871.1360999986937,
+            "sides": {
+              "reference": {
+                "pid": 64264,
+                "wall_ms": 422.0000000004802,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 321.0000000004802,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 42700,
+                "wall_ms": 438.00000000010186,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 337.00000000010186,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          },
+          {
+            "case": 1,
+            "status": "exact",
+            "pair_wall_ms": 872.4621000001207,
+            "sides": {
+              "reference": {
+                "pid": 23840,
+                "wall_ms": 422.0000000004802,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 321.0000000004802,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 63196,
+                "wall_ms": 438.00000000010186,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 337.00000000010186,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          },
+          {
+            "case": 2,
+            "status": "exact",
+            "pair_wall_ms": 876.476299999922,
+            "sides": {
+              "reference": {
+                "pid": 50400,
+                "wall_ms": 421.9999999986612,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 320.9999999986612,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              },
+              "candidate": {
+                "pid": 8264,
+                "wall_ms": 436.99999999989814,
+                "render_worker_lifetime_ms": 101,
+                "outside_render_worker_ms": 335.99999999989814,
+                "ok": true,
+                "freshness_warning": "source_newer_than_worker"
+              }
+            }
+          }
+        ],
+        "stats": {
+          "pairs": 3,
+          "exact_pairs": 3,
+          "failures": [],
+          "wall_ms": {
+            "count": 6,
+            "median": 429.5000000001892,
+            "min": 421.9999999986612,
+            "max": 438.00000000010186
+          },
+          "render_worker_lifetime_ms": {
+            "count": 6,
+            "median": 101.0,
+            "min": 101,
+            "max": 101
+          },
+          "outside_render_worker_ms": {
+            "count": 6,
+            "median": 328.5000000001892,
+            "min": 320.9999999986612,
+            "max": 337.00000000010186
+          }
+        }
+      }
+    },
+    "controls": [
+      {
+        "name": "help",
+        "pid": 32660,
+        "wall_ms": 77.99999999951979,
+        "ok": true
+      },
+      {
+        "name": "inspect-blur",
+        "pid": 63052,
+        "wall_ms": 250.0,
+        "render_worker_lifetime_ms": null,
+        "outside_render_worker_ms": null,
+        "ok": true,
+        "freshness_warning": null
+      },
+      {
+        "name": "help",
+        "pid": 49076,
+        "wall_ms": 78.99999999972351,
+        "ok": true
+      },
+      {
+        "name": "inspect-blur",
+        "pid": 59264,
+        "wall_ms": 250.0,
+        "render_worker_lifetime_ms": null,
+        "outside_render_worker_ms": null,
+        "ok": true,
+        "freshness_warning": null
+      },
+      {
+        "name": "help",
+        "pid": 61656,
+        "wall_ms": 77.99999999951979,
+        "ok": true
+      },
+      {
+        "name": "inspect-blur",
+        "pid": 49276,
+        "wall_ms": 250.0,
+        "render_worker_lifetime_ms": null,
+        "outside_render_worker_ms": null,
+        "ok": true,
+        "freshness_warning": null
+      }
+    ],
+    "performance": [
+      {
+        "size": [
+          320,
+          180
+        ],
+        "cold_count": 3,
+        "warm_count": 9,
+        "open_ms": 63.5702,
+        "cold_frame_ms": 43.1913,
+        "warm": {
+          "wall_ms": {
+            "count": 9,
+            "median": 9.8549,
+            "min": 9.1437,
+            "max": 10.3718
+          },
+          "input_write_ms": {
+            "count": 9,
+            "median": 0.0186,
+            "min": 0.0169,
+            "max": 0.0213
+          },
+          "worker_setup_ms": {
+            "count": 9,
+            "median": 0.0131,
+            "min": 0.0114,
+            "max": 0.0145
+          },
+          "worker_render_ms": {
+            "count": 9,
+            "median": 9.6092,
+            "min": 8.8986,
+            "max": 10.1311
+          },
+          "selector_dispatch_ms": {
+            "count": 9,
+            "median": 4.6159,
+            "min": 4.5548,
+            "max": 5.106
+          },
+          "worker_finalize_ms": {
+            "count": 9,
+            "median": 0.1142,
+            "min": 0.1086,
+            "max": 0.1188
+          },
+          "output_verify_ms": {
+            "count": 9,
+            "median": 0.0532,
+            "min": 0.0138,
+            "max": 0.0594
+          }
+        },
+        "open_plus_cold_over_warm": 10.833341789363667,
+        "note": "Measured repeated-frame diagnostic ratio, not independent-case speed-up"
+      },
+      {
+        "size": [
+          640,
+          360
+        ],
+        "cold_count": 3,
+        "warm_count": 9,
+        "open_ms": 65.4564,
+        "cold_frame_ms": 55.2205,
+        "warm": {
+          "wall_ms": {
+            "count": 9,
+            "median": 22.6041,
+            "min": 22.2895,
+            "max": 26.5868
+          },
+          "input_write_ms": {
+            "count": 9,
+            "median": 0.0709,
+            "min": 0.0655,
+            "max": 0.0919
+          },
+          "worker_setup_ms": {
+            "count": 9,
+            "median": 0.0573,
+            "min": 0.0555,
+            "max": 0.078
+          },
+          "worker_render_ms": {
+            "count": 9,
+            "median": 21.8207,
+            "min": 21.5649,
+            "max": 25.757
+          },
+          "selector_dispatch_ms": {
+            "count": 9,
+            "median": 11.6002,
+            "min": 11.2514,
+            "max": 13.8471
+          },
+          "worker_finalize_ms": {
+            "count": 9,
+            "median": 0.4336,
+            "min": 0.4267,
+            "max": 0.4673
+          },
+          "output_verify_ms": {
+            "count": 9,
+            "median": 0.0772,
+            "min": 0.0579,
+            "max": 0.1521
+          }
+        },
+        "open_plus_cold_over_warm": 5.338717312345991,
+        "note": "Measured repeated-frame diagnostic ratio, not independent-case speed-up"
+      },
+      {
+        "size": [
+          1280,
+          720
+        ],
+        "cold_count": 3,
+        "warm_count": 9,
+        "open_ms": 63.4998,
+        "cold_frame_ms": 110.9785,
+        "warm": {
+          "wall_ms": {
+            "count": 9,
+            "median": 75.7621,
+            "min": 74.6761,
+            "max": 79.5645
+          },
+          "input_write_ms": {
+            "count": 9,
+            "median": 0.2127,
+            "min": 0.1999,
+            "max": 0.302
+          },
+          "worker_setup_ms": {
+            "count": 9,
+            "median": 0.2216,
+            "min": 0.1921,
+            "max": 0.2986
+          },
+          "worker_render_ms": {
+            "count": 9,
+            "median": 73.1105,
+            "min": 71.857,
+            "max": 76.5867
+          },
+          "selector_dispatch_ms": {
+            "count": 9,
+            "median": 39.6887,
+            "min": 38.6914,
+            "max": 41.5048
+          },
+          "worker_finalize_ms": {
+            "count": 9,
+            "median": 1.7289,
+            "min": 1.7082,
+            "max": 1.9585
+          },
+          "output_verify_ms": {
+            "count": 9,
+            "median": 0.4647,
+            "min": 0.3975,
+            "max": 0.6442
+          }
+        },
+        "open_plus_cold_over_warm": 2.3029760262717107,
+        "note": "Measured repeated-frame diagnostic ratio, not independent-case speed-up"
+      },
+      {
+        "size": [
+          1920,
+          1080
+        ],
+        "cold_count": 3,
+        "warm_count": 9,
+        "open_ms": 64.2372,
+        "cold_frame_ms": 207.33,
+        "warm": {
+          "wall_ms": {
+            "count": 9,
+            "median": 164.1293,
+            "min": 161.6804,
+            "max": 168.9075
+          },
+          "input_write_ms": {
+            "count": 9,
+            "median": 0.4678,
+            "min": 0.4121,
+            "max": 0.9318
+          },
+          "worker_setup_ms": {
+            "count": 9,
+            "median": 0.47,
+            "min": 0.4292,
+            "max": 1.0851
+          },
+          "worker_render_ms": {
+            "count": 9,
+            "median": 157.7987,
+            "min": 154.3007,
+            "max": 162.9798
+          },
+          "selector_dispatch_ms": {
+            "count": 9,
+            "median": 86.5646,
+            "min": 84.4922,
+            "max": 91.5406
+          },
+          "worker_finalize_ms": {
+            "count": 9,
+            "median": 3.9723,
+            "min": 3.8656,
+            "max": 4.3028
+          },
+          "output_verify_ms": {
+            "count": 9,
+            "median": 1.0207,
+            "min": 0.931,
+            "max": 2.208
+          }
+        },
+        "open_plus_cold_over_warm": 1.6545930555970203,
+        "note": "Measured repeated-frame diagnostic ratio, not independent-case speed-up"
+      }
+    ],
+    "all_pairs_exact": true,
+    "cleanup": "Every invocation returned through oracle.run_process finally: owned Job ActiveProcesses=0 and child waited."
+  },
+  "worker_file_identity": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\target\\minihost-build\\aex_worker.exe",
+    "sha256": "0481df5fa425af28f0e8a39ea9386185de13656c3c9d488042bed2244bdf8302"
+  },
+  "end_identity_checks_passed": true,
+  "controls": {
+    "help": {
+      "median_ms": 77.99999999951979
+    },
+    "inspect-blur": {
+      "median_ms": 250.0
+    }
+  },
+  "median_pair_outside_process_clocks_ms": 15.850200003114878,
+  "timing_definition": {
+    "render_worker_lifetime_ms": "Raw worker_diagnostics.elapsed_ms: broker RenderSession opened to close/exit collection, not selector CPU or complete process load time.",
+    "outside_render_worker_ms": "Per invocation wall minus the above reported interval; overlapping independent controls must not be added."
+  },
+  "tests": [
+    {
+      "command": "python -m unittest discover -s rust/tools/fastrender -p 'test_*.py' -v",
+      "passed": 6,
+      "exit_code": 0
+    },
+    {
+      "command": "python -m unittest discover -s rust/tools/oracle -p 'test_*.py' -q",
+      "passed": 28,
+      "exit_code": 0
+    }
+  ],
+  "source_roots": {
+    "primary": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat",
+    "installed_source": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main"
+  },
+  "source_identities": [
+    {
+      "tree": "primary",
+      "file": "broker/crates/harness/src/windows/cli.rs",
+      "sha256": "a5ac0e13eb0acb34ac09e055c38b9a2c5a02c2a7c13ea968acfc49f37d10d1e6"
+    },
+    {
+      "tree": "primary",
+      "file": "broker/crates/broker/src/image_render/session.rs",
+      "sha256": "b9b3329965358f115f495914fd03134c200dcfbdece2d4b443277b4235a97038"
+    },
+    {
+      "tree": "primary",
+      "file": "broker/crates/broker/src/render_session.rs",
+      "sha256": "6e8ce6e9b3459a6e7339463f2afa15d11afa694c13ff2fa091a74aa3520e9116"
+    },
+    {
+      "tree": "primary",
+      "file": "minihost/src/worker_render_session.cpp",
+      "sha256": "1141bcf300f2096ec526e43fbc7be3b8b147799b365d0b8dc270e3e8366f58ad"
+    },
+    {
+      "tree": "primary",
+      "file": "minihost/src/worker_render_session.hpp",
+      "sha256": "1eb9edea2c2b559eb90dd16c7d7f43bae7c0a462ebf881cd67b52fe63924670c"
+    },
+    {
+      "tree": "installed_source",
+      "file": "broker/crates/harness/src/windows/cli.rs",
+      "sha256": "0dd098fea15499f0070715f19be27a5a8c62896a2c3e53266396e7822eb479d4"
+    },
+    {
+      "tree": "installed_source",
+      "file": "broker/crates/broker/src/image_render/session.rs",
+      "sha256": "16d435d956ba7e37842e1bb309f4d2417723fc1b8ae82d211dcfbab74b05ec99"
+    },
+    {
+      "tree": "installed_source",
+      "file": "broker/crates/broker/src/render_session.rs",
+      "sha256": "dd98693a3bb05a79887b38e4ba48e323ff9c146c8560af154e0b0f19d1f0a8fb"
+    },
+    {
+      "tree": "installed_source",
+      "file": "broker/crates/broker/src/performance_diagnostics.rs",
+      "sha256": "ff4d3bb8fb99b44700b138b847319663863f99b72661a1ea881e9ac58f2e2edb"
+    },
+    {
+      "tree": "installed_source",
+      "file": "broker/crates/broker/src/render_differential.rs",
+      "sha256": "75731cf1bf9ebc35ab41a70ae04ef8ff87ab6bf99bebc77c279ed38342b6a419"
+    },
+    {
+      "tree": "installed_source",
+      "file": "minihost/src/worker_render_session.cpp",
+      "sha256": "1c8407d38ce41ff57efa633cd5e92a07978f3cf56252ab264dd88e500d68269d"
+    },
+    {
+      "tree": "installed_source",
+      "file": "minihost/src/worker_render_session.hpp",
+      "sha256": "260cda8028ea275610a457973f3cbb8bf66a661462e972e06cd05bea29ca2645"
+    },
+    {
+      "tree": "primary",
+      "file": "docs/RENDER_SESSION_PROTOCOL_2026-07-19.md",
+      "sha256": "6e0a6742b90fbaa991236e6dc1f3df16001b1b492d38ab29b366fcfdec6a76cd"
+    },
+    {
+      "tree": "primary",
+      "file": "docs/CLOSURE_SESSION_SWEEP_MEASUREMENT_2026-07-23.md",
+      "sha256": "a54256a6dfe9786fb22425a3e1201e648cb629e80421b69f387fdd3d905e354f"
+    },
+    {
+      "tree": "primary",
+      "file": "docs/SWEEP_INVESTIGATION_WORKFLOW_2026-08-17.md",
+      "sha256": "3fee291a974bb2a6f9dca33060b6e101d4bf4fe45fdd145bc195b67653634835"
+    },
+    {
+      "tree": "primary",
+      "file": "docs/RENDER_FIXTURE.md",
+      "sha256": "e6b1d52e573e8ca3a20bb207b7d98a9aca40eaeaf95717955b369e29245950bc"
+    },
+    {
+      "tree": "primary",
+      "file": "bridges/aviutl2-multifilter/examples/render_sweep.rs",
+      "sha256": "418a9796566fe51f87e7c1aa92b2f240c259f672840677a24add17e0f4696e03"
+    }
+  ],
+  "process_logs": [
+    {
+      "file": "runs/baseline-20261112/blur-performance-0.process.json",
+      "sha256": "a937c79e4c3ea1d494c36f8a65b110a354547d47e6edb65502748e2c02c1a8bc",
+      "pid": 62780,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/blur-performance-1.process.json",
+      "sha256": "1f90d269c152c2a52184652435e48e340d55186175963c12a2a131fd0bf9a21a",
+      "pid": 51896,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/blur-performance-2.process.json",
+      "sha256": "27ca73977d99df76a3b28db68d50476cb9e5e0a6e18efae75c2826c0ddda23d8",
+      "pid": 62396,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/ColorKeep-97x61/case-0000-smart8/candidate.process.json",
+      "sha256": "bb82be5fca1e63cc31aa4c1f85d76af4327a66729c4095194704c52a5f873117",
+      "pid": 56328,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/ColorKeep-97x61/case-0000-smart8/reference.process.json",
+      "sha256": "bd8ed00ceccb6b800a671350c81574cb5f0991b97a619bbf74163b762fae9920",
+      "pid": 53324,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/ColorKeep-97x61/case-0001-smart8/candidate.process.json",
+      "sha256": "94cd21b88dd002fba58b4f335f7f793cee79ff4ee46a59a38c77405b30eeaa39",
+      "pid": 47940,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/ColorKeep-97x61/case-0001-smart8/reference.process.json",
+      "sha256": "855dcf56351fc448200f1a2b2b30fb1d83ada8c9ed741b2b2eb03fa1de734816",
+      "pid": 47532,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/ColorKeep-97x61/case-0002-smart8/candidate.process.json",
+      "sha256": "c177cfee21491fb6c6868307f7afa361f368c23b59bb58b243df1605d817d43e",
+      "pid": 60952,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/ColorKeep-97x61/case-0002-smart8/reference.process.json",
+      "sha256": "3b9cc27986cfe8c7ff7534bee2d459d04c0d425d2e3f12cc87058bb1161fc8e9",
+      "pid": 59408,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/DistanceGradation-97x61/case-0000-smart8/candidate.process.json",
+      "sha256": "10d4420d99848309dc1fa5a67edfa67b710d2abd4eaa204828f050a316416c46",
+      "pid": 52604,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/DistanceGradation-97x61/case-0000-smart8/reference.process.json",
+      "sha256": "f38c62d33ed2378e7dd42623e5322ecb79cf23390c34a6e2b923ebe6aef18c75",
+      "pid": 5500,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/DistanceGradation-97x61/case-0001-smart8/candidate.process.json",
+      "sha256": "ea387c2fb2c7807990bb123666ef2214eef9df17df2ac14457855f361da7239d",
+      "pid": 39284,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/DistanceGradation-97x61/case-0001-smart8/reference.process.json",
+      "sha256": "ec4171be5d0645d499899f0dc3c3e3bf57a3986fa3fe2b3940fdaf04fb8deb4c",
+      "pid": 6760,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/DistanceGradation-97x61/case-0002-smart8/candidate.process.json",
+      "sha256": "ab5c24ee7811d7f29d5bf09a86f5a35636af101a3bf34aaf3987b6eaad007c2b",
+      "pid": 62560,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/DistanceGradation-97x61/case-0002-smart8/reference.process.json",
+      "sha256": "f9768980975350bf5184dd1f00107e29feee9e749eb26fc88e34615b2dc8d4ad",
+      "pid": 60128,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/help-0.process.json",
+      "sha256": "6ee7dfe9ea6a6125b1a818edbad4c0c075e874ed76f485c6c52cea7ed536abb9",
+      "pid": 32660,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/help-1.process.json",
+      "sha256": "5d2c9a0cf9fed23b6068f38e996d05948ba747b7dc4d5917144ab19036db0d5f",
+      "pid": 49076,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/help-2.process.json",
+      "sha256": "f712faf7d4ae44bc408e53bf956d195e3b4226a0590442190ef1235026f5ac33",
+      "pid": 61656,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/inspect-blur-0.process.json",
+      "sha256": "4d3000972f03be441d38f1bd1ddff332f552fcb49e9916594346031f4d0405bb",
+      "pid": 63052,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/inspect-blur-1.process.json",
+      "sha256": "efb6898ac1c0740e008894d35979707b1d48160b055ea449a762be09bf613148",
+      "pid": 59264,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/inspect-blur-2.process.json",
+      "sha256": "806f4f3ca32a9d29c738b934ed7b549c80b714e4a73a79747fbf53f11623305d",
+      "pid": 49276,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMBlur-320x180/case-0000-smart8/candidate.process.json",
+      "sha256": "698824553cbf8fb23ddae318c9f4e47095ac9aa917d1840832b128b25d6fb5f4",
+      "pid": 47304,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMBlur-320x180/case-0000-smart8/reference.process.json",
+      "sha256": "16ff92e66a9f1f52d8c1bac397f1f6b1bf79546e08a953388fbb3d30e6ec3912",
+      "pid": 58152,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMBlur-320x180/case-0001-smart8/candidate.process.json",
+      "sha256": "062eeeb790ca61a442cf91ab890ed4f9fbb84e629639548d15669742b88e8544",
+      "pid": 60456,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMBlur-320x180/case-0001-smart8/reference.process.json",
+      "sha256": "a6c56efebdb5619e76621ca201f0eb2302d99c96abe6b3fa3677dead0bc31225",
+      "pid": 26516,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMBlur-320x180/case-0002-smart8/candidate.process.json",
+      "sha256": "339842afaa556c8b7519ae67eec1c1d6a1a351db5267c4718c3b9576679ebda8",
+      "pid": 10532,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMBlur-320x180/case-0002-smart8/reference.process.json",
+      "sha256": "402314cb1c9a6436d7e11cb4cf9ad33377d2ee6d8e648aa0069cc8239b37f756",
+      "pid": 54232,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMBlur-97x61/case-0000-smart8/candidate.process.json",
+      "sha256": "90c7ed1e0559aa2232c5aded842c4f0137dbbbe580301455baf99880dbce5087",
+      "pid": 21280,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMBlur-97x61/case-0000-smart8/reference.process.json",
+      "sha256": "634ba4be0ca85db696a2034bc36667ec979b7ab78608a39b60713de5af49b91b",
+      "pid": 51812,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMBlur-97x61/case-0001-smart8/candidate.process.json",
+      "sha256": "ebb5363b3f457a339e84403103d4e4b401c6fdf13a5957b8a61d8f16ce97e44d",
+      "pid": 55248,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMBlur-97x61/case-0001-smart8/reference.process.json",
+      "sha256": "b682745cdbedcd45c0d46cc05455e8c8a864c0d8261093982f5abbb75a98d37e",
+      "pid": 49128,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMBlur-97x61/case-0002-smart8/candidate.process.json",
+      "sha256": "5f03c36bb65c4cd1bb63b4639b0ff67424e888a4b6c6b8c81c67bdf0d689c720",
+      "pid": 51908,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMBlur-97x61/case-0002-smart8/reference.process.json",
+      "sha256": "f9e9d2d1db47a775c34509135dd931c7febf311faf346b523f76d45294d246b1",
+      "pid": 54980,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMColorKey-97x61/case-0000-smart8/candidate.process.json",
+      "sha256": "98a436628fd39a36efb99df8619245074085d62dde8826de09e9ac7aa4e8b40e",
+      "pid": 21384,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMColorKey-97x61/case-0000-smart8/reference.process.json",
+      "sha256": "b7043861d1864f00d95d32b71b859a16c649b14de86e966aee8c9a851430a532",
+      "pid": 49648,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMColorKey-97x61/case-0001-smart8/candidate.process.json",
+      "sha256": "d46866008b01292e3835b422de24be8db6be4fd3b8bc07b0f8b74c396bbcbb04",
+      "pid": 47220,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMColorKey-97x61/case-0001-smart8/reference.process.json",
+      "sha256": "ad8df44fd165971da589ba56a60c2301e02fc7b9e9735fe1e1ad8fd7d2a68ecc",
+      "pid": 55364,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMColorKey-97x61/case-0002-smart8/candidate.process.json",
+      "sha256": "55aed1cab5c8388b1481973497c6a6c7f1ac830c38f4e11b0c9461f7b6689120",
+      "pid": 56596,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMColorKey-97x61/case-0002-smart8/reference.process.json",
+      "sha256": "9f72733ba7d3d49344fcc00232fef7a71e7320e10cb46cbc44da8b7b447414d8",
+      "pid": 62172,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMDirectionalBlur-97x61/case-0000-smart8/candidate.process.json",
+      "sha256": "73bdaf7edd62d5dd2e98c5076aa63b32a5980b7c0e5e37ee88761103ea6bd578",
+      "pid": 60544,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMDirectionalBlur-97x61/case-0000-smart8/reference.process.json",
+      "sha256": "a8443e267ff90548850f37582805619f2aaca85d928b475e0d88a1241846a04f",
+      "pid": 47700,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMDirectionalBlur-97x61/case-0001-smart8/candidate.process.json",
+      "sha256": "0e8f5a9872787060199f588eb68a649c36503c9345b8cebce18374897006843c",
+      "pid": 38696,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMDirectionalBlur-97x61/case-0001-smart8/reference.process.json",
+      "sha256": "dca09abc4a13eaccbd694efc7d9d8b078de7eb0c197120b414c1845988d2ce94",
+      "pid": 9108,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMDirectionalBlur-97x61/case-0002-smart8/candidate.process.json",
+      "sha256": "8aea9e7629badcf017cca7e5a352bb8a8b1d6d5b44e932a95bec4247f1908f43",
+      "pid": 23688,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMDirectionalBlur-97x61/case-0002-smart8/reference.process.json",
+      "sha256": "7bbf02f19557efaeca3e5e5a9ccdc943a3877ea7d389cee38011fb6df968e31f",
+      "pid": 53440,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMKiraKira-97x61/case-0000-smart8/candidate.process.json",
+      "sha256": "64177c34195f22ca6ade0190233f0c20227f5419efba6172e188f6135655c84a",
+      "pid": 57320,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMKiraKira-97x61/case-0000-smart8/reference.process.json",
+      "sha256": "dbc0e2a5f88258e274acac527eb4919b5e973e4d4201e4eb5bf57501cb472277",
+      "pid": 61544,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMKiraKira-97x61/case-0001-smart8/candidate.process.json",
+      "sha256": "8cb15eff38f63e5200cf54cd1d7095c9c4b646b734cf60eefc4a6034c9466671",
+      "pid": 47752,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMKiraKira-97x61/case-0001-smart8/reference.process.json",
+      "sha256": "d0318357ddfa54fc79d8e64e58e47b966fa9c64b4ab21f1ad0478b38cae56b44",
+      "pid": 44320,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMKiraKira-97x61/case-0002-smart8/candidate.process.json",
+      "sha256": "4918630409e5c31f922811a9be83f8653eedf62014e3914fa5b91f82a1033436",
+      "pid": 62652,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMKiraKira-97x61/case-0002-smart8/reference.process.json",
+      "sha256": "6a3fe3c39ce0408061c3ed8dae2e5ffc8bc1677da06428a8fc5d20150a5dc18b",
+      "pid": 3128,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMRadialBlur-97x61/case-0000-smart8/candidate.process.json",
+      "sha256": "99cac63ea658d03fd9f41e0576cf4866d67d270b43c4a7646ea464e47e53f853",
+      "pid": 62564,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMRadialBlur-97x61/case-0000-smart8/reference.process.json",
+      "sha256": "a0beca8ae375684e27ec786bf1cb2375efc0abbc04c6a5224f75c8184ffca3bd",
+      "pid": 3240,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMRadialBlur-97x61/case-0001-smart8/candidate.process.json",
+      "sha256": "64521280dc87c4cd046b2ec0e721a9c6fa3cbf5895fafaaafb3c02a1b0a56305",
+      "pid": 64008,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMRadialBlur-97x61/case-0001-smart8/reference.process.json",
+      "sha256": "acbc4a9e97f7b5100d1df2cf19f7f5a4af3a09212d95a11476a606a3e3db887c",
+      "pid": 64504,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMRadialBlur-97x61/case-0002-smart8/candidate.process.json",
+      "sha256": "538750f8f70753cec37925405a5b721d9135b844efbca2b7c3bc1f0fc86ea54a",
+      "pid": 49432,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMRadialBlur-97x61/case-0002-smart8/reference.process.json",
+      "sha256": "72482d8e801e5902be6066496db68550f94e3f76e3d4857c35a6191ad0f843f1",
+      "pid": 52152,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMSmoother-97x61/case-0000-classic8/candidate.process.json",
+      "sha256": "d9dd77e323faa522969e3f5d0b4c51f4474720e98e3cee0efb968b1d069aec81",
+      "pid": 51072,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMSmoother-97x61/case-0000-classic8/reference.process.json",
+      "sha256": "e2126b4c0f78a96ed584b0cb39d3932404568cd230d526f7486e39a403308bba",
+      "pid": 61760,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMSmoother-97x61/case-0001-classic8/candidate.process.json",
+      "sha256": "7429a3b3f7ac37964b00e731b1e51e45597d712359d02f6817219a175b327b8d",
+      "pid": 56336,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMSmoother-97x61/case-0001-classic8/reference.process.json",
+      "sha256": "77793dd2dc703fb0542a0cca4a1c4da988d0252cedc418e0d96481903e12a8d1",
+      "pid": 50328,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMSmoother-97x61/case-0002-classic8/candidate.process.json",
+      "sha256": "ac225ebf55ac51cc1f6c1166db739492afc7c1421efa3d11b024e6cc9320f414",
+      "pid": 52848,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMSmoother-97x61/case-0002-classic8/reference.process.json",
+      "sha256": "84bdd847c4703848ed32686bb9840fe9e54d4c8961b9e975ea6c7723401f2b83",
+      "pid": 46504,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMSmoother2-97x61/case-0000-smart8/candidate.process.json",
+      "sha256": "d2dc9eaf8cddb9706360d69d185ef4b924c66a9196293f37984f221e1f8c0ab6",
+      "pid": 50008,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMSmoother2-97x61/case-0000-smart8/reference.process.json",
+      "sha256": "73e1554eaf44123707c4e68ef9cad5646a3d6447aa3650c0688eb07b747e300a",
+      "pid": 32800,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMSmoother2-97x61/case-0001-smart8/candidate.process.json",
+      "sha256": "d9f7308796afd4ecf029baaf1dcbb567ddf95ff00e6916e5a5a26afde835c813",
+      "pid": 39812,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMSmoother2-97x61/case-0001-smart8/reference.process.json",
+      "sha256": "e7218c3a7ff23625c0b170949ecea2637686a4afc810018e1e52e8d20261f8f4",
+      "pid": 18744,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMSmoother2-97x61/case-0002-smart8/candidate.process.json",
+      "sha256": "426ed07b54847511db7f25c4eea62a6f797bf3a134d16e258683c1cab7cae780",
+      "pid": 30692,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMSmoother2-97x61/case-0002-smart8/reference.process.json",
+      "sha256": "a15c3a761f6231088ffa533665b49b14c2653729be12c9f9d15f1d76fc159c8e",
+      "pid": 26400,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMToonDilate-97x61/case-0000-smart8/candidate.process.json",
+      "sha256": "582d3d5d7ff3df25b60d44efb3cc61275629cc2dc4fb51187b9c2c66d0d5fbaf",
+      "pid": 42700,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMToonDilate-97x61/case-0000-smart8/reference.process.json",
+      "sha256": "d1e00b802e4d6e857ca9b4de6446ca6a82dc17cdae48397333ffc339a422b537",
+      "pid": 64264,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMToonDilate-97x61/case-0001-smart8/candidate.process.json",
+      "sha256": "fc12ec3754fec7ca53fe0b2bede127b707213656484d9958b7e538a01f653500",
+      "pid": 63196,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMToonDilate-97x61/case-0001-smart8/reference.process.json",
+      "sha256": "c796cfeef46cb9e081433ea4887f578d5173e55eab3941114e41dcbeebfcbf9f",
+      "pid": 23840,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMToonDilate-97x61/case-0002-smart8/candidate.process.json",
+      "sha256": "16b78d3025e3727cf28fcad7b73a88199d8e794ef06181f6387fecbf5676e9d8",
+      "pid": 8264,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/baseline-20261112/OLMToonDilate-97x61/case-0002-smart8/reference.process.json",
+      "sha256": "ec0e9fc6d5728f567b94992d61bf6ac59576939329843a00a59862e7160562fd",
+      "pid": 50400,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/discovery/blur-performance.process.json",
+      "sha256": "869031e0efa21a88de0cf597a32ad7a30606a8541b0c5b03febfb8f6f393de7f",
+      "pid": 61696,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/discovery/contract.process.json",
+      "sha256": "ff2df7db0e0baa36d4488cc4cd788f97265d72b16ebd23e8cac7e83dfc6029e3",
+      "pid": 47636,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/discovery/help.process.json",
+      "sha256": "e264914fc311560e50f4d57cdea08c4b3db12d49dd9b88db72541222f63335aa",
+      "pid": 31804,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/pilot/case-0000-smart8/candidate.process.json",
+      "sha256": "e6617992b5d5993ebfd3d93f2b513fade89e6ba3906de73928ec62137df95302",
+      "pid": 51000,
+      "returncode": 0,
+      "timeout": false
+    },
+    {
+      "file": "runs/pilot/case-0000-smart8/reference.process.json",
+      "sha256": "9ebada62f3c7a38a780bbdce0c5f323955ab9a75ceec94a20dc86ed91546a04a",
+      "pid": 49628,
+      "returncode": 0,
+      "timeout": false
+    }
+  ],
+  "recorded_pid_check": [
+    {
+      "pid": 3128,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 3240,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 5500,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 6760,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 8264,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 9108,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 10532,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 18744,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 21280,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 21384,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 23688,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 23840,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 26400,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 26516,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 30692,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 31804,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 32660,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 32800,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 38696,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 39284,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 39812,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 42700,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 44320,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 46504,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 47220,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 47304,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 47532,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 47636,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 47700,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 47752,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 47940,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 49076,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 49128,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 49276,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 49432,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 49628,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 49648,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 50008,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 50328,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 50400,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 51000,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 51072,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 51812,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 51896,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 51908,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 52152,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 52604,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 52848,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 53324,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 53440,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 54232,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 54980,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 55248,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 55364,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 56328,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 56336,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 56596,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 57320,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 58152,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 59264,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 59408,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 60128,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 60456,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 60544,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 60952,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 61544,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 61656,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 61696,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 61760,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 62172,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 62396,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 62560,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 62564,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 62652,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 62780,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 63052,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 63196,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 64008,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 64264,
+      "state": "pid_absent",
+      "winerror": 87
+    },
+    {
+      "pid": 64504,
+      "state": "pid_absent",
+      "winerror": 87
+    }
+  ],
+  "cleanup_method": "oracle.run_process returns only after its finally closes its owned Job, verifies ActiveProcesses=0, and waits for child. PID-only follow-up does not infer ownership of reused PIDs.",
+  "resident_equivalence_verified": false,
+  "actual_candidates_tested": false
+}

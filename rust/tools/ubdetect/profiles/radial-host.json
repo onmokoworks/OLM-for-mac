@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "module_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "routes": [
+    "smart8",
+    "smart16",
+    "smart32"
+  ],
+  "undefined_contract": true,
+  "automatic": false,
+  "hooks": [
+    {
+      "name": "host_suite_noise_plane",
+      "rva": "0x9443",
+      "instruction": "8b5320",
+      "kind": "span",
+      "address": {
+        "reg": "rax"
+      },
+      "size": {
+        "mul": [
+          4,
+          {
+            "reg": "rbx",
+            "offset": 16
+          },
+          {
+            "reg": "rbx",
+            "offset": 20
+          }
+        ]
+      },
+      "basis": "Fresh PF Handle Suite allocation, after lock and before generator writes any lattice elements. 0x942f calls allocation wrapper 0x9970; 0x943e locks via 0x98d0. Plane count is width*height in owner +0x10/+0x14."
+    },
+    {
+      "name": "host_suite_noise_table",
+      "rva": "0x9463",
+      "instruction": "8b942460140000",
+      "kind": "span",
+      "address": {
+        "reg": "rax"
+      },
+      "size": 404,
+      "basis": "Fresh PF Handle Suite 404-byte allocation: owner+0x20=100; 0x9449 increments to 101; allocation at 0x944f and lock at 0x945e. All 101 floats must be written by 0x94d0..0x94f8 before sampling."
+    }
+  ]
+}

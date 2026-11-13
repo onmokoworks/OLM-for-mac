@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "reference": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMAntiAntiAlias\\OLMAntiAntiAlias\\Plugins\\64\\2025\\OLMAntiAntiAlias.aex",
+  "candidate": "local/final-build/OLMAntiAntiAlias.aex",
+  "harness": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+  "oracle": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+  "routes": [
+    "smart8",
+    "smart16",
+    "smart32"
+  ],
+  "jobs": 1,
+  "cases": 12,
+  "seed": 20261112,
+  "downsample": "1,1/2,1/4",
+  "expect_render_match": false,
+  "reason": "Original rejects the strict host after a duplicate parameter checkin; direct success is not claimed."
+}

@@ -1,0 +1,263 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-12",
+  "plugin": "OLMToonDilate",
+  "qualification": "AEXCompat CPU, not native AE or macOS",
+  "identities": {
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMToonDilate.aex",
+      "sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-toon-dilate\\validation\\OLMToonDilate.aex",
+      "sha256": "b695f68a13ef13c0e8cf8be633897f8930030a390306340a5c5d24b64cdf2967"
+    },
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+    },
+    "tool": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+      "sha256": "657b40b68902ac64a9c3d2175e383ae97b9940f2d30a817b9962b350d76b5ab3"
+    },
+    "worker": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\target\\minihost-build\\aex_worker.exe",
+      "sha256": "0481df5fa425af28f0e8a39ea9386185de13656c3c9d488042bed2244bdf8302"
+    }
+  },
+  "inventory_identical": true,
+  "pipl_identical_bytes": 298,
+  "campaigns": [
+    {
+      "seed": 20261112,
+      "cases_per_depth": 203,
+      "randomized_per_depth": 200,
+      "downsample_counts_per_depth": {
+        "1": 68,
+        "1/2": 68,
+        "1/4": 67
+      },
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 203,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 203,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 203,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 203,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 203,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 203,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "jobs": 3,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          97,
+          61
+        ]
+      ],
+      "timeout_seconds": 120.0,
+      "render_environment_overrides": {
+        "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+      },
+      "summary_path": "validation\\seed-20261112\\summary.json",
+      "summary_sha256": "4b107945dfab456cf6e4c2cce31bea55ec6ccc4836268130386a36f84a44cbc1",
+      "case_plan_sha256": "f091dbd7bbaebcd38e3e8368714d180e32fa03077d4b45c7b4febfb5617507aa"
+    },
+    {
+      "seed": 20261113,
+      "cases_per_depth": 203,
+      "randomized_per_depth": 200,
+      "downsample_counts_per_depth": {
+        "1": 68,
+        "1/2": 68,
+        "1/4": 67
+      },
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 203,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 203,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 203,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 203,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 203,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 203,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "jobs": 3,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          97,
+          61
+        ]
+      ],
+      "timeout_seconds": 120.0,
+      "render_environment_overrides": {
+        "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+      },
+      "summary_path": "validation\\seed-20261113\\summary.json",
+      "summary_sha256": "9893da40e23455cde82f18f52973f77802786a3f31fa27d8cc1937e97f998080",
+      "case_plan_sha256": "0c639a581436e92c4ef43fbe953acb0bff9989c47da0cbddfbfac7b03da1424d"
+    }
+  ],
+  "totals": {
+    "exact": 1218,
+    "per_depth": 406,
+    "randomized_per_depth": 400,
+    "mismatches": 0,
+    "reference_unrenderable": 0,
+    "reference_timeout": 0,
+    "candidate_failure": 0,
+    "tool_error": 0
+  },
+  "tests": {
+    "passed": 7,
+    "cpp_matrix_comparisons": 3150,
+    "concurrent_cpp_comparisons": 168,
+    "frame_thread_counts": [
+      1,
+      2,
+      7
+    ]
+  },
+  "source_sha256": {
+    "Cargo.toml": "293ab60d3aa67a82cde02d28c8e24c18b648913fe6442780a3228c1b64dbfed3",
+    "build.rs": "401592fc416134b7d716d0ec142675d96562e7a27c6a14eb8ec5876d2616443f",
+    "src/lib.rs": "c391aa4705a228b7e591d004d8285228d84848bda549e2f00b8f208220354aa7",
+    "src/algorithm.rs": "ca0ad09b3b4695bc688f1a65493723249213b666c21802aa5c7e9d555a72312d",
+    "src/ae.rs": "a8a3a170a010aac1e987b9700825ccfc5bb9ebe905eaedb7b58be2a7e89690c1",
+    "tests/reference.cpp": "5e94e36f527f06e2f085564825d52485f4e9e4e7c1260a56aaa04a0f56f67fff",
+    "tests/kernel.rs": "f921f24927751e42081f34c78ebe58989b0833dba112c21af484f54f7d7f0c28"
+  },
+  "cpp_production_sha256": "356b2ca70781757eaf31c0c5199b805fc26e8fd49bf9a4826280e80154a86e26",
+  "reference_unrenderable_cases": [],
+  "process_cleanup": "Oracle owned Windows Job Objects verify zero active descendants on every return.",
+  "remaining_gaps": [
+    "native AE",
+    "macOS build",
+    "UI interaction",
+    "saved-project round trips",
+    "native-deep/ROI original-AEX campaign beyond request PNG corpus"
+  ],
+  "hoisting_candidates": [
+    "optional pixel-checkin policy",
+    "commit after checkin",
+    "custom UI event registration",
+    "pre-render extra-pixels flag"
+  ]
+}

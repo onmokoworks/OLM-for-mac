@@ -1,0 +1,1837 @@
+{
+  "schema_version": 1,
+  "harness": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+    "sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d"
+  },
+  "probe": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\probe\\capture.aex",
+    "sha256": "ad75563097dbeabe8b595f94c006cf51c036e7eefce41817d17010894cedabca"
+  },
+  "generator_sha256": "03ef498e2424841fc92f106b8036f936876cd5951fba084c47505ac07520ff2a",
+  "plugins": [
+    {
+      "name": "ColorKeep",
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\ColorKeep.aex",
+        "sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86"
+      },
+      "build_exit": 0,
+      "test_exit": 0,
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\ColorKeep\\ColorKeep.aex",
+        "sha256": "11a861dce8dd45eac4555c5becfc003e2506293a8e7ffe879664c1413ba19849"
+      },
+      "inventory_stdout": "inventory: identical (all exposed parameter and host fields)",
+      "inventory_identical": true,
+      "pipl_identical": true,
+      "pipl": [
+        {
+          "name": 16000,
+          "language": 1033,
+          "type": "PIPL",
+          "size": 294,
+          "sha256": "81397edb97c3177d8e7c916c1f064c0ebf398ef4e36f28206c37e89b6bfc717f"
+        }
+      ],
+      "declarations_diff": [],
+      "limitations": {
+        "algorithm": "TODO: byte-copy stub only; no original render equivalence",
+        "dynamic_ui": "TODO: state transitions cannot be inferred from PARAMS_SETUP/inventory",
+        "custom_ui_events": 0,
+        "supervised_slots": [
+          1
+        ],
+        "arbitrary_slots": [],
+        "arbitrary_semantics": "Opaque flatten/unflatten/copy only; unknown bytes preserved verbatim; no interior interpolation, print/scan or editor. Captured defaults may include unstable inactive bytes.",
+        "host_behavior": "TODO: original ROI expansion, temporal inputs, secondary-layer use, sequence/global state, audio/GPU and dynamic flags are not reconstructed",
+        "platforms": "Windows x64 CPU scaffold; native AE and macOS bundle/PiPL/entry generation unverified"
+      },
+      "params": 101,
+      "status": "pass",
+      "logs": [
+        {
+          "path": "local/all-ten-final/ColorKeep/generate.json",
+          "sha256": "72c1cc20034d4cd8a08626b949deefbb7dbc155cfe39e2bdef68488789594186",
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\olm_scaffold.py",
+            "new",
+            "--aex",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\ColorKeep.aex",
+            "--crate-name",
+            "scaffold-colorkeep",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\ColorKeep\\crate",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--probe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\probe\\capture.aex"
+          ],
+          "pid": 53772,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/ColorKeep/build.json",
+          "sha256": "65a99ef8ad54b8c127811f309ac691776a7ef291dce8b9e2751663824a500f5c",
+          "argv": [
+            "cargo",
+            "build",
+            "--offline",
+            "--release",
+            "--manifest-path",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\ColorKeep\\crate\\Cargo.toml",
+            "--target-dir",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\target",
+            "-j",
+            "2"
+          ],
+          "pid": 53540,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/ColorKeep/test.json",
+          "sha256": "f88301c4b97ec5d891abbb4da453f60b74843e41fc08abd1a41d9c058a21a428",
+          "argv": [
+            "cargo",
+            "test",
+            "--offline",
+            "--release",
+            "--manifest-path",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\ColorKeep\\crate\\Cargo.toml",
+            "--target-dir",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\target",
+            "-j",
+            "2"
+          ],
+          "pid": 57296,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/ColorKeep/inventory-run.json",
+          "sha256": "931aa3c1a2f3fbfc01403b71efd4686c1743c3cb03f0cb5d76ed7bedaac56be7",
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "inventory",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\ColorKeep.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\ColorKeep\\ColorKeep.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\ColorKeep\\inventory"
+          ],
+          "pid": 44812,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/ColorKeep/candidate-capture-run.json",
+          "sha256": "9eed69b9ade7bb307207a169be1d3ef79b81b93c7621085c7827997036e5bf6e",
+          "argv": [
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--headless",
+            "--inspect-experimental-with-deps",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\probe\\capture.aex",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\ColorKeep"
+          ],
+          "pid": 14164,
+          "returncode": 0,
+          "timeout": false
+        }
+      ],
+      "declarations_sha256": "51f88d41526e3ee8a44254193d9e2e75fb341dcfce1b467637e444f8d98d35c6",
+      "generated_manifest_sha256": "4a79a5cb22f63572d128e5133faa81662e99bf69bc05209212bd7492495b146e"
+    },
+    {
+      "name": "DistanceGradation",
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\DistanceGradation.aex",
+        "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+      },
+      "build_exit": 0,
+      "test_exit": 0,
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\DistanceGradation\\DistanceGradation.aex",
+        "sha256": "c4bcce5c84645cecf0bcaf8104908845ce7851a34de616db006fa8d25c0e7621"
+      },
+      "inventory_stdout": "inventory: identical (all exposed parameter and host fields)",
+      "inventory_identical": true,
+      "pipl_identical": true,
+      "pipl": [
+        {
+          "name": 16000,
+          "language": 1033,
+          "type": "PIPL",
+          "size": 310,
+          "sha256": "a1391e693b370c6ae69295a72cf70bf7d67b57fbaf6ab50220c462f14d729982"
+        }
+      ],
+      "declarations_diff": [],
+      "limitations": {
+        "algorithm": "TODO: byte-copy stub only; no original render equivalence",
+        "dynamic_ui": "TODO: state transitions cannot be inferred from PARAMS_SETUP/inventory",
+        "custom_ui_events": 0,
+        "supervised_slots": [],
+        "arbitrary_slots": [],
+        "arbitrary_semantics": "Opaque flatten/unflatten/copy only; unknown bytes preserved verbatim; no interior interpolation, print/scan or editor. Captured defaults may include unstable inactive bytes.",
+        "host_behavior": "TODO: original ROI expansion, temporal inputs, secondary-layer use, sequence/global state, audio/GPU and dynamic flags are not reconstructed",
+        "platforms": "Windows x64 CPU scaffold; native AE and macOS bundle/PiPL/entry generation unverified"
+      },
+      "params": 12,
+      "status": "pass",
+      "logs": [
+        {
+          "path": "local/all-ten-final/DistanceGradation/generate.json",
+          "sha256": "a74e1ef1a2e0f42734e236c35443839b22fa60b22e91977b1dff4a6a80e7c0a9",
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\olm_scaffold.py",
+            "new",
+            "--aex",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\DistanceGradation.aex",
+            "--crate-name",
+            "scaffold-distancegradation",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\DistanceGradation\\crate",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--probe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\probe\\capture.aex"
+          ],
+          "pid": 62380,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/DistanceGradation/build.json",
+          "sha256": "34880b07dba2aaa3be3870221b14c7ebab98e84e610c7e35cbacb4d5faa1e480",
+          "argv": [
+            "cargo",
+            "build",
+            "--offline",
+            "--release",
+            "--manifest-path",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\DistanceGradation\\crate\\Cargo.toml",
+            "--target-dir",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\target",
+            "-j",
+            "2"
+          ],
+          "pid": 58956,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/DistanceGradation/test.json",
+          "sha256": "1e7305cb797c2b133e39b9e82716bf1b98f77de1d3bc9db5a44ef95196e92efd",
+          "argv": [
+            "cargo",
+            "test",
+            "--offline",
+            "--release",
+            "--manifest-path",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\DistanceGradation\\crate\\Cargo.toml",
+            "--target-dir",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\target",
+            "-j",
+            "2"
+          ],
+          "pid": 53260,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/DistanceGradation/inventory-run.json",
+          "sha256": "e3b80edaaec612e8283ba45e47d24c497dad31395622e19e1b9b43d2e3231d98",
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "inventory",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\DistanceGradation.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\DistanceGradation\\DistanceGradation.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\DistanceGradation\\inventory"
+          ],
+          "pid": 61032,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/DistanceGradation/candidate-capture-run.json",
+          "sha256": "8b7c5971fa6f201f2b784cfe33220f89432a998702697857f2086336a528c9d3",
+          "argv": [
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--headless",
+            "--inspect-experimental-with-deps",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\probe\\capture.aex",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\DistanceGradation"
+          ],
+          "pid": 53688,
+          "returncode": 0,
+          "timeout": false
+        }
+      ],
+      "declarations_sha256": "d8cb39029be143c0e8c585a392095bec53b3fb797a195ac48f1967a6336727a7",
+      "generated_manifest_sha256": "b7bbf24405e2837df08e2592efc35c06b2fb52bc3eadb24822d7766720fbb10a"
+    },
+    {
+      "name": "OLMBlur",
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+        "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+      },
+      "build_exit": 0,
+      "test_exit": 0,
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMBlur\\OLMBlur.aex",
+        "sha256": "bbf5611947e9fa635cf58408db22aa904545bc34618dd4671bb19e18ceb96e77"
+      },
+      "inventory_stdout": "inventory: identical (all exposed parameter and host fields)",
+      "inventory_identical": true,
+      "pipl_identical": true,
+      "pipl": [
+        {
+          "name": 16000,
+          "language": 1033,
+          "type": "PIPL",
+          "size": 294,
+          "sha256": "147f220be4bb05cb95d845c71699015a86deb41fe544fb55afa0a3fbe695f78e"
+        }
+      ],
+      "declarations_diff": [],
+      "limitations": {
+        "algorithm": "TODO: byte-copy stub only; no original render equivalence",
+        "dynamic_ui": "TODO: state transitions cannot be inferred from PARAMS_SETUP/inventory",
+        "custom_ui_events": 0,
+        "supervised_slots": [],
+        "arbitrary_slots": [],
+        "arbitrary_semantics": "Opaque flatten/unflatten/copy only; unknown bytes preserved verbatim; no interior interpolation, print/scan or editor. Captured defaults may include unstable inactive bytes.",
+        "host_behavior": "TODO: original ROI expansion, temporal inputs, secondary-layer use, sequence/global state, audio/GPU and dynamic flags are not reconstructed",
+        "platforms": "Windows x64 CPU scaffold; native AE and macOS bundle/PiPL/entry generation unverified"
+      },
+      "params": 5,
+      "status": "pass",
+      "logs": [
+        {
+          "path": "local/all-ten-final/OLMBlur/generate.json",
+          "sha256": "24f7d7fd007ce1969220b75a5d446fcdff50332a3340a04615653bd159f663f4",
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\olm_scaffold.py",
+            "new",
+            "--aex",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+            "--crate-name",
+            "scaffold-olmblur",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMBlur\\crate",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--probe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\probe\\capture.aex"
+          ],
+          "pid": 59076,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMBlur/build.json",
+          "sha256": "e3839da1f74a70f4dd8fa2855609832c384c09be4ad2d82502525a453eb5d07d",
+          "argv": [
+            "cargo",
+            "build",
+            "--offline",
+            "--release",
+            "--manifest-path",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMBlur\\crate\\Cargo.toml",
+            "--target-dir",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\target",
+            "-j",
+            "2"
+          ],
+          "pid": 47656,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMBlur/test.json",
+          "sha256": "91f6ff1f844d300e5bf746bdc27c9282c2d194fa967d0f7fbc71022510cfd321",
+          "argv": [
+            "cargo",
+            "test",
+            "--offline",
+            "--release",
+            "--manifest-path",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMBlur\\crate\\Cargo.toml",
+            "--target-dir",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\target",
+            "-j",
+            "2"
+          ],
+          "pid": 51996,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMBlur/inventory-run.json",
+          "sha256": "07ee9a4b30792984285849b511afbc317370a2563fbcdb40b623281e4124a5a0",
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "inventory",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMBlur\\OLMBlur.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMBlur\\inventory"
+          ],
+          "pid": 56284,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMBlur/candidate-capture-run.json",
+          "sha256": "bc9fd17c78f724d3e67bd068d6ef6eece1df3354266a78b16d7ad1bd827af1df",
+          "argv": [
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--headless",
+            "--inspect-experimental-with-deps",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\probe\\capture.aex",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMBlur"
+          ],
+          "pid": 61900,
+          "returncode": 0,
+          "timeout": false
+        }
+      ],
+      "declarations_sha256": "91a0e7d712ec536329c6261493b8f4429f78118adbaf16f56f89e707fa7e0962",
+      "generated_manifest_sha256": "86497d586c23369d8f527ddfb641f4d14ac9f497feb87a4cbe55f642dea531be"
+    },
+    {
+      "name": "OLMColorKey",
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMColorKey.aex",
+        "sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c"
+      },
+      "build_exit": 0,
+      "test_exit": 0,
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMColorKey\\OLMColorKey.aex",
+        "sha256": "4784b8b2b454e450ed4820d1e817d5f3ab5f2402c8753ff3451c7655564b51cb"
+      },
+      "inventory_stdout": "inventory: identical (all exposed parameter and host fields)",
+      "inventory_identical": true,
+      "pipl_identical": true,
+      "pipl": [
+        {
+          "name": 16000,
+          "language": 1033,
+          "type": "PIPL",
+          "size": 294,
+          "sha256": "8811f9bdf93a59e444a698a4bfa6782a8aa7af45b84b31d35c786ab770c27f05"
+        }
+      ],
+      "declarations_diff": [],
+      "limitations": {
+        "algorithm": "TODO: byte-copy stub only; no original render equivalence",
+        "dynamic_ui": "TODO: state transitions cannot be inferred from PARAMS_SETUP/inventory",
+        "custom_ui_events": 0,
+        "supervised_slots": [
+          22,
+          23
+        ],
+        "arbitrary_slots": [],
+        "arbitrary_semantics": "Opaque flatten/unflatten/copy only; unknown bytes preserved verbatim; no interior interpolation, print/scan or editor. Captured defaults may include unstable inactive bytes.",
+        "host_behavior": "TODO: original ROI expansion, temporal inputs, secondary-layer use, sequence/global state, audio/GPU and dynamic flags are not reconstructed",
+        "platforms": "Windows x64 CPU scaffold; native AE and macOS bundle/PiPL/entry generation unverified"
+      },
+      "params": 223,
+      "status": "pass",
+      "logs": [
+        {
+          "path": "local/all-ten-final/OLMColorKey/generate.json",
+          "sha256": "398d00889e651d4e193b3d121945b8b0ebf22706508248ab5915021fdd7f2ee0",
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\olm_scaffold.py",
+            "new",
+            "--aex",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMColorKey.aex",
+            "--crate-name",
+            "scaffold-olmcolorkey",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMColorKey\\crate",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--probe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\probe\\capture.aex"
+          ],
+          "pid": 54116,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMColorKey/build.json",
+          "sha256": "aa9c8a52098acc96e05b0d69b4751a5cfc45bc0b1d61af8a173e56294bdc9877",
+          "argv": [
+            "cargo",
+            "build",
+            "--offline",
+            "--release",
+            "--manifest-path",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMColorKey\\crate\\Cargo.toml",
+            "--target-dir",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\target",
+            "-j",
+            "2"
+          ],
+          "pid": 58028,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMColorKey/test.json",
+          "sha256": "cfc750644877d7e43635e1f8c20fb469a1b7702add0072737900bb0f7a99ffc2",
+          "argv": [
+            "cargo",
+            "test",
+            "--offline",
+            "--release",
+            "--manifest-path",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMColorKey\\crate\\Cargo.toml",
+            "--target-dir",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\target",
+            "-j",
+            "2"
+          ],
+          "pid": 43632,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMColorKey/inventory-run.json",
+          "sha256": "349506b63df47627efee4ac9cb5abf65227f20a802a7a3684b43331ea1ee9901",
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "inventory",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMColorKey.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMColorKey\\OLMColorKey.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMColorKey\\inventory"
+          ],
+          "pid": 46360,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMColorKey/candidate-capture-run.json",
+          "sha256": "f168c3505c65b3538287335fbb5c8a126fe340baa4d4881059f42689a577b37d",
+          "argv": [
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--headless",
+            "--inspect-experimental-with-deps",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\probe\\capture.aex",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMColorKey"
+          ],
+          "pid": 53692,
+          "returncode": 0,
+          "timeout": false
+        }
+      ],
+      "declarations_sha256": "16474babf3379059a08dc8ad36c13d18d1da6eb4139d380bfb8279a5ef157af5",
+      "generated_manifest_sha256": "4319fccf05232dae6243831a691bd06fdcdafc905f2c5838a6b047b7f838151c"
+    },
+    {
+      "name": "OLMDirectionalBlur",
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+        "sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+      },
+      "build_exit": 0,
+      "test_exit": 0,
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMDirectionalBlur\\OLMDirectionalBlur.aex",
+        "sha256": "17f00fe8e406729411d606871cae2ee92bad003804af566002ff041921b0a148"
+      },
+      "inventory_stdout": "inventory: identical (all exposed parameter and host fields)",
+      "inventory_identical": true,
+      "pipl_identical": true,
+      "pipl": [
+        {
+          "name": 16000,
+          "language": 1033,
+          "type": "PIPL",
+          "size": 310,
+          "sha256": "3bdc27c22e780cb5c14f9edefce91340f4a8b82005b59854bf573fef0774f89d"
+        }
+      ],
+      "declarations_diff": [],
+      "limitations": {
+        "algorithm": "TODO: byte-copy stub only; no original render equivalence",
+        "dynamic_ui": "TODO: state transitions cannot be inferred from PARAMS_SETUP/inventory",
+        "custom_ui_events": 0,
+        "supervised_slots": [],
+        "arbitrary_slots": [],
+        "arbitrary_semantics": "Opaque flatten/unflatten/copy only; unknown bytes preserved verbatim; no interior interpolation, print/scan or editor. Captured defaults may include unstable inactive bytes.",
+        "host_behavior": "TODO: original ROI expansion, temporal inputs, secondary-layer use, sequence/global state, audio/GPU and dynamic flags are not reconstructed",
+        "platforms": "Windows x64 CPU scaffold; native AE and macOS bundle/PiPL/entry generation unverified"
+      },
+      "params": 21,
+      "status": "pass",
+      "logs": [
+        {
+          "path": "local/all-ten-final/OLMDirectionalBlur/generate.json",
+          "sha256": "31c83a42bd90008f43ffd42d07fcf65f54904c63660650522b0088129045488a",
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\olm_scaffold.py",
+            "new",
+            "--aex",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+            "--crate-name",
+            "scaffold-olmdirectionalblur",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMDirectionalBlur\\crate",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--probe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\probe\\capture.aex"
+          ],
+          "pid": 62284,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMDirectionalBlur/build.json",
+          "sha256": "95aee33577dc305f19e2d551e8c07457b6fb8f66c1cb54dcc79837fdb1c5adca",
+          "argv": [
+            "cargo",
+            "build",
+            "--offline",
+            "--release",
+            "--manifest-path",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMDirectionalBlur\\crate\\Cargo.toml",
+            "--target-dir",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\target",
+            "-j",
+            "2"
+          ],
+          "pid": 53716,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMDirectionalBlur/test.json",
+          "sha256": "bbc06950a07aa5c58591d754732cc90b6bd4188916cb4ba17c74cf3f51aa48bf",
+          "argv": [
+            "cargo",
+            "test",
+            "--offline",
+            "--release",
+            "--manifest-path",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMDirectionalBlur\\crate\\Cargo.toml",
+            "--target-dir",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\target",
+            "-j",
+            "2"
+          ],
+          "pid": 52660,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMDirectionalBlur/inventory-run.json",
+          "sha256": "875a860aeba1624138fc95e06b5381954dbc810f7066e09f19aa14f84b866a4e",
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "inventory",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMDirectionalBlur\\OLMDirectionalBlur.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMDirectionalBlur\\inventory"
+          ],
+          "pid": 55796,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMDirectionalBlur/candidate-capture-run.json",
+          "sha256": "142a35558345a7550b090444a72a0728e8906cdb5fdff842fdd954c74b534e8e",
+          "argv": [
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--headless",
+            "--inspect-experimental-with-deps",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\probe\\capture.aex",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMDirectionalBlur"
+          ],
+          "pid": 52172,
+          "returncode": 0,
+          "timeout": false
+        }
+      ],
+      "declarations_sha256": "6efc4b168c86f42d0e1d97f55ba917e9eaa143789e16ae8e67a2f0f20dbe1bd1",
+      "generated_manifest_sha256": "c707490299a0a1c4a26786685d8c3fcf63deecf0b3f7e5fd88bc0c82d0312ce1"
+    },
+    {
+      "name": "OLMKiraKira",
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMKiraKira.aex",
+        "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+      },
+      "build_exit": 0,
+      "test_exit": 0,
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMKiraKira\\OLMKiraKira.aex",
+        "sha256": "966c044a003a80656eac3b69c6bc04be47ebcc2b8b415855a057977aae0d7e77"
+      },
+      "inventory_stdout": "inventory: identical (all exposed parameter and host fields)",
+      "inventory_identical": true,
+      "pipl_identical": true,
+      "pipl": [
+        {
+          "name": 16000,
+          "language": 1033,
+          "type": "PIPL",
+          "size": 298,
+          "sha256": "1d3ffb7c9189da6d6a14ae253ff82821f239f3c902456157cba2595cb492b97f"
+        }
+      ],
+      "declarations_diff": [],
+      "limitations": {
+        "algorithm": "TODO: byte-copy stub only; no original render equivalence",
+        "dynamic_ui": "TODO: state transitions cannot be inferred from PARAMS_SETUP/inventory",
+        "custom_ui_events": 4,
+        "supervised_slots": [
+          1,
+          2,
+          3,
+          14,
+          20,
+          26,
+          32,
+          38
+        ],
+        "arbitrary_slots": [
+          14,
+          20,
+          26,
+          32,
+          38
+        ],
+        "arbitrary_semantics": "Opaque flatten/unflatten/copy only; unknown bytes preserved verbatim; no interior interpolation, print/scan or editor. Captured defaults may include unstable inactive bytes.",
+        "host_behavior": "TODO: original ROI expansion, temporal inputs, secondary-layer use, sequence/global state, audio/GPU and dynamic flags are not reconstructed",
+        "platforms": "Windows x64 CPU scaffold; native AE and macOS bundle/PiPL/entry generation unverified"
+      },
+      "params": 40,
+      "status": "pass",
+      "logs": [
+        {
+          "path": "local/all-ten-final/OLMKiraKira/generate.json",
+          "sha256": "b6306b49c8baebc18dc660b607bd21b74e6e32faaa0d0a0796ded714899bb2cc",
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\olm_scaffold.py",
+            "new",
+            "--aex",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMKiraKira.aex",
+            "--crate-name",
+            "scaffold-olmkirakira",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMKiraKira\\crate",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--probe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\probe\\capture.aex"
+          ],
+          "pid": 62364,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMKiraKira/build.json",
+          "sha256": "5325e636d9864f9b699bf4db568238e95274c9b7689c72656d6cd81d900c1c3e",
+          "argv": [
+            "cargo",
+            "build",
+            "--offline",
+            "--release",
+            "--manifest-path",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMKiraKira\\crate\\Cargo.toml",
+            "--target-dir",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\target",
+            "-j",
+            "2"
+          ],
+          "pid": 50320,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMKiraKira/test.json",
+          "sha256": "d0fe2b43a43556246f2db2ef3bb93b7fe23e71407b502744cda677cab93f3fbd",
+          "argv": [
+            "cargo",
+            "test",
+            "--offline",
+            "--release",
+            "--manifest-path",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMKiraKira\\crate\\Cargo.toml",
+            "--target-dir",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\target",
+            "-j",
+            "2"
+          ],
+          "pid": 61236,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMKiraKira/inventory-run.json",
+          "sha256": "221382e6093ef76e9d580c3f3209abca8c63cd0d3cfcd913fa78b880b226e9c9",
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "inventory",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMKiraKira.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMKiraKira\\OLMKiraKira.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMKiraKira\\inventory"
+          ],
+          "pid": 58844,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMKiraKira/candidate-capture-run.json",
+          "sha256": "e66c82fe893f374cf726dfc446a110917bc86171de89882b360cc4d1bf41a2bf",
+          "argv": [
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--headless",
+            "--inspect-experimental-with-deps",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\probe\\capture.aex",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMKiraKira"
+          ],
+          "pid": 18728,
+          "returncode": 0,
+          "timeout": false
+        }
+      ],
+      "declarations_sha256": "f3e3f3867dd976ffdbc78f99a7b60489f0c4a054abad255987045380439a2b57",
+      "generated_manifest_sha256": "c49761512f95ecf15eb5498583d4a0994cce6e7d75a07b120024c77344ff6934"
+    },
+    {
+      "name": "OLMRadialBlur",
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+        "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+      },
+      "build_exit": 0,
+      "test_exit": 0,
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMRadialBlur\\OLMRadialBlur.aex",
+        "sha256": "3724427c1bcc5a06a37d445b48a6b9ad51b7faf0fabafca0339258a05ede6f7f"
+      },
+      "inventory_stdout": "inventory: identical (all exposed parameter and host fields)",
+      "inventory_identical": true,
+      "pipl_identical": true,
+      "pipl": [
+        {
+          "name": 16000,
+          "language": 1033,
+          "type": "PIPL",
+          "size": 294,
+          "sha256": "ca613a0dbdb5df801cfdac8896b544c7a2f146dc8bde953dba6cfa01723ed7b0"
+        }
+      ],
+      "declarations_diff": [],
+      "limitations": {
+        "algorithm": "TODO: byte-copy stub only; no original render equivalence",
+        "dynamic_ui": "TODO: state transitions cannot be inferred from PARAMS_SETUP/inventory",
+        "custom_ui_events": 0,
+        "supervised_slots": [
+          1,
+          2,
+          5,
+          11,
+          15,
+          17,
+          18,
+          20,
+          21,
+          22,
+          24,
+          25,
+          26,
+          28,
+          29
+        ],
+        "arbitrary_slots": [],
+        "arbitrary_semantics": "Opaque flatten/unflatten/copy only; unknown bytes preserved verbatim; no interior interpolation, print/scan or editor. Captured defaults may include unstable inactive bytes.",
+        "host_behavior": "TODO: original ROI expansion, temporal inputs, secondary-layer use, sequence/global state, audio/GPU and dynamic flags are not reconstructed",
+        "platforms": "Windows x64 CPU scaffold; native AE and macOS bundle/PiPL/entry generation unverified"
+      },
+      "params": 30,
+      "status": "pass",
+      "logs": [
+        {
+          "path": "local/all-ten-final/OLMRadialBlur/generate.json",
+          "sha256": "b9f09489d394479ba942e2a89f7bcd79bd1a09096a744032f41a9c4997fbfe21",
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\olm_scaffold.py",
+            "new",
+            "--aex",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+            "--crate-name",
+            "scaffold-olmradialblur",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMRadialBlur\\crate",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--probe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\probe\\capture.aex"
+          ],
+          "pid": 59360,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMRadialBlur/build.json",
+          "sha256": "fe7368e7b1724cf06d3aa6309fd97533e534b290aceff4250e72eb2280757704",
+          "argv": [
+            "cargo",
+            "build",
+            "--offline",
+            "--release",
+            "--manifest-path",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMRadialBlur\\crate\\Cargo.toml",
+            "--target-dir",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\target",
+            "-j",
+            "2"
+          ],
+          "pid": 49252,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMRadialBlur/test.json",
+          "sha256": "df10c44805afd256d68ba57ea1d32ca0cb358756d64666efc137c0cf0ecb4809",
+          "argv": [
+            "cargo",
+            "test",
+            "--offline",
+            "--release",
+            "--manifest-path",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMRadialBlur\\crate\\Cargo.toml",
+            "--target-dir",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\target",
+            "-j",
+            "2"
+          ],
+          "pid": 51500,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMRadialBlur/inventory-run.json",
+          "sha256": "cfc4346395e2a4293b0d85a53827bfeadeb72b306d69912e09ea497fcedf7d4c",
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "inventory",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMRadialBlur\\OLMRadialBlur.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMRadialBlur\\inventory"
+          ],
+          "pid": 13092,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMRadialBlur/candidate-capture-run.json",
+          "sha256": "8b995faabbf5ae788f1aadcafb8f11953dcfa1f214af3e9e04aee83f3dc40d30",
+          "argv": [
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--headless",
+            "--inspect-experimental-with-deps",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\probe\\capture.aex",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMRadialBlur"
+          ],
+          "pid": 18020,
+          "returncode": 0,
+          "timeout": false
+        }
+      ],
+      "declarations_sha256": "c2ff566a199a544b253fae05d2a9d008f839e32a9b4a276ec91c6c7e48c252ff",
+      "generated_manifest_sha256": "a3017d22a9810af9c9b04d84775186d18d244493ae55c1b067306f6012e58344"
+    },
+    {
+      "name": "OLMSmoother",
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother.aex",
+        "sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
+      },
+      "build_exit": 0,
+      "test_exit": 0,
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMSmoother\\OLMSmoother.aex",
+        "sha256": "879be3d2a7be71f55d9042ea1e332265e5aa02131cf199c1276ad8decf905090"
+      },
+      "inventory_stdout": "inventory: identical (all exposed parameter and host fields)",
+      "inventory_identical": true,
+      "pipl_identical": true,
+      "pipl": [
+        {
+          "name": 16000,
+          "language": 1033,
+          "type": "PIPL",
+          "size": 298,
+          "sha256": "652dd1cccef7ea16acdf236d5ecad626e08729fe16357bca67050e3798928abd"
+        }
+      ],
+      "declarations_diff": [],
+      "limitations": {
+        "algorithm": "TODO: byte-copy stub only; no original render equivalence",
+        "dynamic_ui": "TODO: state transitions cannot be inferred from PARAMS_SETUP/inventory",
+        "custom_ui_events": 0,
+        "supervised_slots": [],
+        "arbitrary_slots": [],
+        "arbitrary_semantics": "Opaque flatten/unflatten/copy only; unknown bytes preserved verbatim; no interior interpolation, print/scan or editor. Captured defaults may include unstable inactive bytes.",
+        "host_behavior": "TODO: original ROI expansion, temporal inputs, secondary-layer use, sequence/global state, audio/GPU and dynamic flags are not reconstructed",
+        "platforms": "Windows x64 CPU scaffold; native AE and macOS bundle/PiPL/entry generation unverified"
+      },
+      "params": 3,
+      "status": "pass",
+      "logs": [
+        {
+          "path": "local/all-ten-final/OLMSmoother/generate.json",
+          "sha256": "756d96b52201a3c2203b26b2158bfabafec2c71106b50356a0aa59f85fe3d437",
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\olm_scaffold.py",
+            "new",
+            "--aex",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother.aex",
+            "--crate-name",
+            "scaffold-olmsmoother",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMSmoother\\crate",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--probe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\probe\\capture.aex"
+          ],
+          "pid": 62344,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMSmoother/build.json",
+          "sha256": "1bb7965607d4578db0b4d6d60456b4f4be1d28b959c27f4d2b4515c2ed41804c",
+          "argv": [
+            "cargo",
+            "build",
+            "--offline",
+            "--release",
+            "--manifest-path",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMSmoother\\crate\\Cargo.toml",
+            "--target-dir",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\target",
+            "-j",
+            "2"
+          ],
+          "pid": 61484,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMSmoother/test.json",
+          "sha256": "3697add79099a1cda256b10b10197c277c72e8a79541812459e556a4d536f918",
+          "argv": [
+            "cargo",
+            "test",
+            "--offline",
+            "--release",
+            "--manifest-path",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMSmoother\\crate\\Cargo.toml",
+            "--target-dir",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\target",
+            "-j",
+            "2"
+          ],
+          "pid": 35944,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMSmoother/inventory-run.json",
+          "sha256": "5277234ec9441dc6ac6e3521b2727a06bd4f35f71e3540cc32c8efe77f30712c",
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "inventory",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMSmoother\\OLMSmoother.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMSmoother\\inventory"
+          ],
+          "pid": 36180,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMSmoother/candidate-capture-run.json",
+          "sha256": "149f801586665536089612689752ffe6e71dc4a48f681779d6ffd5e4ca197a0c",
+          "argv": [
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--headless",
+            "--inspect-experimental-with-deps",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\probe\\capture.aex",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMSmoother"
+          ],
+          "pid": 30876,
+          "returncode": 0,
+          "timeout": false
+        }
+      ],
+      "declarations_sha256": "7fbab11a3d41a0634913e8146e333b051edb42800d64a64768cc2147eed0f882",
+      "generated_manifest_sha256": "32fec689eab12540b048310bcb2b39d7025e262b56dc829131534bede45a5c39"
+    },
+    {
+      "name": "OLMSmoother2",
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother2.aex",
+        "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+      },
+      "build_exit": 0,
+      "test_exit": 0,
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMSmoother2\\OLMSmoother2.aex",
+        "sha256": "db692b41ab6f60f2e298b50da6c042bb4f33ccd0a40976df82f0cb41972b4554"
+      },
+      "inventory_stdout": "inventory: identical (all exposed parameter and host fields)",
+      "inventory_identical": true,
+      "pipl_identical": true,
+      "pipl": [
+        {
+          "name": 16000,
+          "language": 1033,
+          "type": "PIPL",
+          "size": 294,
+          "sha256": "4ab26c40f28c85755ee585a1d4c62e1af9b7c7bde24dd7d1bec6149b285b5fc7"
+        }
+      ],
+      "declarations_diff": [],
+      "limitations": {
+        "algorithm": "TODO: byte-copy stub only; no original render equivalence",
+        "dynamic_ui": "TODO: state transitions cannot be inferred from PARAMS_SETUP/inventory",
+        "custom_ui_events": 0,
+        "supervised_slots": [
+          8,
+          10
+        ],
+        "arbitrary_slots": [],
+        "arbitrary_semantics": "Opaque flatten/unflatten/copy only; unknown bytes preserved verbatim; no interior interpolation, print/scan or editor. Captured defaults may include unstable inactive bytes.",
+        "host_behavior": "TODO: original ROI expansion, temporal inputs, secondary-layer use, sequence/global state, audio/GPU and dynamic flags are not reconstructed",
+        "platforms": "Windows x64 CPU scaffold; native AE and macOS bundle/PiPL/entry generation unverified"
+      },
+      "params": 15,
+      "status": "pass",
+      "logs": [
+        {
+          "path": "local/all-ten-final/OLMSmoother2/generate.json",
+          "sha256": "20b1306d2b3c3a1534deb0bf08052148d4e4347465d6cecf26a307c5e87fe9b1",
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\olm_scaffold.py",
+            "new",
+            "--aex",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother2.aex",
+            "--crate-name",
+            "scaffold-olmsmoother2",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMSmoother2\\crate",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--probe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\probe\\capture.aex"
+          ],
+          "pid": 52732,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMSmoother2/build.json",
+          "sha256": "e4ce39908e4a65ba254ff0550b4aac77f73674c3e094fa2d12f13add728938be",
+          "argv": [
+            "cargo",
+            "build",
+            "--offline",
+            "--release",
+            "--manifest-path",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMSmoother2\\crate\\Cargo.toml",
+            "--target-dir",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\target",
+            "-j",
+            "2"
+          ],
+          "pid": 61772,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMSmoother2/test.json",
+          "sha256": "a85b86d0aef8c7a8764a6018fae1533a1f821e99656bcbd3a5c362e03df63716",
+          "argv": [
+            "cargo",
+            "test",
+            "--offline",
+            "--release",
+            "--manifest-path",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMSmoother2\\crate\\Cargo.toml",
+            "--target-dir",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\target",
+            "-j",
+            "2"
+          ],
+          "pid": 50124,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMSmoother2/inventory-run.json",
+          "sha256": "795b8bf031f6e917d6bb81fa37c3436d4dd377ac2dc228f0f053159dbe0b12c1",
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "inventory",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother2.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMSmoother2\\OLMSmoother2.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMSmoother2\\inventory"
+          ],
+          "pid": 52512,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMSmoother2/candidate-capture-run.json",
+          "sha256": "51310e1bb2a01aaf9e550310579459ec719295ae442bdf9cbaa23c7c6add13ec",
+          "argv": [
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--headless",
+            "--inspect-experimental-with-deps",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\probe\\capture.aex",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMSmoother2"
+          ],
+          "pid": 61756,
+          "returncode": 0,
+          "timeout": false
+        }
+      ],
+      "declarations_sha256": "51eae81c8bed40efdb3d14337a425d99eb6d563836def37e9e122f2c7261fff6",
+      "generated_manifest_sha256": "47dcccba6a307b7c0f9510415d440a87a09869edba9ab1213cb84176eecf1934"
+    },
+    {
+      "name": "OLMToonDilate",
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMToonDilate.aex",
+        "sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
+      },
+      "build_exit": 0,
+      "test_exit": 0,
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMToonDilate\\OLMToonDilate.aex",
+        "sha256": "ecd46c940f18ed6104be17f05a925260999c2325716d2e6a92d14bfd5bb43a1f"
+      },
+      "inventory_stdout": "inventory: identical (all exposed parameter and host fields)",
+      "inventory_identical": true,
+      "pipl_identical": true,
+      "pipl": [
+        {
+          "name": 16000,
+          "language": 1033,
+          "type": "PIPL",
+          "size": 298,
+          "sha256": "6cc040b97eb8f54c6e70b3e285fa8829b635fc203579fc73ad3f0695b69f9462"
+        }
+      ],
+      "declarations_diff": [],
+      "limitations": {
+        "algorithm": "TODO: byte-copy stub only; no original render equivalence",
+        "dynamic_ui": "TODO: state transitions cannot be inferred from PARAMS_SETUP/inventory",
+        "custom_ui_events": 4,
+        "supervised_slots": [],
+        "arbitrary_slots": [],
+        "arbitrary_semantics": "Opaque flatten/unflatten/copy only; unknown bytes preserved verbatim; no interior interpolation, print/scan or editor. Captured defaults may include unstable inactive bytes.",
+        "host_behavior": "TODO: original ROI expansion, temporal inputs, secondary-layer use, sequence/global state, audio/GPU and dynamic flags are not reconstructed",
+        "platforms": "Windows x64 CPU scaffold; native AE and macOS bundle/PiPL/entry generation unverified"
+      },
+      "params": 1,
+      "status": "pass",
+      "logs": [
+        {
+          "path": "local/all-ten-final/OLMToonDilate/generate.json",
+          "sha256": "6b5f6e12bb48a9a1d6adf8143e7d8a765d96f3e8fc2411b52d3aad9c7c3bf80b",
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\olm_scaffold.py",
+            "new",
+            "--aex",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMToonDilate.aex",
+            "--crate-name",
+            "scaffold-olmtoondilate",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMToonDilate\\crate",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--probe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\probe\\capture.aex"
+          ],
+          "pid": 52160,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMToonDilate/build.json",
+          "sha256": "09ae500db5d856a8505a68a32251696bfb884aaaf0a61382438861f012108984",
+          "argv": [
+            "cargo",
+            "build",
+            "--offline",
+            "--release",
+            "--manifest-path",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMToonDilate\\crate\\Cargo.toml",
+            "--target-dir",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\target",
+            "-j",
+            "2"
+          ],
+          "pid": 11556,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMToonDilate/test.json",
+          "sha256": "b580da3cf200da46596bac4b2d1a69ea2a9d3c3e7134b67054d0c5f7a55ae5c6",
+          "argv": [
+            "cargo",
+            "test",
+            "--offline",
+            "--release",
+            "--manifest-path",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMToonDilate\\crate\\Cargo.toml",
+            "--target-dir",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\target",
+            "-j",
+            "2"
+          ],
+          "pid": 53540,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMToonDilate/inventory-run.json",
+          "sha256": "2a878b6c297f4bb78e9a10521be5572c913919475a0b27e2433dac4760c02964",
+          "argv": [
+            "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "inventory",
+            "--reference",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMToonDilate.aex",
+            "--candidate",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMToonDilate\\OLMToonDilate.aex",
+            "--harness",
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--out",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMToonDilate\\inventory"
+          ],
+          "pid": 62240,
+          "returncode": 0,
+          "timeout": false
+        },
+        {
+          "path": "local/all-ten-final/OLMToonDilate/candidate-capture-run.json",
+          "sha256": "61b085f89a2fd2b208cfec6eb2074dbca6e5b3fe63a7cd681a216fbe08271bd1",
+          "argv": [
+            "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "--headless",
+            "--inspect-experimental-with-deps",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\probe\\capture.aex",
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold\\local\\all-ten-final\\OLMToonDilate"
+          ],
+          "pid": 8316,
+          "returncode": 0,
+          "timeout": false
+        }
+      ],
+      "declarations_sha256": "3a1a5a753b2e4dc55dfd94f969587494d5bbaf974ba3487d6dcffdad384eb19c",
+      "generated_manifest_sha256": "bf6332994838d703991b1069d8a30341066134728572d09680177c806d292c6c"
+    }
+  ],
+  "date": "2026-11-12",
+  "platform": "Windows x64; rustc/cargo 1.88.0; Python 3.11",
+  "command": "python rust/tools/scaffold/verify_all.py --out rust/tools/scaffold/local/all-ten-final",
+  "python_tests": {
+    "command": "python -m unittest discover -s rust/tools/scaffold -p test_scaffold.py -v",
+    "passed": 10,
+    "failed": 0
+  },
+  "generated_tests": {
+    "passed": 30,
+    "failed": 0,
+    "ignored_reference_skeletons": 10
+  },
+  "parameter_count": 451,
+  "owned_process_cleanup": "Every harness/cargo subprocess uses olm_oracle.run_process: owned Windows Job, terminate/zero-active-count polling, close, and wait. Both verification parent sessions completed normally.",
+  "source_hashes": {
+    "olm_scaffold.py": "03ef498e2424841fc92f106b8036f936876cd5951fba084c47505ac07520ff2a",
+    "verify_all.py": "a58c6169ad8191f9ef6b80a0a1183a864533d1a6af9ed0f4d03401d281c2b840",
+    "smoke_routes.py": "6f453c0a5cd1e65dabe3203d6957b4d1c83f45ad96fcf24847968750a8be4b60",
+    "probe/src/lib.rs": "211522ededb7e7bf0c6b54c601dea158bdd6d26feb3a8069894271a01b8853ae",
+    "probe/build.rs": "e4dd3558a33423f9a920d59ad1303ca68d871e0fa4032e06002498f022ed6211",
+    "probe/Cargo.lock": "3989466b5e81361b57d6a2eed4aa861bbbd31655dd451cb05e8fccdea1237471",
+    "templates/ae.rs": "b52f30f839f1767160793085012c3bfc317ed2f7daaf7e74ab04b9e3b164d60d",
+    "templates/algorithm.rs": "ef8c2b27584065c8ab134bf792d19b1062aff46c48b6ffa062dd347ec3606eb4",
+    "templates/arbitrary.rs": "76588689777127c52745186bf3a6d5e7654f5c20791b655ee74fd5c6f5d60806",
+    "templates/arbitrary_tests.rs": "efbfd7ffadd1a19bda86b2bf8b5c6010af91be027fcde7a4d8ab927d4b946e8e",
+    "templates/passthrough.rs": "07a3b13247205b84514befe51c0e4d6c76e63d9f75db0f9444c8d9249424f358",
+    "templates/reference.rs": "4baed8591b4f7ce592ec256ceeadf8aca55974518fbaf7ae72962411e880633e",
+    "templates/ui.rs": "c66eb98b234f06e6d9f6657f2891ef17734dff4d558be7b7807293856ee3f2ca",
+    "templates/verify_reference.py": "2444cbf8a1f3ea185772249310079eda581e8b4dc1f5fd511f6308f85b501d23"
+  },
+  "worked_example": {
+    "path": "local/worked-example",
+    "default_proxy_bootstrap": true,
+    "release_build_exit": 0,
+    "inventory_result": "inventory: identical (all exposed parameter and host fields)"
+  },
+  "route_smoke": {
+    "command": "python rust/tools/scaffold/smoke_routes.py --summary rust/tools/scaffold/local/all-ten-final/summary.json --out rust/tools/scaffold/local/routes-final",
+    "sha256": "1f3fb73dea5b20b529abbdb59fc9ab866cadca7aa197410480a790296806ea01",
+    "purpose": "pass-through CPU wiring only; no original algorithm equivalence",
+    "summary_sha256": "0b65a47b5eff99ceb2f6c150f03df0004ad108772887f7adb32b0216d9e81df3",
+    "cases": [
+      {
+        "plugin": "ColorKeep",
+        "route": "smart8",
+        "candidate_sha256": "11a861dce8dd45eac4555c5becfc003e2506293a8e7ffe879664c1413ba19849",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "ColorKeep",
+        "route": "smart16",
+        "candidate_sha256": "11a861dce8dd45eac4555c5becfc003e2506293a8e7ffe879664c1413ba19849",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "ColorKeep",
+        "route": "smart32",
+        "candidate_sha256": "11a861dce8dd45eac4555c5becfc003e2506293a8e7ffe879664c1413ba19849",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "DistanceGradation",
+        "route": "smart8",
+        "candidate_sha256": "c4bcce5c84645cecf0bcaf8104908845ce7851a34de616db006fa8d25c0e7621",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "DistanceGradation",
+        "route": "smart16",
+        "candidate_sha256": "c4bcce5c84645cecf0bcaf8104908845ce7851a34de616db006fa8d25c0e7621",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "DistanceGradation",
+        "route": "smart32",
+        "candidate_sha256": "c4bcce5c84645cecf0bcaf8104908845ce7851a34de616db006fa8d25c0e7621",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMBlur",
+        "route": "smart8",
+        "candidate_sha256": "bbf5611947e9fa635cf58408db22aa904545bc34618dd4671bb19e18ceb96e77",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMBlur",
+        "route": "smart16",
+        "candidate_sha256": "bbf5611947e9fa635cf58408db22aa904545bc34618dd4671bb19e18ceb96e77",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMBlur",
+        "route": "smart32",
+        "candidate_sha256": "bbf5611947e9fa635cf58408db22aa904545bc34618dd4671bb19e18ceb96e77",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMColorKey",
+        "route": "smart8",
+        "candidate_sha256": "4784b8b2b454e450ed4820d1e817d5f3ab5f2402c8753ff3451c7655564b51cb",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMColorKey",
+        "route": "smart16",
+        "candidate_sha256": "4784b8b2b454e450ed4820d1e817d5f3ab5f2402c8753ff3451c7655564b51cb",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMColorKey",
+        "route": "smart32",
+        "candidate_sha256": "4784b8b2b454e450ed4820d1e817d5f3ab5f2402c8753ff3451c7655564b51cb",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMDirectionalBlur",
+        "route": "smart8",
+        "candidate_sha256": "17f00fe8e406729411d606871cae2ee92bad003804af566002ff041921b0a148",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMDirectionalBlur",
+        "route": "smart16",
+        "candidate_sha256": "17f00fe8e406729411d606871cae2ee92bad003804af566002ff041921b0a148",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMDirectionalBlur",
+        "route": "smart32",
+        "candidate_sha256": "17f00fe8e406729411d606871cae2ee92bad003804af566002ff041921b0a148",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMKiraKira",
+        "route": "smart8",
+        "candidate_sha256": "966c044a003a80656eac3b69c6bc04be47ebcc2b8b415855a057977aae0d7e77",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMKiraKira",
+        "route": "smart16",
+        "candidate_sha256": "966c044a003a80656eac3b69c6bc04be47ebcc2b8b415855a057977aae0d7e77",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMKiraKira",
+        "route": "smart32",
+        "candidate_sha256": "966c044a003a80656eac3b69c6bc04be47ebcc2b8b415855a057977aae0d7e77",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMRadialBlur",
+        "route": "smart8",
+        "candidate_sha256": "3724427c1bcc5a06a37d445b48a6b9ad51b7faf0fabafca0339258a05ede6f7f",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMRadialBlur",
+        "route": "smart16",
+        "candidate_sha256": "3724427c1bcc5a06a37d445b48a6b9ad51b7faf0fabafca0339258a05ede6f7f",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMRadialBlur",
+        "route": "smart32",
+        "candidate_sha256": "3724427c1bcc5a06a37d445b48a6b9ad51b7faf0fabafca0339258a05ede6f7f",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMSmoother",
+        "route": "classic8",
+        "candidate_sha256": "879be3d2a7be71f55d9042ea1e332265e5aa02131cf199c1276ad8decf905090",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMSmoother",
+        "route": "classic16",
+        "candidate_sha256": "879be3d2a7be71f55d9042ea1e332265e5aa02131cf199c1276ad8decf905090",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMSmoother2",
+        "route": "smart8",
+        "candidate_sha256": "db692b41ab6f60f2e298b50da6c042bb4f33ccd0a40976df82f0cb41972b4554",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMSmoother2",
+        "route": "smart16",
+        "candidate_sha256": "db692b41ab6f60f2e298b50da6c042bb4f33ccd0a40976df82f0cb41972b4554",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMSmoother2",
+        "route": "smart32",
+        "candidate_sha256": "db692b41ab6f60f2e298b50da6c042bb4f33ccd0a40976df82f0cb41972b4554",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMToonDilate",
+        "route": "smart8",
+        "candidate_sha256": "ecd46c940f18ed6104be17f05a925260999c2325716d2e6a92d14bfd5bb43a1f",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMToonDilate",
+        "route": "smart16",
+        "candidate_sha256": "ecd46c940f18ed6104be17f05a925260999c2325716d2e6a92d14bfd5bb43a1f",
+        "exact_copy": true,
+        "process_exit": 0
+      },
+      {
+        "plugin": "OLMToonDilate",
+        "route": "smart32",
+        "candidate_sha256": "ecd46c940f18ed6104be17f05a925260999c2325716d2e6a92d14bfd5bb43a1f",
+        "exact_copy": true,
+        "process_exit": 0
+      }
+    ],
+    "process_logs": [
+      {
+        "path": "local/routes-final/ColorKeep-smart16.process.json",
+        "sha256": "a6bff9770e709e1e67c111c7644b1635d1c6dc23a2c7f4de9c004eb6dabdedfe",
+        "pid": 52736,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/ColorKeep-smart32.process.json",
+        "sha256": "f8946f2d13cae3c1fe157dc8176dd51b7e198ff5eefeda97d48714b0332781e6",
+        "pid": 61624,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/ColorKeep-smart8.process.json",
+        "sha256": "a7e7cc24ff9fda14e1ea3318c7edab8f0e10833f376182a7150ba41997c574cd",
+        "pid": 49788,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/DistanceGradation-smart16.process.json",
+        "sha256": "3ab88c3bea8c682973e37bff8ccf8e2b70248255c0cf35279368a0d4b2b00747",
+        "pid": 52460,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/DistanceGradation-smart32.process.json",
+        "sha256": "0c0d25842977753d9220fe4eb603ccf3725374d0ff50e84ccd04fdef3e121fda",
+        "pid": 62096,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/DistanceGradation-smart8.process.json",
+        "sha256": "302dbd94f48ba32a7f545b9883ae68e3096572e3f282e9053ee2030acbc94223",
+        "pid": 44076,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMBlur-smart16.process.json",
+        "sha256": "b0356c945340df7cea3a7b49790df68560b662b671d32ab12acc4bf33f24dc36",
+        "pid": 54136,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMBlur-smart32.process.json",
+        "sha256": "a52e8a2d74fc0f50a23117c58ef97fe53d8081f9f619b40e80569c99c85aef58",
+        "pid": 54192,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMBlur-smart8.process.json",
+        "sha256": "27b75b72dc790252f36eaf800c00ad8d25c0eaf37e98c766a0350888ed3947ef",
+        "pid": 46228,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMColorKey-smart16.process.json",
+        "sha256": "55b737793163e8b2cd428e89c89598ee01db776a0725041b5b62b8a44d5ed359",
+        "pid": 56284,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMColorKey-smart32.process.json",
+        "sha256": "9bcd05f6af757557c883dc0d498cae6c4f4716cd865a549e4381689b4205352e",
+        "pid": 52656,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMColorKey-smart8.process.json",
+        "sha256": "9da16d8d4b579fd4ea003ad5e68f97781a1496a586c982545cdaa91c74e52e5c",
+        "pid": 61836,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMDirectionalBlur-smart16.process.json",
+        "sha256": "98e53b412e3675f374d787a846e6d4f69d82c36d125655fb373483a2f088f474",
+        "pid": 58028,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMDirectionalBlur-smart32.process.json",
+        "sha256": "b988f8ca03b259aa507d3b263695878679ff59e188ec4869c9d8e4828d4ff528",
+        "pid": 52960,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMDirectionalBlur-smart8.process.json",
+        "sha256": "2e447b94f10d17de46e9c10a87d6c8f18613173fbead22bcdbb1618d686c040d",
+        "pid": 12048,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMKiraKira-smart16.process.json",
+        "sha256": "129c2534ab7833b5e16477685585b64da32e2317545f1c112f6521f3975d73ea",
+        "pid": 44428,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMKiraKira-smart32.process.json",
+        "sha256": "c9d0a9611b99a726945d383f2883a5e94840279cfb1f7d00b81d2b32ce06c57d",
+        "pid": 62360,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMKiraKira-smart8.process.json",
+        "sha256": "3201ef7948f71ff782e670a0d36dc6e90157991435d0a7436ceed5d71e06b0da",
+        "pid": 49276,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMRadialBlur-smart16.process.json",
+        "sha256": "68be4f2dbb4a7d9abc8749f0e65848a3fffa8efc2833cfc6a86df0d6967d1bf2",
+        "pid": 48652,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMRadialBlur-smart32.process.json",
+        "sha256": "373bcc970d4daa8fefa72143b96a230d310a19ab8475fc4dd1f6a186069c2785",
+        "pid": 16608,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMRadialBlur-smart8.process.json",
+        "sha256": "ecf817325636f9ff54755057f181bb376aee94cdc15866add892026efa7afef3",
+        "pid": 23844,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMSmoother-classic16.process.json",
+        "sha256": "3dce81b982e47d25987961ad8d5b1415d0b1eaebd7ed545d1c6296e902d1a5d5",
+        "pid": 42312,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMSmoother-classic8.process.json",
+        "sha256": "14ebb225a043827400c2349c08d1fcf7150cee2d27ee0943babf12d27edc757f",
+        "pid": 55520,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMSmoother2-smart16.process.json",
+        "sha256": "3ed922390aa3c84a5221f6f8136d5681076ebec64be0edf6a5003f967a73ce91",
+        "pid": 53216,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMSmoother2-smart32.process.json",
+        "sha256": "a84d82c5529865fe5ae1e407e8d3005db4c3acc9f43b47ea7f89f9f0d1ad2e78",
+        "pid": 62296,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMSmoother2-smart8.process.json",
+        "sha256": "b8834ba37eb13ebd54f75c8e4dba29a7b08c2716c069d494cc018e0fa0bd490a",
+        "pid": 52804,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMToonDilate-smart16.process.json",
+        "sha256": "eb9dae8f3f5f25e4f507c9dbfefe8edb53279f45d184481bcb64716c41a68e7c",
+        "pid": 55736,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMToonDilate-smart32.process.json",
+        "sha256": "d8c42d7d4346618fa1957ba1cb1bec18fd2f369244f7fa7ff312eeccb4f243fb",
+        "pid": 3980,
+        "returncode": 0
+      },
+      {
+        "path": "local/routes-final/OLMToonDilate-smart8.process.json",
+        "sha256": "81bbde33be1e8df50335ea08d06a40b20270ceecba99d5c88fff201aecdc3870",
+        "pid": 52960,
+        "returncode": 0
+      }
+    ]
+  }
+}

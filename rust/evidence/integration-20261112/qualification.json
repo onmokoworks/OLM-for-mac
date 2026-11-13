@@ -1,0 +1,2713 @@
+{
+  "job": "I-integrate-20261112",
+  "isolation": "per-process; ordinary oracle; no bridge or sparse fixture",
+  "campaigns": [
+    {
+      "schema_version": 1,
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKeep\\OLMColorKeep\\Plugins\\64\\2025\\ColorKeep.aex",
+        "sha256": "f6e5f09e53b31be6c64e7c1d17a8fac4aac65bbd6487011c54916497ce9ea633"
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\ColorKeep.aex",
+        "sha256": "8c631a83b01fc481315b6a43f26d3914ba08f185e1564c252b01e5b36adb00c0"
+      },
+      "tool": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "sha256": "8bbe4d726496595339cb95161623700002863bd73cc199d462ce0d12efdc0ba5"
+      },
+      "non_ae_debug_routes": [],
+      "seed": 20261121,
+      "cases": 30,
+      "timeout_seconds": 120,
+      "force_classic": false,
+      "render_environment_overrides": {
+        "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+      },
+      "jobs": 3,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          97,
+          61
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "extent": null,
+      "perturb_candidate": [],
+      "layer_sizes": null,
+      "inventory_diff": [],
+      "same_binary": false,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 30,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 30,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 30,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 30,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 30,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 30,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "complete": true,
+      "exit_code": 0,
+      "campaign": "ColorKeep-2025-20261121",
+      "summary_sha256": "be573352465bf12cd6793a55030ffacec8b9cbf817f75fbf378c15fa6cad3aed",
+      "counts": {
+        "smart16": {
+          "exact": 30
+        },
+        "smart32": {
+          "exact": 30
+        },
+        "smart8": {
+          "exact": 30
+        }
+      },
+      "plans_sha256": "f2fd85c4d8dd7f9c75c2c154af63901242428085a74140c2b403d9cfa4e07464",
+      "scale_counts": {
+        "1": 10,
+        "1/2": 10,
+        "1/4": 10
+      },
+      "random_plans": 27,
+      "random_assignment_coverage": {
+        "distinct_slots": 201,
+        "max_slot": 201,
+        "slots_above_1024": 0,
+        "high_slot_range": null
+      },
+      "sampling_domain": "ordinary oracle full declared parameter ranges",
+      "baseline_failures": []
+    },
+    {
+      "schema_version": 1,
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKeep\\OLMColorKeep\\Plugins\\64\\2026\\ColorKeep.aex",
+        "sha256": "f378f4319db09f30dc76b0cce009fe542f606bf2a9806b0165fc97cfba55a305"
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\ColorKeep.aex",
+        "sha256": "8c631a83b01fc481315b6a43f26d3914ba08f185e1564c252b01e5b36adb00c0"
+      },
+      "tool": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "sha256": "8bbe4d726496595339cb95161623700002863bd73cc199d462ce0d12efdc0ba5"
+      },
+      "non_ae_debug_routes": [],
+      "seed": 20261123,
+      "cases": 12,
+      "timeout_seconds": 120,
+      "force_classic": false,
+      "render_environment_overrides": {
+        "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+      },
+      "jobs": 3,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          97,
+          61
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "extent": null,
+      "perturb_candidate": [],
+      "layer_sizes": null,
+      "inventory_diff": [],
+      "same_binary": false,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "complete": true,
+      "exit_code": 0,
+      "campaign": "ColorKeep-2026-20261123",
+      "summary_sha256": "59f5de9eb7bcea96d1d0947598ab37a4d5ac2537b68291cdabb379f7f14549d2",
+      "counts": {
+        "smart16": {
+          "exact": 12
+        },
+        "smart32": {
+          "exact": 12
+        },
+        "smart8": {
+          "exact": 12
+        }
+      },
+      "plans_sha256": "c05b3cff9c1dbb9c14643fcdfe023189015fd8da7ef66b159b45b40cae6948c8",
+      "scale_counts": {
+        "1": 4,
+        "1/2": 4,
+        "1/4": 4
+      },
+      "random_plans": 9,
+      "random_assignment_coverage": {
+        "distinct_slots": 201,
+        "max_slot": 201,
+        "slots_above_1024": 0,
+        "high_slot_range": null
+      },
+      "sampling_domain": "ordinary oracle full declared parameter ranges",
+      "baseline_failures": []
+    },
+    {
+      "campaign": "ColorKeep-inventory",
+      "summary_sha256": "1970f8cf5bdb80991deb82987ad388cc3abbff084e858c1fa56fa6f882b3b072",
+      "identical": true,
+      "diff": [],
+      "parameter_count": 201
+    },
+    {
+      "schema_version": 1,
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMDistanceGradation\\OLMDistanceGradation\\Plugins\\64\\2025\\DistanceGradation.aex",
+        "sha256": "fd151598c015baf7068ce7ef59eead7430657cab083d9000c2a35e9b84da5e63"
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\DistanceGradation.aex",
+        "sha256": "da25ab26624744b899b8d13f7cb9b4ec27fa5ae2c16e78063cc126c8deb1d152"
+      },
+      "tool": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "sha256": "8bbe4d726496595339cb95161623700002863bd73cc199d462ce0d12efdc0ba5"
+      },
+      "non_ae_debug_routes": [],
+      "seed": 20261121,
+      "cases": 30,
+      "timeout_seconds": 60.0,
+      "force_classic": false,
+      "render_environment_overrides": {
+        "AEXCOMPAT_FRAME_DEADLINE_MS": "60000"
+      },
+      "jobs": 2,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          17,
+          11
+        ],
+        [
+          31,
+          19
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "extent": null,
+      "perturb_candidate": [],
+      "layer_sizes": null,
+      "inventory_diff": [],
+      "same_binary": false,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 30,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 30,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 30,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 30,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 30,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 30,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "complete": true,
+      "exit_code": 0,
+      "campaign": "DistanceGradation-2025-20261121",
+      "summary_sha256": "0a67450d2d94bd4578e02239531a15001855bcca745c7f3b5456a13da0370fdd",
+      "counts": {
+        "smart16": {
+          "exact": 30
+        },
+        "smart32": {
+          "exact": 30
+        },
+        "smart8": {
+          "exact": 30
+        }
+      },
+      "plans_sha256": "d4ce446bb82d6d179d71fb1216cf6162387603297800a6fe28275b85f731f709",
+      "scale_counts": {
+        "1": 10,
+        "1/2": 10,
+        "1/4": 10
+      },
+      "random_plans": 27,
+      "random_assignment_coverage": {
+        "distinct_slots": 13,
+        "max_slot": 13,
+        "slots_above_1024": 0,
+        "high_slot_range": null
+      },
+      "sampling_domain": {
+        "thresholds": [
+          0,
+          128
+        ],
+        "blur_size": [
+          0,
+          12
+        ],
+        "other_controls": "full declared range"
+      },
+      "baseline_failures": []
+    },
+    {
+      "schema_version": 1,
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMDistanceGradation\\OLMDistanceGradation\\Plugins\\64\\2026\\DistanceGradation.aex",
+        "sha256": "cb627ab4819b5cb5ef4f24a6afd19685c037bde7546a2c77aed6df35ee8b504e"
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\DistanceGradation.aex",
+        "sha256": "da25ab26624744b899b8d13f7cb9b4ec27fa5ae2c16e78063cc126c8deb1d152"
+      },
+      "tool": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "sha256": "8bbe4d726496595339cb95161623700002863bd73cc199d462ce0d12efdc0ba5"
+      },
+      "non_ae_debug_routes": [],
+      "seed": 20261123,
+      "cases": 12,
+      "timeout_seconds": 60.0,
+      "force_classic": false,
+      "render_environment_overrides": {
+        "AEXCOMPAT_FRAME_DEADLINE_MS": "60000"
+      },
+      "jobs": 2,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          17,
+          11
+        ],
+        [
+          31,
+          19
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "extent": null,
+      "perturb_candidate": [],
+      "layer_sizes": null,
+      "inventory_diff": [],
+      "same_binary": false,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "complete": true,
+      "exit_code": 0,
+      "campaign": "DistanceGradation-2026-20261123",
+      "summary_sha256": "a8f1119862b6426df043b17f2b92fa6aeaea0bc0ad3cc147decd3d48199db3df",
+      "counts": {
+        "smart16": {
+          "exact": 12
+        },
+        "smart32": {
+          "exact": 12
+        },
+        "smart8": {
+          "exact": 12
+        }
+      },
+      "plans_sha256": "15fce5cef09cdf1bf03040596a4045c2387f9d0a49dc0bf71294cf809c4375b5",
+      "scale_counts": {
+        "1": 4,
+        "1/2": 4,
+        "1/4": 4
+      },
+      "random_plans": 9,
+      "random_assignment_coverage": {
+        "distinct_slots": 13,
+        "max_slot": 13,
+        "slots_above_1024": 0,
+        "high_slot_range": null
+      },
+      "sampling_domain": {
+        "thresholds": [
+          0,
+          128
+        ],
+        "blur_size": [
+          0,
+          12
+        ],
+        "other_controls": "full declared range"
+      },
+      "baseline_failures": []
+    },
+    {
+      "campaign": "DistanceGradation-inventory",
+      "summary_sha256": "8893409a95ee9bf9681a0571739c8e99e164121083b0966756327367b92aa9ea",
+      "identical": true,
+      "diff": [],
+      "parameter_count": 13
+    },
+    {
+      "schema_version": 1,
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMAntiAntiAlias\\OLMAntiAntiAlias\\Plugins\\64\\2025\\OLMAntiAntiAlias.aex",
+        "sha256": "9ea6e2d85ab64ec6549653072a00e81315ae9c6791752a5ee634d2f599490cc0"
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMAntiAntiAlias.aex",
+        "sha256": "d069999675085a0043be114e3464012d39d10c289f48561d6c5ef103584bbc6e"
+      },
+      "tool": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "sha256": "8bbe4d726496595339cb95161623700002863bd73cc199d462ce0d12efdc0ba5"
+      },
+      "non_ae_debug_routes": [],
+      "seed": 20261121,
+      "cases": 113,
+      "timeout_seconds": 120,
+      "force_classic": false,
+      "render_environment_overrides": {
+        "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+      },
+      "jobs": 3,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          97,
+          61
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "extent": null,
+      "perturb_candidate": [],
+      "layer_sizes": null,
+      "inventory_diff": [],
+      "same_binary": false,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 113,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 113,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 113,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 113,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 113,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 112,
+          "mismatched": 0,
+          "reference_unrenderable": 1,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 1,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "complete": true,
+      "exit_code": 2,
+      "campaign": "OLMAntiAntiAlias-2025-20261121",
+      "summary_sha256": "3ff883cb409200f91f0d74575e2de5b453f9b603fccc2bcd73abeeacca236c1a",
+      "counts": {
+        "smart16": {
+          "exact": 113
+        },
+        "smart32": {
+          "exact": 112,
+          "reference_unrenderable": 1
+        },
+        "smart8": {
+          "exact": 113
+        }
+      },
+      "plans_sha256": "8d6a53e92f880689c277e7af5776819d0fcc3f7ba47c7e50db6e4ac75da93c1c",
+      "scale_counts": {
+        "1": 38,
+        "1/2": 38,
+        "1/4": 37
+      },
+      "random_plans": 110,
+      "random_assignment_coverage": {
+        "distinct_slots": 102,
+        "max_slot": 106,
+        "slots_above_1024": 0,
+        "high_slot_range": null
+      },
+      "sampling_domain": "ordinary oracle full declared parameter ranges",
+      "baseline_failures": [
+        {
+          "case": 45,
+          "route": "smart32",
+          "directory": "case-0045-smart32",
+          "processes": {
+            "reference": {
+              "pid": 55800,
+              "returncode": 1,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 0.2180000000007567,
+              "harness_frame_timeout": false,
+              "ok": false
+            },
+            "candidate": {
+              "pid": 32380,
+              "returncode": 0,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 0.4069999999992433,
+              "harness_frame_timeout": false,
+              "ok": true
+            }
+          },
+          "status": "reference_unrenderable"
+        }
+      ]
+    },
+    {
+      "schema_version": 1,
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMAntiAntiAlias\\OLMAntiAntiAlias\\Plugins\\64\\2025\\OLMAntiAntiAlias.aex",
+        "sha256": "9ea6e2d85ab64ec6549653072a00e81315ae9c6791752a5ee634d2f599490cc0"
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMAntiAntiAlias.aex",
+        "sha256": "d069999675085a0043be114e3464012d39d10c289f48561d6c5ef103584bbc6e"
+      },
+      "tool": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "sha256": "8bbe4d726496595339cb95161623700002863bd73cc199d462ce0d12efdc0ba5"
+      },
+      "non_ae_debug_routes": [],
+      "seed": 20261122,
+      "cases": 113,
+      "timeout_seconds": 120,
+      "force_classic": false,
+      "render_environment_overrides": {
+        "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+      },
+      "jobs": 3,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          97,
+          61
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "extent": null,
+      "perturb_candidate": [],
+      "layer_sizes": null,
+      "inventory_diff": [],
+      "same_binary": false,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 113,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 113,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 113,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 113,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 113,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 112,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 1,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 1,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "complete": true,
+      "exit_code": 1,
+      "campaign": "OLMAntiAntiAlias-2025-20261122",
+      "summary_sha256": "8a78c59450a041f4ddf2c4fdce3ca90e947af87fa13757fb98b16bff1955498b",
+      "counts": {
+        "smart16": {
+          "exact": 113
+        },
+        "smart32": {
+          "exact": 112,
+          "candidate_failure": 1
+        },
+        "smart8": {
+          "exact": 113
+        }
+      },
+      "plans_sha256": "7cf41d154c161da0e627fb5faa4a5a0b60d78e3186ade8fb23e2fc8330ec91ea",
+      "scale_counts": {
+        "1": 38,
+        "1/2": 38,
+        "1/4": 37
+      },
+      "random_plans": 110,
+      "random_assignment_coverage": {
+        "distinct_slots": 102,
+        "max_slot": 106,
+        "slots_above_1024": 0,
+        "high_slot_range": null
+      },
+      "sampling_domain": "ordinary oracle full declared parameter ranges",
+      "baseline_failures": [
+        {
+          "case": 106,
+          "route": "smart32",
+          "directory": "case-0106-smart32",
+          "processes": {
+            "reference": {
+              "pid": 61636,
+              "returncode": 0,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 0.3440000000009604,
+              "harness_frame_timeout": false,
+              "ok": true
+            },
+            "candidate": {
+              "pid": 59416,
+              "returncode": 1,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 0.21899999999732245,
+              "harness_frame_timeout": false,
+              "ok": false
+            }
+          },
+          "status": "candidate_failure"
+        }
+      ]
+    },
+    {
+      "schema_version": 1,
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMAntiAntiAlias\\OLMAntiAntiAlias\\Plugins\\64\\2026\\OLMAntiAntiAlias.aex",
+        "sha256": "c0348e4d8351a71c9cca0420cfdfcbda151413c0a013818e2cc1ebf20f05ec4e"
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMAntiAntiAlias.aex",
+        "sha256": "d069999675085a0043be114e3464012d39d10c289f48561d6c5ef103584bbc6e"
+      },
+      "tool": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "sha256": "8bbe4d726496595339cb95161623700002863bd73cc199d462ce0d12efdc0ba5"
+      },
+      "non_ae_debug_routes": [],
+      "seed": 20261123,
+      "cases": 12,
+      "timeout_seconds": 120,
+      "force_classic": false,
+      "render_environment_overrides": {
+        "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+      },
+      "jobs": 3,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          97,
+          61
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "extent": null,
+      "perturb_candidate": [],
+      "layer_sizes": null,
+      "inventory_diff": [],
+      "same_binary": false,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "complete": true,
+      "exit_code": 0,
+      "campaign": "OLMAntiAntiAlias-2026-20261123",
+      "summary_sha256": "5d1b32afdf7735f86e7d7c4699b38308f7a5eab4bd094b402bd2c89457127fab",
+      "counts": {
+        "smart16": {
+          "exact": 12
+        },
+        "smart32": {
+          "exact": 12
+        },
+        "smart8": {
+          "exact": 12
+        }
+      },
+      "plans_sha256": "641f12bf63d315fba17cddb9ff9b214011c34313023d03b5abd8d5454add8af8",
+      "scale_counts": {
+        "1": 4,
+        "1/2": 4,
+        "1/4": 4
+      },
+      "random_plans": 9,
+      "random_assignment_coverage": {
+        "distinct_slots": 102,
+        "max_slot": 106,
+        "slots_above_1024": 0,
+        "high_slot_range": null
+      },
+      "sampling_domain": "ordinary oracle full declared parameter ranges",
+      "baseline_failures": []
+    },
+    {
+      "campaign": "OLMAntiAntiAlias-inventory",
+      "summary_sha256": "e775fb1f9ebf13c692c8a9607c6d8276ce8f0008d60b59a9f6fc63f484ad89ed",
+      "identical": true,
+      "diff": [],
+      "parameter_count": 107
+    },
+    {
+      "schema_version": 1,
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKey\\OLMColorKey\\Plugins\\64\\2025\\OLMColorKey.aex",
+        "sha256": "9cd1645c8f75f45d9a6ea61bc61b7fd8bcbed198fb1124457de216e9e9b9d5ed"
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMColorKey.aex",
+        "sha256": "77ea264d0dfa8215c95e83366410caea97ba40457ca77f30bf5e00cd868f8c9f"
+      },
+      "tool": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "sha256": "8bbe4d726496595339cb95161623700002863bd73cc199d462ce0d12efdc0ba5"
+      },
+      "non_ae_debug_routes": [],
+      "seed": 20261121,
+      "cases": 113,
+      "timeout_seconds": 120,
+      "force_classic": false,
+      "render_environment_overrides": {
+        "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+      },
+      "jobs": 3,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          97,
+          61
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "extent": null,
+      "perturb_candidate": [],
+      "layer_sizes": null,
+      "inventory_diff": [],
+      "same_binary": false,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 113,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 113,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 113,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 113,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 113,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 113,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "complete": true,
+      "exit_code": 0,
+      "campaign": "OLMColorKey-2025-20261121",
+      "summary_sha256": "41fb6970624da2bc5bfc262b0d73a4dc75591de56a630ea616600119a0883b38",
+      "counts": {
+        "smart16": {
+          "exact": 113
+        },
+        "smart32": {
+          "exact": 113
+        },
+        "smart8": {
+          "exact": 113
+        }
+      },
+      "plans_sha256": "55b4d9bd90d87e1ceec2807222400a67534259981cbb96fc71213d8411f17e8c",
+      "scale_counts": {
+        "1": 38,
+        "1/2": 38,
+        "1/4": 37
+      },
+      "random_plans": 110,
+      "random_assignment_coverage": {
+        "distinct_slots": 1617,
+        "max_slot": 1623,
+        "slots_above_1024": 599,
+        "high_slot_range": [
+          1025,
+          1623
+        ]
+      },
+      "sampling_domain": "ordinary oracle full declared parameter ranges",
+      "baseline_failures": []
+    },
+    {
+      "schema_version": 1,
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKey\\OLMColorKey\\Plugins\\64\\2025\\OLMColorKey.aex",
+        "sha256": "9cd1645c8f75f45d9a6ea61bc61b7fd8bcbed198fb1124457de216e9e9b9d5ed"
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMColorKey.aex",
+        "sha256": "77ea264d0dfa8215c95e83366410caea97ba40457ca77f30bf5e00cd868f8c9f"
+      },
+      "tool": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "sha256": "8bbe4d726496595339cb95161623700002863bd73cc199d462ce0d12efdc0ba5"
+      },
+      "non_ae_debug_routes": [],
+      "seed": 20261122,
+      "cases": 113,
+      "timeout_seconds": 120,
+      "force_classic": false,
+      "render_environment_overrides": {
+        "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+      },
+      "jobs": 3,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          97,
+          61
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "extent": null,
+      "perturb_candidate": [],
+      "layer_sizes": null,
+      "inventory_diff": [],
+      "same_binary": false,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 113,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 113,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 113,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 113,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 113,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 113,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "complete": true,
+      "exit_code": 0,
+      "campaign": "OLMColorKey-2025-20261122",
+      "summary_sha256": "7f6aa6dbf24e5e3b614e166d697a18014cb5eb339410d30e64d534b64fe0aa5c",
+      "counts": {
+        "smart16": {
+          "exact": 113
+        },
+        "smart32": {
+          "exact": 113
+        },
+        "smart8": {
+          "exact": 113
+        }
+      },
+      "plans_sha256": "f13c2b63785b84d6578e835bf5fa3d6b517b952b0441c197d8c1b9c420c14b88",
+      "scale_counts": {
+        "1": 38,
+        "1/2": 38,
+        "1/4": 37
+      },
+      "random_plans": 110,
+      "random_assignment_coverage": {
+        "distinct_slots": 1617,
+        "max_slot": 1623,
+        "slots_above_1024": 599,
+        "high_slot_range": [
+          1025,
+          1623
+        ]
+      },
+      "sampling_domain": "ordinary oracle full declared parameter ranges",
+      "baseline_failures": []
+    },
+    {
+      "schema_version": 1,
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKey\\OLMColorKey\\Plugins\\64\\2026\\OLMColorKey.aex",
+        "sha256": "4752e50132c6d60fc2b9699cf262e4276e9c00b006c248d47b1055899d61c193"
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMColorKey.aex",
+        "sha256": "77ea264d0dfa8215c95e83366410caea97ba40457ca77f30bf5e00cd868f8c9f"
+      },
+      "tool": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "sha256": "8bbe4d726496595339cb95161623700002863bd73cc199d462ce0d12efdc0ba5"
+      },
+      "non_ae_debug_routes": [],
+      "seed": 20261123,
+      "cases": 12,
+      "timeout_seconds": 120,
+      "force_classic": false,
+      "render_environment_overrides": {
+        "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+      },
+      "jobs": 3,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          97,
+          61
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "extent": null,
+      "perturb_candidate": [],
+      "layer_sizes": null,
+      "inventory_diff": [],
+      "same_binary": false,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "complete": true,
+      "exit_code": 0,
+      "campaign": "OLMColorKey-2026-20261123",
+      "summary_sha256": "32bdd0d05975ab2f9c4c3061b7460cbade3c32afb2fd7e0d129609123b75859e",
+      "counts": {
+        "smart16": {
+          "exact": 12
+        },
+        "smart32": {
+          "exact": 12
+        },
+        "smart8": {
+          "exact": 12
+        }
+      },
+      "plans_sha256": "693a71dc5758ddc424d286a5f841f0b6fe9cf7e5f05d392ffa91b75ac2d96005",
+      "scale_counts": {
+        "1": 4,
+        "1/2": 4,
+        "1/4": 4
+      },
+      "random_plans": 9,
+      "random_assignment_coverage": {
+        "distinct_slots": 1612,
+        "max_slot": 1623,
+        "slots_above_1024": 598,
+        "high_slot_range": [
+          1025,
+          1623
+        ]
+      },
+      "sampling_domain": "ordinary oracle full declared parameter ranges",
+      "baseline_failures": []
+    },
+    {
+      "campaign": "OLMColorKey-inventory",
+      "summary_sha256": "0a6674bcc2fca1c579981167b169f445f85588fc71190a5d915defc611438f51",
+      "identical": true,
+      "diff": [],
+      "parameter_count": 1623
+    },
+    {
+      "schema_version": 1,
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMSmoother2AE\\OLMSmoother2AE\\Plugins\\64\\2025\\OLMSmoother2.aex",
+        "sha256": "add776af61499d425f3978f4e5e4c2c8b4062db6d7276db66a22928749227137"
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMSmoother2.aex",
+        "sha256": "19e05fea673712dd8ef7a1433f172d1893e6765bfc31670e088fd6187a0334c1"
+      },
+      "tool": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "sha256": "8bbe4d726496595339cb95161623700002863bd73cc199d462ce0d12efdc0ba5"
+      },
+      "non_ae_debug_routes": [],
+      "seed": 20261121,
+      "cases": 30,
+      "timeout_seconds": 120,
+      "force_classic": false,
+      "render_environment_overrides": {
+        "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+      },
+      "jobs": 3,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          97,
+          61
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "extent": null,
+      "perturb_candidate": [],
+      "layer_sizes": null,
+      "inventory_diff": [],
+      "same_binary": false,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 30,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 30,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 30,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 30,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 30,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 30,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "complete": true,
+      "exit_code": 0,
+      "campaign": "OLMSmoother2-2025-20261121",
+      "summary_sha256": "bede7035da7ed306fa04c2076995bdfe19aa2a31eca9e794b48fb5383716ae23",
+      "counts": {
+        "smart16": {
+          "exact": 30
+        },
+        "smart32": {
+          "exact": 30
+        },
+        "smart8": {
+          "exact": 30
+        }
+      },
+      "plans_sha256": "8bd5d5bce51291273eb80bad50963d40bef77e7c3dc5cf303539a33790427cdd",
+      "scale_counts": {
+        "1": 10,
+        "1/2": 10,
+        "1/4": 10
+      },
+      "random_plans": 27,
+      "random_assignment_coverage": {
+        "distinct_slots": 15,
+        "max_slot": 15,
+        "slots_above_1024": 0,
+        "high_slot_range": null
+      },
+      "sampling_domain": "ordinary oracle full declared parameter ranges",
+      "baseline_failures": []
+    },
+    {
+      "schema_version": 1,
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMSmoother2AE\\OLMSmoother2AE\\Plugins\\64\\2026\\OLMSmoother2.aex",
+        "sha256": "d56118d170b2eb8c6a4f7708486ba221c7e71271a87becce907db13a29fa9ac5"
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMSmoother2.aex",
+        "sha256": "19e05fea673712dd8ef7a1433f172d1893e6765bfc31670e088fd6187a0334c1"
+      },
+      "tool": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "sha256": "8bbe4d726496595339cb95161623700002863bd73cc199d462ce0d12efdc0ba5"
+      },
+      "non_ae_debug_routes": [],
+      "seed": 20261123,
+      "cases": 12,
+      "timeout_seconds": 120,
+      "force_classic": false,
+      "render_environment_overrides": {
+        "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+      },
+      "jobs": 3,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          97,
+          61
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "extent": null,
+      "perturb_candidate": [],
+      "layer_sizes": null,
+      "inventory_diff": [],
+      "same_binary": false,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "complete": true,
+      "exit_code": 0,
+      "campaign": "OLMSmoother2-2026-20261123",
+      "summary_sha256": "ffcf0494b6c133b0a9dc63ed28253275903b9af9e8e87f332aacaccdf0952464",
+      "counts": {
+        "smart16": {
+          "exact": 12
+        },
+        "smart32": {
+          "exact": 12
+        },
+        "smart8": {
+          "exact": 12
+        }
+      },
+      "plans_sha256": "a7e13e5af2c25ee7300d15b0d6a528a4322ec9081da9cbc4f02ca2297c16dca3",
+      "scale_counts": {
+        "1": 4,
+        "1/2": 4,
+        "1/4": 4
+      },
+      "random_plans": 9,
+      "random_assignment_coverage": {
+        "distinct_slots": 15,
+        "max_slot": 15,
+        "slots_above_1024": 0,
+        "high_slot_range": null
+      },
+      "sampling_domain": "ordinary oracle full declared parameter ranges",
+      "baseline_failures": []
+    },
+    {
+      "campaign": "OLMSmoother2-inventory",
+      "summary_sha256": "6ed982d099fefbd8ba4cdf2b75b3dca48c1263436fbf2bdefb06d7a80d663a54",
+      "identical": true,
+      "diff": [],
+      "parameter_count": 15
+    },
+    {
+      "schema_version": 1,
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2025\\OLMUVMap.aex",
+        "sha256": "412de99a5af617f41d8c0deddc2bdc7fb8b38065b34af2966730e01b72cb2c62"
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMUVMap.aex",
+        "sha256": "b5fe941781d47db12d851a7d6a2da6989b82bbc54d071be4d5b45e32d505583f"
+      },
+      "tool": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "sha256": "8bbe4d726496595339cb95161623700002863bd73cc199d462ce0d12efdc0ba5"
+      },
+      "non_ae_debug_routes": [],
+      "seed": 20261121,
+      "cases": 30,
+      "timeout_seconds": 120,
+      "force_classic": false,
+      "render_environment_overrides": {
+        "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+      },
+      "jobs": 3,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          97,
+          61
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "extent": null,
+      "perturb_candidate": [],
+      "layer_sizes": [
+        [
+          17,
+          9
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          33,
+          17
+        ]
+      ],
+      "inventory_diff": [],
+      "same_binary": false,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 30,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 30,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 30,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 30,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 30,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 30,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "complete": true,
+      "exit_code": 0,
+      "campaign": "OLMUVMap-2025-20261121",
+      "summary_sha256": "d68164178dc4634d6288311a970d066332409d7f434cec821bc29c08e6c16947",
+      "counts": {
+        "smart16": {
+          "exact": 30
+        },
+        "smart32": {
+          "exact": 30
+        },
+        "smart8": {
+          "exact": 30
+        }
+      },
+      "plans_sha256": "cfe07993125c186859290634fb5bf28b878cacfa9e4a129f58467a2e5ae2a27a",
+      "scale_counts": {
+        "1": 10,
+        "1/2": 10,
+        "1/4": 10
+      },
+      "random_plans": 27,
+      "random_assignment_coverage": {
+        "distinct_slots": 3,
+        "max_slot": 3,
+        "slots_above_1024": 0,
+        "high_slot_range": null
+      },
+      "sampling_domain": "ordinary oracle full declared parameter ranges",
+      "baseline_failures": []
+    },
+    {
+      "schema_version": 1,
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2026\\OLMUVMap.aex",
+        "sha256": "c8afcf81c4c037611ccacf9bb2eeed645b33f06d131e9220984c49fa1904e0a8"
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMUVMap.aex",
+        "sha256": "b5fe941781d47db12d851a7d6a2da6989b82bbc54d071be4d5b45e32d505583f"
+      },
+      "tool": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "sha256": "8bbe4d726496595339cb95161623700002863bd73cc199d462ce0d12efdc0ba5"
+      },
+      "non_ae_debug_routes": [],
+      "seed": 20261123,
+      "cases": 12,
+      "timeout_seconds": 120,
+      "force_classic": false,
+      "render_environment_overrides": {
+        "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+      },
+      "jobs": 3,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          97,
+          61
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "extent": null,
+      "perturb_candidate": [],
+      "layer_sizes": [
+        [
+          17,
+          9
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          33,
+          17
+        ]
+      ],
+      "inventory_diff": [],
+      "same_binary": false,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "complete": true,
+      "exit_code": 0,
+      "campaign": "OLMUVMap-2026-20261123",
+      "summary_sha256": "bc2430ec20ba3098cd112356d0c5f86db59f7ba648cecf31a0dca9e3d4f6aab8",
+      "counts": {
+        "smart16": {
+          "exact": 12
+        },
+        "smart32": {
+          "exact": 12
+        },
+        "smart8": {
+          "exact": 12
+        }
+      },
+      "plans_sha256": "e03389301a57493be6279f64d8dd15ef23d88c012c9b54a05c76906b97532838",
+      "scale_counts": {
+        "1": 4,
+        "1/2": 4,
+        "1/4": 4
+      },
+      "random_plans": 9,
+      "random_assignment_coverage": {
+        "distinct_slots": 3,
+        "max_slot": 3,
+        "slots_above_1024": 0,
+        "high_slot_range": null
+      },
+      "sampling_domain": "ordinary oracle full declared parameter ranges",
+      "baseline_failures": []
+    },
+    {
+      "campaign": "OLMUVMap-inventory",
+      "summary_sha256": "25ecf668d0f0798b0fbba864b1af81c882190e4ba03e763ade7bc1efaf67f4a6",
+      "identical": true,
+      "diff": [],
+      "parameter_count": 3
+    }
+  ],
+  "commands": [
+    {
+      "label": "OLMAntiAntiAlias-inventory",
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "inventory",
+        "--reference",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMAntiAntiAlias\\OLMAntiAntiAlias\\Plugins\\64\\2025\\OLMAntiAntiAlias.aex",
+        "--candidate",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMAntiAntiAlias.aex",
+        "--out",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMAntiAntiAlias-inventory"
+      ],
+      "pid": 42832,
+      "start": 1794514891.6768813,
+      "returncode": 0,
+      "seconds": 1.0890932083129883
+    },
+    {
+      "label": "OLMAntiAntiAlias-2025-20261121",
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "render",
+        "--harness",
+        "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "--reference",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMAntiAntiAlias\\OLMAntiAntiAlias\\Plugins\\64\\2025\\OLMAntiAntiAlias.aex",
+        "--candidate",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMAntiAntiAlias.aex",
+        "--out",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMAntiAntiAlias-2025-20261121",
+        "--seed",
+        "20261121",
+        "--cases",
+        "113",
+        "--jobs",
+        "3",
+        "--routes",
+        "smart8,smart16,smart32",
+        "--sizes",
+        "1x1,3x7,11x7,31x19,97x61",
+        "--downsample",
+        "1,1/2,1/4"
+      ],
+      "pid": 5860,
+      "start": 1794514892.766979,
+      "returncode": 2,
+      "seconds": 87.69974827766418
+    },
+    {
+      "label": "OLMAntiAntiAlias-2025-20261122",
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "render",
+        "--harness",
+        "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "--reference",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMAntiAntiAlias\\OLMAntiAntiAlias\\Plugins\\64\\2025\\OLMAntiAntiAlias.aex",
+        "--candidate",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMAntiAntiAlias.aex",
+        "--out",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMAntiAntiAlias-2025-20261122",
+        "--seed",
+        "20261122",
+        "--cases",
+        "113",
+        "--jobs",
+        "3",
+        "--routes",
+        "smart8,smart16,smart32",
+        "--sizes",
+        "1x1,3x7,11x7,31x19,97x61",
+        "--downsample",
+        "1,1/2,1/4"
+      ],
+      "pid": 53580,
+      "start": 1794514980.4677327,
+      "returncode": 1,
+      "seconds": 85.29768776893616
+    },
+    {
+      "label": "OLMAntiAntiAlias-2026-20261123",
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "render",
+        "--harness",
+        "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "--reference",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMAntiAntiAlias\\OLMAntiAntiAlias\\Plugins\\64\\2026\\OLMAntiAntiAlias.aex",
+        "--candidate",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMAntiAntiAlias.aex",
+        "--out",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMAntiAntiAlias-2026-20261123",
+        "--seed",
+        "20261123",
+        "--cases",
+        "12",
+        "--jobs",
+        "3",
+        "--routes",
+        "smart8,smart16,smart32",
+        "--sizes",
+        "1x1,3x7,11x7,31x19,97x61",
+        "--downsample",
+        "1,1/2,1/4"
+      ],
+      "pid": 51216,
+      "start": 1794515065.766422,
+      "returncode": 0,
+      "seconds": 9.674327611923218
+    },
+    {
+      "label": "OLMColorKey-inventory",
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "inventory",
+        "--reference",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKey\\OLMColorKey\\Plugins\\64\\2025\\OLMColorKey.aex",
+        "--candidate",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMColorKey.aex",
+        "--out",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMColorKey-inventory"
+      ],
+      "pid": 54896,
+      "start": 1794515075.44375,
+      "returncode": 0,
+      "seconds": 1.3878538608551025
+    },
+    {
+      "label": "OLMColorKey-2025-20261121",
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "render",
+        "--harness",
+        "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "--reference",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKey\\OLMColorKey\\Plugins\\64\\2025\\OLMColorKey.aex",
+        "--candidate",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMColorKey.aex",
+        "--out",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMColorKey-2025-20261121",
+        "--seed",
+        "20261121",
+        "--cases",
+        "113",
+        "--jobs",
+        "3",
+        "--routes",
+        "smart8,smart16,smart32",
+        "--sizes",
+        "1x1,3x7,11x7,31x19,97x61",
+        "--downsample",
+        "1,1/2,1/4"
+      ],
+      "pid": 46192,
+      "start": 1794515076.832602,
+      "returncode": 0,
+      "seconds": 100.32537269592285
+    },
+    {
+      "label": "OLMColorKey-2025-20261122",
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "render",
+        "--harness",
+        "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "--reference",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKey\\OLMColorKey\\Plugins\\64\\2025\\OLMColorKey.aex",
+        "--candidate",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMColorKey.aex",
+        "--out",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMColorKey-2025-20261122",
+        "--seed",
+        "20261122",
+        "--cases",
+        "113",
+        "--jobs",
+        "3",
+        "--routes",
+        "smart8,smart16,smart32",
+        "--sizes",
+        "1x1,3x7,11x7,31x19,97x61",
+        "--downsample",
+        "1,1/2,1/4"
+      ],
+      "pid": 55408,
+      "start": 1794515177.1594784,
+      "returncode": 0,
+      "seconds": 100.315025806427
+    },
+    {
+      "label": "OLMColorKey-2026-20261123",
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "render",
+        "--harness",
+        "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "--reference",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKey\\OLMColorKey\\Plugins\\64\\2026\\OLMColorKey.aex",
+        "--candidate",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMColorKey.aex",
+        "--out",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMColorKey-2026-20261123",
+        "--seed",
+        "20261123",
+        "--cases",
+        "12",
+        "--jobs",
+        "3",
+        "--routes",
+        "smart8,smart16,smart32",
+        "--sizes",
+        "1x1,3x7,11x7,31x19,97x61",
+        "--downsample",
+        "1,1/2,1/4"
+      ],
+      "pid": 50240,
+      "start": 1794515277.4755037,
+      "returncode": 0,
+      "seconds": 11.579792976379395
+    },
+    {
+      "label": "ColorKeep-inventory",
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "inventory",
+        "--reference",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKeep\\OLMColorKeep\\Plugins\\64\\2025\\ColorKeep.aex",
+        "--candidate",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\ColorKeep.aex",
+        "--out",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\ColorKeep-inventory"
+      ],
+      "pid": 4008,
+      "start": 1794515289.0582967,
+      "returncode": 0,
+      "seconds": 1.1175978183746338
+    },
+    {
+      "label": "ColorKeep-2025-20261121",
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "render",
+        "--harness",
+        "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "--reference",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKeep\\OLMColorKeep\\Plugins\\64\\2025\\ColorKeep.aex",
+        "--candidate",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\ColorKeep.aex",
+        "--out",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\ColorKeep-2025-20261121",
+        "--seed",
+        "20261121",
+        "--cases",
+        "30",
+        "--jobs",
+        "3",
+        "--routes",
+        "smart8,smart16,smart32",
+        "--sizes",
+        "1x1,3x7,11x7,31x19,97x61",
+        "--downsample",
+        "1,1/2,1/4"
+      ],
+      "pid": 43604,
+      "start": 1794515290.1768937,
+      "returncode": 0,
+      "seconds": 23.671072483062744
+    },
+    {
+      "label": "ColorKeep-2026-20261123",
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "render",
+        "--harness",
+        "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "--reference",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKeep\\OLMColorKeep\\Plugins\\64\\2026\\ColorKeep.aex",
+        "--candidate",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\ColorKeep.aex",
+        "--out",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\ColorKeep-2026-20261123",
+        "--seed",
+        "20261123",
+        "--cases",
+        "12",
+        "--jobs",
+        "3",
+        "--routes",
+        "smart8,smart16,smart32",
+        "--sizes",
+        "1x1,3x7,11x7,31x19,97x61",
+        "--downsample",
+        "1,1/2,1/4"
+      ],
+      "pid": 14704,
+      "start": 1794515313.848966,
+      "returncode": 0,
+      "seconds": 9.954887390136719
+    },
+    {
+      "label": "OLMSmoother2-inventory",
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "inventory",
+        "--reference",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMSmoother2AE\\OLMSmoother2AE\\Plugins\\64\\2025\\OLMSmoother2.aex",
+        "--candidate",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMSmoother2.aex",
+        "--out",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMSmoother2-inventory"
+      ],
+      "pid": 60164,
+      "start": 1794515323.8093877,
+      "returncode": 0,
+      "seconds": 1.0729622840881348
+    },
+    {
+      "label": "OLMSmoother2-2025-20261121",
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "render",
+        "--harness",
+        "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "--reference",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMSmoother2AE\\OLMSmoother2AE\\Plugins\\64\\2025\\OLMSmoother2.aex",
+        "--candidate",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMSmoother2.aex",
+        "--out",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMSmoother2-2025-20261121",
+        "--seed",
+        "20261121",
+        "--cases",
+        "30",
+        "--jobs",
+        "3",
+        "--routes",
+        "smart8,smart16,smart32",
+        "--sizes",
+        "1x1,3x7,11x7,31x19,97x61",
+        "--downsample",
+        "1,1/2,1/4"
+      ],
+      "pid": 61564,
+      "start": 1794515324.8828557,
+      "returncode": 0,
+      "seconds": 22.29327654838562
+    },
+    {
+      "label": "OLMSmoother2-2026-20261123",
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "render",
+        "--harness",
+        "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "--reference",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMSmoother2AE\\OLMSmoother2AE\\Plugins\\64\\2026\\OLMSmoother2.aex",
+        "--candidate",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMSmoother2.aex",
+        "--out",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMSmoother2-2026-20261123",
+        "--seed",
+        "20261123",
+        "--cases",
+        "12",
+        "--jobs",
+        "3",
+        "--routes",
+        "smart8,smart16,smart32",
+        "--sizes",
+        "1x1,3x7,11x7,31x19,97x61",
+        "--downsample",
+        "1,1/2,1/4"
+      ],
+      "pid": 51992,
+      "start": 1794515347.177132,
+      "returncode": 0,
+      "seconds": 9.597647428512573
+    },
+    {
+      "label": "OLMUVMap-inventory",
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "inventory",
+        "--reference",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2025\\OLMUVMap.aex",
+        "--candidate",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMUVMap.aex",
+        "--out",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMUVMap-inventory"
+      ],
+      "pid": 56940,
+      "start": 1794515356.7813096,
+      "returncode": 0,
+      "seconds": 1.045177698135376
+    },
+    {
+      "label": "OLMUVMap-2025-20261121",
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "render",
+        "--harness",
+        "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "--reference",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2025\\OLMUVMap.aex",
+        "--candidate",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMUVMap.aex",
+        "--out",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMUVMap-2025-20261121",
+        "--seed",
+        "20261121",
+        "--cases",
+        "30",
+        "--jobs",
+        "3",
+        "--routes",
+        "smart8,smart16,smart32",
+        "--sizes",
+        "1x1,3x7,11x7,31x19,97x61",
+        "--downsample",
+        "1,1/2,1/4",
+        "--layer-sizes",
+        "17x9,1x5,33x17"
+      ],
+      "pid": 36876,
+      "start": 1794515357.8274863,
+      "returncode": 0,
+      "seconds": 22.507620334625244
+    },
+    {
+      "label": "OLMUVMap-2026-20261123",
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "render",
+        "--harness",
+        "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "--reference",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2026\\OLMUVMap.aex",
+        "--candidate",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMUVMap.aex",
+        "--out",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMUVMap-2026-20261123",
+        "--seed",
+        "20261123",
+        "--cases",
+        "12",
+        "--jobs",
+        "3",
+        "--routes",
+        "smart8,smart16,smart32",
+        "--sizes",
+        "1x1,3x7,11x7,31x19,97x61",
+        "--downsample",
+        "1,1/2,1/4",
+        "--layer-sizes",
+        "17x9,1x5,33x17"
+      ],
+      "pid": 53572,
+      "start": 1794515380.336612,
+      "returncode": 0,
+      "seconds": 9.560828447341919
+    },
+    {
+      "label": "DistanceGradation-inventory",
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "inventory",
+        "--reference",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMDistanceGradation\\OLMDistanceGradation\\Plugins\\64\\2025\\DistanceGradation.aex",
+        "--candidate",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\DistanceGradation.aex",
+        "--out",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\DistanceGradation-inventory"
+      ],
+      "pid": 50520,
+      "start": 1794515389.901965,
+      "returncode": 0,
+      "seconds": 1.263977289199829
+    },
+    {
+      "label": "DistanceGradation-2025-20261121",
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-distance-gradation\\tests\\update_campaign.py",
+        "--candidate",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\DistanceGradation.aex",
+        "--out",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\DistanceGradation-2025-20261121",
+        "--seed",
+        "20261121",
+        "--cases",
+        "30",
+        "--year",
+        "2025"
+      ],
+      "pid": 516,
+      "start": 1794515391.1669478,
+      "returncode": 0,
+      "seconds": 43.04365921020508
+    },
+    {
+      "label": "DistanceGradation-2026-20261123",
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-distance-gradation\\tests\\update_campaign.py",
+        "--candidate",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\DistanceGradation.aex",
+        "--out",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\DistanceGradation-2026-20261123",
+        "--seed",
+        "20261123",
+        "--cases",
+        "12",
+        "--year",
+        "2026"
+      ],
+      "pid": 62032,
+      "start": 1794515434.211118,
+      "returncode": 0,
+      "seconds": 17.511082887649536
+    }
+  ]
+}

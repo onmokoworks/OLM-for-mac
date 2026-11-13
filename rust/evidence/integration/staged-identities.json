@@ -1,0 +1,72 @@
+[
+  {
+    "name": "ColorKeep",
+    "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\target\\release\\color_keep.dll",
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\ColorKeep.aex",
+    "sha256": "2bcfc5a746c503deba995cfc6cab5500a5b1b61584b4b6a5cf079223e5d235ae",
+    "bytes": 154112
+  },
+  {
+    "name": "DistanceGradation",
+    "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\target\\release\\olm_distance_gradation.dll",
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\DistanceGradation.aex",
+    "sha256": "f0ab528e73378255e96fe0931a2f1e0307e0ec71df1cb2b05f60958a4800574f",
+    "bytes": 247296
+  },
+  {
+    "name": "OLMBlur",
+    "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\target\\release\\olm_blur.dll",
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMBlur.aex",
+    "sha256": "b5894283c866ac86850ccc9c1aa9d91f2b51d1fba432982484c8c52ca721f54b",
+    "bytes": 209920
+  },
+  {
+    "name": "OLMColorKey",
+    "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\target\\release\\olm_color_key.dll",
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMColorKey.aex",
+    "sha256": "82f84ceb68cccd18693c0883bda970a0420596a88d52c60d55379f7df43d6262",
+    "bytes": 216064
+  },
+  {
+    "name": "OLMDirectionalBlur",
+    "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\target\\release\\olm_directional_blur.dll",
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMDirectionalBlur.aex",
+    "sha256": "d8139a723847a60d98424ba9bfba3c627e46fb2edc299e0832c8c4bdf235b94b",
+    "bytes": 260608
+  },
+  {
+    "name": "OLMKiraKira",
+    "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\target\\release\\olm_kirakira.dll",
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMKiraKira.aex",
+    "sha256": "62d7173c26c4e08137a0f662f31b8f0242cbc8ba30583eb526105a69bb119e2f",
+    "bytes": 283136
+  },
+  {
+    "name": "OLMRadialBlur",
+    "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\target\\release\\olm_radial_blur.dll",
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMRadialBlur.aex",
+    "sha256": "51eaea21f9bd0e0e00c69fa2ab402947cfc8af5c75e17f05afbd217f86c366f3",
+    "bytes": 299520
+  },
+  {
+    "name": "OLMSmoother",
+    "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\target\\release\\olm_smoother.dll",
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMSmoother.aex",
+    "sha256": "623e29b1b779f56350e1b56ac63cafadd8212e70d2acb451fa3395afaefa0abb",
+    "bytes": 465408
+  },
+  {
+    "name": "OLMSmoother2",
+    "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\target\\release\\olm_smoother2.dll",
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMSmoother2.aex",
+    "sha256": "5a006ae7cf7129374041b315bc816a22668a4d42de3b569a83c49054d3eb16e7",
+    "bytes": 375296
+  },
+  {
+    "name": "OLMToonDilate",
+    "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\target\\release\\olm_toon_dilate.dll",
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMToonDilate.aex",
+    "sha256": "36ca7c763a202d190ca39b279baada58149e721c991c6c72f6b546783a7a279b",
+    "bytes": 142848
+  }
+]

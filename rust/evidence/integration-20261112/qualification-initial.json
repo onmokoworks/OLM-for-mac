@@ -1,0 +1,351 @@
+{
+  "note": "First integrated Windows build, before Mac-only adapter follow-up; historical counts are not added to the final rebuilt candidate totals.",
+  "campaigns": [
+    {
+      "campaign": "ColorKeep-2025-20261121",
+      "counts": {
+        "smart16": {
+          "exact": 30
+        },
+        "smart32": {
+          "exact": 30
+        },
+        "smart8": {
+          "exact": 30
+        }
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\ColorKeep.aex",
+        "sha256": "32e8bf5b75bc1f1a81b2e4d856b300e5b5e508c56b2d85bbbae2c8ec9e655832"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKeep\\OLMColorKeep\\Plugins\\64\\2025\\ColorKeep.aex",
+        "sha256": "f6e5f09e53b31be6c64e7c1d17a8fac4aac65bbd6487011c54916497ce9ea633"
+      },
+      "summary_sha256": "1d5a74882baa5425703791ec2a825960d35cd6ebca3588185b2259198fdeec20"
+    },
+    {
+      "campaign": "ColorKeep-2026-20261123",
+      "counts": {
+        "smart16": {
+          "exact": 12
+        },
+        "smart32": {
+          "exact": 12
+        },
+        "smart8": {
+          "exact": 12
+        }
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\ColorKeep.aex",
+        "sha256": "32e8bf5b75bc1f1a81b2e4d856b300e5b5e508c56b2d85bbbae2c8ec9e655832"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKeep\\OLMColorKeep\\Plugins\\64\\2026\\ColorKeep.aex",
+        "sha256": "f378f4319db09f30dc76b0cce009fe542f606bf2a9806b0165fc97cfba55a305"
+      },
+      "summary_sha256": "00484132d7263171c37c3f579d021ba2758c26e37109900da20e6c44b6c2c756"
+    },
+    {
+      "campaign": "ColorKeep-inventory",
+      "summary_sha256": "45f6ade68901da8c94dc3b799486dd0c61c13bef4bbe09c4852c2685aeae91d8"
+    },
+    {
+      "campaign": "DistanceGradation-2025-20261121",
+      "counts": {
+        "smart16": {
+          "exact": 30
+        },
+        "smart32": {
+          "exact": 30
+        },
+        "smart8": {
+          "exact": 30
+        }
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\DistanceGradation.aex",
+        "sha256": "ab4e7d9592a49951be37436145b5892494ec092451e0d177d5887634c1982797"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMDistanceGradation\\OLMDistanceGradation\\Plugins\\64\\2025\\DistanceGradation.aex",
+        "sha256": "fd151598c015baf7068ce7ef59eead7430657cab083d9000c2a35e9b84da5e63"
+      },
+      "summary_sha256": "bacb6c9e53e59c5d071427e03daa1927a5fa1e35b11fcb362b03611dbcdb1050"
+    },
+    {
+      "campaign": "DistanceGradation-2026-20261123",
+      "counts": {
+        "smart16": {
+          "exact": 12
+        },
+        "smart32": {
+          "exact": 12
+        },
+        "smart8": {
+          "exact": 12
+        }
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\DistanceGradation.aex",
+        "sha256": "ab4e7d9592a49951be37436145b5892494ec092451e0d177d5887634c1982797"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMDistanceGradation\\OLMDistanceGradation\\Plugins\\64\\2026\\DistanceGradation.aex",
+        "sha256": "cb627ab4819b5cb5ef4f24a6afd19685c037bde7546a2c77aed6df35ee8b504e"
+      },
+      "summary_sha256": "84b7930f051896ab9e6bbb1a746b6c9815d19a5a5583e085ce0924bd0ea527a5"
+    },
+    {
+      "campaign": "DistanceGradation-inventory",
+      "summary_sha256": "2fee3488dc9b0bb0164a6576d8dcb3038063f77eff9b51fe7c39f18cec4568c9"
+    },
+    {
+      "campaign": "OLMAntiAntiAlias-2025-20261121",
+      "counts": {
+        "smart16": {
+          "exact": 113
+        },
+        "smart32": {
+          "exact": 113
+        },
+        "smart8": {
+          "exact": 113
+        }
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMAntiAntiAlias.aex",
+        "sha256": "b43431f22c7dd7677ef96cca2f48968e7848aa9f339991073e47495eb75f82da"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMAntiAntiAlias\\OLMAntiAntiAlias\\Plugins\\64\\2025\\OLMAntiAntiAlias.aex",
+        "sha256": "9ea6e2d85ab64ec6549653072a00e81315ae9c6791752a5ee634d2f599490cc0"
+      },
+      "summary_sha256": "89b51b4e02f6d1c0e12a521dbf22e9a1a3538c182c52a9331a316aa574fbfe9c"
+    },
+    {
+      "campaign": "OLMAntiAntiAlias-2025-20261122",
+      "counts": {
+        "smart16": {
+          "exact": 113
+        },
+        "smart32": {
+          "exact": 113
+        },
+        "smart8": {
+          "exact": 113
+        }
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMAntiAntiAlias.aex",
+        "sha256": "b43431f22c7dd7677ef96cca2f48968e7848aa9f339991073e47495eb75f82da"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMAntiAntiAlias\\OLMAntiAntiAlias\\Plugins\\64\\2025\\OLMAntiAntiAlias.aex",
+        "sha256": "9ea6e2d85ab64ec6549653072a00e81315ae9c6791752a5ee634d2f599490cc0"
+      },
+      "summary_sha256": "c4ff8862dc15c5e366321ec1666512aa13fff4a94dbc2743d7a4fc3200a2cb2c"
+    },
+    {
+      "campaign": "OLMAntiAntiAlias-2026-20261123",
+      "counts": {
+        "smart16": {
+          "exact": 12
+        },
+        "smart32": {
+          "exact": 12
+        },
+        "smart8": {
+          "exact": 12
+        }
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMAntiAntiAlias.aex",
+        "sha256": "b43431f22c7dd7677ef96cca2f48968e7848aa9f339991073e47495eb75f82da"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMAntiAntiAlias\\OLMAntiAntiAlias\\Plugins\\64\\2026\\OLMAntiAntiAlias.aex",
+        "sha256": "c0348e4d8351a71c9cca0420cfdfcbda151413c0a013818e2cc1ebf20f05ec4e"
+      },
+      "summary_sha256": "9b41e4e193dc180add27654cd9a5ac952858245393529bba37e40202459be0db"
+    },
+    {
+      "campaign": "OLMAntiAntiAlias-inventory",
+      "summary_sha256": "b8d1fc6d9c4d6fa3a2fc72886ec22c0ca547149eb95bbeaa84cded2e27ee93c0"
+    },
+    {
+      "campaign": "OLMColorKey-2025-20261121",
+      "counts": {
+        "smart16": {
+          "exact": 113
+        },
+        "smart32": {
+          "exact": 113
+        },
+        "smart8": {
+          "exact": 113
+        }
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMColorKey.aex",
+        "sha256": "431c4aaca0d1af280d72144f9dc9f26a0f96001f3168c0ace3453bee14538ee1"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKey\\OLMColorKey\\Plugins\\64\\2025\\OLMColorKey.aex",
+        "sha256": "9cd1645c8f75f45d9a6ea61bc61b7fd8bcbed198fb1124457de216e9e9b9d5ed"
+      },
+      "summary_sha256": "75e20e111cec182114560d15c81f1ee4ba3e6d84ff71e22cd8c5fbe235589d1d"
+    },
+    {
+      "campaign": "OLMColorKey-2025-20261122",
+      "counts": {
+        "smart16": {
+          "exact": 113
+        },
+        "smart32": {
+          "exact": 113
+        },
+        "smart8": {
+          "exact": 113
+        }
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMColorKey.aex",
+        "sha256": "431c4aaca0d1af280d72144f9dc9f26a0f96001f3168c0ace3453bee14538ee1"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKey\\OLMColorKey\\Plugins\\64\\2025\\OLMColorKey.aex",
+        "sha256": "9cd1645c8f75f45d9a6ea61bc61b7fd8bcbed198fb1124457de216e9e9b9d5ed"
+      },
+      "summary_sha256": "45e8aeba30c535fbb715ee29ea379082bdbd3486739290035f509c4964d4ced7"
+    },
+    {
+      "campaign": "OLMColorKey-2026-20261123",
+      "counts": {
+        "smart16": {
+          "exact": 12
+        },
+        "smart32": {
+          "exact": 12
+        },
+        "smart8": {
+          "exact": 12
+        }
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMColorKey.aex",
+        "sha256": "431c4aaca0d1af280d72144f9dc9f26a0f96001f3168c0ace3453bee14538ee1"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKey\\OLMColorKey\\Plugins\\64\\2026\\OLMColorKey.aex",
+        "sha256": "4752e50132c6d60fc2b9699cf262e4276e9c00b006c248d47b1055899d61c193"
+      },
+      "summary_sha256": "f1ba5f8c57ed12bbd0f7278407bc14c03c382f8719d1067f4f67b0251d20dec9"
+    },
+    {
+      "campaign": "OLMColorKey-inventory",
+      "summary_sha256": "1af1af626e06905ea9aed300f330c15793d02b58a768654b4677ddc6a96cedd9"
+    },
+    {
+      "campaign": "OLMSmoother2-2025-20261121",
+      "counts": {
+        "smart16": {
+          "exact": 30
+        },
+        "smart32": {
+          "exact": 30
+        },
+        "smart8": {
+          "exact": 30
+        }
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMSmoother2.aex",
+        "sha256": "f8a6cd193c39d965c69d690550634f88f22784bd27ef8148df14ae6f7a1ca5c7"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMSmoother2AE\\OLMSmoother2AE\\Plugins\\64\\2025\\OLMSmoother2.aex",
+        "sha256": "add776af61499d425f3978f4e5e4c2c8b4062db6d7276db66a22928749227137"
+      },
+      "summary_sha256": "dcbdec50dd52ed7787c15ecdc190aaf587b3357f7037703a2121bc8ade6966a1"
+    },
+    {
+      "campaign": "OLMSmoother2-2026-20261123",
+      "counts": {
+        "smart16": {
+          "exact": 12
+        },
+        "smart32": {
+          "exact": 12
+        },
+        "smart8": {
+          "exact": 12
+        }
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMSmoother2.aex",
+        "sha256": "f8a6cd193c39d965c69d690550634f88f22784bd27ef8148df14ae6f7a1ca5c7"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMSmoother2AE\\OLMSmoother2AE\\Plugins\\64\\2026\\OLMSmoother2.aex",
+        "sha256": "d56118d170b2eb8c6a4f7708486ba221c7e71271a87becce907db13a29fa9ac5"
+      },
+      "summary_sha256": "5bbefeb85883abd4dd10ea994918acb840da9e64f588797e3276cd9e34cba66b"
+    },
+    {
+      "campaign": "OLMSmoother2-inventory",
+      "summary_sha256": "e1bbb88026d3ef3421bafbe8ef49a009cf9ec92d5fcd006a7891544dba2471d0"
+    },
+    {
+      "campaign": "OLMUVMap-2025-20261121",
+      "counts": {
+        "smart16": {
+          "exact": 30
+        },
+        "smart32": {
+          "exact": 30
+        },
+        "smart8": {
+          "exact": 30
+        }
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMUVMap.aex",
+        "sha256": "c3aa2afd562396f1d4ab3e1555940f076baa899eaefc16cee61a9f63f179414e"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2025\\OLMUVMap.aex",
+        "sha256": "412de99a5af617f41d8c0deddc2bdc7fb8b38065b34af2966730e01b72cb2c62"
+      },
+      "summary_sha256": "4049fa2d1fd8b5e4f328191d5ffc8bff774275f6bd522458fa708b1a150ce1fb"
+    },
+    {
+      "campaign": "OLMUVMap-2026-20261123",
+      "counts": {
+        "smart16": {
+          "exact": 12
+        },
+        "smart32": {
+          "exact": 12
+        },
+        "smart8": {
+          "exact": 12
+        }
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMUVMap.aex",
+        "sha256": "c3aa2afd562396f1d4ab3e1555940f076baa899eaefc16cee61a9f63f179414e"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2026\\OLMUVMap.aex",
+        "sha256": "c8afcf81c4c037611ccacf9bb2eeed645b33f06d131e9220984c49fa1904e0a8"
+      },
+      "summary_sha256": "38fab8bc874fc10a4f462237af812ab074aa981c0f47e80fb9c34ef997c9b257"
+    },
+    {
+      "campaign": "OLMUVMap-inventory",
+      "summary_sha256": "acbad84ceebec0ea19eb93b7f453bb554b4b5738b5e4f69b97a5c36f99361490"
+    }
+  ]
+}

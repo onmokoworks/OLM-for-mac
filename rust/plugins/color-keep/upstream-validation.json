@@ -1,0 +1,594 @@
+{
+  "job": "Up-colorkeep",
+  "release": "2026-11-12",
+  "measured": "2026-11-13",
+  "qualification": "AEXCompat Windows x64 CPU, not native AE or macOS acceptance",
+  "metadata": {
+    "identities": {
+      "old": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\ColorKeep.aex",
+        "sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86"
+      },
+      "2025": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKeep\\OLMColorKeep\\Plugins\\64\\2025\\ColorKeep.aex",
+        "sha256": "f6e5f09e53b31be6c64e7c1d17a8fac4aac65bbd6487011c54916497ce9ea633"
+      },
+      "2026": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKeep\\OLMColorKeep\\Plugins\\64\\2026\\ColorKeep.aex",
+        "sha256": "f378f4319db09f30dc76b0cce009fe542f606bf2a9806b0165fc97cfba55a305"
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\color-keep\\validation\\upstream-20261112\\ColorKeep.aex",
+        "sha256": "e3961446feb38afe572a8d7482198f13b7cf3d934f51aced9ee40f3b0e938f25"
+      }
+    },
+    "pipl_exact": true,
+    "declarations_exact": true,
+    "old_palette_declarations_preserved": true,
+    "counts": {
+      "old": 101,
+      "2025": 201,
+      "2026": 201,
+      "candidate": 201
+    }
+  },
+  "pipl": {
+    "length": 294,
+    "sha256": "87e282d92db41488b38ffe96dcd751a973feb9356013c5377a3c2cf42b6c697d",
+    "fields": {
+      "name": "OLM Color Keep",
+      "catg": "OLM Plug-ins",
+      "8664": "entry_point",
+      "ePVR": {
+        "major": 2,
+        "minor": 0
+      },
+      "eSVR": {
+        "major": 13,
+        "minor": 28
+      },
+      "eVER": 557056,
+      "eINF": 0,
+      "eGLO": 33554496,
+      "eGL2": 134222848,
+      "eMNA": "OLM Color Keep",
+      "aeFL": 0,
+      "depths": [
+        8,
+        16,
+        32
+      ],
+      "smart_render": true,
+      "effect_version": {
+        "major": 1,
+        "minor": 1,
+        "bug": 0,
+        "stage": 0,
+        "build": 0
+      }
+    }
+  },
+  "source_sha256": {
+    "src/lib.rs": "be630cfbb5699c9968fa4bad248ded0372b1b471f44a4083997d55c19a4526b7",
+    "build.rs": "b03c7d098b1b9c55d30652439b5ab99c1fbc4fd64802dbca24693ec1c7748262",
+    "Cargo.toml": "97631186120abbedeff752406545b173bda066ff8fde01613587ce175db54901",
+    "witness_adapter.rs": "6fb1bbcc92876b06148305cfb0fa649a8e4bceffe3a65cace56048c3d53f02f8",
+    "record_adapter.rs": "4e13ca3c908c43faa43de4f720879e8cc43dde99e059f14b1ccc8a474e9ffa25",
+    "golden_probe.rs": "864560d0e979afdcdc047347a307e90598df4a1f6899c155bd07748d496c4160",
+    "validate_upstream.py": "c0df8af9a979cc014d518d11afc4f69864e4c6b1a836fa01c8b6cfc6b783e378",
+    "upstream_hub.py": "71b6d4be5e4cd990fc50e52e2682f58fd4c22f1c62be02dd662a1bdf6beb1620"
+  },
+  "build_equivalence": {
+    "campaign": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\color-keep\\validation\\upstream-20261112\\ColorKeep.aex",
+      "sha256": "e3961446feb38afe572a8d7482198f13b7cf3d934f51aced9ee40f3b0e938f25"
+    },
+    "formatted_source_rebuild": {
+      "path": "D:\\olm-rs-target\\Up-colorkeep\\release\\color_keep.dll",
+      "sha256": "63ced8a186c6269d6d0ac381ee1472c15f905ad7a2161b0251f108736634283a"
+    },
+    "sections": {
+      ".text": {
+        "exact": true,
+        "original_sha256": "324e88e268a62487ed19572335adc8df65f0ac247cb77695c3a0ab50a2c05b66",
+        "rebuilt_sha256": "324e88e268a62487ed19572335adc8df65f0ac247cb77695c3a0ab50a2c05b66"
+      },
+      ".rdata": {
+        "exact": false,
+        "original_sha256": "31626bf8b2b966c14e7daa9f430b128ee38b325f34f5ed7d6c5f8f86dc84097d",
+        "rebuilt_sha256": "b59206e51f48d67aa1d3544484e0cafa3d53c48975d1d192e2cada10b5fa89ca"
+      },
+      ".data": {
+        "exact": true,
+        "original_sha256": "02511f47bc25800bea5b58ea46b202e76d592f45b13674363c62c76d0de53f07",
+        "rebuilt_sha256": "02511f47bc25800bea5b58ea46b202e76d592f45b13674363c62c76d0de53f07"
+      },
+      ".pdata": {
+        "exact": true,
+        "original_sha256": "78bf0779f3483c53b747474af3be18c707af5dfb218d2c4197991c2cf838cf81",
+        "rebuilt_sha256": "78bf0779f3483c53b747474af3be18c707af5dfb218d2c4197991c2cf838cf81"
+      },
+      ".rsrc": {
+        "exact": false,
+        "original_sha256": "569889f7048c327af3f4fa560fea993b65f3de947cdbebcdbcfee5c783a5073e",
+        "rebuilt_sha256": "3d0c6435d89ac703d837387382450987daab53c81f64b97d8a64712e297cb9c5"
+      },
+      ".reloc": {
+        "exact": true,
+        "original_sha256": "2cd6315084e7cb52867d082cb731de548395d18f0572246fc73e02f32ef9db72",
+        "rebuilt_sha256": "2cd6315084e7cb52867d082cb731de548395d18f0572246fc73e02f32ef9db72"
+      }
+    },
+    "pipl_exact": true
+  },
+  "unit_tests": 4,
+  "campaigns": {
+    "random-20261112": {
+      "path": "validation\\upstream-20261112\\random-20261112\\summary.json",
+      "sha256": "e031107cf53f91f01e47bd35528306ab557a16cfc78c039f49f700f5c55e632a",
+      "transport": "resident",
+      "routes": {
+        "smart8": {
+          "cases_run": 203,
+          "exact": 203,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        },
+        "smart16": {
+          "cases_run": 203,
+          "exact": 203,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        },
+        "smart32": {
+          "cases_run": 203,
+          "exact": 203,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        }
+      }
+    },
+    "random-20261113": {
+      "path": "validation\\upstream-20261112\\random-20261113\\summary.json",
+      "sha256": "b0bf8b652015ba4011a43612df546e2f15de5157b67874a3cc03be575021625c",
+      "transport": "resident",
+      "routes": {
+        "smart8": {
+          "cases_run": 203,
+          "exact": 203,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        },
+        "smart16": {
+          "cases_run": 203,
+          "exact": 203,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        },
+        "smart32": {
+          "cases_run": 203,
+          "exact": 203,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        }
+      }
+    },
+    "fresh-2025": {
+      "path": "validation\\upstream-20261112\\fresh-2025\\summary.json",
+      "sha256": "92b0e11d17dbde1640d273ffe3ef69b79fe612d85bab276296242419524adec2",
+      "transport": "per_process",
+      "routes": {
+        "smart8": {
+          "cases_run": 12,
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        },
+        "smart16": {
+          "cases_run": 12,
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        },
+        "smart32": {
+          "cases_run": 12,
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        }
+      }
+    },
+    "fresh-2026": {
+      "path": "validation\\upstream-20261112\\fresh-2026\\summary.json",
+      "sha256": "b331e373faf73cfa5a9ddd099649cd53e81b73d9bf05fe133a110fead86b65d7",
+      "transport": "per_process",
+      "routes": {
+        "smart8": {
+          "cases_run": 12,
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        },
+        "smart16": {
+          "cases_run": 12,
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        },
+        "smart32": {
+          "cases_run": 12,
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        }
+      }
+    },
+    "active-sensitivity": {
+      "path": "validation\\upstream-20261112\\active-sensitivity\\summary.json",
+      "sha256": "dd43d215ab4f485170bf2cb295e70a58652cad592e40dec837de3d45323e7a97",
+      "transport": "resident",
+      "routes": {
+        "smart8": {
+          "cases_run": 200,
+          "exact": 200,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        },
+        "smart16": {
+          "cases_run": 200,
+          "exact": 200,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        },
+        "smart32": {
+          "cases_run": 200,
+          "exact": 200,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        }
+      }
+    },
+    "matched-2025": {
+      "path": "validation\\upstream-20261112\\matched-2025\\summary.json",
+      "sha256": "30d06e3cf5b915d365dca1ce9d26c907bf35a909d8ceb22958c3661e6e52876c",
+      "transport": "per_process",
+      "routes": {
+        "smart8": {
+          "cases_run": 36,
+          "exact": 36,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        },
+        "smart16": {
+          "cases_run": 36,
+          "exact": 36,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        },
+        "smart32": {
+          "cases_run": 36,
+          "exact": 36,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        }
+      }
+    },
+    "matched-2026": {
+      "path": "validation\\upstream-20261112\\matched-2026\\summary.json",
+      "sha256": "60de767f04fc7304c156b9ccfed089522a2d80a147f39f0baf1cada2d07c88e1",
+      "transport": "per_process",
+      "routes": {
+        "smart8": {
+          "cases_run": 36,
+          "exact": 36,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        },
+        "smart16": {
+          "cases_run": 36,
+          "exact": 36,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        },
+        "smart32": {
+          "cases_run": 36,
+          "exact": 36,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        }
+      }
+    },
+    "old-new-matched": {
+      "path": "validation\\upstream-20261112\\old-new-matched\\summary.json",
+      "sha256": "e55c6fdcf30b411ea79bc5117c61d607b69927302fd542f84395be891a5830f7",
+      "transport": "per_process",
+      "routes": {
+        "smart8": {
+          "cases_run": 12,
+          "exact": 0,
+          "mismatched": 12,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        },
+        "smart16": {
+          "cases_run": 12,
+          "exact": 0,
+          "mismatched": 12,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        },
+        "smart32": {
+          "cases_run": 12,
+          "exact": 0,
+          "mismatched": 12,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0
+        }
+      }
+    }
+  },
+  "random_cases_per_depth": 400,
+  "random_seeds": [
+    20261112,
+    20261113
+  ],
+  "downsample": [
+    "1",
+    "1/2",
+    "1/4"
+  ],
+  "witnesses": [
+    {
+      "depth": 8,
+      "cases": 320,
+      "exact": 320
+    },
+    {
+      "depth": 16,
+      "cases": 320,
+      "exact": 320
+    },
+    {
+      "depth": 32,
+      "cases": 320,
+      "exact": 320
+    }
+  ],
+  "record_replays": [
+    {
+      "depth": 8,
+      "path": "validation\\upstream-20261112\\record-replay-8-0\\comparison.json",
+      "sha256": "057070066611f7da4474096a3a6a013d3ed5b7a5b744c9e71d945002d50a7633"
+    },
+    {
+      "depth": 8,
+      "path": "validation\\upstream-20261112\\record-replay-8-1\\comparison.json",
+      "sha256": "328153adc3aa7910fe974b096157541d8b80368a7dbe56d8fdd23f2c91013eb8"
+    },
+    {
+      "depth": 8,
+      "path": "validation\\upstream-20261112\\record-replay-8-2\\comparison.json",
+      "sha256": "ed1cc14f9573c731e4d95d16fcccfa32abc6c876b00640acc741e2ba306491bb"
+    },
+    {
+      "depth": 8,
+      "path": "validation\\upstream-20261112\\record-replay-8-3\\comparison.json",
+      "sha256": "15301dd01c86423b4e04ebb51f6bda9f428e5f272a706cf7bf1f297e87f44254"
+    },
+    {
+      "depth": 8,
+      "path": "validation\\upstream-20261112\\record-replay-8-4\\comparison.json",
+      "sha256": "cbf6263a8a48d9d3bc4d8548c2d4c2337b004d9305c1cb46d6c3b76df83524c4"
+    },
+    {
+      "depth": 8,
+      "path": "validation\\upstream-20261112\\record-replay-8-5\\comparison.json",
+      "sha256": "a1de21e306e2874d934a7fccbcef8a021950a49531ead8deae8277e2e52c76d2"
+    },
+    {
+      "depth": 16,
+      "path": "validation\\upstream-20261112\\record-replay-16-0\\comparison.json",
+      "sha256": "92c9e385d8c302f205ab75f684ea258cc8331dd21350e65ee30c8cd16066c434"
+    },
+    {
+      "depth": 16,
+      "path": "validation\\upstream-20261112\\record-replay-16-1\\comparison.json",
+      "sha256": "fc74bb22aa155ddd30aafbfc7bc6a08c18eb9ce4d869c4f876cba455596c66e6"
+    },
+    {
+      "depth": 16,
+      "path": "validation\\upstream-20261112\\record-replay-16-2\\comparison.json",
+      "sha256": "8cadba0d0555afd535a874b2c41ba9d62feee10c40e28ed1b87e15019ca631f0"
+    },
+    {
+      "depth": 16,
+      "path": "validation\\upstream-20261112\\record-replay-16-3\\comparison.json",
+      "sha256": "baffe630099c95e20bd5edbc93a1fcfb46e79c9e7918a73c276b893170a2bc37"
+    },
+    {
+      "depth": 16,
+      "path": "validation\\upstream-20261112\\record-replay-16-4\\comparison.json",
+      "sha256": "42adc9ef5988efd872d4a4d6bc8069bc9f5f8661ceba41dae7c4e21f2b79a9ab"
+    },
+    {
+      "depth": 16,
+      "path": "validation\\upstream-20261112\\record-replay-16-5\\comparison.json",
+      "sha256": "58f1c0c1ad2a1c205d32b6feaf50a1cd08f6db2ebc36536a885e7340720f55d6"
+    },
+    {
+      "depth": 32,
+      "path": "validation\\upstream-20261112\\record-replay-32-0\\comparison.json",
+      "sha256": "ab0f1717c615b03b864bff9e654104041da08eabaf1088edba16161de1c067c1"
+    },
+    {
+      "depth": 32,
+      "path": "validation\\upstream-20261112\\record-replay-32-1\\comparison.json",
+      "sha256": "9e5837e098cb625ef20069a5c4f764c71e0363785a276ca798c7b164c5738097"
+    },
+    {
+      "depth": 32,
+      "path": "validation\\upstream-20261112\\record-replay-32-2\\comparison.json",
+      "sha256": "b96234690925b74fe2173fc3df03203c24ca8c43416c806ec78b868ad8307c86"
+    },
+    {
+      "depth": 32,
+      "path": "validation\\upstream-20261112\\record-replay-32-3\\comparison.json",
+      "sha256": "6aca50965340a5f2b8872b33272228c743eb1ba64a26d958680fb1fad26cb262"
+    },
+    {
+      "depth": 32,
+      "path": "validation\\upstream-20261112\\record-replay-32-4\\comparison.json",
+      "sha256": "e88fc10d4fdd5d186f3c7ae3332269d3790e86ef08197106621a66e7983a956e"
+    },
+    {
+      "depth": 32,
+      "path": "validation\\upstream-20261112\\record-replay-32-5\\comparison.json",
+      "sha256": "548db5196dbe916ca3f7b5f9bb92aea02dd1cba70cfe5248d64b42b3b8ac7ed1"
+    }
+  ],
+  "golden": {
+    "path": "validation\\upstream-20261112\\golden\\verification.json",
+    "sha256": "bff388bab2fa98b5fc8f9f80507dc8d694f62259ed58e35bfa620d75abd8f46d",
+    "exact": 54,
+    "changed_legacy_hashes": [],
+    "shared_manifests_written": false,
+    "follow_up": "Refresh ColorKeep's 54 entries and upstream identity in shared golden verification when the owner supports per-plugin publishing, or as part of an authorized all-plugin regeneration. Add translucent matches and counts 101/199/200 to the shared corpus."
+  },
+  "static": {
+    "reused_triage": {
+      "path": "validation\\upstream-20261112\\reused-triage.json",
+      "sha256": "bf45328716c9593564697ac5b9843bdf14b17cbad4e52bf2b3d7f0fdae3a3ca0"
+    },
+    "decompile": {
+      "path": "validation\\upstream-20261112\\decompile.json",
+      "sha256": "7859176b79cbc20e3398b5f50b0735f02e645670c8178514f2db9373fc662edf"
+    },
+    "old_decompile": {
+      "path": "validation\\upstream-20261112\\decompile-old.json",
+      "sha256": "0456008a73b815eeaabac0f216a32b29ec421be3d561618ef4c8b56af84612ae"
+    },
+    "funcdb": {
+      "path": "validation\\upstream-20261112\\funcdb.json",
+      "sha256": "57a649732489cdcea5aa23b47e19d73e36fba695eb279dd67ea32206561f479a"
+    },
+    "function_counts": {
+      "exact": 312,
+      "fuzzy": 62,
+      "unknown": 7
+    },
+    "callbacks": {
+      "8": "0x15c0",
+      "16": "0x1690",
+      "32": "0x1780"
+    },
+    "conversion_helpers": [
+      "0x7080",
+      "0x70f0",
+      "0x7160"
+    ]
+  },
+  "old_new_minimize": {
+    "path": "validation\\upstream-20261112\\old-new-minimized\\summary.json",
+    "sha256": "0e8578f65d1ac51ac43e865d04a74dde05f2c683856cfbe145d22ab05eabf46d"
+  },
+  "old_new_stability": {
+    "path": "validation\\upstream-20261112\\old-new-stability\\verdict.json",
+    "sha256": "115f7bf454260455b810bee927ba79c269f28868dfec3cdb21938836debfad0f"
+  },
+  "owned_hub_cleanup": {
+    "pid": 60092,
+    "exited": true,
+    "forced": [],
+    "remaining": [],
+    "owned_pids": [
+      31672,
+      28624,
+      61220,
+      51256,
+      50772,
+      45696,
+      8868,
+      30044,
+      60092,
+      9092
+    ],
+    "graceful_requested": true
+  },
+  "limits": [
+    "Native AE project load/save and conditional parameter UI unverified; original color visibility handler is not implemented by the existing shared glue.",
+    "macOS arm64/x86_64 builds and packaging unverified on this Windows machine.",
+    "Full-render sources are PNG-promoted SDR. Direct callback witnesses include bounded HDR/nonfinite values but do not qualify arbitrary HDR/nonfinite worlds.",
+    "Resident exact results retain shared module state; fresh-process campaigns are reported separately.",
+    "Cropped-demand/row-padding/temporal behavior not newly qualified; historical old-binary evidence is not promoted.",
+    "Shared Cargo.lock needed an update at initial build; isolated build avoids editing files outside ownership."
+  ]
+}

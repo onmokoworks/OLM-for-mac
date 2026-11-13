@@ -1,0 +1,19 @@
+[package]
+name = "olm-anti-anti-alias"
+version = "0.1.0"
+edition = "2021"
+publish = false
+[lib]
+crate-type = ["cdylib", "rlib"]
+[dependencies]
+after-effects-sys = { git = "https://github.com/virtualritz/after-effects.git", rev = "0e0b197850f28c1bb24e8c82fce2e3d4c120d1e9" }
+[build-dependencies]
+winres = "=0.1.12"
+pipl = { git = "https://github.com/virtualritz/after-effects.git", rev = "0e0b197850f28c1bb24e8c82fce2e3d4c120d1e9" }
+
+
+[features]
+witness = []
+
+[target.'cfg(target_os = "macos")'.dependencies]
+olm-ae = { path = "../../crates/olm-ae" }

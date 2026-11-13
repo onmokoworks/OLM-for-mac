@@ -1,0 +1,7 @@
+target/
+local/
+*.aex
+
+# Required declaration resources (not executable plug-ins).
+!resources/
+!resources/*.bin

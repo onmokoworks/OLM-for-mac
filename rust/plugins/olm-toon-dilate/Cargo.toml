@@ -1,0 +1,18 @@
+[package]
+name = "olm-toon-dilate"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+license.workspace = true
+
+[lib]
+crate-type = ["rlib", "cdylib"]
+
+[dependencies]
+olm-core.workspace = true
+olm-ae.workspace = true
+
+[build-dependencies]
+pipl.workspace = true
+winres = "0.1"
+cc.workspace = true

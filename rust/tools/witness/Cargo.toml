@@ -1,0 +1,26 @@
+[package]
+name = "aex-native-witness"
+version = "0.1.0"
+edition = "2021"
+publish = false
+license = "Apache-2.0"
+autotests = false
+
+[workspace]
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+olm-math = { path = "../../crates/olm-math", optional = true }
+
+[features]
+demo = ["dep:olm-math"]
+
+[[bin]]
+name = "witness-host"
+path = "src/main.rs"
+
+[[bin]]
+name = "translation-reference"
+path = "src/reference.rs"
+required-features = ["demo"]

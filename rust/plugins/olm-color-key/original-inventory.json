@@ -1,0 +1,6938 @@
+[
+  {
+    "slot": 1,
+    "name": "Color Keep",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 2,
+    "name": "Threshold",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 3,
+    "name": "Threshold Parameters",
+    "kind": "group_start",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 4,
+    "name": "Premultiplied Color",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 5,
+    "name": "Color Space",
+    "kind": "integer",
+    "minimum": 1.0,
+    "maximum": 6.0,
+    "value": 1.0,
+    "choices": [
+      "RGB",
+      "HSV",
+      "Lab76",
+      "Lab94",
+      "YUV",
+      "YCrCb"
+    ],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 6,
+    "name": "Force Lower Precision",
+    "kind": "integer",
+    "minimum": 1.0,
+    "maximum": 3.0,
+    "value": 1.0,
+    "choices": [
+      "Full",
+      "16bit",
+      "8bit"
+    ],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 7,
+    "name": "Per Color",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 8,
+    "name": "Per Component",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 9,
+    "name": "Threshold(R,H,L,Y,Y)",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 10,
+    "name": "Threshold(G,S,a,U,Cr)",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 11,
+    "name": "Threshold(B,V,b,V,Cb)",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 12,
+    "name": "",
+    "kind": "group_end",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 13,
+    "name": "Edge Thin",
+    "kind": "group_start",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 14,
+    "name": "Amount",
+    "kind": "integer",
+    "minimum": -4000.0,
+    "maximum": 4000.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 15,
+    "name": "Distance Type",
+    "kind": "integer",
+    "minimum": 1.0,
+    "maximum": 3.0,
+    "value": 1.0,
+    "choices": [
+      "Box",
+      "Approximate",
+      "Euclidean"
+    ],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 16,
+    "name": "",
+    "kind": "group_end",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 17,
+    "name": "Edge Blur",
+    "kind": "group_start",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 18,
+    "name": "Amount",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 4000.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 19,
+    "name": "Distance Type",
+    "kind": "integer",
+    "minimum": 1.0,
+    "maximum": 3.0,
+    "value": 1.0,
+    "choices": [
+      "Box",
+      "Approximate",
+      "Euclidean"
+    ],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 20,
+    "name": "Direction",
+    "kind": "integer",
+    "minimum": 1.0,
+    "maximum": 3.0,
+    "value": 2.0,
+    "choices": [
+      "Inside ",
+      " Around ",
+      " Outside"
+    ],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 21,
+    "name": "",
+    "kind": "group_end",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 22,
+    "name": "Number of Colors",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 25.0,
+    "value": 1.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": true,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 23,
+    "name": "Enable Replace",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": true,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 24,
+    "name": "Use Color 1",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 25,
+    "name": "Use Replace Color 1",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 26,
+    "name": "Color 1",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 27,
+    "name": "Replace Color 1",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 28,
+    "name": "Threshold 1",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 29,
+    "name": "Threshold(R,H,L,Y,Y) 1",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 30,
+    "name": "Threshold(G,S,a,U,Cr) 1",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 31,
+    "name": "Threshold(B,V,b,V,Cb) 1",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 32,
+    "name": "Use Color 2",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 33,
+    "name": "Use Replace Color 2",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 34,
+    "name": "Color 2",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 35,
+    "name": "Replace Color 2",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 36,
+    "name": "Threshold 2",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 37,
+    "name": "Threshold(R,H,L,Y,Y) 2",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 38,
+    "name": "Threshold(G,S,a,U,Cr) 2",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 39,
+    "name": "Threshold(B,V,b,V,Cb) 2",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 40,
+    "name": "Use Color 3",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 41,
+    "name": "Use Replace Color 3",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 42,
+    "name": "Color 3",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 43,
+    "name": "Replace Color 3",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 44,
+    "name": "Threshold 3",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 45,
+    "name": "Threshold(R,H,L,Y,Y) 3",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 46,
+    "name": "Threshold(G,S,a,U,Cr) 3",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 47,
+    "name": "Threshold(B,V,b,V,Cb) 3",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 48,
+    "name": "Use Color 4",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 49,
+    "name": "Use Replace Color 4",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 50,
+    "name": "Color 4",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 51,
+    "name": "Replace Color 4",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 52,
+    "name": "Threshold 4",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 53,
+    "name": "Threshold(R,H,L,Y,Y) 4",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 54,
+    "name": "Threshold(G,S,a,U,Cr) 4",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 55,
+    "name": "Threshold(B,V,b,V,Cb) 4",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 56,
+    "name": "Use Color 5",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 57,
+    "name": "Use Replace Color 5",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 58,
+    "name": "Color 5",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 59,
+    "name": "Replace Color 5",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 60,
+    "name": "Threshold 5",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 61,
+    "name": "Threshold(R,H,L,Y,Y) 5",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 62,
+    "name": "Threshold(G,S,a,U,Cr) 5",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 63,
+    "name": "Threshold(B,V,b,V,Cb) 5",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 64,
+    "name": "Use Color 6",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 65,
+    "name": "Use Replace Color 6",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 66,
+    "name": "Color 6",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 67,
+    "name": "Replace Color 6",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 68,
+    "name": "Threshold 6",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 69,
+    "name": "Threshold(R,H,L,Y,Y) 6",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 70,
+    "name": "Threshold(G,S,a,U,Cr) 6",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 71,
+    "name": "Threshold(B,V,b,V,Cb) 6",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 72,
+    "name": "Use Color 7",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 73,
+    "name": "Use Replace Color 7",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 74,
+    "name": "Color 7",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 75,
+    "name": "Replace Color 7",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 76,
+    "name": "Threshold 7",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 77,
+    "name": "Threshold(R,H,L,Y,Y) 7",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 78,
+    "name": "Threshold(G,S,a,U,Cr) 7",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 79,
+    "name": "Threshold(B,V,b,V,Cb) 7",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 80,
+    "name": "Use Color 8",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 81,
+    "name": "Use Replace Color 8",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 82,
+    "name": "Color 8",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 83,
+    "name": "Replace Color 8",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 84,
+    "name": "Threshold 8",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 85,
+    "name": "Threshold(R,H,L,Y,Y) 8",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 86,
+    "name": "Threshold(G,S,a,U,Cr) 8",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 87,
+    "name": "Threshold(B,V,b,V,Cb) 8",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 88,
+    "name": "Use Color 9",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 89,
+    "name": "Use Replace Color 9",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 90,
+    "name": "Color 9",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 91,
+    "name": "Replace Color 9",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 92,
+    "name": "Threshold 9",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 93,
+    "name": "Threshold(R,H,L,Y,Y) 9",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 94,
+    "name": "Threshold(G,S,a,U,Cr) 9",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 95,
+    "name": "Threshold(B,V,b,V,Cb) 9",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 96,
+    "name": "Use Color 10",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 97,
+    "name": "Use Replace Color 10",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 98,
+    "name": "Color 10",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 99,
+    "name": "Replace Color 10",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 100,
+    "name": "Threshold 10",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 101,
+    "name": "Threshold(R,H,L,Y,Y) 10",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 102,
+    "name": "Threshold(G,S,a,U,Cr) 10",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 103,
+    "name": "Threshold(B,V,b,V,Cb) 10",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 104,
+    "name": "Use Color 11",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 105,
+    "name": "Use Replace Color 11",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 106,
+    "name": "Color 11",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 107,
+    "name": "Replace Color 11",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 108,
+    "name": "Threshold 11",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 109,
+    "name": "Threshold(R,H,L,Y,Y) 11",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 110,
+    "name": "Threshold(G,S,a,U,Cr) 11",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 111,
+    "name": "Threshold(B,V,b,V,Cb) 11",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 112,
+    "name": "Use Color 12",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 113,
+    "name": "Use Replace Color 12",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 114,
+    "name": "Color 12",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 115,
+    "name": "Replace Color 12",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 116,
+    "name": "Threshold 12",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 117,
+    "name": "Threshold(R,H,L,Y,Y) 12",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 118,
+    "name": "Threshold(G,S,a,U,Cr) 12",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 119,
+    "name": "Threshold(B,V,b,V,Cb) 12",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 120,
+    "name": "Use Color 13",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 121,
+    "name": "Use Replace Color 13",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 122,
+    "name": "Color 13",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 123,
+    "name": "Replace Color 13",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 124,
+    "name": "Threshold 13",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 125,
+    "name": "Threshold(R,H,L,Y,Y) 13",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 126,
+    "name": "Threshold(G,S,a,U,Cr) 13",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 127,
+    "name": "Threshold(B,V,b,V,Cb) 13",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 128,
+    "name": "Use Color 14",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 129,
+    "name": "Use Replace Color 14",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 130,
+    "name": "Color 14",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 131,
+    "name": "Replace Color 14",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 132,
+    "name": "Threshold 14",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 133,
+    "name": "Threshold(R,H,L,Y,Y) 14",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 134,
+    "name": "Threshold(G,S,a,U,Cr) 14",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 135,
+    "name": "Threshold(B,V,b,V,Cb) 14",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 136,
+    "name": "Use Color 15",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 137,
+    "name": "Use Replace Color 15",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 138,
+    "name": "Color 15",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 139,
+    "name": "Replace Color 15",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 140,
+    "name": "Threshold 15",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 141,
+    "name": "Threshold(R,H,L,Y,Y) 15",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 142,
+    "name": "Threshold(G,S,a,U,Cr) 15",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 143,
+    "name": "Threshold(B,V,b,V,Cb) 15",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 144,
+    "name": "Use Color 16",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 145,
+    "name": "Use Replace Color 16",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 146,
+    "name": "Color 16",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 147,
+    "name": "Replace Color 16",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 148,
+    "name": "Threshold 16",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 149,
+    "name": "Threshold(R,H,L,Y,Y) 16",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 150,
+    "name": "Threshold(G,S,a,U,Cr) 16",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 151,
+    "name": "Threshold(B,V,b,V,Cb) 16",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 152,
+    "name": "Use Color 17",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 153,
+    "name": "Use Replace Color 17",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 154,
+    "name": "Color 17",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 155,
+    "name": "Replace Color 17",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 156,
+    "name": "Threshold 17",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 157,
+    "name": "Threshold(R,H,L,Y,Y) 17",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 158,
+    "name": "Threshold(G,S,a,U,Cr) 17",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 159,
+    "name": "Threshold(B,V,b,V,Cb) 17",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 160,
+    "name": "Use Color 18",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 161,
+    "name": "Use Replace Color 18",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 162,
+    "name": "Color 18",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 163,
+    "name": "Replace Color 18",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 164,
+    "name": "Threshold 18",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 165,
+    "name": "Threshold(R,H,L,Y,Y) 18",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 166,
+    "name": "Threshold(G,S,a,U,Cr) 18",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 167,
+    "name": "Threshold(B,V,b,V,Cb) 18",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 168,
+    "name": "Use Color 19",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 169,
+    "name": "Use Replace Color 19",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 170,
+    "name": "Color 19",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 171,
+    "name": "Replace Color 19",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 172,
+    "name": "Threshold 19",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 173,
+    "name": "Threshold(R,H,L,Y,Y) 19",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 174,
+    "name": "Threshold(G,S,a,U,Cr) 19",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 175,
+    "name": "Threshold(B,V,b,V,Cb) 19",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 176,
+    "name": "Use Color 20",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 177,
+    "name": "Use Replace Color 20",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 178,
+    "name": "Color 20",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 179,
+    "name": "Replace Color 20",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 180,
+    "name": "Threshold 20",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 181,
+    "name": "Threshold(R,H,L,Y,Y) 20",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 182,
+    "name": "Threshold(G,S,a,U,Cr) 20",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 183,
+    "name": "Threshold(B,V,b,V,Cb) 20",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 184,
+    "name": "Use Color 21",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 185,
+    "name": "Use Replace Color 21",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 186,
+    "name": "Color 21",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 187,
+    "name": "Replace Color 21",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 188,
+    "name": "Threshold 21",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 189,
+    "name": "Threshold(R,H,L,Y,Y) 21",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 190,
+    "name": "Threshold(G,S,a,U,Cr) 21",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 191,
+    "name": "Threshold(B,V,b,V,Cb) 21",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 192,
+    "name": "Use Color 22",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 193,
+    "name": "Use Replace Color 22",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 194,
+    "name": "Color 22",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 195,
+    "name": "Replace Color 22",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 196,
+    "name": "Threshold 22",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 197,
+    "name": "Threshold(R,H,L,Y,Y) 22",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 198,
+    "name": "Threshold(G,S,a,U,Cr) 22",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 199,
+    "name": "Threshold(B,V,b,V,Cb) 22",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 200,
+    "name": "Use Color 23",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 201,
+    "name": "Use Replace Color 23",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 202,
+    "name": "Color 23",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 203,
+    "name": "Replace Color 23",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 204,
+    "name": "Threshold 23",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 205,
+    "name": "Threshold(R,H,L,Y,Y) 23",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 206,
+    "name": "Threshold(G,S,a,U,Cr) 23",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 207,
+    "name": "Threshold(B,V,b,V,Cb) 23",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 208,
+    "name": "Use Color 24",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 209,
+    "name": "Use Replace Color 24",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 210,
+    "name": "Color 24",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 211,
+    "name": "Replace Color 24",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 212,
+    "name": "Threshold 24",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 213,
+    "name": "Threshold(R,H,L,Y,Y) 24",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 214,
+    "name": "Threshold(G,S,a,U,Cr) 24",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 215,
+    "name": "Threshold(B,V,b,V,Cb) 24",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 216,
+    "name": "Use Color 25",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 217,
+    "name": "Use Replace Color 25",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 218,
+    "name": "Color 25",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 219,
+    "name": "Replace Color 25",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 220,
+    "name": "Threshold 25",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 221,
+    "name": "Threshold(R,H,L,Y,Y) 25",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 222,
+    "name": "Threshold(G,S,a,U,Cr) 25",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 223,
+    "name": "Threshold(B,V,b,V,Cb) 25",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  }
+]

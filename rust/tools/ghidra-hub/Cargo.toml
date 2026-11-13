@@ -1,0 +1,8 @@
+# Workspace tools/* compatibility; implementation is Python.
+[package]
+name = "olm-ghidra-hub"
+version = "0.1.0"
+edition = "2021"
+publish = false
+[lib]
+path = "cargo_stub.rs"

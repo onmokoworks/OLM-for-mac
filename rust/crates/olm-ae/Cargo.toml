@@ -1,0 +1,11 @@
+[package]
+name = "olm-ae"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+license.workspace = true
+
+[dependencies]
+olm-core.workspace = true
+after-effects.workspace = true
+

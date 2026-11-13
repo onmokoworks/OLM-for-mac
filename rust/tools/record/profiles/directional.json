@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "module_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+  "functions": [
+    {"name":"gaussian", "rva":"0x1830", "args":["ptr","i32"], "return":"void", "adapter":"directional.gaussian", "max_calls":8,
+     "buffers":[{"arg":0,"size":{"mul":[{"arg":1},4]},"stride":4,"role":"output"}]},
+    {"name":"rotate", "rva":"0x1ec0", "args":["ptr","ptr","i32","i32","f32"], "return":"void", "adapter":"directional.rotate", "max_calls":4,
+     "buffers":[{"arg":0,"size":{"mul":[{"arg":2},{"arg":3},16]},"stride":{"mul":[{"arg":2},16]},"role":"input"},
+                {"arg":1,"size":{"mul":[{"arg":2},{"arg":3},16]},"stride":{"mul":[{"arg":2},16]},"role":"inout"}]}
+  ],
+  "imports": [
+    {"name":"expf","args":["f32"],"return":"f32","adapter":"math.expf","max_calls":8},
+    {"name":"cosf","args":["f32"],"return":"f32","adapter":"math.cosf","max_calls":4},
+    {"name":"sinf","args":["f32"],"return":"f32","adapter":"math.sinf","max_calls":4}
+  ]
+}

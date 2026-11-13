@@ -1,0 +1,1673 @@
+{
+  "candidate": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\OLMRadialBlur-final.aex",
+    "sha256": "b437bf3dceacb99e16efb18b290d4be26cdf685cd1461d51f0aabfa2f963a06b"
+  },
+  "campaigns": [
+    {
+      "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\final-a",
+      "summary": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\final-a\\summary.json",
+        "sha256": "bce6858cc8746c778f863090255649de65f359f3d01e010f67036a5b15755cfc"
+      },
+      "seed": 20261112,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          17,
+          9
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "jobs": 3,
+      "timeout_seconds": 600.0,
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+        "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\OLMRadialBlur-final.aex",
+        "sha256": "b437bf3dceacb99e16efb18b290d4be26cdf685cd1461d51f0aabfa2f963a06b"
+      },
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+      },
+      "counts": {
+        "smart8": {
+          "random_exact": 109,
+          "extrema_exact": 2,
+          "reference_nondeterministic": 2,
+          "unresolved": 0,
+          "excluded": [
+            {
+              "case": 103,
+              "reason": "Reference output changes for identical saved input/request",
+              "triage": {
+                "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\final-a\\case-0103-smart8",
+                "route": "smart8",
+                "baseline_candidate": {
+                  "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\OLMRadialBlur-final.aex",
+                  "sha256": "b437bf3dceacb99e16efb18b290d4be26cdf685cd1461d51f0aabfa2f963a06b"
+                },
+                "replay_candidate": {
+                  "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\OLMRadialBlur-final.aex",
+                  "sha256": "b437bf3dceacb99e16efb18b290d4be26cdf685cd1461d51f0aabfa2f963a06b"
+                },
+                "reference_output_hashes": [
+                  "6381e8061ae5561d4a72ffdb70e38576ac6315826bd691c6a1489b5b8ec6530d",
+                  "39ca1f0d09bec1a6fdd834080271fe4a2da319944e29fdb9de2974571052ef21",
+                  "39ca1f0d09bec1a6fdd834080271fe4a2da319944e29fdb9de2974571052ef21",
+                  "39ca1f0d09bec1a6fdd834080271fe4a2da319944e29fdb9de2974571052ef21"
+                ],
+                "candidate_output_hashes": [
+                  "39ca1f0d09bec1a6fdd834080271fe4a2da319944e29fdb9de2974571052ef21",
+                  "39ca1f0d09bec1a6fdd834080271fe4a2da319944e29fdb9de2974571052ef21",
+                  "39ca1f0d09bec1a6fdd834080271fe4a2da319944e29fdb9de2974571052ef21",
+                  "39ca1f0d09bec1a6fdd834080271fe4a2da319944e29fdb9de2974571052ef21"
+                ],
+                "reference_unique": 2,
+                "candidate_unique": 1,
+                "replays": [
+                  {
+                    "case": 103,
+                    "route": "smart8",
+                    "directory": "final-a-case-0103-smart8-0",
+                    "processes": {
+                      "reference": {
+                        "pid": 58212,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 1.25,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      },
+                      "candidate": {
+                        "pid": 53448,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 0.75,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      }
+                    },
+                    "comparison": {
+                      "exact": true,
+                      "mismatching_pixels": 0,
+                      "mismatching_samples": 0,
+                      "max_abs_diff": 0.0,
+                      "nonfinite_difference_samples": 0,
+                      "first_coordinates": []
+                    },
+                    "status": "exact"
+                  },
+                  {
+                    "case": 103,
+                    "route": "smart8",
+                    "directory": "final-a-case-0103-smart8-1",
+                    "processes": {
+                      "reference": {
+                        "pid": 60588,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 0.8439999999991414,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      },
+                      "candidate": {
+                        "pid": 59836,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 0.9840000000003783,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      }
+                    },
+                    "comparison": {
+                      "exact": true,
+                      "mismatching_pixels": 0,
+                      "mismatching_samples": 0,
+                      "max_abs_diff": 0.0,
+                      "nonfinite_difference_samples": 0,
+                      "first_coordinates": []
+                    },
+                    "status": "exact"
+                  },
+                  {
+                    "case": 103,
+                    "route": "smart8",
+                    "directory": "final-a-case-0103-smart8-2",
+                    "processes": {
+                      "reference": {
+                        "pid": 46156,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 1.4210000000002765,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      },
+                      "candidate": {
+                        "pid": 60552,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 2.0310000000008586,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      }
+                    },
+                    "comparison": {
+                      "exact": true,
+                      "mismatching_pixels": 0,
+                      "mismatching_samples": 0,
+                      "max_abs_diff": 0.0,
+                      "nonfinite_difference_samples": 0,
+                      "first_coordinates": []
+                    },
+                    "status": "exact"
+                  }
+                ],
+                "all_replays_succeeded": true,
+                "has_exact_replay": true,
+                "classification": "reference_nondeterministic"
+              }
+            },
+            {
+              "case": 122,
+              "reason": "Reference output changes for identical saved input/request",
+              "triage": {
+                "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\final-a\\case-0122-smart8",
+                "route": "smart8",
+                "baseline_candidate": {
+                  "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\OLMRadialBlur-final.aex",
+                  "sha256": "b437bf3dceacb99e16efb18b290d4be26cdf685cd1461d51f0aabfa2f963a06b"
+                },
+                "replay_candidate": {
+                  "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\OLMRadialBlur-final.aex",
+                  "sha256": "b437bf3dceacb99e16efb18b290d4be26cdf685cd1461d51f0aabfa2f963a06b"
+                },
+                "reference_output_hashes": [
+                  "baea2aef44c1cea13fce5db4753eb6d8cb44d1a24f57c4ed03474ed1aac01565",
+                  "8439e2fb296277b6ef73fc71db6ae22b2522758281c2e401d0b156573a3502f8",
+                  "79e0bfec24bec2ba19493e335bda1450f2a5943661f9bb24ed1073f38ef4355f",
+                  "79e0bfec24bec2ba19493e335bda1450f2a5943661f9bb24ed1073f38ef4355f"
+                ],
+                "candidate_output_hashes": [
+                  "79e0bfec24bec2ba19493e335bda1450f2a5943661f9bb24ed1073f38ef4355f",
+                  "79e0bfec24bec2ba19493e335bda1450f2a5943661f9bb24ed1073f38ef4355f",
+                  "79e0bfec24bec2ba19493e335bda1450f2a5943661f9bb24ed1073f38ef4355f",
+                  "79e0bfec24bec2ba19493e335bda1450f2a5943661f9bb24ed1073f38ef4355f"
+                ],
+                "reference_unique": 3,
+                "candidate_unique": 1,
+                "replays": [
+                  {
+                    "case": 122,
+                    "route": "smart8",
+                    "directory": "final-a-case-0122-smart8-0",
+                    "processes": {
+                      "reference": {
+                        "pid": 59944,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 1.0619999999998981,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      },
+                      "candidate": {
+                        "pid": 32512,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 0.9539999999997235,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      }
+                    },
+                    "comparison": {
+                      "exact": false,
+                      "mismatching_pixels": 16,
+                      "mismatching_samples": 32,
+                      "max_abs_diff": 127.0,
+                      "nonfinite_difference_samples": 0,
+                      "first_coordinates": [
+                        {
+                          "x": 5,
+                          "y": 0
+                        },
+                        {
+                          "x": 8,
+                          "y": 0
+                        },
+                        {
+                          "x": 9,
+                          "y": 0
+                        },
+                        {
+                          "x": 5,
+                          "y": 1
+                        },
+                        {
+                          "x": 6,
+                          "y": 1
+                        },
+                        {
+                          "x": 7,
+                          "y": 1
+                        },
+                        {
+                          "x": 8,
+                          "y": 1
+                        },
+                        {
+                          "x": 9,
+                          "y": 1
+                        }
+                      ]
+                    },
+                    "status": "mismatched"
+                  },
+                  {
+                    "case": 122,
+                    "route": "smart8",
+                    "directory": "final-a-case-0122-smart8-1",
+                    "processes": {
+                      "reference": {
+                        "pid": 65884,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 0.8439999999991414,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      },
+                      "candidate": {
+                        "pid": 58092,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 0.9840000000003783,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      }
+                    },
+                    "comparison": {
+                      "exact": true,
+                      "mismatching_pixels": 0,
+                      "mismatching_samples": 0,
+                      "max_abs_diff": 0.0,
+                      "nonfinite_difference_samples": 0,
+                      "first_coordinates": []
+                    },
+                    "status": "exact"
+                  },
+                  {
+                    "case": 122,
+                    "route": "smart8",
+                    "directory": "final-a-case-0122-smart8-2",
+                    "processes": {
+                      "reference": {
+                        "pid": 25644,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 1.2180000000007567,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      },
+                      "candidate": {
+                        "pid": 61300,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 2.0309999999990396,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      }
+                    },
+                    "comparison": {
+                      "exact": true,
+                      "mismatching_pixels": 0,
+                      "mismatching_samples": 0,
+                      "max_abs_diff": 0.0,
+                      "nonfinite_difference_samples": 0,
+                      "first_coordinates": []
+                    },
+                    "status": "exact"
+                  }
+                ],
+                "all_replays_succeeded": true,
+                "has_exact_replay": true,
+                "classification": "reference_nondeterministic"
+              }
+            }
+          ]
+        },
+        "smart16": {
+          "random_exact": 109,
+          "extrema_exact": 2,
+          "reference_nondeterministic": 2,
+          "unresolved": 0,
+          "excluded": [
+            {
+              "case": 55,
+              "reason": "Reference output changes for identical saved input/request",
+              "triage": {
+                "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\final-a\\case-0055-smart16",
+                "route": "smart16",
+                "baseline_candidate": {
+                  "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\OLMRadialBlur-final.aex",
+                  "sha256": "b437bf3dceacb99e16efb18b290d4be26cdf685cd1461d51f0aabfa2f963a06b"
+                },
+                "replay_candidate": {
+                  "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\OLMRadialBlur-final.aex",
+                  "sha256": "b437bf3dceacb99e16efb18b290d4be26cdf685cd1461d51f0aabfa2f963a06b"
+                },
+                "reference_output_hashes": [
+                  "ff13444a63728e81815e443601bf66f647ef60940ee125d03d2558a0c198e254",
+                  "8b05f2fc5c831372d1c9bde0343c56529b05d730582a798032c1282f0acbe14e",
+                  "6c9d592b2a03490aa068347f05b98a6cbb27d1131929d35027cc87178d3d481b",
+                  "8b05f2fc5c831372d1c9bde0343c56529b05d730582a798032c1282f0acbe14e"
+                ],
+                "candidate_output_hashes": [
+                  "8b05f2fc5c831372d1c9bde0343c56529b05d730582a798032c1282f0acbe14e",
+                  "8b05f2fc5c831372d1c9bde0343c56529b05d730582a798032c1282f0acbe14e",
+                  "8b05f2fc5c831372d1c9bde0343c56529b05d730582a798032c1282f0acbe14e",
+                  "8b05f2fc5c831372d1c9bde0343c56529b05d730582a798032c1282f0acbe14e"
+                ],
+                "reference_unique": 3,
+                "candidate_unique": 1,
+                "replays": [
+                  {
+                    "case": 55,
+                    "route": "smart16",
+                    "directory": "final-a-case-0055-smart16-0",
+                    "processes": {
+                      "reference": {
+                        "pid": 18104,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 1.25,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      },
+                      "candidate": {
+                        "pid": 38336,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 0.7340000000003783,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      }
+                    },
+                    "comparison": {
+                      "exact": true,
+                      "mismatching_pixels": 0,
+                      "mismatching_samples": 0,
+                      "max_abs_diff": 0.0,
+                      "nonfinite_difference_samples": 0,
+                      "first_coordinates": []
+                    },
+                    "status": "exact"
+                  },
+                  {
+                    "case": 55,
+                    "route": "smart16",
+                    "directory": "final-a-case-0055-smart16-1",
+                    "processes": {
+                      "reference": {
+                        "pid": 47448,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 0.8600000000005821,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      },
+                      "candidate": {
+                        "pid": 35832,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 0.9840000000003783,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      }
+                    },
+                    "comparison": {
+                      "exact": false,
+                      "mismatching_pixels": 33,
+                      "mismatching_samples": 98,
+                      "max_abs_diff": 745.0,
+                      "nonfinite_difference_samples": 0,
+                      "first_coordinates": [
+                        {
+                          "x": 0,
+                          "y": 2
+                        },
+                        {
+                          "x": 1,
+                          "y": 2
+                        },
+                        {
+                          "x": 3,
+                          "y": 3
+                        },
+                        {
+                          "x": 4,
+                          "y": 3
+                        },
+                        {
+                          "x": 5,
+                          "y": 3
+                        },
+                        {
+                          "x": 5,
+                          "y": 4
+                        },
+                        {
+                          "x": 6,
+                          "y": 4
+                        },
+                        {
+                          "x": 7,
+                          "y": 4
+                        }
+                      ]
+                    },
+                    "status": "mismatched"
+                  },
+                  {
+                    "case": 55,
+                    "route": "smart16",
+                    "directory": "final-a-case-0055-smart16-2",
+                    "processes": {
+                      "reference": {
+                        "pid": 44348,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 1.0310000000008586,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      },
+                      "candidate": {
+                        "pid": 56128,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 1.9689999999991414,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      }
+                    },
+                    "comparison": {
+                      "exact": true,
+                      "mismatching_pixels": 0,
+                      "mismatching_samples": 0,
+                      "max_abs_diff": 0.0,
+                      "nonfinite_difference_samples": 0,
+                      "first_coordinates": []
+                    },
+                    "status": "exact"
+                  }
+                ],
+                "all_replays_succeeded": true,
+                "has_exact_replay": true,
+                "classification": "reference_nondeterministic"
+              }
+            },
+            {
+              "case": 150,
+              "reason": "Reference output changes for identical saved input/request",
+              "triage": {
+                "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\final-a\\case-0150-smart16",
+                "route": "smart16",
+                "baseline_candidate": {
+                  "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\OLMRadialBlur-final.aex",
+                  "sha256": "b437bf3dceacb99e16efb18b290d4be26cdf685cd1461d51f0aabfa2f963a06b"
+                },
+                "replay_candidate": {
+                  "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\OLMRadialBlur-final.aex",
+                  "sha256": "b437bf3dceacb99e16efb18b290d4be26cdf685cd1461d51f0aabfa2f963a06b"
+                },
+                "reference_output_hashes": [
+                  "4dfd7eead36a18e89238f717ca1cc486c0601f3c5e888892e16808f36c889ccd",
+                  "1e5573ee8832237ef881ac4b2f665b0e6c17b3749e65aff9f31ce71ac7abc048",
+                  "1e5573ee8832237ef881ac4b2f665b0e6c17b3749e65aff9f31ce71ac7abc048",
+                  "1e5573ee8832237ef881ac4b2f665b0e6c17b3749e65aff9f31ce71ac7abc048"
+                ],
+                "candidate_output_hashes": [
+                  "1e5573ee8832237ef881ac4b2f665b0e6c17b3749e65aff9f31ce71ac7abc048",
+                  "1e5573ee8832237ef881ac4b2f665b0e6c17b3749e65aff9f31ce71ac7abc048",
+                  "1e5573ee8832237ef881ac4b2f665b0e6c17b3749e65aff9f31ce71ac7abc048",
+                  "1e5573ee8832237ef881ac4b2f665b0e6c17b3749e65aff9f31ce71ac7abc048"
+                ],
+                "reference_unique": 2,
+                "candidate_unique": 1,
+                "replays": [
+                  {
+                    "case": 150,
+                    "route": "smart16",
+                    "directory": "final-a-case-0150-smart16-0",
+                    "processes": {
+                      "reference": {
+                        "pid": 57768,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 2.2039999999997235,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      },
+                      "candidate": {
+                        "pid": 13280,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 2.436999999999898,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      }
+                    },
+                    "comparison": {
+                      "exact": true,
+                      "mismatching_pixels": 0,
+                      "mismatching_samples": 0,
+                      "max_abs_diff": 0.0,
+                      "nonfinite_difference_samples": 0,
+                      "first_coordinates": []
+                    },
+                    "status": "exact"
+                  },
+                  {
+                    "case": 150,
+                    "route": "smart16",
+                    "directory": "final-a-case-0150-smart16-1",
+                    "processes": {
+                      "reference": {
+                        "pid": 64684,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 2.0,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      },
+                      "candidate": {
+                        "pid": 66048,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 2.390000000001237,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      }
+                    },
+                    "comparison": {
+                      "exact": true,
+                      "mismatching_pixels": 0,
+                      "mismatching_samples": 0,
+                      "max_abs_diff": 0.0,
+                      "nonfinite_difference_samples": 0,
+                      "first_coordinates": []
+                    },
+                    "status": "exact"
+                  },
+                  {
+                    "case": 150,
+                    "route": "smart16",
+                    "directory": "final-a-case-0150-smart16-2",
+                    "processes": {
+                      "reference": {
+                        "pid": 65488,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 2.061999999999898,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      },
+                      "candidate": {
+                        "pid": 59964,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 2.7659999999996217,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      }
+                    },
+                    "comparison": {
+                      "exact": true,
+                      "mismatching_pixels": 0,
+                      "mismatching_samples": 0,
+                      "max_abs_diff": 0.0,
+                      "nonfinite_difference_samples": 0,
+                      "first_coordinates": []
+                    },
+                    "status": "exact"
+                  }
+                ],
+                "all_replays_succeeded": true,
+                "has_exact_replay": true,
+                "classification": "reference_nondeterministic"
+              }
+            }
+          ]
+        },
+        "smart32": {
+          "random_exact": 111,
+          "extrema_exact": 2,
+          "reference_nondeterministic": 0,
+          "unresolved": 0,
+          "excluded": []
+        }
+      },
+      "raw_routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 113,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 111,
+          "mismatched": 2,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 21.0,
+          "mismatching_pixels": 12,
+          "first_coordinates": [
+            {
+              "case": 103,
+              "x": 14,
+              "y": 6
+            },
+            {
+              "case": 103,
+              "x": 15,
+              "y": 6
+            },
+            {
+              "case": 103,
+              "x": 16,
+              "y": 6
+            },
+            {
+              "case": 103,
+              "x": 15,
+              "y": 7
+            },
+            {
+              "case": 103,
+              "x": 16,
+              "y": 7
+            },
+            {
+              "case": 103,
+              "x": 15,
+              "y": 8
+            },
+            {
+              "case": 103,
+              "x": 16,
+              "y": 8
+            },
+            {
+              "case": 122,
+              "x": 7,
+              "y": 0
+            }
+          ]
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 113,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 111,
+          "mismatched": 2,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 53.0,
+          "mismatching_pixels": 24,
+          "first_coordinates": [
+            {
+              "case": 55,
+              "x": 1,
+              "y": 2
+            },
+            {
+              "case": 55,
+              "x": 3,
+              "y": 3
+            },
+            {
+              "case": 55,
+              "x": 4,
+              "y": 3
+            },
+            {
+              "case": 55,
+              "x": 5,
+              "y": 4
+            },
+            {
+              "case": 55,
+              "x": 6,
+              "y": 4
+            },
+            {
+              "case": 55,
+              "x": 7,
+              "y": 4
+            },
+            {
+              "case": 55,
+              "x": 8,
+              "y": 4
+            },
+            {
+              "case": 55,
+              "x": 7,
+              "y": 5
+            }
+          ]
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 113,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 113,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "coverage": {
+        "downsample": {
+          "1": 40,
+          "1/2": 40,
+          "1/4": 33
+        },
+        "blur_type": {
+          "1": 66,
+          "2": 47
+        },
+        "noise_type": {
+          "1": 95,
+          "2": 18
+        },
+        "size": {
+          "1x1": 25,
+          "3x7": 30,
+          "17x9": 32,
+          "11x7": 26
+        }
+      },
+      "type3_exclusions": 47
+    },
+    {
+      "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\final-b",
+      "summary": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\final-b\\summary.json",
+        "sha256": "eb25d14a58528af0dca6841f865ad9563bff5e33fab3e995b6d8c65839e70cbe"
+      },
+      "seed": 20261113,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          17,
+          9
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "jobs": 3,
+      "timeout_seconds": 600.0,
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+        "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\OLMRadialBlur-final.aex",
+        "sha256": "b437bf3dceacb99e16efb18b290d4be26cdf685cd1461d51f0aabfa2f963a06b"
+      },
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+      },
+      "counts": {
+        "smart8": {
+          "random_exact": 110,
+          "extrema_exact": 2,
+          "reference_nondeterministic": 1,
+          "unresolved": 0,
+          "excluded": [
+            {
+              "case": 159,
+              "reason": "Reference output changes for identical saved input/request",
+              "triage": {
+                "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\final-b\\case-0159-smart8",
+                "route": "smart8",
+                "baseline_candidate": {
+                  "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\OLMRadialBlur-final.aex",
+                  "sha256": "b437bf3dceacb99e16efb18b290d4be26cdf685cd1461d51f0aabfa2f963a06b"
+                },
+                "replay_candidate": {
+                  "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\OLMRadialBlur-final.aex",
+                  "sha256": "b437bf3dceacb99e16efb18b290d4be26cdf685cd1461d51f0aabfa2f963a06b"
+                },
+                "reference_output_hashes": [
+                  "4ed3c094fc1886987894ce502153170b413e3e59a82f32a152c563ba07c3bf39",
+                  "aaaf60762feb5382a6b9ab96cca560bdd851882b54c3f97681a3ee8e746a2270",
+                  "aaaf60762feb5382a6b9ab96cca560bdd851882b54c3f97681a3ee8e746a2270",
+                  "aaaf60762feb5382a6b9ab96cca560bdd851882b54c3f97681a3ee8e746a2270"
+                ],
+                "candidate_output_hashes": [
+                  "aaaf60762feb5382a6b9ab96cca560bdd851882b54c3f97681a3ee8e746a2270",
+                  "aaaf60762feb5382a6b9ab96cca560bdd851882b54c3f97681a3ee8e746a2270",
+                  "aaaf60762feb5382a6b9ab96cca560bdd851882b54c3f97681a3ee8e746a2270",
+                  "aaaf60762feb5382a6b9ab96cca560bdd851882b54c3f97681a3ee8e746a2270"
+                ],
+                "reference_unique": 2,
+                "candidate_unique": 1,
+                "replays": [
+                  {
+                    "case": 159,
+                    "route": "smart8",
+                    "directory": "final-b-case-0159-smart8-0",
+                    "processes": {
+                      "reference": {
+                        "pid": 32316,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 1.9539999999997235,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      },
+                      "candidate": {
+                        "pid": 67316,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 2.2180000000007567,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      }
+                    },
+                    "comparison": {
+                      "exact": true,
+                      "mismatching_pixels": 0,
+                      "mismatching_samples": 0,
+                      "max_abs_diff": 0.0,
+                      "nonfinite_difference_samples": 0,
+                      "first_coordinates": []
+                    },
+                    "status": "exact"
+                  },
+                  {
+                    "case": 159,
+                    "route": "smart8",
+                    "directory": "final-b-case-0159-smart8-1",
+                    "processes": {
+                      "reference": {
+                        "pid": 58912,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 1.8590000000003783,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      },
+                      "candidate": {
+                        "pid": 62620,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 2.4219999999986612,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      }
+                    },
+                    "comparison": {
+                      "exact": true,
+                      "mismatching_pixels": 0,
+                      "mismatching_samples": 0,
+                      "max_abs_diff": 0.0,
+                      "nonfinite_difference_samples": 0,
+                      "first_coordinates": []
+                    },
+                    "status": "exact"
+                  },
+                  {
+                    "case": 159,
+                    "route": "smart8",
+                    "directory": "final-b-case-0159-smart8-2",
+                    "processes": {
+                      "reference": {
+                        "pid": 33440,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 1.7809999999990396,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      },
+                      "candidate": {
+                        "pid": 63152,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 1.515000000001237,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      }
+                    },
+                    "comparison": {
+                      "exact": true,
+                      "mismatching_pixels": 0,
+                      "mismatching_samples": 0,
+                      "max_abs_diff": 0.0,
+                      "nonfinite_difference_samples": 0,
+                      "first_coordinates": []
+                    },
+                    "status": "exact"
+                  }
+                ],
+                "all_replays_succeeded": true,
+                "has_exact_replay": true,
+                "classification": "reference_nondeterministic"
+              }
+            }
+          ]
+        },
+        "smart16": {
+          "random_exact": 109,
+          "extrema_exact": 2,
+          "reference_nondeterministic": 2,
+          "unresolved": 0,
+          "excluded": [
+            {
+              "case": 162,
+              "reason": "Reference output changes for identical saved input/request",
+              "triage": {
+                "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\final-b\\case-0162-smart16",
+                "route": "smart16",
+                "baseline_candidate": {
+                  "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\OLMRadialBlur-final.aex",
+                  "sha256": "b437bf3dceacb99e16efb18b290d4be26cdf685cd1461d51f0aabfa2f963a06b"
+                },
+                "replay_candidate": {
+                  "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\OLMRadialBlur-final.aex",
+                  "sha256": "b437bf3dceacb99e16efb18b290d4be26cdf685cd1461d51f0aabfa2f963a06b"
+                },
+                "reference_output_hashes": [
+                  "b4b333f278d362bb255527503db67d4ce0c49a464ca5c1e119319179a6434e43",
+                  "b966d86eaa00e2a9297ca9d455a1541c95a6c0719fd65ec776bc9da02fc92b5c",
+                  "b966d86eaa00e2a9297ca9d455a1541c95a6c0719fd65ec776bc9da02fc92b5c",
+                  "b966d86eaa00e2a9297ca9d455a1541c95a6c0719fd65ec776bc9da02fc92b5c"
+                ],
+                "candidate_output_hashes": [
+                  "b966d86eaa00e2a9297ca9d455a1541c95a6c0719fd65ec776bc9da02fc92b5c",
+                  "b966d86eaa00e2a9297ca9d455a1541c95a6c0719fd65ec776bc9da02fc92b5c",
+                  "b966d86eaa00e2a9297ca9d455a1541c95a6c0719fd65ec776bc9da02fc92b5c",
+                  "b966d86eaa00e2a9297ca9d455a1541c95a6c0719fd65ec776bc9da02fc92b5c"
+                ],
+                "reference_unique": 2,
+                "candidate_unique": 1,
+                "replays": [
+                  {
+                    "case": 162,
+                    "route": "smart16",
+                    "directory": "final-b-case-0162-smart16-0",
+                    "processes": {
+                      "reference": {
+                        "pid": 29480,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 1.9680000000007567,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      },
+                      "candidate": {
+                        "pid": 55456,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 3.07799999999952,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      }
+                    },
+                    "comparison": {
+                      "exact": true,
+                      "mismatching_pixels": 0,
+                      "mismatching_samples": 0,
+                      "max_abs_diff": 0.0,
+                      "nonfinite_difference_samples": 0,
+                      "first_coordinates": []
+                    },
+                    "status": "exact"
+                  },
+                  {
+                    "case": 162,
+                    "route": "smart16",
+                    "directory": "final-b-case-0162-smart16-1",
+                    "processes": {
+                      "reference": {
+                        "pid": 4220,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 2.0789999999997235,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      },
+                      "candidate": {
+                        "pid": 66340,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 3.20299999999952,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      }
+                    },
+                    "comparison": {
+                      "exact": true,
+                      "mismatching_pixels": 0,
+                      "mismatching_samples": 0,
+                      "max_abs_diff": 0.0,
+                      "nonfinite_difference_samples": 0,
+                      "first_coordinates": []
+                    },
+                    "status": "exact"
+                  },
+                  {
+                    "case": 162,
+                    "route": "smart16",
+                    "directory": "final-b-case-0162-smart16-2",
+                    "processes": {
+                      "reference": {
+                        "pid": 60608,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 1.609999999998763,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      },
+                      "candidate": {
+                        "pid": 32756,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 3.4060000000008586,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      }
+                    },
+                    "comparison": {
+                      "exact": true,
+                      "mismatching_pixels": 0,
+                      "mismatching_samples": 0,
+                      "max_abs_diff": 0.0,
+                      "nonfinite_difference_samples": 0,
+                      "first_coordinates": []
+                    },
+                    "status": "exact"
+                  }
+                ],
+                "all_replays_succeeded": true,
+                "has_exact_replay": true,
+                "classification": "reference_nondeterministic"
+              }
+            },
+            {
+              "case": 183,
+              "reason": "Reference output changes for identical saved input/request",
+              "triage": {
+                "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\final-b\\case-0183-smart16",
+                "route": "smart16",
+                "baseline_candidate": {
+                  "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\OLMRadialBlur-final.aex",
+                  "sha256": "b437bf3dceacb99e16efb18b290d4be26cdf685cd1461d51f0aabfa2f963a06b"
+                },
+                "replay_candidate": {
+                  "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\OLMRadialBlur-final.aex",
+                  "sha256": "b437bf3dceacb99e16efb18b290d4be26cdf685cd1461d51f0aabfa2f963a06b"
+                },
+                "reference_output_hashes": [
+                  "f323d9f23862e345dc039171fc763894471e5ad253c0b4e5979280bd5517d065",
+                  "e29652f4f768da8c98bca21bef3d9f28d59d2d7747a81e7a2b0bb96694ebe511",
+                  "e29652f4f768da8c98bca21bef3d9f28d59d2d7747a81e7a2b0bb96694ebe511",
+                  "e29652f4f768da8c98bca21bef3d9f28d59d2d7747a81e7a2b0bb96694ebe511"
+                ],
+                "candidate_output_hashes": [
+                  "e29652f4f768da8c98bca21bef3d9f28d59d2d7747a81e7a2b0bb96694ebe511",
+                  "e29652f4f768da8c98bca21bef3d9f28d59d2d7747a81e7a2b0bb96694ebe511",
+                  "e29652f4f768da8c98bca21bef3d9f28d59d2d7747a81e7a2b0bb96694ebe511",
+                  "e29652f4f768da8c98bca21bef3d9f28d59d2d7747a81e7a2b0bb96694ebe511"
+                ],
+                "reference_unique": 2,
+                "candidate_unique": 1,
+                "replays": [
+                  {
+                    "case": 183,
+                    "route": "smart16",
+                    "directory": "final-b-case-0183-smart16-0",
+                    "processes": {
+                      "reference": {
+                        "pid": 32748,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 3.014999999999418,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      },
+                      "candidate": {
+                        "pid": 29280,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 0.9060000000008586,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      }
+                    },
+                    "comparison": {
+                      "exact": true,
+                      "mismatching_pixels": 0,
+                      "mismatching_samples": 0,
+                      "max_abs_diff": 0.0,
+                      "nonfinite_difference_samples": 0,
+                      "first_coordinates": []
+                    },
+                    "status": "exact"
+                  },
+                  {
+                    "case": 183,
+                    "route": "smart16",
+                    "directory": "final-b-case-0183-smart16-1",
+                    "processes": {
+                      "reference": {
+                        "pid": 58960,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 0.5630000000001019,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      },
+                      "candidate": {
+                        "pid": 65292,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 1.5,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      }
+                    },
+                    "comparison": {
+                      "exact": true,
+                      "mismatching_pixels": 0,
+                      "mismatching_samples": 0,
+                      "max_abs_diff": 0.0,
+                      "nonfinite_difference_samples": 0,
+                      "first_coordinates": []
+                    },
+                    "status": "exact"
+                  },
+                  {
+                    "case": 183,
+                    "route": "smart16",
+                    "directory": "final-b-case-0183-smart16-2",
+                    "processes": {
+                      "reference": {
+                        "pid": 57572,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 1.75,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      },
+                      "candidate": {
+                        "pid": 34804,
+                        "returncode": 0,
+                        "environment_overrides": {
+                          "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+                        },
+                        "timeout": false,
+                        "cancelled": false,
+                        "elapsed_seconds": 1.7180000000007567,
+                        "harness_frame_timeout": false,
+                        "ok": true
+                      }
+                    },
+                    "comparison": {
+                      "exact": true,
+                      "mismatching_pixels": 0,
+                      "mismatching_samples": 0,
+                      "max_abs_diff": 0.0,
+                      "nonfinite_difference_samples": 0,
+                      "first_coordinates": []
+                    },
+                    "status": "exact"
+                  }
+                ],
+                "all_replays_succeeded": true,
+                "has_exact_replay": true,
+                "classification": "reference_nondeterministic"
+              }
+            }
+          ]
+        },
+        "smart32": {
+          "random_exact": 111,
+          "extrema_exact": 2,
+          "reference_nondeterministic": 0,
+          "unresolved": 0,
+          "excluded": []
+        }
+      },
+      "raw_routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 113,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 112,
+          "mismatched": 1,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 94.0,
+          "mismatching_pixels": 2,
+          "first_coordinates": [
+            {
+              "case": 159,
+              "x": 13,
+              "y": 6
+            },
+            {
+              "case": 159,
+              "x": 15,
+              "y": 7
+            }
+          ]
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 113,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 111,
+          "mismatched": 2,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 4779.0,
+          "mismatching_pixels": 14,
+          "first_coordinates": [
+            {
+              "case": 162,
+              "x": 9,
+              "y": 6
+            },
+            {
+              "case": 183,
+              "x": 1,
+              "y": 1
+            },
+            {
+              "case": 183,
+              "x": 3,
+              "y": 2
+            },
+            {
+              "case": 183,
+              "x": 8,
+              "y": 4
+            },
+            {
+              "case": 183,
+              "x": 10,
+              "y": 5
+            },
+            {
+              "case": 183,
+              "x": 11,
+              "y": 5
+            },
+            {
+              "case": 183,
+              "x": 12,
+              "y": 6
+            },
+            {
+              "case": 183,
+              "x": 13,
+              "y": 6
+            }
+          ]
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 113,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 113,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "coverage": {
+        "downsample": {
+          "1": 39,
+          "1/2": 36,
+          "1/4": 38
+        },
+        "blur_type": {
+          "1": 77,
+          "2": 36
+        },
+        "noise_type": {
+          "1": 98,
+          "2": 15
+        },
+        "size": {
+          "1x1": 26,
+          "3x7": 29,
+          "11x7": 28,
+          "17x9": 30
+        }
+      },
+      "type3_exclusions": 73
+    }
+  ],
+  "totals": {
+    "smart8": {
+      "random_exact": 219,
+      "extrema_exact": 4,
+      "reference_nondeterministic": 3,
+      "unresolved": 0,
+      "seeds": [
+        20261112,
+        20261113
+      ]
+    },
+    "smart16": {
+      "random_exact": 218,
+      "extrema_exact": 4,
+      "reference_nondeterministic": 4,
+      "unresolved": 0,
+      "seeds": [
+        20261112,
+        20261113
+      ]
+    },
+    "smart32": {
+      "random_exact": 222,
+      "extrema_exact": 4,
+      "reference_nondeterministic": 0,
+      "unresolved": 0,
+      "seeds": [
+        20261112,
+        20261113
+      ]
+    }
+  },
+  "pipl_identical": true,
+  "cpu": {
+    "name": "AMD Ryzen 9 5900X 12-Core Processor",
+    "manufacturer": "AuthenticAMD",
+    "processor_id": "178BFBFF00A20F12"
+  },
+  "source_files": [
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\src\\ae.rs",
+      "sha256": "91f82e6afcb81c9c1bad50ccb346f122cf3dbd4f8e6e72e04180ea51bb30838c"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\src\\algorithm.rs",
+      "sha256": "96f4e98d9c097bcf8702501f3af8a4b4b006ce4ee1abc8ffe226836605844cf6"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\src\\glue.rs",
+      "sha256": "a13322d5b3c2845f539b303f3dc107aa26539263b3e1bc43f08809ef6fc8eea7"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\src\\lib.rs",
+      "sha256": "ecba56cb14c760322656a467a70539bd749e1e3a4ecae922abf83a3afdbfc5b8"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\src\\math.rs",
+      "sha256": "77dc0256a749e780fe4c424c5efe27d6411d893f40753738bf9a4694c747eedc"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\src\\noise.rs",
+      "sha256": "8c3b8a2c28c24f5bbdce9155cf42a32aa2184f6f0cb664866c88e28595bba2a6"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\src\\reciprocal_table.rs",
+      "sha256": "c1bbe2a022c005c1574a49d036dac99be03bd732539c61fce8bbcc86814522ac"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\src\\reference_tests.rs",
+      "sha256": "95d1ada665bb5e159a8e92591802bb9c26f48874f3addfabc72185076b2bc5ca"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\src\\ui.rs",
+      "sha256": "7dab9bf6caa0ab8bcc7efed3ad9ca8c0cd79fa6ddd9f2973a67bb15b3188ac2c"
+    }
+  ],
+  "qualification_passed": true,
+  "limitations": [
+    "AEXCompat only; native After Effects and macOS builds not performed",
+    "RCP estimate profile qualified on the recorded CPU; no claim for a different original-CPU approximation profile",
+    "PNG-promoted deep input campaign; native HDR and negative alpha fixtures not qualified",
+    "Active Noise Type 3 excluded/refused; zero-control identity copy remains supported",
+    "Original allocation-boundary nondeterminism is excluded only when demonstrated by identical-input replays",
+    "UI code compiled; native AE UI behavior unverified",
+    "Pure renderer has a conservative checked 1 GiB allocation budget; large-frame qualification not performed"
+  ],
+  "installed_worker_file": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\target\\minihost-build\\aex_worker.exe",
+    "sha256": "0481df5fa425af28f0e8a39ea9386185de13656c3c9d488042bed2244bdf8302"
+  }
+}

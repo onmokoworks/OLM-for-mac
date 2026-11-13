@@ -1,0 +1,384 @@
+{
+  "source_local_only": "rust\\local\\integration\\radial-triage-final\\summary.json",
+  "source_sha256": "019817de85e68e3bd20daf1e592dab1a4f65fa39320882766812874ce0c15d4e",
+  "rule_source": "rust/plugins/olm-radial-blur/VALIDATION.md#campaign-method",
+  "rule": "Require changed reference output, constant candidate output, all three successful replays, and at least one exact replay. Never replace baseline verdicts.",
+  "complete": true,
+  "results": [
+    {
+      "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMRadialBlur\\render\\case-0017-smart32",
+      "route": "smart32",
+      "baseline_candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMRadialBlur.aex",
+        "sha256": "51eaea21f9bd0e0e00c69fa2ab402947cfc8af5c75e17f05afbd217f86c366f3"
+      },
+      "replay_candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMRadialBlur.aex",
+        "sha256": "51eaea21f9bd0e0e00c69fa2ab402947cfc8af5c75e17f05afbd217f86c366f3"
+      },
+      "reference_output_hashes": [
+        "51f321d7add42675067ba547337a0cb75937df82e5db7881076e38064c30e791",
+        "51f321d7add42675067ba547337a0cb75937df82e5db7881076e38064c30e791",
+        "3f40f783908ca98d3b056a79279ef03de6fe6ec525512fbbf3afeab270106db1",
+        "51f321d7add42675067ba547337a0cb75937df82e5db7881076e38064c30e791"
+      ],
+      "candidate_output_hashes": [
+        "90e3446cd4e13347da40f6812c322f06a1e9ca286af83ba24703af23e158c61b",
+        "90e3446cd4e13347da40f6812c322f06a1e9ca286af83ba24703af23e158c61b",
+        "90e3446cd4e13347da40f6812c322f06a1e9ca286af83ba24703af23e158c61b",
+        "90e3446cd4e13347da40f6812c322f06a1e9ca286af83ba24703af23e158c61b"
+      ],
+      "reference_unique": 2,
+      "candidate_unique": 1,
+      "all_replays_succeeded": true,
+      "has_exact_replay": false,
+      "classification": "reference_nondeterministic",
+      "replays": [
+        {
+          "directory": "render-case-0017-smart32-0",
+          "status": "mismatched",
+          "processes": {
+            "reference": {
+              "pid": 64420,
+              "returncode": 0,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 0.8440000000009604,
+              "harness_frame_timeout": false,
+              "ok": true
+            },
+            "candidate": {
+              "pid": 10512,
+              "returncode": 0,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 1.9529999999995198,
+              "harness_frame_timeout": false,
+              "ok": true
+            }
+          }
+        },
+        {
+          "directory": "render-case-0017-smart32-1",
+          "status": "mismatched",
+          "processes": {
+            "reference": {
+              "pid": 61828,
+              "returncode": 0,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 1.2180000000007567,
+              "harness_frame_timeout": false,
+              "ok": true
+            },
+            "candidate": {
+              "pid": 59944,
+              "returncode": 0,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 1.3130000000001019,
+              "harness_frame_timeout": false,
+              "ok": true
+            }
+          }
+        },
+        {
+          "directory": "render-case-0017-smart32-2",
+          "status": "mismatched",
+          "processes": {
+            "reference": {
+              "pid": 67532,
+              "returncode": 0,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 0.8430000000007567,
+              "harness_frame_timeout": false,
+              "ok": true
+            },
+            "candidate": {
+              "pid": 49736,
+              "returncode": 0,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 2.0309999999990396,
+              "harness_frame_timeout": false,
+              "ok": true
+            }
+          }
+        }
+      ],
+      "excluded_by_documented_rule": false,
+      "final_classification": "unresolved_mismatch",
+      "case_manifest_sha256": "8170bde2e29875421a401837a85e4c9b6794df5094261551950587b2b44bb4bb",
+      "baseline_diff_sha256": "614c34bd5be2b36b10298975f1e3b67d4756a801228b78950a5e749c6e9864e2"
+    },
+    {
+      "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMRadialBlur\\render\\case-0017-smart8",
+      "route": "smart8",
+      "baseline_candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMRadialBlur.aex",
+        "sha256": "51eaea21f9bd0e0e00c69fa2ab402947cfc8af5c75e17f05afbd217f86c366f3"
+      },
+      "replay_candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMRadialBlur.aex",
+        "sha256": "51eaea21f9bd0e0e00c69fa2ab402947cfc8af5c75e17f05afbd217f86c366f3"
+      },
+      "reference_output_hashes": [
+        "8fc2301a898f34d0d6ef7749f92bf6586fc7d74e7e8c1ee385949b88abfdadb3",
+        "6c9ff036b9e4f39ac3876f183018d246fb4811734b41b2f25ff54ec2a1440b5d",
+        "eea5991318a1682a0a773e4ec5b22fefeefc95cf0fede7549f5bf5e926d86176",
+        "8fc2301a898f34d0d6ef7749f92bf6586fc7d74e7e8c1ee385949b88abfdadb3"
+      ],
+      "candidate_output_hashes": [
+        "6c9ff036b9e4f39ac3876f183018d246fb4811734b41b2f25ff54ec2a1440b5d",
+        "6c9ff036b9e4f39ac3876f183018d246fb4811734b41b2f25ff54ec2a1440b5d",
+        "6c9ff036b9e4f39ac3876f183018d246fb4811734b41b2f25ff54ec2a1440b5d",
+        "6c9ff036b9e4f39ac3876f183018d246fb4811734b41b2f25ff54ec2a1440b5d"
+      ],
+      "reference_unique": 3,
+      "candidate_unique": 1,
+      "all_replays_succeeded": true,
+      "has_exact_replay": true,
+      "classification": "reference_nondeterministic",
+      "replays": [
+        {
+          "directory": "render-case-0017-smart8-0",
+          "status": "exact",
+          "processes": {
+            "reference": {
+              "pid": 57736,
+              "returncode": 0,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 0.9530000000013388,
+              "harness_frame_timeout": false,
+              "ok": true
+            },
+            "candidate": {
+              "pid": 4564,
+              "returncode": 0,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 1.6409999999996217,
+              "harness_frame_timeout": false,
+              "ok": true
+            }
+          }
+        },
+        {
+          "directory": "render-case-0017-smart8-1",
+          "status": "mismatched",
+          "processes": {
+            "reference": {
+              "pid": 33144,
+              "returncode": 0,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 1.2180000000007567,
+              "harness_frame_timeout": false,
+              "ok": true
+            },
+            "candidate": {
+              "pid": 12784,
+              "returncode": 0,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 1.5159999999996217,
+              "harness_frame_timeout": false,
+              "ok": true
+            }
+          }
+        },
+        {
+          "directory": "render-case-0017-smart8-2",
+          "status": "mismatched",
+          "processes": {
+            "reference": {
+              "pid": 53640,
+              "returncode": 0,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 1.0460000000002765,
+              "harness_frame_timeout": false,
+              "ok": true
+            },
+            "candidate": {
+              "pid": 13952,
+              "returncode": 0,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 1.8430000000007567,
+              "harness_frame_timeout": false,
+              "ok": true
+            }
+          }
+        }
+      ],
+      "excluded_by_documented_rule": true,
+      "final_classification": "excluded_original_nondeterminism",
+      "case_manifest_sha256": "11088e378ee85543b0f64559f794d16d6f99a9723cb045edaf81080b7ee0f1f5",
+      "baseline_diff_sha256": "bced44aa49438f9440ea6550f227e665f5ab74f0d41cbf048b198d03e2d4896c"
+    },
+    {
+      "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMRadialBlur\\render\\case-0003-smart8",
+      "route": "smart8",
+      "baseline_candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMRadialBlur.aex",
+        "sha256": "51eaea21f9bd0e0e00c69fa2ab402947cfc8af5c75e17f05afbd217f86c366f3"
+      },
+      "replay_candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMRadialBlur.aex",
+        "sha256": "51eaea21f9bd0e0e00c69fa2ab402947cfc8af5c75e17f05afbd217f86c366f3"
+      },
+      "reference_output_hashes": [
+        "1cad5ea18b92f2a7a0f8f7c568d5b720bb0c5a41081d2eeed42abc78a02f817f",
+        "00480a9f568479296db1b7a1058ffd8ba2eab2a23fb7a85742996133bde30d92",
+        "00480a9f568479296db1b7a1058ffd8ba2eab2a23fb7a85742996133bde30d92",
+        "00480a9f568479296db1b7a1058ffd8ba2eab2a23fb7a85742996133bde30d92"
+      ],
+      "candidate_output_hashes": [
+        "00480a9f568479296db1b7a1058ffd8ba2eab2a23fb7a85742996133bde30d92",
+        "00480a9f568479296db1b7a1058ffd8ba2eab2a23fb7a85742996133bde30d92",
+        "00480a9f568479296db1b7a1058ffd8ba2eab2a23fb7a85742996133bde30d92",
+        "00480a9f568479296db1b7a1058ffd8ba2eab2a23fb7a85742996133bde30d92"
+      ],
+      "reference_unique": 2,
+      "candidate_unique": 1,
+      "all_replays_succeeded": true,
+      "has_exact_replay": true,
+      "classification": "reference_nondeterministic",
+      "replays": [
+        {
+          "directory": "render-case-0003-smart8-0",
+          "status": "exact",
+          "processes": {
+            "reference": {
+              "pid": 64792,
+              "returncode": 0,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 1.125,
+              "harness_frame_timeout": false,
+              "ok": true
+            },
+            "candidate": {
+              "pid": 64784,
+              "returncode": 0,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 2.985000000000582,
+              "harness_frame_timeout": false,
+              "ok": true
+            }
+          }
+        },
+        {
+          "directory": "render-case-0003-smart8-1",
+          "status": "exact",
+          "processes": {
+            "reference": {
+              "pid": 22004,
+              "returncode": 0,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 1.0940000000009604,
+              "harness_frame_timeout": false,
+              "ok": true
+            },
+            "candidate": {
+              "pid": 62760,
+              "returncode": 0,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 2.9840000000003783,
+              "harness_frame_timeout": false,
+              "ok": true
+            }
+          }
+        },
+        {
+          "directory": "render-case-0003-smart8-2",
+          "status": "exact",
+          "processes": {
+            "reference": {
+              "pid": 11120,
+              "returncode": 0,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 0.9529999999995198,
+              "harness_frame_timeout": false,
+              "ok": true
+            },
+            "candidate": {
+              "pid": 37640,
+              "returncode": 0,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 2.8430000000007567,
+              "harness_frame_timeout": false,
+              "ok": true
+            }
+          }
+        }
+      ],
+      "excluded_by_documented_rule": true,
+      "final_classification": "excluded_original_nondeterminism",
+      "case_manifest_sha256": "48bc132a5ebc02eebc8969d1dd9456dbb22fab831ec04706f7bbb56edf27e5a6",
+      "baseline_diff_sha256": "db0f8a6fc20a868fadb8ab829c30f3b6fff47b9d70b1d527ac41e0894fc40453"
+    }
+  ]
+}

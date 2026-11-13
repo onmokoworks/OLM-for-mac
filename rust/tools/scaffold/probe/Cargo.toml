@@ -1,0 +1,13 @@
+[package]
+name = "olm-scaffold-probe"
+version = "0.1.0"
+edition = "2021"
+publish = false
+[workspace]
+[lib]
+crate-type = ["cdylib"]
+[dependencies]
+after-effects-sys = { git = "https://github.com/virtualritz/after-effects.git", rev = "0e0b197850f28c1bb24e8c82fce2e3d4c120d1e9" }
+serde_json = "1"
+[build-dependencies]
+winres = "0.1"

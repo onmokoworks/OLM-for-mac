@@ -1,0 +1,565 @@
+{
+  "date": "2026-11-13",
+  "candidate": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\upstream-work\\OLMSmoother2-final.aex",
+    "sha256": "a84f8850d0bc5d026f30711592c5c8715c1d2d665e8ed11d44828eed23a854b7"
+  },
+  "originals": {
+    "ae2025": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMSmoother2AE\\OLMSmoother2AE\\Plugins\\64\\2025\\OLMSmoother2.aex",
+      "sha256": "add776af61499d425f3978f4e5e4c2c8b4062db6d7276db66a22928749227137"
+    },
+    "ae2026": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMSmoother2AE\\OLMSmoother2AE\\Plugins\\64\\2026\\OLMSmoother2.aex",
+      "sha256": "d56118d170b2eb8c6a4f7708486ba221c7e71271a87becce907db13a29fa9ac5"
+    },
+    "old": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother2.aex",
+      "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+    }
+  },
+  "ucrt": {
+    "path": "C:\\Windows\\System32\\ucrtbase.dll",
+    "sha256": "dedb7611e1abc1ff3852dcac3d4c93a048d729e25b061973b9969f22698f14ca",
+    "version": "10.0.26100.9711",
+    "symbol": "cbrtf",
+    "rva": "0x54ed0",
+    "import_library": "api-ms-win-crt-math-l1-1-0.dll"
+  },
+  "final_totals": {
+    "2025": {
+      "smart8": 227,
+      "smart16": 227,
+      "smart32": 227
+    },
+    "2026": {
+      "smart8": 12,
+      "smart16": 12,
+      "smart32": 12
+    }
+  },
+  "campaigns": [
+    {
+      "year": 2025,
+      "seed": 20261114,
+      "summary": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\upstream-work\\final-2025-20261114\\summary.json",
+        "sha256": "cd5f9bc50132f03d411e5e4e08fe8b8ed71ae96c76ee283570d7bdb15cbe2d15"
+      },
+      "resident": true,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 103,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 103,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 103,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 103,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 103,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 103,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "random_cases_per_depth": 100,
+      "random_versions": {
+        "3": 28,
+        "2": 35,
+        "1": 37
+      },
+      "fractional_ranges": 25
+    },
+    {
+      "year": 2025,
+      "seed": 20261115,
+      "summary": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\upstream-work\\final-2025-20261115\\summary.json",
+        "sha256": "1d63e593d5c7da98d69d7a81fa2bdf6475e4f7a65bcc9da027f1c103bc0c4514"
+      },
+      "resident": true,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 103,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 103,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 103,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 103,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 103,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 103,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "random_cases_per_depth": 100,
+      "random_versions": {
+        "2": 33,
+        "3": 31,
+        "1": 36
+      },
+      "fractional_ranges": 28
+    },
+    {
+      "year": 2025,
+      "seed": 20261116,
+      "summary": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\upstream-work\\final-2025-20261116\\summary.json",
+        "sha256": "968ceecc2b374afd94701be1e7eb97b40e7917d8955fa7ad432cad96cdf4f550"
+      },
+      "resident": false,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "random_cases_per_depth": 9,
+      "random_versions": {
+        "1": 3,
+        "3": 2,
+        "2": 4
+      },
+      "fractional_ranges": 3
+    },
+    {
+      "year": 2026,
+      "seed": 20261116,
+      "summary": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\upstream-work\\final-2026-20261116\\summary.json",
+        "sha256": "21c5ccb456461a872401bbe2dbca3ab9fb58dd15f4b90fb205f7982bd0127419"
+      },
+      "resident": false,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "random_cases_per_depth": 9,
+      "random_versions": {
+        "1": 3,
+        "3": 2,
+        "2": 4
+      },
+      "fractional_ranges": 3
+    }
+  ],
+  "primary_campaign_random_cases_per_depth": 200,
+  "primary_campaign_downsample_counts": {
+    "1": 70,
+    "1/2": 68,
+    "1/4": 68
+  },
+  "primary_campaign_random_versions": {
+    "1": 73,
+    "2": 68,
+    "3": 59
+  },
+  "tests": {
+    "release_tests": 21,
+    "cbrtf_raw_words": 1033289,
+    "matrices": 256,
+    "class_pixels": 735,
+    "recorded_calls": 20,
+    "recorded_replays": 40
+  },
+  "declarations": {
+    "raw_identical": true,
+    "pipl_identical": true,
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMSmoother2AE\\OLMSmoother2AE\\Plugins\\64\\2025\\OLMSmoother2.aex",
+      "sha256": "add776af61499d425f3978f4e5e4c2c8b4062db6d7276db66a22928749227137"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\upstream-work\\OLMSmoother2-final.aex",
+      "sha256": "a84f8850d0bc5d026f30711592c5c8715c1d2d665e8ed11d44828eed23a854b7"
+    }
+  },
+  "old_domain": {
+    "mismatched": 30,
+    "exact": 6
+  },
+  "old_domain_stability": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\upstream-work\\old-domain-stability\\verdict.json",
+    "sha256": "72e103249646c805adbb392760c85e82022ee05340f0cb3d662fb7915ecee343"
+  },
+  "minimized_boundary": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\upstream-work\\old-new-class-minimized-v2\\reduction.json",
+    "sha256": "b234b47c08ec99c502c23f46b9df6ac384d9e8bc3d4b4d86bf28d652bdc1db3d"
+  },
+  "lookup_counts": {
+    "exact": 516,
+    "fuzzy": 19,
+    "unknown": 39
+  },
+  "hub_cleanup": {
+    "pid": 4744,
+    "exited": true,
+    "forced": [],
+    "remaining": [],
+    "owned_pids": [
+      52008,
+      53588,
+      61636,
+      60840,
+      1180,
+      54936,
+      51048,
+      9724,
+      4744,
+      57536
+    ],
+    "graceful_requested": true
+  },
+  "final_cleanup": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\upstream-work\\final-cleanup.json",
+    "sha256": "e23cdba3c7cef9059683ab05fdae40b79153370a7d0a6093335980537025a32e"
+  },
+  "golden_rebaseline": {
+    "manifest": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\golden\\golden.json",
+      "sha256": "15ee359aea525a939dee0640564353726f91a6a0dfbac788db364d983d84fc3a"
+    },
+    "case_ids": [
+      "OLMSmoother2-00-16",
+      "OLMSmoother2-00-32",
+      "OLMSmoother2-00-8",
+      "OLMSmoother2-01-16",
+      "OLMSmoother2-01-32",
+      "OLMSmoother2-01-8",
+      "OLMSmoother2-02-16",
+      "OLMSmoother2-02-32",
+      "OLMSmoother2-02-8",
+      "OLMSmoother2-03-16",
+      "OLMSmoother2-03-32",
+      "OLMSmoother2-03-8",
+      "OLMSmoother2-04-16",
+      "OLMSmoother2-04-32",
+      "OLMSmoother2-04-8",
+      "OLMSmoother2-05-16",
+      "OLMSmoother2-05-32",
+      "OLMSmoother2-05-8",
+      "OLMSmoother2-06-16",
+      "OLMSmoother2-06-32",
+      "OLMSmoother2-06-8",
+      "OLMSmoother2-07-16",
+      "OLMSmoother2-07-32",
+      "OLMSmoother2-07-8",
+      "OLMSmoother2-08-16",
+      "OLMSmoother2-08-32",
+      "OLMSmoother2-08-8",
+      "OLMSmoother2-09-16",
+      "OLMSmoother2-09-32",
+      "OLMSmoother2-09-8",
+      "OLMSmoother2-10-16",
+      "OLMSmoother2-10-32",
+      "OLMSmoother2-10-8",
+      "OLMSmoother2-11-16",
+      "OLMSmoother2-11-32",
+      "OLMSmoother2-11-8",
+      "OLMSmoother2-12-16",
+      "OLMSmoother2-12-32",
+      "OLMSmoother2-12-8",
+      "OLMSmoother2-13-16",
+      "OLMSmoother2-13-32",
+      "OLMSmoother2-13-8",
+      "OLMSmoother2-14-16",
+      "OLMSmoother2-14-32",
+      "OLMSmoother2-14-8",
+      "OLMSmoother2-15-16",
+      "OLMSmoother2-15-32",
+      "OLMSmoother2-15-8",
+      "OLMSmoother2-16-16",
+      "OLMSmoother2-16-32",
+      "OLMSmoother2-16-8",
+      "OLMSmoother2-17-16",
+      "OLMSmoother2-17-32",
+      "OLMSmoother2-17-8"
+    ],
+    "updated": false,
+    "reason": "No per-plugin publishing support; shared files outside ownership"
+  },
+  "sources": [
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\src\\admission.rs",
+      "sha256": "e6015afb7c170f40e36f44673bc8cfb84048af3fcfd001a5e35e938d769259ac"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\src\\ae.rs",
+      "sha256": "5f3baf21b4e0da47bae22752004b8c0f608ce11da054cdad0066083373f04b6b"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\src\\ae_boundary.rs",
+      "sha256": "668570084c87ab223639934a198ed777ef61883ee6d597ed52b9d0b98545bd7b"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\src\\ae_setup.rs",
+      "sha256": "b3b9767f8ce2a28bc7d49726b0da5ab7b2efd356c10e1cbc205f6a7ea42d2675"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\src\\algorithm.rs",
+      "sha256": "04002d92a429d14b71878855295da5c371a0882efaa49c9bcb24be9e1296631f"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\src\\class_plane.rs",
+      "sha256": "fbec8da0e8c1a7eeff14b9cbd1d54c17f2392b491d38763ea45816bd8907d39d"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\src\\dynamic.rs",
+      "sha256": "753de77939a7cc35fd7d5ac08c573f39d07da946b654f40280780ad3870029cb"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\src\\frame.rs",
+      "sha256": "f74d83aad89919ea1a94e55b33844b46db5b98b7cf28a38e3ceea038835bdf37"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\src\\gamma.rs",
+      "sha256": "47f269bedb06aa6cdf753d773acd1902f7c8216d13abb5004a823190fe3ca955"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\src\\geometry.rs",
+      "sha256": "780ca67282942cc36dd687a409084d338bb4bf34aed430563f9421b7cdeb37cd"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\src\\geometry_generated.rs",
+      "sha256": "abc95da8b5d8b72657d6371ecc03c3c094f5871ec58b00c78e049b59c1635aa9"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\src\\lib.rs",
+      "sha256": "009683b6f41573f9a53a4c0c702d4ebb26d12e0fc4ab397f2cd4bcd073d97ae5"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\src\\lut.rs",
+      "sha256": "d689282f3a649e9ddf667f7fbcd26a7fb33d031290370aac4f7e01be73ef5a23"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\src\\oklab.rs",
+      "sha256": "528a32ca4224afa57550c00066c5a697b74f1ee954c77eae8a076181daa3534d"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\src\\polygon.rs",
+      "sha256": "d12bc79ce16a9db963b1e3f08faa8a0f21d86ba76f538c9b446ba855fe255868"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\src\\reference_tests.rs",
+      "sha256": "17b0c0ffeaea6401807dd594be7fd64ad46989b0d65bbdbcc037994f3601cade"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\src\\scan.rs",
+      "sha256": "7ea8285810661f74bbc0a03957997e34060d9b3ad756a66356de710d5295e459"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\src\\sha256.rs",
+      "sha256": "4020d786acea28da1d0e3aa0be73dc08e38eaf10b4acd86fa05d0c79c952da81"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\src\\types.rs",
+      "sha256": "587e657449140dcb4302227c378ddcbb7e05badb5b65ad823aa4aa94550a6eea"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\src\\weights.rs",
+      "sha256": "f805049b4f5da50e48eb591744a477a9ee991ec4a5d8303048f28ba832bfe772"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\build.rs",
+      "sha256": "a223fd3e2566956e06ebf34cb2a034a8c3ee7533cf68af28757cd84b0237f42b"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\pipl_build.rs",
+      "sha256": "03537dc36492a928b37551cc678bd5da14c19948d45c9b24b0484f8c448c5d6f"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\Cargo.toml",
+      "sha256": "5fea0fb2e7d9faaa40b31d49c4c6d482e5245c69ec7537f5d9534c717021145a"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\examples\\upstream_witness.rs",
+      "sha256": "1014ee2d2f97559d76709d01a0dcbf2897f2ed93d81ee8fe3dcd17d58d0bd053"
+    }
+  ],
+  "needed_shared_changes": [
+    "Hoist the qualified OLM-internal cbrtf wrapper into olm-math.",
+    "Golden tool supports diagnostic subsets only: owner must regenerate 54 Smoother2 hashes and add Oklab/fractional cases.",
+    "Hub needs an explicit per-instance data/project directory option; local launcher currently overrides defaults.",
+    "Diverge reducer should separate input dtype from output dtype; local adaptation permits u8 output with f32 input.",
+    "Record replay dispatcher needs Smoother2 adapters; local replay bridge verifies all 20 calls."
+  ],
+  "limitations": [
+    "AEXCompat CPU only; no native AE, macOS, GPU, project/keyframe migration or UI interaction qualification.",
+    "Cube-root raw-word campaign is sampled, not exhaustive; errno, FP exception flags and alternate rounding modes excluded.",
+    "Full-frame sources are SDR PNG-promoted; signed/HDR matrix leaves do not establish arbitrary HDR frame coverage.",
+    "Historical 2.1.0 validation/goldens are not the authority for this update."
+  ]
+}

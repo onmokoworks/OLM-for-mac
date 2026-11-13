@@ -1,0 +1,928 @@
+{
+  "classification": "excluded_original_nondeterminism",
+  "baseline_status": "mismatched",
+  "counts_added_to_campaign": 0,
+  "predeclared_additional_replays": 10,
+  "identities": {
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+      "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMRadialBlur.aex",
+      "sha256": "51eaea21f9bd0e0e00c69fa2ab402947cfc8af5c75e17f05afbd217f86c366f3"
+    },
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+    }
+  },
+  "historical_original_hashes": [
+    "51f321d7add42675067ba547337a0cb75937df82e5db7881076e38064c30e791",
+    "51f321d7add42675067ba547337a0cb75937df82e5db7881076e38064c30e791",
+    "3f40f783908ca98d3b056a79279ef03de6fe6ec525512fbbf3afeab270106db1",
+    "51f321d7add42675067ba547337a0cb75937df82e5db7881076e38064c30e791"
+  ],
+  "witness_case": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMRadialBlur\\render\\case-0017-smart32\\case.json",
+    "sha256": "8170bde2e29875421a401837a85e4c9b6794df5094261551950587b2b44bb4bb"
+  },
+  "input_png": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMRadialBlur\\render\\case-0017-smart32\\input.png",
+    "sha256": "73cccc9f2b1f687adf7c26466c2e8024e419d76354c99cdfb922f337482e557e"
+  },
+  "expected_native_float_output": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMRadialBlur\\render\\case-0017-smart32\\candidate.rgba32f-le",
+    "sha256": "90e3446cd4e13347da40f6812c322f06a1e9ca286af83ba24703af23e158c61b"
+  },
+  "historical_triage": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\evidence\\integration\\radial-triage.json",
+    "sha256": "e34b393a78cf312351b67dc697be16c73b6b479ca5c60b5f0532a5d799a24825"
+  },
+  "all_14_candidate_unique": 1,
+  "all_14_original_unique": 5,
+  "additional_exact": 2,
+  "additional_replays": [
+    {
+      "number": 1,
+      "reference_sha256": "ec364e144926a076e525b68185253674d63d15da688d3fee35c3b4f5c4af3f18",
+      "candidate_sha256": "90e3446cd4e13347da40f6812c322f06a1e9ca286af83ba24703af23e158c61b",
+      "status": "mismatched",
+      "comparison": {
+        "exact": false,
+        "mismatching_pixels": 6,
+        "mismatching_samples": 15,
+        "max_abs_diff": 0.5950400829315186,
+        "nonfinite_difference_samples": 0,
+        "first_coordinates": [
+          {
+            "x": 0,
+            "y": 4
+          },
+          {
+            "x": 0,
+            "y": 5
+          },
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 0,
+            "y": 6
+          },
+          {
+            "x": 1,
+            "y": 6
+          },
+          {
+            "x": 2,
+            "y": 6
+          }
+        ]
+      },
+      "processes": {
+        "reference": {
+          "pid": 66936,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 0.6720000000004802,
+          "harness_frame_timeout": false,
+          "ok": true
+        },
+        "candidate": {
+          "pid": 66468,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 1.3590000000003783,
+          "harness_frame_timeout": false,
+          "ok": true
+        }
+      }
+    },
+    {
+      "number": 2,
+      "reference_sha256": "ec364e144926a076e525b68185253674d63d15da688d3fee35c3b4f5c4af3f18",
+      "candidate_sha256": "90e3446cd4e13347da40f6812c322f06a1e9ca286af83ba24703af23e158c61b",
+      "status": "mismatched",
+      "comparison": {
+        "exact": false,
+        "mismatching_pixels": 6,
+        "mismatching_samples": 15,
+        "max_abs_diff": 0.5950400829315186,
+        "nonfinite_difference_samples": 0,
+        "first_coordinates": [
+          {
+            "x": 0,
+            "y": 4
+          },
+          {
+            "x": 0,
+            "y": 5
+          },
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 0,
+            "y": 6
+          },
+          {
+            "x": 1,
+            "y": 6
+          },
+          {
+            "x": 2,
+            "y": 6
+          }
+        ]
+      },
+      "processes": {
+        "reference": {
+          "pid": 40996,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 0.6569999999992433,
+          "harness_frame_timeout": false,
+          "ok": true
+        },
+        "candidate": {
+          "pid": 60048,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 1.3279999999995198,
+          "harness_frame_timeout": false,
+          "ok": true
+        }
+      }
+    },
+    {
+      "number": 3,
+      "reference_sha256": "ec364e144926a076e525b68185253674d63d15da688d3fee35c3b4f5c4af3f18",
+      "candidate_sha256": "90e3446cd4e13347da40f6812c322f06a1e9ca286af83ba24703af23e158c61b",
+      "status": "mismatched",
+      "comparison": {
+        "exact": false,
+        "mismatching_pixels": 6,
+        "mismatching_samples": 15,
+        "max_abs_diff": 0.5950400829315186,
+        "nonfinite_difference_samples": 0,
+        "first_coordinates": [
+          {
+            "x": 0,
+            "y": 4
+          },
+          {
+            "x": 0,
+            "y": 5
+          },
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 0,
+            "y": 6
+          },
+          {
+            "x": 1,
+            "y": 6
+          },
+          {
+            "x": 2,
+            "y": 6
+          }
+        ]
+      },
+      "processes": {
+        "reference": {
+          "pid": 54640,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 0.6560000000008586,
+          "harness_frame_timeout": false,
+          "ok": true
+        },
+        "candidate": {
+          "pid": 16080,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 1.4219999999986612,
+          "harness_frame_timeout": false,
+          "ok": true
+        }
+      }
+    },
+    {
+      "number": 4,
+      "reference_sha256": "ec364e144926a076e525b68185253674d63d15da688d3fee35c3b4f5c4af3f18",
+      "candidate_sha256": "90e3446cd4e13347da40f6812c322f06a1e9ca286af83ba24703af23e158c61b",
+      "status": "mismatched",
+      "comparison": {
+        "exact": false,
+        "mismatching_pixels": 6,
+        "mismatching_samples": 15,
+        "max_abs_diff": 0.5950400829315186,
+        "nonfinite_difference_samples": 0,
+        "first_coordinates": [
+          {
+            "x": 0,
+            "y": 4
+          },
+          {
+            "x": 0,
+            "y": 5
+          },
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 0,
+            "y": 6
+          },
+          {
+            "x": 1,
+            "y": 6
+          },
+          {
+            "x": 2,
+            "y": 6
+          }
+        ]
+      },
+      "processes": {
+        "reference": {
+          "pid": 8768,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 0.6559999999990396,
+          "harness_frame_timeout": false,
+          "ok": true
+        },
+        "candidate": {
+          "pid": 6012,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 1.3279999999995198,
+          "harness_frame_timeout": false,
+          "ok": true
+        }
+      }
+    },
+    {
+      "number": 5,
+      "reference_sha256": "51f321d7add42675067ba547337a0cb75937df82e5db7881076e38064c30e791",
+      "candidate_sha256": "90e3446cd4e13347da40f6812c322f06a1e9ca286af83ba24703af23e158c61b",
+      "status": "mismatched",
+      "comparison": {
+        "exact": false,
+        "mismatching_pixels": 6,
+        "mismatching_samples": 15,
+        "max_abs_diff": 0.4191911220550537,
+        "nonfinite_difference_samples": 0,
+        "first_coordinates": [
+          {
+            "x": 0,
+            "y": 4
+          },
+          {
+            "x": 0,
+            "y": 5
+          },
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 0,
+            "y": 6
+          },
+          {
+            "x": 1,
+            "y": 6
+          },
+          {
+            "x": 2,
+            "y": 6
+          }
+        ]
+      },
+      "processes": {
+        "reference": {
+          "pid": 52768,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 0.625,
+          "harness_frame_timeout": false,
+          "ok": true
+        },
+        "candidate": {
+          "pid": 16152,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 1.4369999999998981,
+          "harness_frame_timeout": false,
+          "ok": true
+        }
+      }
+    },
+    {
+      "number": 6,
+      "reference_sha256": "51f321d7add42675067ba547337a0cb75937df82e5db7881076e38064c30e791",
+      "candidate_sha256": "90e3446cd4e13347da40f6812c322f06a1e9ca286af83ba24703af23e158c61b",
+      "status": "mismatched",
+      "comparison": {
+        "exact": false,
+        "mismatching_pixels": 6,
+        "mismatching_samples": 15,
+        "max_abs_diff": 0.4191911220550537,
+        "nonfinite_difference_samples": 0,
+        "first_coordinates": [
+          {
+            "x": 0,
+            "y": 4
+          },
+          {
+            "x": 0,
+            "y": 5
+          },
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 0,
+            "y": 6
+          },
+          {
+            "x": 1,
+            "y": 6
+          },
+          {
+            "x": 2,
+            "y": 6
+          }
+        ]
+      },
+      "processes": {
+        "reference": {
+          "pid": 61892,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 0.6409999999996217,
+          "harness_frame_timeout": false,
+          "ok": true
+        },
+        "candidate": {
+          "pid": 25756,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 1.3590000000003783,
+          "harness_frame_timeout": false,
+          "ok": true
+        }
+      }
+    },
+    {
+      "number": 7,
+      "reference_sha256": "833e29b62a0e1aff612c46f91f2daf17636268e60799564fa74976b8cd96d749",
+      "candidate_sha256": "90e3446cd4e13347da40f6812c322f06a1e9ca286af83ba24703af23e158c61b",
+      "status": "mismatched",
+      "comparison": {
+        "exact": false,
+        "mismatching_pixels": 8,
+        "mismatching_samples": 19,
+        "max_abs_diff": 0.6949746608734131,
+        "nonfinite_difference_samples": 0,
+        "first_coordinates": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 4
+          },
+          {
+            "x": 0,
+            "y": 5
+          },
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 2,
+            "y": 5
+          },
+          {
+            "x": 0,
+            "y": 6
+          },
+          {
+            "x": 1,
+            "y": 6
+          },
+          {
+            "x": 2,
+            "y": 6
+          }
+        ]
+      },
+      "processes": {
+        "reference": {
+          "pid": 43116,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 0.6399999999994179,
+          "harness_frame_timeout": false,
+          "ok": true
+        },
+        "candidate": {
+          "pid": 59012,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 1.375,
+          "harness_frame_timeout": false,
+          "ok": true
+        }
+      }
+    },
+    {
+      "number": 8,
+      "reference_sha256": "90e3446cd4e13347da40f6812c322f06a1e9ca286af83ba24703af23e158c61b",
+      "candidate_sha256": "90e3446cd4e13347da40f6812c322f06a1e9ca286af83ba24703af23e158c61b",
+      "status": "exact",
+      "comparison": {
+        "exact": true,
+        "mismatching_pixels": 0,
+        "mismatching_samples": 0,
+        "max_abs_diff": 0.0,
+        "nonfinite_difference_samples": 0,
+        "first_coordinates": []
+      },
+      "processes": {
+        "reference": {
+          "pid": 26204,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 0.6559999999990396,
+          "harness_frame_timeout": false,
+          "ok": true
+        },
+        "candidate": {
+          "pid": 61948,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 1.3440000000009604,
+          "harness_frame_timeout": false,
+          "ok": true
+        }
+      }
+    },
+    {
+      "number": 9,
+      "reference_sha256": "90e3446cd4e13347da40f6812c322f06a1e9ca286af83ba24703af23e158c61b",
+      "candidate_sha256": "90e3446cd4e13347da40f6812c322f06a1e9ca286af83ba24703af23e158c61b",
+      "status": "exact",
+      "comparison": {
+        "exact": true,
+        "mismatching_pixels": 0,
+        "mismatching_samples": 0,
+        "max_abs_diff": 0.0,
+        "nonfinite_difference_samples": 0,
+        "first_coordinates": []
+      },
+      "processes": {
+        "reference": {
+          "pid": 62684,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 0.6409999999996217,
+          "harness_frame_timeout": false,
+          "ok": true
+        },
+        "candidate": {
+          "pid": 66040,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 1.3279999999995198,
+          "harness_frame_timeout": false,
+          "ok": true
+        }
+      }
+    },
+    {
+      "number": 10,
+      "reference_sha256": "51f321d7add42675067ba547337a0cb75937df82e5db7881076e38064c30e791",
+      "candidate_sha256": "90e3446cd4e13347da40f6812c322f06a1e9ca286af83ba24703af23e158c61b",
+      "status": "mismatched",
+      "comparison": {
+        "exact": false,
+        "mismatching_pixels": 6,
+        "mismatching_samples": 15,
+        "max_abs_diff": 0.4191911220550537,
+        "nonfinite_difference_samples": 0,
+        "first_coordinates": [
+          {
+            "x": 0,
+            "y": 4
+          },
+          {
+            "x": 0,
+            "y": 5
+          },
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 0,
+            "y": 6
+          },
+          {
+            "x": 1,
+            "y": 6
+          },
+          {
+            "x": 2,
+            "y": 6
+          }
+        ]
+      },
+      "processes": {
+        "reference": {
+          "pid": 62936,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 0.625,
+          "harness_frame_timeout": false,
+          "ok": true
+        },
+        "candidate": {
+          "pid": 22460,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 1.3589999999985594,
+          "harness_frame_timeout": false,
+          "ok": true
+        }
+      }
+    }
+  ],
+  "controls": [
+    {
+      "case": 17,
+      "route": "smart32",
+      "directory": "offset-0",
+      "processes": {
+        "reference": {
+          "pid": 24084,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 0.6409999999996217,
+          "harness_frame_timeout": false,
+          "ok": true
+        },
+        "candidate": {
+          "pid": 31532,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 1.3279999999995198,
+          "harness_frame_timeout": false,
+          "ok": true
+        }
+      },
+      "comparison": {
+        "exact": true,
+        "mismatching_pixels": 0,
+        "mismatching_samples": 0,
+        "max_abs_diff": 0.0,
+        "nonfinite_difference_samples": 0,
+        "first_coordinates": []
+      },
+      "status": "exact",
+      "offset_degrees": 0.0,
+      "hashes": {
+        "reference": "1d82d14ee40bde59e2b5f6bed63be2a90e9b427989a070a8e5645cdf0e28977a",
+        "candidate": "1d82d14ee40bde59e2b5f6bed63be2a90e9b427989a070a8e5645cdf0e28977a"
+      }
+    },
+    {
+      "case": 17,
+      "route": "smart32",
+      "directory": "offset-1",
+      "processes": {
+        "reference": {
+          "pid": 60752,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 0.6409999999996217,
+          "harness_frame_timeout": false,
+          "ok": true
+        },
+        "candidate": {
+          "pid": 63372,
+          "returncode": 0,
+          "environment_overrides": {
+            "AEXCOMPAT_FRAME_DEADLINE_MS": "600000"
+          },
+          "timeout": false,
+          "cancelled": false,
+          "elapsed_seconds": 1.4369999999998981,
+          "harness_frame_timeout": false,
+          "ok": true
+        }
+      },
+      "comparison": {
+        "exact": true,
+        "mismatching_pixels": 0,
+        "mismatching_samples": 0,
+        "max_abs_diff": 0.0,
+        "nonfinite_difference_samples": 0,
+        "first_coordinates": []
+      },
+      "status": "exact",
+      "offset_degrees": 1.0,
+      "hashes": {
+        "reference": "a41597b3faf29bf1010c138201d9d4c847bf7caa2c6f3e532d33167c78f9ed93",
+        "candidate": "a41597b3faf29bf1010c138201d9d4c847bf7caa2c6f3e532d33167c78f9ed93"
+      }
+    }
+  ],
+  "offset_control_evidence": {
+    "same_input_params_route_except_slot28": true,
+    "zero_offset_exact": true,
+    "positive_offset_exact": true,
+    "cpp_zero_read_equivalent": true,
+    "mismatches_within_underread_support": true,
+    "controls_summary": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\integration-offset-controls\\summary.json",
+      "sha256": "b896d9abf3ef0cfe83226a6aec24770a340ff1ada3a9502f42e2b1a4feb7eb45"
+    },
+    "localization_test_log": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\integration-offset-tests-confirmed.log",
+      "sha256": "002f20f1712937389f99792068a08e0ff9b63a58c0fd0f307cfc83bd257899a7"
+    }
+  },
+  "noise_lattice_size": [
+    15,
+    31
+  ],
+  "phase_bits": "c0b1cf36",
+  "underread_cells_and_endpoint_indices": [
+    [
+      30,
+      -4,
+      -3
+    ],
+    [
+      58,
+      -4,
+      -3
+    ],
+    [
+      96,
+      -3,
+      -2
+    ],
+    [
+      98,
+      -1,
+      0
+    ],
+    [
+      101,
+      -1,
+      0
+    ],
+    [
+      126,
+      -2,
+      -1
+    ],
+    [
+      160,
+      -4,
+      -3
+    ],
+    [
+      173,
+      -4,
+      -3
+    ],
+    [
+      181,
+      -1,
+      0
+    ],
+    [
+      191,
+      -1,
+      0
+    ],
+    [
+      199,
+      -3,
+      -2
+    ],
+    [
+      201,
+      -1,
+      0
+    ],
+    [
+      257,
+      -3,
+      -2
+    ],
+    [
+      324,
+      -4,
+      -3
+    ],
+    [
+      326,
+      -2,
+      -1
+    ],
+    [
+      345,
+      -1,
+      0
+    ],
+    [
+      360,
+      -4,
+      -3
+    ],
+    [
+      364,
+      -3,
+      -2
+    ],
+    [
+      382,
+      -4,
+      -3
+    ],
+    [
+      444,
+      -3,
+      -2
+    ]
+  ],
+  "cpp_exact_phases_degrees": [
+    -318.36653167426726,
+    0,
+    1
+  ],
+  "underread_counterfactual_values": [
+    -1,
+    1
+  ],
+  "underread_sensitive_pixel_indices": [
+    6,
+    12,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+  ],
+  "underread_sensitive_source_pixel_indices": [
+    18,
+    19
+  ],
+  "observed_mismatch_pixel_indices": [
+    6,
+    12,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+  ],
+  "evidence_boundary": "Sensitivity is measured in the pure Rust Smart32 renderer matching the staged DLL; original under-read cause is source-grounded inference, not a native memory trace.",
+  "production_algorithm_changed": false,
+  "full_campaign_rerun": false,
+  "source_files": [
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\src\\noise.rs",
+      "sha256": "b9271ee261ce4ae427fb9ef904de406581747fdb6ccdeb5cd0ab354547ba9341"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\tests\\support\\offset_witness.rs",
+      "sha256": "b0904baf491d68ece5c02b64e34d265d595b56783e97a7cf2e3342d0706396d7"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\tests\\support\\offset_witness_data.rs",
+      "sha256": "f630a0273e124a98a19414765197214628c593c9f74d49c50ee3e12ee1826d30"
+    },
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\core\\dblur_noise.h",
+      "sha256": "1185097bd6d2e7a451ee6b13411d40f22f1f57c88ddcd664f41f090fea9110bc"
+    }
+  ],
+  "test_log": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-radial-blur\\validation\\integration-offset-tests-confirmed.log",
+    "sha256": "002f20f1712937389f99792068a08e0ff9b63a58c0fd0f307cfc83bd257899a7"
+  }
+}

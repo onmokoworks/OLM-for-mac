@@ -1,0 +1,800 @@
+{
+  "schema_version": 1,
+  "job": "Up-dgrad",
+  "upstream_release": "2026-11-12",
+  "status": "AEXCompat CPU qualification with measured original-instability exclusions; not native AE exact",
+  "candidate": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-distance-gradation\\validation\\upstream\\DistanceGradation-v8.aex",
+    "sha256": "fae669a69389d3292f94d87a3854607d6eab13f5756f64cd6bd2dce7d3365318"
+  },
+  "static_audit": {
+    "path": "upstream-static-report.json",
+    "sha256": "e3ea7f9686bb56d95e9b3cc36700be079909558e411c209b2362c7be14132b68"
+  },
+  "complete_declarations": {
+    "path": "validation\\upstream\\final-v8-declarations\\comparison.json",
+    "sha256": "cccee51253607e4f91dbfc531bc551a0777abe0c336c7c7dd5dbb873c6fa4273"
+  },
+  "parameter_differences": 0,
+  "pipl_byte_identical": true,
+  "campaigns": {
+    "final-v8-seed-20261112": {
+      "summary": {
+        "path": "validation\\upstream\\final-v8-seed-20261112\\summary.json",
+        "sha256": "d1d58cd82bc920374682bfaa6a2397856835c8a5acd314e905eded5f0de014ce"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMDistanceGradation\\OLMDistanceGradation\\Plugins\\64\\2025\\DistanceGradation.aex",
+        "sha256": "fd151598c015baf7068ce7ef59eead7430657cab083d9000c2a35e9b84da5e63"
+      },
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 133,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 130,
+          "mismatched": 0,
+          "reference_unrenderable": 3,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 3,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 133,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 130,
+          "mismatched": 0,
+          "reference_unrenderable": 3,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 3,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 133,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 129,
+          "mismatched": 1,
+          "reference_unrenderable": 3,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 3,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 5.960464477539063e-08,
+          "mismatching_pixels": 7,
+          "first_coordinates": [
+            {
+              "case": 102,
+              "x": 116,
+              "y": 128
+            },
+            {
+              "case": 102,
+              "x": 121,
+              "y": 128
+            },
+            {
+              "case": 102,
+              "x": 145,
+              "y": 128
+            },
+            {
+              "case": 102,
+              "x": 114,
+              "y": 130
+            },
+            {
+              "case": 102,
+              "x": 115,
+              "y": 130
+            },
+            {
+              "case": 102,
+              "x": 115,
+              "y": 131
+            },
+            {
+              "case": 102,
+              "x": 116,
+              "y": 134
+            }
+          ]
+        }
+      },
+      "successful_random_cases": {
+        "smart8": 127,
+        "smart16": 127,
+        "smart32": 127
+      }
+    },
+    "final-v8-seed-20261113": {
+      "summary": {
+        "path": "validation\\upstream\\final-v8-seed-20261113\\summary.json",
+        "sha256": "5d7ca2858f231d68244bb90eacbc5f34be4fb794408cd7ca0503973f359b402e"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMDistanceGradation\\OLMDistanceGradation\\Plugins\\64\\2025\\DistanceGradation.aex",
+        "sha256": "fd151598c015baf7068ce7ef59eead7430657cab083d9000c2a35e9b84da5e63"
+      },
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 133,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 131,
+          "mismatched": 0,
+          "reference_unrenderable": 2,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 2,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 133,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 131,
+          "mismatched": 0,
+          "reference_unrenderable": 2,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 2,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 133,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 129,
+          "mismatched": 2,
+          "reference_unrenderable": 2,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 2,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 5.960464477539063e-08,
+          "mismatching_pixels": 25,
+          "first_coordinates": [
+            {
+              "case": 6,
+              "x": 34,
+              "y": 19
+            },
+            {
+              "case": 6,
+              "x": 35,
+              "y": 19
+            },
+            {
+              "case": 6,
+              "x": 5,
+              "y": 20
+            },
+            {
+              "case": 6,
+              "x": 6,
+              "y": 20
+            },
+            {
+              "case": 6,
+              "x": 12,
+              "y": 20
+            },
+            {
+              "case": 6,
+              "x": 33,
+              "y": 20
+            },
+            {
+              "case": 6,
+              "x": 34,
+              "y": 20
+            },
+            {
+              "case": 6,
+              "x": 7,
+              "y": 21
+            }
+          ]
+        }
+      },
+      "successful_random_cases": {
+        "smart8": 128,
+        "smart16": 128,
+        "smart32": 128
+      }
+    },
+    "opaque-2025": {
+      "summary": {
+        "path": "validation\\upstream\\opaque-2025\\summary.json",
+        "sha256": "c594ff33e381e88179221090c3117b4846b5d6a3115c5e02af112319dc2f133d"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMDistanceGradation\\OLMDistanceGradation\\Plugins\\64\\2025\\DistanceGradation.aex",
+        "sha256": "fd151598c015baf7068ce7ef59eead7430657cab083d9000c2a35e9b84da5e63"
+      },
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 42,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 42,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 42,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 42,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 42,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 40,
+          "mismatched": 2,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 5.960464477539063e-08,
+          "mismatching_pixels": 12,
+          "first_coordinates": [
+            {
+              "case": 20,
+              "x": 0,
+              "y": 3
+            },
+            {
+              "case": 20,
+              "x": 0,
+              "y": 4
+            },
+            {
+              "case": 20,
+              "x": 0,
+              "y": 5
+            },
+            {
+              "case": 20,
+              "x": 0,
+              "y": 7
+            },
+            {
+              "case": 20,
+              "x": 0,
+              "y": 8
+            },
+            {
+              "case": 20,
+              "x": 0,
+              "y": 9
+            },
+            {
+              "case": 21,
+              "x": 0,
+              "y": 3
+            },
+            {
+              "case": 21,
+              "x": 0,
+              "y": 4
+            }
+          ]
+        }
+      }
+    },
+    "opaque-2026": {
+      "summary": {
+        "path": "validation\\upstream\\opaque-2026\\summary.json",
+        "sha256": "e8d9f12cdedb1162e45edf1b5a82668c21720a14c48f167d598de8545e44d30b"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMDistanceGradation\\OLMDistanceGradation\\Plugins\\64\\2026\\DistanceGradation.aex",
+        "sha256": "cb627ab4819b5cb5ef4f24a6afd19685c037bde7546a2c77aed6df35ee8b504e"
+      },
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 42,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 42,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 42,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 42,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 42,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 39,
+          "mismatched": 3,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 5.960464477539063e-08,
+          "mismatching_pixels": 18,
+          "first_coordinates": [
+            {
+              "case": 20,
+              "x": 0,
+              "y": 3
+            },
+            {
+              "case": 20,
+              "x": 0,
+              "y": 4
+            },
+            {
+              "case": 20,
+              "x": 0,
+              "y": 5
+            },
+            {
+              "case": 20,
+              "x": 0,
+              "y": 7
+            },
+            {
+              "case": 20,
+              "x": 0,
+              "y": 8
+            },
+            {
+              "case": 20,
+              "x": 0,
+              "y": 9
+            },
+            {
+              "case": 21,
+              "x": 0,
+              "y": 3
+            },
+            {
+              "case": 21,
+              "x": 0,
+              "y": 4
+            }
+          ]
+        }
+      }
+    },
+    "sample-2026": {
+      "summary": {
+        "path": "validation\\upstream\\sample-2026\\summary.json",
+        "sha256": "bb914cb6a50f0d8d822d2959dce74aa9bf4e67ec049f17767f3879da7dcc665a"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMDistanceGradation\\OLMDistanceGradation\\Plugins\\64\\2026\\DistanceGradation.aex",
+        "sha256": "cb627ab4819b5cb5ef4f24a6afd19685c037bde7546a2c77aed6df35ee8b504e"
+      },
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 18,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 18,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 18,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 18,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 18,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 18,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      }
+    }
+  },
+  "residuals": [
+    {
+      "campaign": "final-v8-seed-20261112",
+      "case": 102,
+      "route": "smart32",
+      "verdict": {
+        "path": "validation\\upstream\\ub-seed1-case102-v8\\verdict.json",
+        "sha256": "d4f81ded1256fb778ffe27a54e676e13b34f4457d0569691aaeac2fad7702543"
+      },
+      "classification": "original_ub",
+      "reason": "original_nondeterminism",
+      "reference_trials": 8,
+      "candidate_trials": 8,
+      "distinct_reference_outputs": 2,
+      "distinct_candidate_outputs": 1,
+      "retained_mismatch_pixels": 7,
+      "observed_variation_pixels": 7,
+      "retained_mismatch_pixels_outside_variation": 0,
+      "retained_reference_and_candidate_both_observed_in_original_population": true,
+      "qualification": "Explicit check of the saved campaign pair; ubdetect automatic exclusion can be false when its own first trial is exact."
+    },
+    {
+      "campaign": "final-v8-seed-20261113",
+      "case": 6,
+      "route": "smart32",
+      "verdict": {
+        "path": "validation\\upstream\\ub-seed2-case6-v8\\verdict.json",
+        "sha256": "b3310617cc303e8eff5778f8ba87537e0de07d099d142d799d17da28167dae88"
+      },
+      "classification": "original_ub",
+      "reason": "original_nondeterminism",
+      "reference_trials": 8,
+      "candidate_trials": 8,
+      "distinct_reference_outputs": 2,
+      "distinct_candidate_outputs": 1,
+      "retained_mismatch_pixels": 23,
+      "observed_variation_pixels": 23,
+      "retained_mismatch_pixels_outside_variation": 0,
+      "retained_reference_and_candidate_both_observed_in_original_population": true,
+      "qualification": "Explicit check of the saved campaign pair; ubdetect automatic exclusion can be false when its own first trial is exact."
+    },
+    {
+      "campaign": "final-v8-seed-20261113",
+      "case": 107,
+      "route": "smart32",
+      "verdict": {
+        "path": "validation\\upstream\\ub-seed2-case107-v8\\verdict.json",
+        "sha256": "c3000096709eb3f37ae2cdb4ac73b2f286d5af4ef66e19f0b50a65051c65dc47"
+      },
+      "classification": "original_ub",
+      "reason": "original_nondeterminism",
+      "reference_trials": 8,
+      "candidate_trials": 8,
+      "distinct_reference_outputs": 2,
+      "distinct_candidate_outputs": 1,
+      "retained_mismatch_pixels": 2,
+      "observed_variation_pixels": 2,
+      "retained_mismatch_pixels_outside_variation": 0,
+      "retained_reference_and_candidate_both_observed_in_original_population": true,
+      "qualification": "Explicit check of the saved campaign pair; ubdetect automatic exclusion can be false when its own first trial is exact."
+    },
+    {
+      "campaign": "opaque-2025",
+      "case": 20,
+      "route": "smart32",
+      "verdict": {
+        "path": "validation\\upstream\\ub-opaque2025-case20\\verdict.json",
+        "sha256": "bcc34beb8e9b5cdc059b5cc6aaf41e7deca304b762b534185e5bf90c5664ddee"
+      },
+      "classification": "original_ub",
+      "reason": "original_nondeterminism",
+      "reference_trials": 8,
+      "candidate_trials": 8,
+      "distinct_reference_outputs": 2,
+      "distinct_candidate_outputs": 1,
+      "retained_mismatch_pixels": 6,
+      "observed_variation_pixels": 6,
+      "retained_mismatch_pixels_outside_variation": 0,
+      "retained_reference_and_candidate_both_observed_in_original_population": true,
+      "qualification": "Explicit check of the saved campaign pair; ubdetect automatic exclusion can be false when its own first trial is exact."
+    },
+    {
+      "campaign": "opaque-2025",
+      "case": 21,
+      "route": "smart32",
+      "verdict": {
+        "path": "validation\\upstream\\ub-opaque2025-case21\\verdict.json",
+        "sha256": "e3ae37aa336de23e98e4b179458dc9b8f1d22bf59e4422d168e6c94309a8254d"
+      },
+      "classification": "original_ub",
+      "reason": "original_nondeterminism",
+      "reference_trials": 8,
+      "candidate_trials": 8,
+      "distinct_reference_outputs": 2,
+      "distinct_candidate_outputs": 1,
+      "retained_mismatch_pixels": 6,
+      "observed_variation_pixels": 6,
+      "retained_mismatch_pixels_outside_variation": 0,
+      "retained_reference_and_candidate_both_observed_in_original_population": true,
+      "qualification": "Explicit check of the saved campaign pair; ubdetect automatic exclusion can be false when its own first trial is exact."
+    },
+    {
+      "campaign": "opaque-2026",
+      "case": 20,
+      "route": "smart32",
+      "verdict": {
+        "path": "validation\\upstream\\ub-opaque2026-case20\\verdict.json",
+        "sha256": "4f771dbd1f0dee0f1b9b2b8bbf78a97237f5768fc851babaa318a9e0b916ed72"
+      },
+      "classification": "original_ub",
+      "reason": "original_nondeterminism",
+      "reference_trials": 8,
+      "candidate_trials": 8,
+      "distinct_reference_outputs": 2,
+      "distinct_candidate_outputs": 1,
+      "retained_mismatch_pixels": 6,
+      "observed_variation_pixels": 6,
+      "retained_mismatch_pixels_outside_variation": 0,
+      "retained_reference_and_candidate_both_observed_in_original_population": true,
+      "qualification": "Explicit check of the saved campaign pair; ubdetect automatic exclusion can be false when its own first trial is exact."
+    },
+    {
+      "campaign": "opaque-2026",
+      "case": 21,
+      "route": "smart32",
+      "verdict": {
+        "path": "validation\\upstream\\ub-opaque2026-case21\\verdict.json",
+        "sha256": "b6f68dae65adbb962f6183793e33c1ab189cb67202abecb2ce670cf5d31ba4a8"
+      },
+      "classification": "original_ub",
+      "reason": "original_nondeterminism",
+      "reference_trials": 8,
+      "candidate_trials": 8,
+      "distinct_reference_outputs": 2,
+      "distinct_candidate_outputs": 1,
+      "retained_mismatch_pixels": 6,
+      "observed_variation_pixels": 6,
+      "retained_mismatch_pixels_outside_variation": 0,
+      "retained_reference_and_candidate_both_observed_in_original_population": true,
+      "qualification": "Explicit check of the saved campaign pair; ubdetect automatic exclusion can be false when its own first trial is exact."
+    },
+    {
+      "campaign": "opaque-2026",
+      "case": 33,
+      "route": "smart32",
+      "verdict": {
+        "path": "validation\\upstream\\ub-opaque2026-case33\\verdict.json",
+        "sha256": "4e4cc83e143ab6b964acd72e2e8242403dcd8e2acd7ee463d7140d56f62815f4"
+      },
+      "classification": "original_ub",
+      "reason": "original_nondeterminism",
+      "reference_trials": 8,
+      "candidate_trials": 8,
+      "distinct_reference_outputs": 2,
+      "distinct_candidate_outputs": 1,
+      "retained_mismatch_pixels": 6,
+      "observed_variation_pixels": 6,
+      "retained_mismatch_pixels_outside_variation": 0,
+      "retained_reference_and_candidate_both_observed_in_original_population": true,
+      "qualification": "Explicit check of the saved campaign pair; ubdetect automatic exclusion can be false when its own first trial is exact."
+    }
+  ],
+  "original_2025_vs_2026_direct_comparisons": {
+    "mixed-alpha": {
+      "smart8": {
+        "exact": 18,
+        "different": 0
+      },
+      "smart16": {
+        "exact": 18,
+        "different": 0
+      },
+      "smart32": {
+        "exact": 18,
+        "different": 0
+      }
+    },
+    "opaque": {
+      "smart8": {
+        "exact": 42,
+        "different": 0
+      },
+      "smart16": {
+        "exact": 42,
+        "different": 0
+      },
+      "smart32": {
+        "exact": 41,
+        "different": 1
+      }
+    }
+  },
+  "tests": {
+    "command": "python tests/update_build.py test",
+    "passed": 13,
+    "failed": 0,
+    "fixtures": [
+      {
+        "path": "tests\\upstream-field.bin",
+        "sha256": "b0b4caeb04930b968f654edc9663f452f93dd2e63cf580b4bc59ebc3135fa4ec"
+      },
+      {
+        "path": "tests\\upstream-masked-copy.bin",
+        "sha256": "309fad5fb121b72db8df5e36dcb172b66c7d39eac41ddd1a5367e38a0ab51d9e"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "path": "validation\\upstream\\witness-case38-v6\\comparison.json",
+      "sha256": "454ed53af1340012fa653b5a488e3c15f809e7fdd4e5e0ef114843d792caa057"
+    },
+    {
+      "path": "validation\\upstream\\witness-stages-case2-v5\\comparison.json",
+      "sha256": "e78dd562706f6b1dbb218b63b699b9dea1052618577da3e6d2d6723372b89e2e"
+    },
+    {
+      "path": "validation\\upstream\\witness-seed2-case76\\comparison.json",
+      "sha256": "7278112704892ea93fe8db3e78988a2942fe4f8e140500494979889ad8457d76"
+    },
+    {
+      "path": "validation\\upstream\\record-case132\\alignment-analysis.json",
+      "sha256": "93e0bb02bfca601fad659c0677cb3b875e1731b44b3fdc138f3665b0facb3c9f"
+    },
+    {
+      "path": "validation\\upstream\\hub\\reports\\last-stop.json",
+      "sha256": "53c02d7bd8d1ff02eeee5a3e1c4a4d736c526448f813345f6912b9680b7acc07"
+    }
+  ],
+  "sampling_domain": {
+    "random_thresholds": [
+      0,
+      128
+    ],
+    "random_blur_size": [
+      0,
+      12
+    ],
+    "other_controls": "full exposed ranges",
+    "seeds": [
+      20261112,
+      20261113
+    ],
+    "downsample": [
+      "1",
+      "1/2",
+      "1/4"
+    ],
+    "random_sizes": [
+      [
+        1,
+        1
+      ],
+      [
+        3,
+        7
+      ],
+      [
+        11,
+        7
+      ],
+      [
+        17,
+        11
+      ],
+      [
+        31,
+        19
+      ]
+    ],
+    "opaque_cases_per_build": 42,
+    "opaque_threshold_boundaries": [
+      512,
+      1000
+    ],
+    "full_extrema_attempt": "validation/upstream/smoke-v1: original all-max padding/blur timeout retained"
+  },
+  "compatibility": "Existing parameter slots/disk IDs/types retained. Padding appended at 13, default off. New upstream normalization intentionally changes old renders.",
+  "limitations": [
+    "Five original-error cases per depth across the two seeds remain excluded, not passes.",
+    "Original float output can depend on native buffer alignment; canonical Rust alignment is deterministic.",
+    "RSQRT approximation is the measured x86 CPU profile, not all possible CPUs.",
+    "Finite SDR PNG-promoted deep worlds; not arbitrary HDR/nonfinite/cropped/strided worlds.",
+    "No macOS build, native AE execution, GUI, install, or shared workspace golden run.",
+    "Random threshold/blur ranges are bounded as declared; high-cost original full-extrema timeouts are not retuned into passing cases."
+  ],
+  "shared_owner_actions": [
+    "Add use_padding: false to the Params literal in rust/tools/golden/src/bin/golden-olm-distance-gradation.rs (new public field).",
+    "Regenerate all 54 DistanceGradation golden hashes against the 2025 new original. Current tool publishes only complete all-ten runs; --only is diagnostic.",
+    "Consider adding new DistanceGradation IplImage field/resize/EDT profiles to shared record/diverge. Job-local adapters avoid editing shared tools.",
+    "Resolve the shared Cargo.lock update separately; this job uses an isolated offline snapshot."
+  ],
+  "ownership": "All edits inside rust/plugins/olm-distance-gradation; no Git operations, AE, install, subagents, or shared tool edits.",
+  "lifecycle": "Owned hub PIDs 60012 and 59484 were stopped and exits verified; render/debug/witness tools verify owned worker cleanup."
+}

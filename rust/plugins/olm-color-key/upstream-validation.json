@@ -1,0 +1,282 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-13",
+  "status": "implemented_qualification_incomplete",
+  "scope": "rust/plugins/olm-color-key only",
+  "inventory": {
+    "sha256": {
+      "2025": "9cd1645c8f75f45d9a6ea61bc61b7fd8bcbed198fb1124457de216e9e9b9d5ed",
+      "2026": "4752e50132c6d60fc2b9699cf262e4276e9c00b006c248d47b1055899d61c193",
+      "old": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "candidate": "8f54e7fb9cd5ef85da7c47a70c9b2900a6fbe009910b2795e016228b251bdec3",
+      "harness": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+    },
+    "controls": 1623,
+    "raw_declarations_equal_2025": true,
+    "raw_declarations_equal_2026": true,
+    "public_parameters_equal": true,
+    "pipl_bytes_equal_2025": true,
+    "declaration_differences": [],
+    "old_slot_ids_types_preserved": true
+  },
+  "main_sparse_corpora": [
+    {
+      "path": "validation/sparse-20261113/summary.json",
+      "seed": 20261113,
+      "random_cases_per_depth": 100,
+      "downsample": [
+        1
+      ],
+      "counts": {
+        "8": {
+          "exact": 102,
+          "mismatch": 0,
+          "incomplete": 1
+        },
+        "16": {
+          "exact": 103,
+          "mismatch": 0,
+          "incomplete": 0
+        },
+        "32": {
+          "exact": 103,
+          "mismatch": 0,
+          "incomplete": 0
+        }
+      }
+    },
+    {
+      "path": "validation/sparse-20261114/summary.json",
+      "seed": 20261114,
+      "random_cases_per_depth": 100,
+      "downsample": [
+        1
+      ],
+      "counts": {
+        "8": {
+          "exact": 103,
+          "mismatch": 0,
+          "incomplete": 0
+        },
+        "16": {
+          "exact": 103,
+          "mismatch": 0,
+          "incomplete": 0
+        },
+        "32": {
+          "exact": 103,
+          "mismatch": 0,
+          "incomplete": 0
+        }
+      }
+    }
+  ],
+  "failed_baseline": {
+    "path": "validation/sparse-20261113/0002-8/candidate-process.json",
+    "kind": "candidate_session_open_os_error_80",
+    "replay": {
+      "index": 2,
+      "depth": 8,
+      "seed": 20261115,
+      "size": [
+        11,
+        7
+      ],
+      "kind": "maximum",
+      "downsample": 1,
+      "processes": {
+        "reference": 0,
+        "candidate": 0
+      },
+      "status": "exact",
+      "reference_sha256": "1007f269b152cf0de8534a7a65aae6c39d9e5d6e63fdd9b57a400dd499cf4e52",
+      "candidate_sha256": "1007f269b152cf0de8534a7a65aae6c39d9e5d6e63fdd9b57a400dd499cf4e52"
+    },
+    "baseline_not_reclassified": true
+  },
+  "sample_2026": {
+    "8": {
+      "exact": 9,
+      "mismatch": 0,
+      "incomplete": 0
+    },
+    "16": {
+      "exact": 9,
+      "mismatch": 0,
+      "incomplete": 0
+    },
+    "32": {
+      "exact": 9,
+      "mismatch": 0,
+      "incomplete": 0
+    }
+  },
+  "final_production_smoke": {
+    "8": {
+      "exact": 9,
+      "mismatch": 0,
+      "incomplete": 0
+    },
+    "16": {
+      "exact": 9,
+      "mismatch": 0,
+      "incomplete": 0
+    },
+    "32": {
+      "exact": 9,
+      "mismatch": 0,
+      "incomplete": 0
+    }
+  },
+  "native_pixel_witnesses": {
+    "original_sha256": "9cd1645c8f75f45d9a6ea61bc61b7fd8bcbed198fb1124457de216e9e9b9d5ed",
+    "candidate_sha256": "3fa59460a67f7b7daf99f4475fe0d9d189952217a66b459dc972c8563ea6d571",
+    "counts": {
+      "8": {
+        "exact": 48,
+        "total": 48
+      },
+      "16": {
+        "exact": 48,
+        "total": 48
+      },
+      "32": {
+        "exact": 48,
+        "total": 48
+      }
+    }
+  },
+  "recorded_pixel_replays": {
+    "16": {
+      "exact": 4,
+      "total": 4
+    },
+    "32": {
+      "exact": 4,
+      "total": 4
+    },
+    "8": {
+      "exact": 4,
+      "total": 4
+    }
+  },
+  "record_cleanup": {
+    "8": true,
+    "16": true,
+    "32": true
+  },
+  "funcdb": {
+    "exact": 365,
+    "fuzzy": 70,
+    "unknown": 3
+  },
+  "tests": {
+    "functions_passed": 4,
+    "cpp_color_vectors": 24576,
+    "cpp_distance_scans": 648,
+    "cpp_boundary_masks": 216,
+    "ui_configurations": 40,
+    "ui_late_failure_cleanup": true,
+    "last_color_all_depths_spaces": true,
+    "reject_201_colors": true
+  },
+  "build_equivalence": {
+    "builds": [
+      {
+        "sha256": "0577b759e1b3b924526bea80a79966649ff78d1cb58c4d365e5fc84b399862c7",
+        "sections": {
+          ".text": "066da990457497cbbf8165a7bd95088763e9329cb2485bbe14e569f622c0a533",
+          ".rdata": "c9f5250e7f9ce5881084f9c3d6c43c2f89dc772f6dd8d3b6ddbfe1d299a14705",
+          ".data": "6abfe5f396df9b0ee0f523f49527843ff8fdca20ecc8de0aa62406ed2b41d598",
+          ".pdata": "e7c68d501cc8e5f8f18cc000e91d3417f0de3830dbe1de4416e6a14d947bdd13",
+          ".rsrc": "b31ce41db3d07acd011b4a540fff42e0bb0c6593f2b408ff5b8432fce59d96b3",
+          ".reloc": "c40ee8c082dcd19c597689e4320e6067a2fc8f74076acd434bd0225c7bc9aabc"
+        }
+      },
+      {
+        "sha256": "8f54e7fb9cd5ef85da7c47a70c9b2900a6fbe009910b2795e016228b251bdec3",
+        "sections": {
+          ".text": "066da990457497cbbf8165a7bd95088763e9329cb2485bbe14e569f622c0a533",
+          ".rdata": "bcd27e0c068446343bb93a9e333ecaa16a8b4b68a814febc85bd3cd4f6f67cbd",
+          ".data": "6abfe5f396df9b0ee0f523f49527843ff8fdca20ecc8de0aa62406ed2b41d598",
+          ".pdata": "e7c68d501cc8e5f8f18cc000e91d3417f0de3830dbe1de4416e6a14d947bdd13",
+          ".rsrc": "877be44dbcbc529b42c980026e6f8e83b596051462694d16fe834a6defab8fe0",
+          ".reloc": "c40ee8c082dcd19c597689e4320e6067a2fc8f74076acd434bd0225c7bc9aabc"
+        }
+      }
+    ],
+    "same_text_data_pdata_reloc": true,
+    "rdata_changes_limited_to_source_lines_and_debug_metadata": true,
+    "source_line_rvas": [
+      "0x283b8",
+      "0x283e8",
+      "0x28420",
+      "0x284a0",
+      "0x284b8",
+      "0x284d0",
+      "0x284e8",
+      "0x28500"
+    ],
+    "version_resource_strings_equal": true,
+    "pipl_recaptured_exact": true
+  },
+  "remaining": [
+    "ordinary oracle blocked: slot >1024 / payload >16384 bytes",
+    "new full renders at downsample 1/2 and 1/4",
+    "full per-control sensitivity including high slots",
+    "golden owner must regenerate 54 ColorKey cases; per-plugin publication unsupported",
+    "native AE saved projects/UI and macOS build",
+    "HDR, nonfinite, crops, production performance"
+  ],
+  "hub_cleanup": {
+    "pid": 22620,
+    "exited": true,
+    "forced": [],
+    "remaining": [],
+    "owned_pids": [
+      58436,
+      4316,
+      56304,
+      50316,
+      22620,
+      53404
+    ],
+    "graceful_requested": true
+  },
+  "source_sha256": {
+    "Cargo.toml": "0b75ca99e31ec2e7b277f86fb02ed30b298fcc0e3f2dd3486374942fbfa4b1da",
+    "build.rs": "ad0dca61308acbbf35cb6ac6d956088ac566d5d1ce9cc1e74117ee5caf06613a",
+    "src/ae.rs": "88278b02a6211f8022e4bbb0618dba72112fbfec354c2e1a0e820d278a7ecd41",
+    "src/algorithm.rs": "cf3b1055ccc85ec010272fadeff6fe332ed258817a6269761e8a63b3ba493b23",
+    "src/host.rs": "2d6f407c19331a52ed5b2260312010a9a0ffb3d69d0f7d141740de23f5d6dfe1",
+    "src/ui.rs": "01f0cd1e6e1c3dfd6f1a0ef64d92bbf801c5fc7dc17cdc22b161791269b58472",
+    "src/lib.rs": "2986e5f0a4f7ea1a9327249c517a32594534610ee5aeed3cc5d30fcdb47dd161",
+    "src/reference_tests.rs": "01c3a3eece5599584d844996251daaff30b0fb4d786020cc8f8c4e7dcbf8cf24",
+    "src/ui_tests.rs": "13464205ef9b22e920b02dc81065cd664880379642d492aecee510ff674fde38",
+    "src/upstream_witness.rs": "7bab040f048935274dfefb8c94338f83773dc92b2649027340968be2b8d91c7e",
+    "verify_update.py": "c995d2d73c2ab6bee8ce894e0abbf2ea6f7c779b11405e67d907f8742c0c067d",
+    "witness_pixels.py": "5360249c70468cd3c8c2e1fa2a1a15fe65ca68938b470c53b6ad14d5e99a1e03",
+    "capture_pixels.py": "0a5e078669615e59311811fdd3c077350bb9ab2985eac0696cd53d3d5dbadc6a",
+    "hub_local.py": "71834d9d0280e72e55a407ec8812ee184b3e647b990b815010e906fd3cf8d9ab"
+  },
+  "evidence": {
+    "validation\\inventory-final\\summary.json": "479fc47548020e949db724d9d304e46ab54b40273f24483264ed91330a104b7f",
+    "validation\\final\\inventory\\summary.json": "b0298f870f4dac88aa4ecfde985d0caa222f96980d5381443efff3129f24f43b",
+    "validation\\final\\build-sections.json": "2d1e1e751b0618bf9c5bc58ee49bce0001d980280445141f5b68931913faeec2",
+    "validation\\sparse-20261113\\summary.json": "9c35e8e87a3867bbe0db35eb913bb7221492e50ae4f41d0b53c8b60efac43b2a",
+    "validation\\sparse-20261114\\summary.json": "65b9e7fb29c1fc94a9e518f06a287546c23404ebd1631cb69637e7af224420f3",
+    "validation\\sparse-replay\\summary.json": "c4e6c7c4f800663c3f0855c94c5e7f8f7d09a5f6fd2c9b5c1b8f5a857d138db5",
+    "validation\\sparse-2026-sample\\summary.json": "3a072e07bf8c7c22adef87c952573c9ad052af115e99fb628cf97e3f2ae65342",
+    "validation\\final\\smoke\\summary.json": "55dcf6abaf5876ac581bc9d69eb444be7b344a966939fa5064bd21789a4e1214",
+    "validation\\pixel-witnesses\\summary.json": "9df1c0127c0bdf74880c2e5285bbcd55f83c7359da97c92575519414d763c417",
+    "validation\\record-pixels\\summary.json": "5d54d62f043653e1708f590ec148a4aa574dc50ae147ba84761e4922aae036b8",
+    "validation\\focused-decompile.json": "5f77b4386c360693f9df57171b98ab76c22fb4af25bf27f56d5bb03f6194ac9e",
+    "validation\\render-decompile.json": "c90a26912c7e9557a40bc12e6aaabb664844daae9bb6e2318ce3ceed628912b0",
+    "validation\\pixel-decompile.json": "24eb65de0c87ab4d39add481adf88f0c3efd7ff5f398e1743f4a76411f0181b3",
+    "validation\\ui-decompile.json": "58dc40b57341279ae34f897e951d7158d6d8d191706188e285d1554a1b2baa57",
+    "validation\\funcdb-new.json.gz": "62cdc3e94ed97c9b3b64d62603cac76c9e880382171e34421101f670cf327a69",
+    "validation\\ordinary-oracle-blocker\\summary.json": "ffd528068e426644e1cf87c12d65c6fa99f001706308be9bb798484fd1eaf8b2",
+    "validation\\ghidra\\reports\\last-stop.json": "78daa152f4acd0bb97337d94fc4349199177fb5e04f68a72055da8eb00b1a682"
+  },
+  "limits": "Sparse full renders are full-frame SDR at downsample 1; edited palette 1/2/25/26/99/100/101/125 only. Native witnesses and record replays are separate internal-call evidence, not render-case counts."
+}

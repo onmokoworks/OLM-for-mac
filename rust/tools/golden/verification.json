@@ -1,0 +1,401 @@
+{
+  "schema": 1,
+  "platform": "Windows-10-10.0.26300-SP0",
+  "golden_sha256": "744bd7bf4c35a66faedc3556464e88e80b6ff7d30051eb38b418fd513e1e7ab2",
+  "plugins": {
+    "ColorKeep": {
+      "original_sha256": "f6e5f09e53b31be6c64e7c1d17a8fac4aac65bbd6487011c54916497ce9ea633",
+      "harness_sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc",
+      "runner_sha256": "17c3b7c67643a6e88c1b6a04549f462a2ba65fff57be1cda48cacab03d796bf9",
+      "exact": 54,
+      "excluded": 0
+    },
+    "OLMBlur": {
+      "original_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+      "harness_sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d",
+      "runner_sha256": "268f8c8de35a81e6696482eb11389578e1358ad6adc72f23d98dfce93cc4eebd",
+      "exact": 54,
+      "excluded": 0
+    },
+    "OLMColorKey": {
+      "original_sha256": "9cd1645c8f75f45d9a6ea61bc61b7fd8bcbed198fb1124457de216e9e9b9d5ed",
+      "harness_sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc",
+      "runner_sha256": "cd4c31ea1b19d78797abbf65eced60dd494a4b6b752ddd6dceb749f2cf19b57d",
+      "exact": 54,
+      "excluded": 0
+    },
+    "OLMDirectionalBlur": {
+      "original_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+      "harness_sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d",
+      "runner_sha256": "3b91fc6f403b85219bac6c2c415ba944df21d4302524a0908edb28625526fc47",
+      "exact": 54,
+      "excluded": 0
+    },
+    "DistanceGradation": {
+      "original_sha256": "fd151598c015baf7068ce7ef59eead7430657cab083d9000c2a35e9b84da5e63",
+      "harness_sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc",
+      "runner_sha256": "73fbc326ccb1e68184a978e63e8b47ff271e6b68422e0843f3ffe77d1c293ac1",
+      "exact": 54,
+      "excluded": 0
+    },
+    "OLMKiraKira": {
+      "original_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+      "harness_sha256": "41a939afc290a750a698a9ec55ea09431bf9a0291e85ebd08bbf3f46f0c2fee7",
+      "runner_sha256": "01ef995788c2ed756c6f0bc65085e127121cc8940f503000624407122097cc96",
+      "exact": 54,
+      "excluded": 0
+    },
+    "OLMRadialBlur": {
+      "original_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+      "harness_sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d",
+      "runner_sha256": "2f33304402cb433e6b99a460e254e9e8390fd44376cbbed20ac7d98a28483085",
+      "exact": 40,
+      "excluded": 14
+    },
+    "OLMSmoother": {
+      "original_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+      "harness_sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d",
+      "runner_sha256": "3fce961283f023f21e7ae6b28fa48c0cba7e0d376b7467436d9e8bcac5a863f1",
+      "exact": 36,
+      "excluded": 0
+    },
+    "OLMSmoother2": {
+      "original_sha256": "add776af61499d425f3978f4e5e4c2c8b4062db6d7276db66a22928749227137",
+      "harness_sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc",
+      "runner_sha256": "20a51a4d87df78f391a1beadfb1296f3774af84608ff0f304a5e88c10988eb76",
+      "exact": 54,
+      "excluded": 0
+    },
+    "OLMToonDilate": {
+      "original_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+      "harness_sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d",
+      "runner_sha256": "4e238f4b00d034ac3267e1af06882281d8b5b19c50ac6769389bff9aa7d0ac03",
+      "exact": 54,
+      "excluded": 0
+    },
+    "OLMUVMap": {
+      "original_sha256": "412de99a5af617f41d8c0deddc2bdc7fb8b38065b34af2966730e01b72cb2c62",
+      "harness_sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc",
+      "runner_sha256": "00c09e850d9ab54aa969c0ae3521b20746fab5722175903bb786aeac95d7c99d",
+      "exact": 54,
+      "excluded": 0
+    },
+    "OLMAntiAntiAlias": {
+      "original_sha256": "9ea6e2d85ab64ec6549653072a00e81315ae9c6791752a5ee634d2f599490cc0",
+      "harness_sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc",
+      "runner_sha256": "e37aaa7fdb9f96321da373629fde786b3fc5270b9d89538e509d58540382f158",
+      "exact": 54,
+      "excluded": 0
+    }
+  },
+  "excluded_cases": [
+    {
+      "id": "OLMRadialBlur-01-16",
+      "route": "smart16",
+      "rust_sha256": "248dcc59e5186e0b4d1d1284c6d0ee9d50e7a23bbe140f2991176e386ec13c1c",
+      "fingerprint": "d40a3b48e03bb7180b83c0c2edb332ca23c918929bb1814718d1ab7814bc691a",
+      "pure_repeats": 4,
+      "request_sha256": "482b017a3ddd519b0f2b2e97be5102f6317aa8f3246e594bc5b371181f1eae2c",
+      "input_sha256": "7dba88d3a55d5e53df771beea25f5cacec5e445b1ec7cdaa806b28f9d6339c80",
+      "original_sha256": [
+        "248dcc59e5186e0b4d1d1284c6d0ee9d50e7a23bbe140f2991176e386ec13c1c",
+        "248dcc59e5186e0b4d1d1284c6d0ee9d50e7a23bbe140f2991176e386ec13c1c",
+        "248dcc59e5186e0b4d1d1284c6d0ee9d50e7a23bbe140f2991176e386ec13c1c",
+        "1f2b51787b44db1898863499339fb49f3121946ecb01a1d028c4a4e545079070"
+      ],
+      "exact_repeats": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "status": "excluded_original_nondeterminism"
+    },
+    {
+      "id": "OLMRadialBlur-01-32",
+      "route": "smart32",
+      "rust_sha256": "f66d5750203d65009ac127b34c0bfa0967f2615bb7c2ec77a9e02ae8d3df23de",
+      "fingerprint": "2cb053de58dd1180e8b898035898c4c9c852580b7d139c20bde8cf99b500c42a",
+      "pure_repeats": 4,
+      "request_sha256": "482b017a3ddd519b0f2b2e97be5102f6317aa8f3246e594bc5b371181f1eae2c",
+      "input_sha256": "7dba88d3a55d5e53df771beea25f5cacec5e445b1ec7cdaa806b28f9d6339c80",
+      "original_sha256": [
+        "f66d5750203d65009ac127b34c0bfa0967f2615bb7c2ec77a9e02ae8d3df23de",
+        "f66d5750203d65009ac127b34c0bfa0967f2615bb7c2ec77a9e02ae8d3df23de",
+        "f66d5750203d65009ac127b34c0bfa0967f2615bb7c2ec77a9e02ae8d3df23de",
+        "0cb5a336b2b7c2dfb4ff4d1b895c31f97de3f29c20a4e780250df778b20fdc34"
+      ],
+      "exact_repeats": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "status": "excluded_original_nondeterminism"
+    },
+    {
+      "id": "OLMRadialBlur-04-8",
+      "route": "smart8",
+      "rust_sha256": "8651d75cf2e779e612f3a0c7187c8d5463dbe79c9d6bf3be31efbc1aac08e17f",
+      "fingerprint": "a493c198dfff86e498e3ab30605a1b4efddb46859b098b723b7dbc1f9a2786e5",
+      "pure_repeats": 4,
+      "request_sha256": "01615a1d4cce20f13d4ee2b7c4dce23b446e7df02a770eb97fc77d9ce603b7ac",
+      "input_sha256": "a80e2b65d42d8a86835f937b54065357a03cbd9839c90ddcc349768ff82b4dd0",
+      "original_sha256": [
+        "d0d0243c47e877b3a4ea0a64084f87443d4f3180836979cf962bf9ea73b53571",
+        "8651d75cf2e779e612f3a0c7187c8d5463dbe79c9d6bf3be31efbc1aac08e17f",
+        "8651d75cf2e779e612f3a0c7187c8d5463dbe79c9d6bf3be31efbc1aac08e17f",
+        "8651d75cf2e779e612f3a0c7187c8d5463dbe79c9d6bf3be31efbc1aac08e17f"
+      ],
+      "exact_repeats": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "status": "excluded_original_nondeterminism"
+    },
+    {
+      "id": "OLMRadialBlur-04-32",
+      "route": "smart32",
+      "rust_sha256": "50f49f730421485104c0a30f6e1b4a8986d12f668d7edc06b4ec07720c3e0d94",
+      "fingerprint": "daa4634cadbafd8566d8f88a1c4c6c60ddf41c60c3256c16f5420daa6e5d1029",
+      "pure_repeats": 4,
+      "request_sha256": "01615a1d4cce20f13d4ee2b7c4dce23b446e7df02a770eb97fc77d9ce603b7ac",
+      "input_sha256": "a80e2b65d42d8a86835f937b54065357a03cbd9839c90ddcc349768ff82b4dd0",
+      "original_sha256": [
+        "50f49f730421485104c0a30f6e1b4a8986d12f668d7edc06b4ec07720c3e0d94",
+        "50f49f730421485104c0a30f6e1b4a8986d12f668d7edc06b4ec07720c3e0d94",
+        "50f49f730421485104c0a30f6e1b4a8986d12f668d7edc06b4ec07720c3e0d94",
+        "20d535c57b95f46010baba62d68499063d6654d22183eaac8a14d601f4c46cf5"
+      ],
+      "exact_repeats": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "status": "excluded_original_nondeterminism"
+    },
+    {
+      "id": "OLMRadialBlur-05-8",
+      "route": "smart8",
+      "rust_sha256": "6e834ae7dbcfabd35310f4dd8d1c22208e5b0cf319262b99f6844791ee83c3d4",
+      "fingerprint": "e5fd811fcf0e9ceb7fc9cb5f381d63f03d8567e61bb9f9e572db1b0c6dd9bf16",
+      "pure_repeats": 4,
+      "request_sha256": "e9e1a09162fcd8eb0ca0cd5da64b92be75627427c93c8cacf2c00509d7001e51",
+      "input_sha256": "b42385b6ab52ec5edd045ea89c06f128baa04c2d98cd7886b9598ea29095bb0f",
+      "original_sha256": [
+        "6e834ae7dbcfabd35310f4dd8d1c22208e5b0cf319262b99f6844791ee83c3d4",
+        "6e834ae7dbcfabd35310f4dd8d1c22208e5b0cf319262b99f6844791ee83c3d4",
+        "6e834ae7dbcfabd35310f4dd8d1c22208e5b0cf319262b99f6844791ee83c3d4",
+        "0417417378b286ae0c9d3f5381080e5b311174d8a26604d4d811d77025e384cd"
+      ],
+      "exact_repeats": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "status": "excluded_original_nondeterminism"
+    },
+    {
+      "id": "OLMRadialBlur-05-32",
+      "route": "smart32",
+      "rust_sha256": "7417f9a7b53440202ae597cc8aa9e8ce78084f02e85eb74f02099094b19a7c85",
+      "fingerprint": "e76b22634ad5073ee169c78e61320cc157c188b0aa35038fa045c17424278a78",
+      "pure_repeats": 4,
+      "request_sha256": "e9e1a09162fcd8eb0ca0cd5da64b92be75627427c93c8cacf2c00509d7001e51",
+      "input_sha256": "b42385b6ab52ec5edd045ea89c06f128baa04c2d98cd7886b9598ea29095bb0f",
+      "original_sha256": [
+        "7417f9a7b53440202ae597cc8aa9e8ce78084f02e85eb74f02099094b19a7c85",
+        "7417f9a7b53440202ae597cc8aa9e8ce78084f02e85eb74f02099094b19a7c85",
+        "42b02196ad45017920bb85c0ae73682eb21e4d7eaad72915dff8776eeca32a2e",
+        "7417f9a7b53440202ae597cc8aa9e8ce78084f02e85eb74f02099094b19a7c85"
+      ],
+      "exact_repeats": [
+        true,
+        true,
+        false,
+        true
+      ],
+      "status": "excluded_original_nondeterminism"
+    },
+    {
+      "id": "OLMRadialBlur-10-8",
+      "route": "smart8",
+      "rust_sha256": "da101772571cf5b87f072dc126ad7636eb144026fb39db246c799c635302f4c3",
+      "fingerprint": "4686225bca71ad1daa365c6fcc911002afc78fc5c20a041364d26dbf05ebde60",
+      "pure_repeats": 4,
+      "request_sha256": "4488a0a1762ad4f809fe9e67d7ccec01c080373f8e4b88156d85fd25da51d2c5",
+      "input_sha256": "80386fee2d80160f6d14e4a66b191f21237075a283bae2b9009d9de08358701a",
+      "original_sha256": [
+        "da101772571cf5b87f072dc126ad7636eb144026fb39db246c799c635302f4c3",
+        "da101772571cf5b87f072dc126ad7636eb144026fb39db246c799c635302f4c3",
+        "5050fefea3e4b9641620b39fc41d1dbb85c2e81b68939d3506d15a00e0b4a193",
+        "5050fefea3e4b9641620b39fc41d1dbb85c2e81b68939d3506d15a00e0b4a193"
+      ],
+      "exact_repeats": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "status": "excluded_original_nondeterminism"
+    },
+    {
+      "id": "OLMRadialBlur-10-32",
+      "route": "smart32",
+      "rust_sha256": "855168c70adb4d83048d1bc62a2e4d370e018067c32dbac422671f4aec863b8e",
+      "fingerprint": "8b24fd8c8efadd4c023c51c764f8653936d398aa26aa0dec09074a0fe5f4d538",
+      "pure_repeats": 4,
+      "request_sha256": "4488a0a1762ad4f809fe9e67d7ccec01c080373f8e4b88156d85fd25da51d2c5",
+      "input_sha256": "80386fee2d80160f6d14e4a66b191f21237075a283bae2b9009d9de08358701a",
+      "original_sha256": [
+        "855168c70adb4d83048d1bc62a2e4d370e018067c32dbac422671f4aec863b8e",
+        "855168c70adb4d83048d1bc62a2e4d370e018067c32dbac422671f4aec863b8e",
+        "9286c8d344bf2942ae3f7089947be6805c633255bf1d0a35a2b45c07e2de60c4",
+        "855168c70adb4d83048d1bc62a2e4d370e018067c32dbac422671f4aec863b8e"
+      ],
+      "exact_repeats": [
+        true,
+        true,
+        false,
+        true
+      ],
+      "status": "excluded_original_nondeterminism"
+    },
+    {
+      "id": "OLMRadialBlur-11-8",
+      "route": "smart8",
+      "rust_sha256": "d2a98690b242a3b4b8912d9dfac1f9d7cb1aec8fe7d8af015314409ae7e51ee1",
+      "fingerprint": "87e8474d0cc03448b0fedb153a37bf4170e9aa6b25c5d7ae5478d2832942dc45",
+      "pure_repeats": 4,
+      "request_sha256": "aa98e48647e9a1e491cbd91f1c1a8448396e69560085219b2bd2465ab339f691",
+      "input_sha256": "5981d163e75c3be67b8910df3a83488f6d0226a823baf203ea608772feb2f7ef",
+      "original_sha256": [
+        "308f7401bebe2bae6503d6ed0c51388f002d05a3b1adce9621817d67a8ef33d8",
+        "d2a98690b242a3b4b8912d9dfac1f9d7cb1aec8fe7d8af015314409ae7e51ee1",
+        "d2a98690b242a3b4b8912d9dfac1f9d7cb1aec8fe7d8af015314409ae7e51ee1",
+        "d2a98690b242a3b4b8912d9dfac1f9d7cb1aec8fe7d8af015314409ae7e51ee1"
+      ],
+      "exact_repeats": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "status": "excluded_original_nondeterminism"
+    },
+    {
+      "id": "OLMRadialBlur-13-8",
+      "route": "smart8",
+      "rust_sha256": "d30c10d2cfc9af8fe58a8bef5230323d7fc5fa3eb5cc83dcceaf09aeef7c8fa7",
+      "fingerprint": "162a137f0e8b28108ae5d593402eea3af83cb58a60a87bb91f805dd261c2bde6",
+      "pure_repeats": 4,
+      "request_sha256": "555f78d77f1bf2b3692100dfda1cf6a2b351a2149e913c7d47aa22f4175fcac4",
+      "input_sha256": "7682ff63b3d7b3f03be8fa1bfe9545cea12a86c675ead570d47ee146892bd4b5",
+      "original_sha256": [
+        "d30c10d2cfc9af8fe58a8bef5230323d7fc5fa3eb5cc83dcceaf09aeef7c8fa7",
+        "d30c10d2cfc9af8fe58a8bef5230323d7fc5fa3eb5cc83dcceaf09aeef7c8fa7",
+        "d30c10d2cfc9af8fe58a8bef5230323d7fc5fa3eb5cc83dcceaf09aeef7c8fa7",
+        "798a9e3f62abe37e649a2e430d23547e900d2be7662b94faec4176c42f95da32"
+      ],
+      "exact_repeats": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "status": "excluded_original_nondeterminism"
+    },
+    {
+      "id": "OLMRadialBlur-13-16",
+      "route": "smart16",
+      "rust_sha256": "4df151fee0146745a2015416475c2bf9da086f42a0d55592b2c8d0d16bc2e594",
+      "fingerprint": "cda33ca3b6b566b42ab86db27feef59a4778c4e377e4723f487dd6e63be2bd8d",
+      "pure_repeats": 4,
+      "request_sha256": "555f78d77f1bf2b3692100dfda1cf6a2b351a2149e913c7d47aa22f4175fcac4",
+      "input_sha256": "7682ff63b3d7b3f03be8fa1bfe9545cea12a86c675ead570d47ee146892bd4b5",
+      "original_sha256": [
+        "4df151fee0146745a2015416475c2bf9da086f42a0d55592b2c8d0d16bc2e594",
+        "4df151fee0146745a2015416475c2bf9da086f42a0d55592b2c8d0d16bc2e594",
+        "8037a739f92295ca7d78691785bc2e2b1e108f8fe872d1c65b002826c1d59d2a",
+        "4df151fee0146745a2015416475c2bf9da086f42a0d55592b2c8d0d16bc2e594"
+      ],
+      "exact_repeats": [
+        true,
+        true,
+        false,
+        true
+      ],
+      "status": "excluded_original_nondeterminism"
+    },
+    {
+      "id": "OLMRadialBlur-14-8",
+      "route": "smart8",
+      "rust_sha256": "7fa158704901d46ada1cbfffc8cdfde1439b64d65d24a6029790d3912bc07e7d",
+      "fingerprint": "a111e4a89569c2cd91d00d6a3f165d94510a449d38c774ad358d4c3c37e4bd9c",
+      "pure_repeats": 4,
+      "request_sha256": "c1272389179ea2ae6e1fef6486a23bea2d74f74a57dfffe580f7cc2df73bdf91",
+      "input_sha256": "289b24e58ca41cc44c967b3aa122f11057164c29f08751ba58acb45f1a312828",
+      "original_sha256": [
+        "7fa158704901d46ada1cbfffc8cdfde1439b64d65d24a6029790d3912bc07e7d",
+        "7fa158704901d46ada1cbfffc8cdfde1439b64d65d24a6029790d3912bc07e7d",
+        "ab45d2528f0fb3d87e97b07e7cad51768530eda39a55f9676904633ca7361bff",
+        "7fa158704901d46ada1cbfffc8cdfde1439b64d65d24a6029790d3912bc07e7d"
+      ],
+      "exact_repeats": [
+        true,
+        true,
+        false,
+        true
+      ],
+      "status": "excluded_original_nondeterminism"
+    },
+    {
+      "id": "OLMRadialBlur-14-16",
+      "route": "smart16",
+      "rust_sha256": "f13d2fe90b18a257f5d33bdc68210c94fd44351c6fbb07591833c824cfd07ab7",
+      "fingerprint": "f4de692fe152704aea0cfe32f98721f97ec40373308e6c0fbf916e016050ed43",
+      "pure_repeats": 4,
+      "request_sha256": "c1272389179ea2ae6e1fef6486a23bea2d74f74a57dfffe580f7cc2df73bdf91",
+      "input_sha256": "289b24e58ca41cc44c967b3aa122f11057164c29f08751ba58acb45f1a312828",
+      "original_sha256": [
+        "f13d2fe90b18a257f5d33bdc68210c94fd44351c6fbb07591833c824cfd07ab7",
+        "f13d2fe90b18a257f5d33bdc68210c94fd44351c6fbb07591833c824cfd07ab7",
+        "f13d2fe90b18a257f5d33bdc68210c94fd44351c6fbb07591833c824cfd07ab7",
+        "817277631d01250b89097f49567cf83e591fceeacb8cebdfd54c83a66454bdf5"
+      ],
+      "exact_repeats": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "status": "excluded_original_nondeterminism"
+    },
+    {
+      "id": "OLMRadialBlur-16-32",
+      "route": "smart32",
+      "rust_sha256": "7962ef8c499c640784fc2ad660823e7578d26c8cf2babfe8f37e903e48ab2065",
+      "fingerprint": "009f818e4f28946d1937656a6fda429122794a1b8a84536c72ff98c405f8d506",
+      "pure_repeats": 4,
+      "request_sha256": "337c42fa0600eabe0e089f1a0a23d006eb00c636d4692ff217cac9ee07912c3d",
+      "input_sha256": "16da9d64b566efa146f791e68ba9f1626073d7d9f8261b3a6e33be48866c33a4",
+      "original_sha256": [
+        "7962ef8c499c640784fc2ad660823e7578d26c8cf2babfe8f37e903e48ab2065",
+        "b431be413ee30d66831479d0d75bc57c48273e48dfa843b8e0b558c0acd2cc7c",
+        "7962ef8c499c640784fc2ad660823e7578d26c8cf2babfe8f37e903e48ab2065",
+        "b431be413ee30d66831479d0d75bc57c48273e48dfa843b8e0b558c0acd2cc7c"
+      ],
+      "exact_repeats": [
+        true,
+        false,
+        true,
+        false
+      ],
+      "status": "excluded_original_nondeterminism"
+    }
+  ]
+}

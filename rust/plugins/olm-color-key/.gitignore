@@ -1,0 +1,4 @@
+validation/
+candidate-path.txt
+candidate-inventory.json
+__pycache__/

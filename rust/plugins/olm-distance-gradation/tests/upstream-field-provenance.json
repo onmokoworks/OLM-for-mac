@@ -1,0 +1,67 @@
+{
+  "original_sha256": "fd151598c015baf7068ce7ef59eead7430657cab083d9000c2a35e9b84da5e63",
+  "field_rva": "0x11750f0",
+  "fixture_sha256": "b0b4caeb04930b968f654edc9663f452f93dd2e63cf580b4bc59ebc3135fa4ec",
+  "cases": [
+    {
+      "record": "validation\\upstream\\record-stages-case2\\calls\\000000\\record.json",
+      "record_sha256": "4cb00d17b7758ab8c5fbb66b258f686e551332b69ca450a5d2705a6bdea5905d",
+      "shape": [
+        75,
+        71
+      ],
+      "reconstructed_shape": [
+        300,
+        284
+      ],
+      "threshold": 128,
+      "interpolation": 4,
+      "output_sha256": "73a2128c757435c6eeaea95288681d90f6fdd6b9a2e33f78d67dda5eee5ee482"
+    },
+    {
+      "record": "validation\\upstream\\record-stages-case2\\calls\\000005\\record.json",
+      "record_sha256": "855fe91ecd1f954a909195e8875570c88415a730ca5f48ef76117703d5f745b7",
+      "shape": [
+        75,
+        71
+      ],
+      "reconstructed_shape": [
+        300,
+        284
+      ],
+      "threshold": 128,
+      "interpolation": 4,
+      "output_sha256": "dcd64b585fbf9ceced2d27080a862a5d0fd4d598be40476e10297d561eff29b8"
+    },
+    {
+      "record": "validation\\upstream\\record-case38\\calls\\000000\\record.json",
+      "record_sha256": "9ba779fcb27a665dc81e89157d520dfede82724dbd373ef1bb997a2b359d00db",
+      "shape": [
+        69,
+        63
+      ],
+      "reconstructed_shape": [
+        282,
+        258
+      ],
+      "threshold": 0,
+      "interpolation": 2,
+      "output_sha256": "e0ae5334271d8e728c2915277b35b0243706de726bf5464b32c5d302f1f922d5"
+    },
+    {
+      "record": "validation\\upstream\\record-case38\\calls\\000007\\record.json",
+      "record_sha256": "1149a1d958ed98d522af5c5cab83a6bfb0140c7e6f8912fb85f13344d5059b03",
+      "shape": [
+        69,
+        63
+      ],
+      "reconstructed_shape": [
+        282,
+        258
+      ],
+      "threshold": 107,
+      "interpolation": 2,
+      "output_sha256": "5bda6caed001c221054fa71f0e02651c9575354277afda3b25aefc094fbc1e18"
+    }
+  ]
+}

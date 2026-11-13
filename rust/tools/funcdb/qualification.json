@@ -1,0 +1,12 @@
+{
+  "ColorKeep": {"contains": "| Main, seed 20261112 | 203 exact", "scope": "Smart8/16/32; report retains palette/crop and replay qualifications."},
+  "DistanceGradation": {"contains": "each depth has **275 exact cases", "scope": "Smart8/16/32 on native IPP CPU-index-4/FMA profile; original errors/timeouts excluded."},
+  "OLMBlur": {"contains": "**221 exact cases per Smart depth**", "scope": "Smart8/16/32, bounded source corpus."},
+  "OLMColorKey": {"contains": "| Main, seed 20261113 | 203 exact", "scope": "Smart8/16/32; original crop failures remain excluded."},
+  "OLMDirectionalBlur": {"contains": "751/768 baseline renders are bit-exact", "scope": "17 nondeterministic original mismatches remain; unconditional equivalence is not claimed."},
+  "OLMKiraKira": {"contains": "720/720 SmartFX route-cases", "scope": "Patched harness arbitrary/default transport; active custom ramps outside qualified lane."},
+  "OLMRadialBlur": {"contains": "qualification_passed: true", "scope": "Type-3 excluded; nondeterminism exclusions and CPU reciprocal profile retained."},
+  "OLMSmoother": {"contains": "| **Main total** | **206 exact**", "scope": "Classic8/16 only; 32 bpc not declared."},
+  "OLMSmoother2": {"contains": "618/618 comparisons", "scope": "206 cases per Smart depth, downsample 1, 1/2, 1/4."},
+  "OLMToonDilate": {"contains": "| 20261112 | 203 exact", "scope": "406 cases per Smart depth across both seeds; documented admission limits retained."}
+}

@@ -1,0 +1,2297 @@
+{
+  "plugin": "OLMBlur",
+  "date": "2026-11-12",
+  "scope": "AEXCompat Windows x64 CPU; not native AE",
+  "runs": [
+    {
+      "name": "final-seed-20261112",
+      "seed": 20261112,
+      "cases_per_depth": 12,
+      "random_per_depth": 9,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "jobs": 3,
+      "timeout_seconds": 120.0,
+      "scale_counts_per_depth": {
+        "1": 4,
+        "1/2": 4,
+        "1/4": 4
+      },
+      "legacy_counts_per_depth": {
+        "0": 9,
+        "1": 3
+      },
+      "summary_sha256": "c3490c53513aa31413730c182c1f5bcac4093f9a6710e3f5d935b46b7230f49d",
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-blur\\validation\\final-bin\\OLMBlur.aex",
+        "sha256": "d374df21e013d5c78dbae6370b55a86f51ceb952ac660410b47cbcbc9b6bbec0"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+        "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+      },
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+      },
+      "tool": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "sha256": "657b40b68902ac64a9c3d2175e383ae97b9940f2d30a817b9962b350d76b5ab3"
+      }
+    },
+    {
+      "name": "final-seed-20261113",
+      "seed": 20261113,
+      "cases_per_depth": 203,
+      "random_per_depth": 200,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 203,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 203,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 203,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 203,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 203,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 203,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "jobs": 3,
+      "timeout_seconds": 120.0,
+      "scale_counts_per_depth": {
+        "1": 68,
+        "1/2": 68,
+        "1/4": 67
+      },
+      "legacy_counts_per_depth": {
+        "0": 118,
+        "1": 85
+      },
+      "summary_sha256": "6a748e12cf4ff9ddd69ef20d977b44a1d87274ddce3d7c2c7d863287a6bb4014",
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-blur\\validation\\final-bin\\OLMBlur.aex",
+        "sha256": "d374df21e013d5c78dbae6370b55a86f51ceb952ac660410b47cbcbc9b6bbec0"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+        "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+      },
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+      },
+      "tool": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "sha256": "657b40b68902ac64a9c3d2175e383ae97b9940f2d30a817b9962b350d76b5ab3"
+      }
+    },
+    {
+      "name": "supplemental",
+      "seed": null,
+      "cases_per_depth": 6,
+      "random_per_depth": 0,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 6,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 6,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 6,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 6,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 6,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 6,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "jobs": 3,
+      "timeout_seconds": 120,
+      "scale_counts_per_depth": {
+        "1": 2,
+        "1/2": 2,
+        "1/4": 2
+      },
+      "legacy_counts_per_depth": {
+        "default": 3,
+        "1": 2,
+        "0": 1
+      },
+      "summary_sha256": "71cc92579afc9e8bfc6b4e7747d721264b41463fc4a8b6a14d2b122ee5a40526",
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-blur\\validation\\final-bin\\OLMBlur.aex",
+        "sha256": "d374df21e013d5c78dbae6370b55a86f51ceb952ac660410b47cbcbc9b6bbec0"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+        "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+      },
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+      },
+      "tool": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "sha256": "657b40b68902ac64a9c3d2175e383ae97b9940f2d30a817b9962b350d76b5ab3"
+      }
+    }
+  ],
+  "inventory": {
+    "schema_version": 1,
+    "identical": true,
+    "diff": [],
+    "inventories": {
+      "reference": {
+        "parameters": [
+          {
+            "slot": 1,
+            "name": "Blur Amount",
+            "kind": "float",
+            "minimum": 1.0,
+            "maximum": 1000.0,
+            "value": 5.0,
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "component_count": 0,
+            "layer_path": null,
+            "enabled": true,
+            "visible": true,
+            "supervised": false,
+            "debug_summary": null,
+            "custom_ui_events": 0,
+            "control_size": [
+              0,
+              0
+            ]
+          },
+          {
+            "slot": 2,
+            "name": "Blur Smoothness",
+            "kind": "float",
+            "minimum": 1.0,
+            "maximum": 100.0,
+            "value": 100.0,
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "component_count": 0,
+            "layer_path": null,
+            "enabled": true,
+            "visible": true,
+            "supervised": false,
+            "debug_summary": null,
+            "custom_ui_events": 0,
+            "control_size": [
+              0,
+              0
+            ]
+          },
+          {
+            "slot": 3,
+            "name": "Number of Repeat",
+            "kind": "integer",
+            "minimum": 1.0,
+            "maximum": 10.0,
+            "value": 2.0,
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "component_count": 0,
+            "layer_path": null,
+            "enabled": true,
+            "visible": true,
+            "supervised": false,
+            "debug_summary": null,
+            "custom_ui_events": 0,
+            "control_size": [
+              0,
+              0
+            ]
+          },
+          {
+            "slot": 4,
+            "name": "Bias Direction",
+            "kind": "integer",
+            "minimum": 1.0,
+            "maximum": 2.0,
+            "value": 1.0,
+            "choices": [
+              "Vertical",
+              "Horizontal"
+            ],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "component_count": 0,
+            "layer_path": null,
+            "enabled": true,
+            "visible": true,
+            "supervised": false,
+            "debug_summary": null,
+            "custom_ui_events": 0,
+            "control_size": [
+              0,
+              0
+            ]
+          },
+          {
+            "slot": 5,
+            "name": "Legacy",
+            "kind": "integer",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "value": 0.0,
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "component_count": 0,
+            "layer_path": null,
+            "enabled": true,
+            "visible": true,
+            "supervised": false,
+            "debug_summary": null,
+            "custom_ui_events": 0,
+            "control_size": [
+              0,
+              0
+            ]
+          }
+        ],
+        "host": {
+          "advertised_out_flags": 100663360,
+          "advertised_out_flags2": 134222848,
+          "audio_effect_only": false,
+          "image_render_supported": true,
+          "parameter_metadata": [
+            {
+              "host_range": {
+                "maximum": 1000.0,
+                "minimum": 1.0
+              },
+              "index": 1,
+              "initial_value": 5.0,
+              "type": "float_slider",
+              "user_range": {
+                "maximum": 50.0,
+                "minimum": 1.0
+              }
+            },
+            {
+              "host_range": {
+                "maximum": 100.0,
+                "minimum": 1.0
+              },
+              "index": 2,
+              "initial_value": 100.0,
+              "type": "fixed_slider",
+              "user_range": {
+                "maximum": 100.0,
+                "minimum": 1.0
+              }
+            },
+            {
+              "host_range": {
+                "maximum": 10.0,
+                "minimum": 1.0
+              },
+              "index": 3,
+              "initial_value": 2.0,
+              "type": "slider",
+              "user_range": {
+                "maximum": 10.0,
+                "minimum": 1.0
+              }
+            },
+            {
+              "host_range": {
+                "maximum": 2.0,
+                "minimum": 1.0
+              },
+              "index": 4,
+              "initial_value": 1.0,
+              "type": "popup",
+              "user_range": {
+                "maximum": 2.0,
+                "minimum": 1.0
+              }
+            },
+            {
+              "host_range": {
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              "index": 5,
+              "initial_value": 0.0,
+              "type": "checkbox",
+              "user_range": {
+                "maximum": 1.0,
+                "minimum": 0.0
+              }
+            }
+          ],
+          "plugin_data": null,
+          "plugin_kind": null,
+          "reported_num_params": 6,
+          "smart_render_advertised": true
+        },
+        "diagnostics": {
+          "dependency_closure": {
+            "dependencies": [],
+            "dependency_count": 0,
+            "provenance": [],
+            "rejected_import_name_count": 0,
+            "search_roots": [
+              "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex"
+            ],
+            "total_bytes": 0,
+            "unresolved_import_count": 7,
+            "unresolved_imports": [
+              "api-ms-win-crt-heap-l1-1-0.dll",
+              "api-ms-win-crt-math-l1-1-0.dll",
+              "api-ms-win-crt-runtime-l1-1-0.dll",
+              "api-ms-win-crt-string-l1-1-0.dll",
+              "kernel32.dll",
+              "vcruntime140.dll",
+              "vcruntime140_1.dll"
+            ]
+          },
+          "parameters": [
+            {
+              "choices": [],
+              "color": [
+                255,
+                0,
+                0,
+                0
+              ],
+              "component_count": 0,
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "control_size": [
+                0,
+                0
+              ],
+              "custom_ui_events": 0,
+              "debug_summary": null,
+              "enabled": true,
+              "kind": "float",
+              "layer_path": null,
+              "maximum": 1000.0,
+              "minimum": 1.0,
+              "name": "Blur Amount",
+              "slot": 1,
+              "supervised": false,
+              "value": 5.0,
+              "visible": true
+            },
+            {
+              "choices": [],
+              "color": [
+                255,
+                0,
+                0,
+                0
+              ],
+              "component_count": 0,
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "control_size": [
+                0,
+                0
+              ],
+              "custom_ui_events": 0,
+              "debug_summary": null,
+              "enabled": true,
+              "kind": "float",
+              "layer_path": null,
+              "maximum": 100.0,
+              "minimum": 1.0,
+              "name": "Blur Smoothness",
+              "slot": 2,
+              "supervised": false,
+              "value": 100.0,
+              "visible": true
+            },
+            {
+              "choices": [],
+              "color": [
+                255,
+                0,
+                0,
+                0
+              ],
+              "component_count": 0,
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "control_size": [
+                0,
+                0
+              ],
+              "custom_ui_events": 0,
+              "debug_summary": null,
+              "enabled": true,
+              "kind": "integer",
+              "layer_path": null,
+              "maximum": 10.0,
+              "minimum": 1.0,
+              "name": "Number of Repeat",
+              "slot": 3,
+              "supervised": false,
+              "value": 2.0,
+              "visible": true
+            },
+            {
+              "choices": [
+                "Vertical",
+                "Horizontal"
+              ],
+              "color": [
+                255,
+                0,
+                0,
+                0
+              ],
+              "component_count": 0,
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "control_size": [
+                0,
+                0
+              ],
+              "custom_ui_events": 0,
+              "debug_summary": null,
+              "enabled": true,
+              "kind": "integer",
+              "layer_path": null,
+              "maximum": 2.0,
+              "minimum": 1.0,
+              "name": "Bias Direction",
+              "slot": 4,
+              "supervised": false,
+              "value": 1.0,
+              "visible": true
+            },
+            {
+              "choices": [],
+              "color": [
+                255,
+                0,
+                0,
+                0
+              ],
+              "component_count": 0,
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "control_size": [
+                0,
+                0
+              ],
+              "custom_ui_events": 0,
+              "debug_summary": null,
+              "enabled": true,
+              "kind": "integer",
+              "layer_path": null,
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "name": "Legacy",
+              "slot": 5,
+              "supervised": false,
+              "value": 0.0,
+              "visible": true
+            }
+          ],
+          "plugin_identity": {
+            "sha256": "F0611785E7B14AC4FCFC75F23B8862BEB4539EEE52D25D472556849535E96E5B",
+            "size_bytes": 63488
+          },
+          "stage": "parameter_inspection",
+          "worker_diagnostics": {
+            "active_stage": null,
+            "advertised_out_flags": 100663360,
+            "advertised_out_flags2": 134222848,
+            "audio_effect_only": false,
+            "bee_facade": {
+              "effect_layer_hand_outs": 0,
+              "layer_vtable_calls": [],
+              "layer_vtable_calls_truncated": false,
+              "trap_count": 0
+            },
+            "callback_addr_denials": [],
+            "callback_addr_denials_truncated": false,
+            "callback_denials": [],
+            "callback_denials_truncated": false,
+            "callback_history": [],
+            "classification": "ok",
+            "compute_cache_timeline": {
+              "maximum_records": 128,
+              "records": [
+                {
+                  "call_count": 1,
+                  "operation": "global_teardown",
+                  "outcome": "cleanup",
+                  "return_code": 0,
+                  "selector": "HOST",
+                  "sequence": 0,
+                  "slot": 1
+                }
+              ],
+              "truncated": false
+            },
+            "elapsed_ms": 3006,
+            "exit_code": 0,
+            "extended_allocation_timeline": {
+              "maximum_records": 128,
+              "records": [
+                {
+                  "allocations": [],
+                  "boundary": "entry",
+                  "double_frees": 0,
+                  "frees": 0,
+                  "global_setup_live_allocation_count": 0,
+                  "invalid_frees": 0,
+                  "live_allocation_count": 0,
+                  "new_allocations": 0,
+                  "selector": "GLOBAL_SETUP",
+                  "sequence": 0
+                },
+                {
+                  "allocations": [],
+                  "boundary": "exit",
+                  "double_frees": 0,
+                  "frees": 0,
+                  "global_setup_live_allocation_count": 0,
+                  "invalid_frees": 0,
+                  "live_allocation_count": 0,
+                  "new_allocations": 0,
+                  "selector": "GLOBAL_SETUP",
+                  "sequence": 1
+                },
+                {
+                  "allocations": [],
+                  "boundary": "entry",
+                  "double_frees": 0,
+                  "frees": 0,
+                  "global_setup_live_allocation_count": 0,
+                  "invalid_frees": 0,
+                  "live_allocation_count": 0,
+                  "new_allocations": 0,
+                  "selector": "PARAMS_SETUP",
+                  "sequence": 2
+                },
+                {
+                  "allocations": [],
+                  "boundary": "exit",
+                  "double_frees": 0,
+                  "frees": 0,
+                  "global_setup_live_allocation_count": 0,
+                  "invalid_frees": 0,
+                  "live_allocation_count": 0,
+                  "new_allocations": 0,
+                  "selector": "PARAMS_SETUP",
+                  "sequence": 3
+                },
+                {
+                  "allocations": [],
+                  "boundary": "entry",
+                  "double_frees": 0,
+                  "frees": 0,
+                  "global_setup_live_allocation_count": 0,
+                  "invalid_frees": 0,
+                  "live_allocation_count": 0,
+                  "new_allocations": 0,
+                  "selector": "GLOBAL_SETDOWN",
+                  "sequence": 4
+                },
+                {
+                  "allocations": [],
+                  "boundary": "exit",
+                  "double_frees": 0,
+                  "frees": 0,
+                  "global_setup_live_allocation_count": 0,
+                  "invalid_frees": 0,
+                  "live_allocation_count": 0,
+                  "new_allocations": 0,
+                  "selector": "GLOBAL_SETDOWN",
+                  "sequence": 5
+                }
+              ],
+              "truncated": false
+            },
+            "extended_lookup_timeline": {
+              "maximum_records": 128,
+              "records": [],
+              "truncated": false
+            },
+            "failure_stage": null,
+            "first_failure_stage": null,
+            "global_setdown_error": 0,
+            "global_setup_error": 0,
+            "host_callback_timeline": {
+              "maximum_records": 128,
+              "records": [
+                {
+                  "call_count": 5,
+                  "callback": "inter.add_param",
+                  "classification": "implemented",
+                  "return_code": 0,
+                  "selector": "PARAMS_SETUP",
+                  "sequence": 0,
+                  "status": "success"
+                }
+              ],
+              "truncated": false
+            },
+            "image_render_supported": true,
+            "inspection_status": "parameters_inspected",
+            "kill_reason": null,
+            "last_completed_stage": "global_setdown",
+            "launch_validation_failure": null,
+            "load_failure": null,
+            "memory_limit_reached": false,
+            "minidump": null,
+            "missing_suites": [],
+            "missing_suites_truncated": false,
+            "module_audit": {
+              "authorized_policy_modules": [],
+              "phase_count": 5,
+              "status": "passed",
+              "unknown_count": 0,
+              "unknown_modules": []
+            },
+            "parameter_count": 5,
+            "parameter_metadata": [
+              {
+                "host_range": {
+                  "maximum": 1000.0,
+                  "minimum": 1.0
+                },
+                "index": 1,
+                "initial_value": 5.0,
+                "type": "float_slider",
+                "user_range": {
+                  "maximum": 50.0,
+                  "minimum": 1.0
+                }
+              },
+              {
+                "host_range": {
+                  "maximum": 100.0,
+                  "minimum": 1.0
+                },
+                "index": 2,
+                "initial_value": 100.0,
+                "type": "fixed_slider",
+                "user_range": {
+                  "maximum": 100.0,
+                  "minimum": 1.0
+                }
+              },
+              {
+                "host_range": {
+                  "maximum": 10.0,
+                  "minimum": 1.0
+                },
+                "index": 3,
+                "initial_value": 2.0,
+                "type": "slider",
+                "user_range": {
+                  "maximum": 10.0,
+                  "minimum": 1.0
+                }
+              },
+              {
+                "host_range": {
+                  "maximum": 2.0,
+                  "minimum": 1.0
+                },
+                "index": 4,
+                "initial_value": 1.0,
+                "type": "popup",
+                "user_range": {
+                  "maximum": 2.0,
+                  "minimum": 1.0
+                }
+              },
+              {
+                "host_range": {
+                  "maximum": 1.0,
+                  "minimum": 0.0
+                },
+                "index": 5,
+                "initial_value": 0.0,
+                "type": "checkbox",
+                "user_range": {
+                  "maximum": 1.0,
+                  "minimum": 0.0
+                }
+              }
+            ],
+            "params_setup_error": 0,
+            "peak_job_memory_bytes": 3620864,
+            "peak_process_memory_bytes": 2326528,
+            "plugin_data": null,
+            "plugin_kind": null,
+            "process_memory_limit_bytes": 536870912,
+            "reported_num_params": 6,
+            "runtime_module_policy_applied": false,
+            "selector_invocations": {
+              "maximum_records": 64,
+              "records": [
+                {
+                  "access_type": null,
+                  "appl_id_at_entry": {
+                    "hex_u32": "0x46585443",
+                    "host_setting_source": "worker_effect_bootstrap",
+                    "printable_code": "FXTC",
+                    "same_value_as_global_setup_entry": null
+                  },
+                  "effect_ref_at_entry": {
+                    "classification": "module",
+                    "process_local_token": "ptr-bcccf8e3c0e68663",
+                    "same_identity_as_global_setup_entry": null,
+                    "state": "non_null"
+                  },
+                  "fault_address": null,
+                  "fault_module": null,
+                  "fault_module_class": null,
+                  "global_data_handoff": {
+                    "input_at_entry": {
+                      "classification": "null",
+                      "process_local_token": null,
+                      "state": "null"
+                    },
+                    "output_after_return": {
+                      "classification": "null",
+                      "process_local_token": null,
+                      "state": "null"
+                    },
+                    "same_identity_as_previous_output": null
+                  },
+                  "host_result_code": 0,
+                  "invocation_completed_normally": true,
+                  "plugin_rva": null,
+                  "raw_return_code": 0,
+                  "registers": null,
+                  "seh_caught": false,
+                  "seh_code": null,
+                  "selector": "GLOBAL_SETUP",
+                  "stack_pointer_values": null,
+                  "unwind_frames": null,
+                  "unwind_stop": null,
+                  "version_at_entry": {
+                    "host_setting_source": "worker_effect_bootstrap",
+                    "major": 13,
+                    "minor": 29,
+                    "raw_packed_u32": "0x001d000d",
+                    "same_value_as_global_setup_entry": null
+                  }
+                },
+                {
+                  "access_type": null,
+                  "appl_id_at_entry": {
+                    "hex_u32": "0x46585443",
+                    "host_setting_source": "worker_effect_bootstrap",
+                    "printable_code": "FXTC",
+                    "same_value_as_global_setup_entry": true
+                  },
+                  "effect_ref_at_entry": {
+                    "classification": "module",
+                    "process_local_token": "ptr-bcccf8e3c0e68663",
+                    "same_identity_as_global_setup_entry": true,
+                    "state": "non_null"
+                  },
+                  "fault_address": null,
+                  "fault_module": null,
+                  "fault_module_class": null,
+                  "global_data_handoff": {
+                    "input_at_entry": {
+                      "classification": "null",
+                      "process_local_token": null,
+                      "state": "null"
+                    },
+                    "output_after_return": {
+                      "classification": "null",
+                      "process_local_token": null,
+                      "state": "null"
+                    },
+                    "same_identity_as_previous_output": true
+                  },
+                  "host_result_code": 0,
+                  "invocation_completed_normally": true,
+                  "plugin_rva": null,
+                  "raw_return_code": 0,
+                  "registers": null,
+                  "seh_caught": false,
+                  "seh_code": null,
+                  "selector": "PARAMS_SETUP",
+                  "stack_pointer_values": null,
+                  "unwind_frames": null,
+                  "unwind_stop": null,
+                  "version_at_entry": {
+                    "host_setting_source": "worker_effect_bootstrap",
+                    "major": 13,
+                    "minor": 29,
+                    "raw_packed_u32": "0x001d000d",
+                    "same_value_as_global_setup_entry": true
+                  }
+                },
+                {
+                  "access_type": null,
+                  "appl_id_at_entry": {
+                    "hex_u32": "0x46585443",
+                    "host_setting_source": "worker_effect_bootstrap",
+                    "printable_code": "FXTC",
+                    "same_value_as_global_setup_entry": true
+                  },
+                  "effect_ref_at_entry": {
+                    "classification": "module",
+                    "process_local_token": "ptr-bcccf8e3c0e68663",
+                    "same_identity_as_global_setup_entry": true,
+                    "state": "non_null"
+                  },
+                  "fault_address": null,
+                  "fault_module": null,
+                  "fault_module_class": null,
+                  "global_data_handoff": {
+                    "input_at_entry": {
+                      "classification": "null",
+                      "process_local_token": null,
+                      "state": "null"
+                    },
+                    "output_after_return": {
+                      "classification": "null",
+                      "process_local_token": null,
+                      "state": "null"
+                    },
+                    "same_identity_as_previous_output": true
+                  },
+                  "host_result_code": 0,
+                  "invocation_completed_normally": true,
+                  "plugin_rva": null,
+                  "raw_return_code": 0,
+                  "registers": null,
+                  "seh_caught": false,
+                  "seh_code": null,
+                  "selector": "GLOBAL_SETDOWN",
+                  "stack_pointer_values": null,
+                  "unwind_frames": null,
+                  "unwind_stop": null,
+                  "version_at_entry": {
+                    "host_setting_source": "worker_effect_bootstrap",
+                    "major": 13,
+                    "minor": 29,
+                    "raw_packed_u32": "0x001d000d",
+                    "same_value_as_global_setup_entry": true
+                  }
+                }
+              ],
+              "truncated": false
+            },
+            "smart_render_advertised": true,
+            "stage_events": [
+              {
+                "errors": {},
+                "stage": "global_setup",
+                "state": "begin"
+              },
+              {
+                "errors": {
+                  "error": 0
+                },
+                "stage": "global_setup",
+                "state": "end"
+              },
+              {
+                "errors": {},
+                "stage": "params_setup",
+                "state": "begin"
+              },
+              {
+                "errors": {
+                  "error": 0
+                },
+                "stage": "params_setup",
+                "state": "end"
+              },
+              {
+                "errors": {},
+                "stage": "global_setdown",
+                "state": "begin"
+              },
+              {
+                "errors": {
+                  "error": 0
+                },
+                "stage": "global_setdown",
+                "state": "end"
+              }
+            ],
+            "stderr_truncated": false,
+            "suite_acquire_failures": [],
+            "suite_acquire_failures_truncated": false,
+            "suite_call_slot_probe": {
+              "configuration_truncated": false,
+              "enabled": false,
+              "maximum_targets": 8,
+              "slot_count": 32,
+              "targets": [
+                {
+                  "calls": [],
+                  "enabled": false,
+                  "name": "PF AE Private Effect Suite",
+                  "truncated": false,
+                  "version": 3
+                },
+                {
+                  "calls": [],
+                  "enabled": false,
+                  "name": "PF AE Private Effect Suite",
+                  "truncated": false,
+                  "version": 5
+                },
+                {
+                  "calls": [],
+                  "enabled": false,
+                  "name": "AEFX ACE Suite",
+                  "truncated": false,
+                  "version": 1
+                }
+              ]
+            },
+            "suite_timeline": [],
+            "suite_timeline_truncated": false,
+            "unhandled_exception": null,
+            "unsupported_suite_calls": [],
+            "unsupported_suite_calls_truncated": false,
+            "worker_freshness_warning": "source_newer_than_worker",
+            "worker_peak_commit_bytes": 2326528
+          }
+        }
+      },
+      "candidate": {
+        "parameters": [
+          {
+            "slot": 1,
+            "name": "Blur Amount",
+            "kind": "float",
+            "minimum": 1.0,
+            "maximum": 1000.0,
+            "value": 5.0,
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "component_count": 0,
+            "layer_path": null,
+            "enabled": true,
+            "visible": true,
+            "supervised": false,
+            "debug_summary": null,
+            "custom_ui_events": 0,
+            "control_size": [
+              0,
+              0
+            ]
+          },
+          {
+            "slot": 2,
+            "name": "Blur Smoothness",
+            "kind": "float",
+            "minimum": 1.0,
+            "maximum": 100.0,
+            "value": 100.0,
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "component_count": 0,
+            "layer_path": null,
+            "enabled": true,
+            "visible": true,
+            "supervised": false,
+            "debug_summary": null,
+            "custom_ui_events": 0,
+            "control_size": [
+              0,
+              0
+            ]
+          },
+          {
+            "slot": 3,
+            "name": "Number of Repeat",
+            "kind": "integer",
+            "minimum": 1.0,
+            "maximum": 10.0,
+            "value": 2.0,
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "component_count": 0,
+            "layer_path": null,
+            "enabled": true,
+            "visible": true,
+            "supervised": false,
+            "debug_summary": null,
+            "custom_ui_events": 0,
+            "control_size": [
+              0,
+              0
+            ]
+          },
+          {
+            "slot": 4,
+            "name": "Bias Direction",
+            "kind": "integer",
+            "minimum": 1.0,
+            "maximum": 2.0,
+            "value": 1.0,
+            "choices": [
+              "Vertical",
+              "Horizontal"
+            ],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "component_count": 0,
+            "layer_path": null,
+            "enabled": true,
+            "visible": true,
+            "supervised": false,
+            "debug_summary": null,
+            "custom_ui_events": 0,
+            "control_size": [
+              0,
+              0
+            ]
+          },
+          {
+            "slot": 5,
+            "name": "Legacy",
+            "kind": "integer",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "value": 0.0,
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "component_count": 0,
+            "layer_path": null,
+            "enabled": true,
+            "visible": true,
+            "supervised": false,
+            "debug_summary": null,
+            "custom_ui_events": 0,
+            "control_size": [
+              0,
+              0
+            ]
+          }
+        ],
+        "host": {
+          "advertised_out_flags": 100663360,
+          "advertised_out_flags2": 134222848,
+          "audio_effect_only": false,
+          "image_render_supported": true,
+          "parameter_metadata": [
+            {
+              "host_range": {
+                "maximum": 1000.0,
+                "minimum": 1.0
+              },
+              "index": 1,
+              "initial_value": 5.0,
+              "type": "float_slider",
+              "user_range": {
+                "maximum": 50.0,
+                "minimum": 1.0
+              }
+            },
+            {
+              "host_range": {
+                "maximum": 100.0,
+                "minimum": 1.0
+              },
+              "index": 2,
+              "initial_value": 100.0,
+              "type": "fixed_slider",
+              "user_range": {
+                "maximum": 100.0,
+                "minimum": 1.0
+              }
+            },
+            {
+              "host_range": {
+                "maximum": 10.0,
+                "minimum": 1.0
+              },
+              "index": 3,
+              "initial_value": 2.0,
+              "type": "slider",
+              "user_range": {
+                "maximum": 10.0,
+                "minimum": 1.0
+              }
+            },
+            {
+              "host_range": {
+                "maximum": 2.0,
+                "minimum": 1.0
+              },
+              "index": 4,
+              "initial_value": 1.0,
+              "type": "popup",
+              "user_range": {
+                "maximum": 2.0,
+                "minimum": 1.0
+              }
+            },
+            {
+              "host_range": {
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              "index": 5,
+              "initial_value": 0.0,
+              "type": "checkbox",
+              "user_range": {
+                "maximum": 1.0,
+                "minimum": 0.0
+              }
+            }
+          ],
+          "plugin_data": null,
+          "plugin_kind": null,
+          "reported_num_params": 6,
+          "smart_render_advertised": true
+        },
+        "diagnostics": {
+          "dependency_closure": {
+            "dependencies": [],
+            "dependency_count": 0,
+            "provenance": [],
+            "rejected_import_name_count": 0,
+            "search_roots": [
+              "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-blur\\validation\\final-bin"
+            ],
+            "total_bytes": 0,
+            "unresolved_import_count": 7,
+            "unresolved_imports": [
+              "api-ms-win-core-synch-l1-2-0.dll",
+              "api-ms-win-crt-heap-l1-1-0.dll",
+              "api-ms-win-crt-math-l1-1-0.dll",
+              "api-ms-win-crt-runtime-l1-1-0.dll",
+              "kernel32.dll",
+              "ntdll.dll",
+              "vcruntime140.dll"
+            ]
+          },
+          "parameters": [
+            {
+              "choices": [],
+              "color": [
+                255,
+                0,
+                0,
+                0
+              ],
+              "component_count": 0,
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "control_size": [
+                0,
+                0
+              ],
+              "custom_ui_events": 0,
+              "debug_summary": null,
+              "enabled": true,
+              "kind": "float",
+              "layer_path": null,
+              "maximum": 1000.0,
+              "minimum": 1.0,
+              "name": "Blur Amount",
+              "slot": 1,
+              "supervised": false,
+              "value": 5.0,
+              "visible": true
+            },
+            {
+              "choices": [],
+              "color": [
+                255,
+                0,
+                0,
+                0
+              ],
+              "component_count": 0,
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "control_size": [
+                0,
+                0
+              ],
+              "custom_ui_events": 0,
+              "debug_summary": null,
+              "enabled": true,
+              "kind": "float",
+              "layer_path": null,
+              "maximum": 100.0,
+              "minimum": 1.0,
+              "name": "Blur Smoothness",
+              "slot": 2,
+              "supervised": false,
+              "value": 100.0,
+              "visible": true
+            },
+            {
+              "choices": [],
+              "color": [
+                255,
+                0,
+                0,
+                0
+              ],
+              "component_count": 0,
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "control_size": [
+                0,
+                0
+              ],
+              "custom_ui_events": 0,
+              "debug_summary": null,
+              "enabled": true,
+              "kind": "integer",
+              "layer_path": null,
+              "maximum": 10.0,
+              "minimum": 1.0,
+              "name": "Number of Repeat",
+              "slot": 3,
+              "supervised": false,
+              "value": 2.0,
+              "visible": true
+            },
+            {
+              "choices": [
+                "Vertical",
+                "Horizontal"
+              ],
+              "color": [
+                255,
+                0,
+                0,
+                0
+              ],
+              "component_count": 0,
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "control_size": [
+                0,
+                0
+              ],
+              "custom_ui_events": 0,
+              "debug_summary": null,
+              "enabled": true,
+              "kind": "integer",
+              "layer_path": null,
+              "maximum": 2.0,
+              "minimum": 1.0,
+              "name": "Bias Direction",
+              "slot": 4,
+              "supervised": false,
+              "value": 1.0,
+              "visible": true
+            },
+            {
+              "choices": [],
+              "color": [
+                255,
+                0,
+                0,
+                0
+              ],
+              "component_count": 0,
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "control_size": [
+                0,
+                0
+              ],
+              "custom_ui_events": 0,
+              "debug_summary": null,
+              "enabled": true,
+              "kind": "integer",
+              "layer_path": null,
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "name": "Legacy",
+              "slot": 5,
+              "supervised": false,
+              "value": 0.0,
+              "visible": true
+            }
+          ],
+          "plugin_identity": {
+            "sha256": "D374DF21E013D5C78DBAE6370B55A86F51CEB952AC660410B47CBCBC9B6BBEC0",
+            "size_bytes": 209920
+          },
+          "stage": "parameter_inspection",
+          "worker_diagnostics": {
+            "active_stage": null,
+            "advertised_out_flags": 100663360,
+            "advertised_out_flags2": 134222848,
+            "audio_effect_only": false,
+            "bee_facade": {
+              "effect_layer_hand_outs": 0,
+              "layer_vtable_calls": [],
+              "layer_vtable_calls_truncated": false,
+              "trap_count": 0
+            },
+            "callback_addr_denials": [],
+            "callback_addr_denials_truncated": false,
+            "callback_denials": [],
+            "callback_denials_truncated": false,
+            "callback_history": [],
+            "classification": "ok",
+            "compute_cache_timeline": {
+              "maximum_records": 128,
+              "records": [
+                {
+                  "call_count": 1,
+                  "operation": "global_teardown",
+                  "outcome": "cleanup",
+                  "return_code": 0,
+                  "selector": "HOST",
+                  "sequence": 0,
+                  "slot": 1
+                }
+              ],
+              "truncated": false
+            },
+            "elapsed_ms": 1985,
+            "exit_code": 0,
+            "extended_allocation_timeline": {
+              "maximum_records": 128,
+              "records": [
+                {
+                  "allocations": [],
+                  "boundary": "entry",
+                  "double_frees": 0,
+                  "frees": 0,
+                  "global_setup_live_allocation_count": 0,
+                  "invalid_frees": 0,
+                  "live_allocation_count": 0,
+                  "new_allocations": 0,
+                  "selector": "GLOBAL_SETUP",
+                  "sequence": 0
+                },
+                {
+                  "allocations": [],
+                  "boundary": "exit",
+                  "double_frees": 0,
+                  "frees": 0,
+                  "global_setup_live_allocation_count": 0,
+                  "invalid_frees": 0,
+                  "live_allocation_count": 0,
+                  "new_allocations": 0,
+                  "selector": "GLOBAL_SETUP",
+                  "sequence": 1
+                },
+                {
+                  "allocations": [],
+                  "boundary": "entry",
+                  "double_frees": 0,
+                  "frees": 0,
+                  "global_setup_live_allocation_count": 0,
+                  "invalid_frees": 0,
+                  "live_allocation_count": 0,
+                  "new_allocations": 0,
+                  "selector": "PARAMS_SETUP",
+                  "sequence": 2
+                },
+                {
+                  "allocations": [],
+                  "boundary": "exit",
+                  "double_frees": 0,
+                  "frees": 0,
+                  "global_setup_live_allocation_count": 0,
+                  "invalid_frees": 0,
+                  "live_allocation_count": 0,
+                  "new_allocations": 0,
+                  "selector": "PARAMS_SETUP",
+                  "sequence": 3
+                },
+                {
+                  "allocations": [],
+                  "boundary": "entry",
+                  "double_frees": 0,
+                  "frees": 0,
+                  "global_setup_live_allocation_count": 0,
+                  "invalid_frees": 0,
+                  "live_allocation_count": 0,
+                  "new_allocations": 0,
+                  "selector": "GLOBAL_SETDOWN",
+                  "sequence": 4
+                },
+                {
+                  "allocations": [],
+                  "boundary": "exit",
+                  "double_frees": 0,
+                  "frees": 0,
+                  "global_setup_live_allocation_count": 0,
+                  "invalid_frees": 0,
+                  "live_allocation_count": 0,
+                  "new_allocations": 0,
+                  "selector": "GLOBAL_SETDOWN",
+                  "sequence": 5
+                }
+              ],
+              "truncated": false
+            },
+            "extended_lookup_timeline": {
+              "maximum_records": 128,
+              "records": [],
+              "truncated": false
+            },
+            "failure_stage": null,
+            "first_failure_stage": null,
+            "global_setdown_error": 0,
+            "global_setup_error": 0,
+            "host_callback_timeline": {
+              "maximum_records": 128,
+              "records": [
+                {
+                  "call_count": 5,
+                  "callback": "inter.add_param",
+                  "classification": "implemented",
+                  "return_code": 0,
+                  "selector": "PARAMS_SETUP",
+                  "sequence": 0,
+                  "status": "success"
+                }
+              ],
+              "truncated": false
+            },
+            "image_render_supported": true,
+            "inspection_status": "parameters_inspected",
+            "kill_reason": null,
+            "last_completed_stage": "global_setdown",
+            "launch_validation_failure": null,
+            "load_failure": null,
+            "memory_limit_reached": false,
+            "minidump": null,
+            "missing_suites": [],
+            "missing_suites_truncated": false,
+            "module_audit": {
+              "authorized_policy_modules": [],
+              "phase_count": 5,
+              "status": "passed",
+              "unknown_count": 0,
+              "unknown_modules": []
+            },
+            "parameter_count": 5,
+            "parameter_metadata": [
+              {
+                "host_range": {
+                  "maximum": 1000.0,
+                  "minimum": 1.0
+                },
+                "index": 1,
+                "initial_value": 5.0,
+                "type": "float_slider",
+                "user_range": {
+                  "maximum": 50.0,
+                  "minimum": 1.0
+                }
+              },
+              {
+                "host_range": {
+                  "maximum": 100.0,
+                  "minimum": 1.0
+                },
+                "index": 2,
+                "initial_value": 100.0,
+                "type": "fixed_slider",
+                "user_range": {
+                  "maximum": 100.0,
+                  "minimum": 1.0
+                }
+              },
+              {
+                "host_range": {
+                  "maximum": 10.0,
+                  "minimum": 1.0
+                },
+                "index": 3,
+                "initial_value": 2.0,
+                "type": "slider",
+                "user_range": {
+                  "maximum": 10.0,
+                  "minimum": 1.0
+                }
+              },
+              {
+                "host_range": {
+                  "maximum": 2.0,
+                  "minimum": 1.0
+                },
+                "index": 4,
+                "initial_value": 1.0,
+                "type": "popup",
+                "user_range": {
+                  "maximum": 2.0,
+                  "minimum": 1.0
+                }
+              },
+              {
+                "host_range": {
+                  "maximum": 1.0,
+                  "minimum": 0.0
+                },
+                "index": 5,
+                "initial_value": 0.0,
+                "type": "checkbox",
+                "user_range": {
+                  "maximum": 1.0,
+                  "minimum": 0.0
+                }
+              }
+            ],
+            "params_setup_error": 0,
+            "peak_job_memory_bytes": 3694592,
+            "peak_process_memory_bytes": 2416640,
+            "plugin_data": null,
+            "plugin_kind": null,
+            "process_memory_limit_bytes": 536870912,
+            "reported_num_params": 6,
+            "runtime_module_policy_applied": false,
+            "selector_invocations": {
+              "maximum_records": 64,
+              "records": [
+                {
+                  "access_type": null,
+                  "appl_id_at_entry": {
+                    "hex_u32": "0x46585443",
+                    "host_setting_source": "worker_effect_bootstrap",
+                    "printable_code": "FXTC",
+                    "same_value_as_global_setup_entry": null
+                  },
+                  "effect_ref_at_entry": {
+                    "classification": "module",
+                    "process_local_token": "ptr-ca4cdee60c8314b6",
+                    "same_identity_as_global_setup_entry": null,
+                    "state": "non_null"
+                  },
+                  "fault_address": null,
+                  "fault_module": null,
+                  "fault_module_class": null,
+                  "global_data_handoff": {
+                    "input_at_entry": {
+                      "classification": "null",
+                      "process_local_token": null,
+                      "state": "null"
+                    },
+                    "output_after_return": {
+                      "classification": "null",
+                      "process_local_token": null,
+                      "state": "null"
+                    },
+                    "same_identity_as_previous_output": null
+                  },
+                  "host_result_code": 0,
+                  "invocation_completed_normally": true,
+                  "plugin_rva": null,
+                  "raw_return_code": 0,
+                  "registers": null,
+                  "seh_caught": false,
+                  "seh_code": null,
+                  "selector": "GLOBAL_SETUP",
+                  "stack_pointer_values": null,
+                  "unwind_frames": null,
+                  "unwind_stop": null,
+                  "version_at_entry": {
+                    "host_setting_source": "worker_effect_bootstrap",
+                    "major": 13,
+                    "minor": 29,
+                    "raw_packed_u32": "0x001d000d",
+                    "same_value_as_global_setup_entry": null
+                  }
+                },
+                {
+                  "access_type": null,
+                  "appl_id_at_entry": {
+                    "hex_u32": "0x46585443",
+                    "host_setting_source": "worker_effect_bootstrap",
+                    "printable_code": "FXTC",
+                    "same_value_as_global_setup_entry": true
+                  },
+                  "effect_ref_at_entry": {
+                    "classification": "module",
+                    "process_local_token": "ptr-ca4cdee60c8314b6",
+                    "same_identity_as_global_setup_entry": true,
+                    "state": "non_null"
+                  },
+                  "fault_address": null,
+                  "fault_module": null,
+                  "fault_module_class": null,
+                  "global_data_handoff": {
+                    "input_at_entry": {
+                      "classification": "null",
+                      "process_local_token": null,
+                      "state": "null"
+                    },
+                    "output_after_return": {
+                      "classification": "null",
+                      "process_local_token": null,
+                      "state": "null"
+                    },
+                    "same_identity_as_previous_output": true
+                  },
+                  "host_result_code": 0,
+                  "invocation_completed_normally": true,
+                  "plugin_rva": null,
+                  "raw_return_code": 0,
+                  "registers": null,
+                  "seh_caught": false,
+                  "seh_code": null,
+                  "selector": "PARAMS_SETUP",
+                  "stack_pointer_values": null,
+                  "unwind_frames": null,
+                  "unwind_stop": null,
+                  "version_at_entry": {
+                    "host_setting_source": "worker_effect_bootstrap",
+                    "major": 13,
+                    "minor": 29,
+                    "raw_packed_u32": "0x001d000d",
+                    "same_value_as_global_setup_entry": true
+                  }
+                },
+                {
+                  "access_type": null,
+                  "appl_id_at_entry": {
+                    "hex_u32": "0x46585443",
+                    "host_setting_source": "worker_effect_bootstrap",
+                    "printable_code": "FXTC",
+                    "same_value_as_global_setup_entry": true
+                  },
+                  "effect_ref_at_entry": {
+                    "classification": "module",
+                    "process_local_token": "ptr-ca4cdee60c8314b6",
+                    "same_identity_as_global_setup_entry": true,
+                    "state": "non_null"
+                  },
+                  "fault_address": null,
+                  "fault_module": null,
+                  "fault_module_class": null,
+                  "global_data_handoff": {
+                    "input_at_entry": {
+                      "classification": "null",
+                      "process_local_token": null,
+                      "state": "null"
+                    },
+                    "output_after_return": {
+                      "classification": "null",
+                      "process_local_token": null,
+                      "state": "null"
+                    },
+                    "same_identity_as_previous_output": true
+                  },
+                  "host_result_code": 0,
+                  "invocation_completed_normally": true,
+                  "plugin_rva": null,
+                  "raw_return_code": 0,
+                  "registers": null,
+                  "seh_caught": false,
+                  "seh_code": null,
+                  "selector": "GLOBAL_SETDOWN",
+                  "stack_pointer_values": null,
+                  "unwind_frames": null,
+                  "unwind_stop": null,
+                  "version_at_entry": {
+                    "host_setting_source": "worker_effect_bootstrap",
+                    "major": 13,
+                    "minor": 29,
+                    "raw_packed_u32": "0x001d000d",
+                    "same_value_as_global_setup_entry": true
+                  }
+                }
+              ],
+              "truncated": false
+            },
+            "smart_render_advertised": true,
+            "stage_events": [
+              {
+                "errors": {},
+                "stage": "global_setup",
+                "state": "begin"
+              },
+              {
+                "errors": {
+                  "error": 0
+                },
+                "stage": "global_setup",
+                "state": "end"
+              },
+              {
+                "errors": {},
+                "stage": "params_setup",
+                "state": "begin"
+              },
+              {
+                "errors": {
+                  "error": 0
+                },
+                "stage": "params_setup",
+                "state": "end"
+              },
+              {
+                "errors": {},
+                "stage": "global_setdown",
+                "state": "begin"
+              },
+              {
+                "errors": {
+                  "error": 0
+                },
+                "stage": "global_setdown",
+                "state": "end"
+              }
+            ],
+            "stderr_truncated": false,
+            "suite_acquire_failures": [],
+            "suite_acquire_failures_truncated": false,
+            "suite_call_slot_probe": {
+              "configuration_truncated": false,
+              "enabled": false,
+              "maximum_targets": 8,
+              "slot_count": 32,
+              "targets": [
+                {
+                  "calls": [],
+                  "enabled": false,
+                  "name": "PF AE Private Effect Suite",
+                  "truncated": false,
+                  "version": 3
+                },
+                {
+                  "calls": [],
+                  "enabled": false,
+                  "name": "PF AE Private Effect Suite",
+                  "truncated": false,
+                  "version": 5
+                },
+                {
+                  "calls": [],
+                  "enabled": false,
+                  "name": "AEFX ACE Suite",
+                  "truncated": false,
+                  "version": 1
+                }
+              ]
+            },
+            "suite_timeline": [],
+            "suite_timeline_truncated": false,
+            "unhandled_exception": null,
+            "unsupported_suite_calls": [],
+            "unsupported_suite_calls_truncated": false,
+            "worker_freshness_warning": "source_newer_than_worker",
+            "worker_peak_commit_bytes": 2416640
+          }
+        }
+      }
+    },
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+      "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-blur\\validation\\final-bin\\OLMBlur.aex",
+      "sha256": "d374df21e013d5c78dbae6370b55a86f51ceb952ac660410b47cbcbc9b6bbec0"
+    },
+    "tool": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+      "sha256": "657b40b68902ac64a9c3d2175e383ae97b9940f2d30a817b9962b350d76b5ab3"
+    }
+  },
+  "pipl": {
+    "identical": true,
+    "binaries": [
+      {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+        "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+        "pipl_size": 294,
+        "pipl_sha256": "147f220be4bb05cb95d845c71699015a86deb41fe544fb55afa0a3fbe695f78e",
+        "exports": [
+          "entryPointFunc"
+        ]
+      },
+      {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-blur\\validation\\final-bin\\OLMBlur.aex",
+        "sha256": "d374df21e013d5c78dbae6370b55a86f51ceb952ac660410b47cbcbc9b6bbec0",
+        "pipl_size": 294,
+        "pipl_sha256": "147f220be4bb05cb95d845c71699015a86deb41fe544fb55afa0a3fbe695f78e",
+        "exports": [
+          "EffectMain",
+          "entryPointFunc",
+          "rust_win_dbg_logger_init_debug",
+          "rust_win_dbg_logger_init_error",
+          "rust_win_dbg_logger_init_info",
+          "rust_win_dbg_logger_init_trace",
+          "rust_win_dbg_logger_init_warn"
+        ]
+      }
+    ]
+  },
+  "environment": {
+    "platform": "Windows-10-10.0.26200-SP0",
+    "machine": "AMD64",
+    "processor": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+    "ucrt_fma3_enabled": 1,
+    "worker": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\target\\minihost-build\\aex_worker.exe",
+      "sha256": "0481df5fa425af28f0e8a39ea9386185de13656c3c9d488042bed2244bdf8302"
+    }
+  },
+  "cleanup": {
+    "process_records_checked": 1944,
+    "unique_pids_checked": 1427,
+    "owned_live_processes": [],
+    "reused_pids_ignored": [
+      64628,
+      46216,
+      61472,
+      8040,
+      4072,
+      64172,
+      33748,
+      60788,
+      11444,
+      25020,
+      31208,
+      19260,
+      64852,
+      16076,
+      61252,
+      7444,
+      21744,
+      63244,
+      4256,
+      8084,
+      60512,
+      50468,
+      48728,
+      61324,
+      32404,
+      16608,
+      62180,
+      63252,
+      61856,
+      14920,
+      61192,
+      54772,
+      60916,
+      52124,
+      48088,
+      61668,
+      57496,
+      62212,
+      28804,
+      18816,
+      11908,
+      31812,
+      33332,
+      36248,
+      39336,
+      544,
+      48916,
+      30340,
+      63188,
+      44880,
+      13880,
+      54216,
+      63280,
+      33528,
+      57948,
+      59268,
+      59592,
+      40052,
+      54724,
+      55500,
+      18376
+    ],
+    "query_errors": [
+      {
+        "pid": 60756,
+        "error": 5
+      },
+      {
+        "pid": 16212,
+        "error": 5
+      }
+    ],
+    "oracle_job_cleanup": "Each successful call verifies ActiveProcesses=0 before returning.",
+    "query_error_resolution": [
+      {
+        "pid": 60756,
+        "status": "reused by svchost.exe",
+        "creation_unix_seconds": 1794459808.877,
+        "latest_owned_log_unix_seconds": 1794458622.3967395
+      },
+      {
+        "pid": 16212,
+        "status": "not present in targeted Win32_Process query"
+      }
+    ],
+    "resolved": true
+  },
+  "source_sha256": {
+    "Cargo.toml": "b78393670821c664814d09032550ec1cc4724425fce8c2ec8565dbdb72ff5bd3",
+    "build.rs": "e31b25c1f8bc3068522838f0341092ec5a26e8c64162ed9f405463d2d1a3330b",
+    "src/lib.rs": "fea194b9762feef57d828c526a294d271f06f56a6e1db9415152625bc6ac66a4",
+    "src/algorithm.rs": "78ff2afc7320228d2b14ecf28b5cb45329293a24daae59aba0cb38c51812134b",
+    "src/ae.rs": "c827f960965c8c7d1871b30c5182ab46097a8ac07c7d9132c6ab4bcbc99327b6",
+    "src/ae_support.rs": "7574417adcafb72c5057c0532d45f2d4e2516858686b65dd385f8c87e7167f7f",
+    "src/reference_tests.rs": "00ea25ca8923d7094472a2c6d95cddddb34af8169188f28c69905fdb861bf763",
+    "tests/reference.cpp": "adaf9c79bfeb2cbfd76650eca172ffe3337c5ac94a4a90198e4e0a27ba181071",
+    "validate_supplemental.py": "18d6e273aea6f4132a36b18b60f2c2f73cb345f39a470943eed1446277d14f0b",
+    "collect_validation.py": "b9679774b9e23f131b802ed275dbcca9737d6eefc512e2d51c977b52ed967f2e"
+  },
+  "reference_source_sha256": {
+    "core\\olmblur_fullworker_helper.cpp": "44b2000658065648241019f0e7362a5073edd00210da9b2a31ed2bf0db5281a1",
+    "core\\olmblur_helper.cpp": "a8d8f3171c123496565713cf99f78b4d693b181c9667bf89b0dee30fcba616ca",
+    "core\\olmblur_worker16_legacy.cpp": "92c06601e4552161ba71630d41dae9c02aa493e557807ff589be7f0e1b56581a",
+    "core\\olmblur_worker16_nonlegacy.cpp": "546fe8e0485c26956079f8e0f3aa8516c72a395279f47e3aa59c3448c90e17b9",
+    "core\\olmblur_worker32_legacy.cpp": "bcc1740b8f9b457af4899f0ba7183b74a61c1faed954313a76012ce30d006124",
+    "core\\olmblur_worker32_nonlegacy.cpp": "c5f3e0caa5df58dc8a383239993ffaea63fc84ac800f9dd761b71b0818273fa9",
+    "core\\olmblur_worker8_legacy.cpp": "c0d4217e73ba0921274c5cdfd5a3990d486fc8e35d2433bce6d9111e4d4e174a",
+    "core\\olmblur_worker_orchestration.cpp": "5cc0fa38ad4ec289b7cdde44b4896a76ee602899ead1cf43e5e6214897cc48fe"
+  },
+  "tests": {
+    "passed": 4,
+    "cpp_cases": 576,
+    "thread_counts": [
+      1,
+      4
+    ],
+    "comparisons": 1152,
+    "cpp_optimization": "O0: preserve source NaN operand order"
+  },
+  "pre_format_run": {
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-blur\\validation\\bin\\OLMBlur.aex",
+      "sha256": "8f601e9b46ad65ed19ad140e820279eccfe72d3b72a3047d98844a978e736090"
+    },
+    "seed": 20261112,
+    "routes": {
+      "smart8": {
+        "status": "tested",
+        "reason": null,
+        "cases_run": 103,
+        "route_scope": "ae_dispatch_contract",
+        "exact": 103,
+        "mismatched": 0,
+        "reference_unrenderable": 0,
+        "reference_timeout": 0,
+        "candidate_failure": 0,
+        "tool_error": 0,
+        "reference_harness_failures": 0,
+        "candidate_harness_failures": 0,
+        "max_abs_diff": 0.0,
+        "mismatching_pixels": 0,
+        "first_coordinates": []
+      },
+      "smart16": {
+        "status": "tested",
+        "reason": null,
+        "cases_run": 103,
+        "route_scope": "ae_dispatch_contract",
+        "exact": 103,
+        "mismatched": 0,
+        "reference_unrenderable": 0,
+        "reference_timeout": 0,
+        "candidate_failure": 0,
+        "tool_error": 0,
+        "reference_harness_failures": 0,
+        "candidate_harness_failures": 0,
+        "max_abs_diff": 0.0,
+        "mismatching_pixels": 0,
+        "first_coordinates": []
+      },
+      "smart32": {
+        "status": "tested",
+        "reason": null,
+        "cases_run": 103,
+        "route_scope": "ae_dispatch_contract",
+        "exact": 103,
+        "mismatched": 0,
+        "reference_unrenderable": 0,
+        "reference_timeout": 0,
+        "candidate_failure": 0,
+        "tool_error": 0,
+        "reference_harness_failures": 0,
+        "candidate_harness_failures": 0,
+        "max_abs_diff": 0.0,
+        "mismatching_pixels": 0,
+        "first_coordinates": []
+      }
+    },
+    "included_in_final_counts": false
+  },
+  "hoisting_candidates": [
+    "fixed slider declaration and checkout",
+    "checkbox initial/default split",
+    "full-frame SmartPreRender union and extra-pixels flag",
+    "AEGP suite leases and visibility callback"
+  ],
+  "new_external_dependencies": false
+}

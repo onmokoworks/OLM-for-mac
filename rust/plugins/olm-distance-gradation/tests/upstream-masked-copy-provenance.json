@@ -1,0 +1,7 @@
+{
+  "case": "validation\\upstream\\recheck-v8\\case-0076-smart8",
+  "original_sha256": "fd151598c015baf7068ce7ef59eead7430657cab083d9000c2a35e9b84da5e63",
+  "manifest_sha256": "25f6a59f57a558d94e0e32a6e4d6f3020ea00914782a4187aa6e8848d78055ef",
+  "fixture_sha256": "309fad5fb121b72db8df5e36dcb172b66c7d39eac41ddd1a5367e38a0ab51d9e",
+  "packing": "four little-endian dimensions; input then expected output packed ARGB8"
+}

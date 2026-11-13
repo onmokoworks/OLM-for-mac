@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "module_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "routes": [
+    "smart8",
+    "smart16",
+    "smart32"
+  ],
+  "undefined_contract": true,
+  "hooks": [
+    {
+      "name": "noise_endpoint_1",
+      "rva": "0x95cd",
+      "instruction": "f30f594c8804",
+      "kind": "oob_read",
+      "table": {
+        "reg": "rax"
+      },
+      "index_reg": "rcx",
+      "index_add": 1,
+      "count": 101,
+      "basis": "101-float allocation; rbx+0x28 stores table pointer; generator initializes indices 0..100. Only signed index outside [0,101) is mutated, then restored before other threads resume. See profiles/README.md."
+    },
+    {
+      "name": "noise_endpoint_0",
+      "rva": "0x95d8",
+      "instruction": "f30f590488",
+      "kind": "oob_read",
+      "table": {
+        "reg": "rax"
+      },
+      "index_reg": "rcx",
+      "index_add": 0,
+      "count": 101,
+      "basis": "101-float allocation; rbx+0x28 stores table pointer; generator initializes indices 0..100. Only signed index outside [0,101) is mutated, then restored before other threads resume. See profiles/README.md."
+    }
+  ]
+}

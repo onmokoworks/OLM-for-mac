@@ -1,0 +1,1522 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-12",
+  "seed": 20261112,
+  "cases_per_route": 60,
+  "jobs": 3,
+  "upstream_merge": "7418be04e400c5020ea5b088e904db3fdf82b052",
+  "old_binaries": {
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d"
+    },
+    "worker": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\target\\minihost-build\\aex_worker.exe",
+      "sha256": "0481df5fa425af28f0e8a39ea9386185de13656c3c9d488042bed2244bdf8302"
+    }
+  },
+  "new_binaries": {
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+    },
+    "worker": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\target\\minihost-build\\aex_worker.exe",
+      "sha256": "186f0f00b1e9ff793f6ff5f9f23d6167188af3276d298b2ce6764bb6cf9b94f1"
+    }
+  },
+  "source": {
+    "olm_oracle.py": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+      "sha256": "f53efa307fe5db9971a5740d553c595385634ef2386973d72aa03c20ff4522f3"
+    },
+    "oracle_resident.py": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+      "sha256": "e8c58b88ccd2b039fa6168a1582bba3eb5e93f06fd371401339a9761c39d2857"
+    },
+    "qualify_resident.py": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\qualify_resident.py",
+      "sha256": "fea6b6d0a95bd61f1fe90a7fa225abe19f487a39e6eea0ae3496f7d5553b1175"
+    }
+  },
+  "initial_campaign": {
+    "summary": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\summary.json",
+      "sha256": "47bf52203a67237dfcd613be2f4d5b4cdfab269a174fcc5b4a3026e52d5fa328"
+    },
+    "all_equivalent": false,
+    "rows": [
+      {
+        "route_cases": 180,
+        "verdicts_equal": 180,
+        "side_outputs_equal": 360,
+        "all_equivalent": true,
+        "per_process_wall_seconds": 60.103846399997565,
+        "resident_wall_seconds": 11.742461099998764,
+        "speedup": 5.118505046612749,
+        "name": "original-ColorKeep",
+        "corpus": "lifecycle",
+        "order": [
+          "per_process",
+          "resident"
+        ],
+        "identities": {
+          "harness": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+          },
+          "reference": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\ColorKeep.aex",
+            "sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86"
+          },
+          "candidate": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\ColorKeep.aex",
+            "sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86"
+          },
+          "tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+          },
+          "resident_tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+            "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+          }
+        },
+        "inventory_diff": []
+      },
+      {
+        "route_cases": 180,
+        "verdicts_equal": 180,
+        "side_outputs_equal": 360,
+        "all_equivalent": true,
+        "per_process_wall_seconds": 92.67134900000019,
+        "resident_wall_seconds": 17.078647499998624,
+        "speedup": 5.426152685685893,
+        "name": "original-DistanceGradation",
+        "corpus": "lifecycle",
+        "order": [
+          "resident",
+          "per_process"
+        ],
+        "identities": {
+          "harness": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+          },
+          "reference": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\DistanceGradation.aex",
+            "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+          },
+          "candidate": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\DistanceGradation.aex",
+            "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+          },
+          "tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+          },
+          "resident_tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+            "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+          }
+        },
+        "inventory_diff": []
+      },
+      {
+        "route_cases": 180,
+        "verdicts_equal": 180,
+        "side_outputs_equal": 360,
+        "all_equivalent": true,
+        "per_process_wall_seconds": 59.71076750000066,
+        "resident_wall_seconds": 13.15460990000065,
+        "speedup": 4.539151518282401,
+        "name": "original-OLMBlur",
+        "corpus": "lifecycle",
+        "order": [
+          "per_process",
+          "resident"
+        ],
+        "identities": {
+          "harness": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+          },
+          "reference": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+            "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+          },
+          "candidate": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+            "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+          },
+          "tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+          },
+          "resident_tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+            "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+          }
+        },
+        "inventory_diff": []
+      },
+      {
+        "route_cases": 180,
+        "verdicts_equal": 179,
+        "side_outputs_equal": 359,
+        "all_equivalent": false,
+        "per_process_wall_seconds": 59.302988899999036,
+        "resident_wall_seconds": 14.351701600000524,
+        "speedup": 4.132122486437209,
+        "name": "original-OLMColorKey",
+        "corpus": "lifecycle",
+        "order": [
+          "resident",
+          "per_process"
+        ],
+        "identities": {
+          "harness": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+          },
+          "reference": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMColorKey.aex",
+            "sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c"
+          },
+          "candidate": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMColorKey.aex",
+            "sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c"
+          },
+          "tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+          },
+          "resident_tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+            "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+          }
+        },
+        "inventory_diff": []
+      },
+      {
+        "route_cases": 180,
+        "verdicts_equal": 180,
+        "side_outputs_equal": 360,
+        "all_equivalent": true,
+        "per_process_wall_seconds": 59.01774749999822,
+        "resident_wall_seconds": 9.978748099998484,
+        "speedup": 5.914343854416686,
+        "name": "original-OLMDirectionalBlur",
+        "corpus": "lifecycle",
+        "order": [
+          "per_process",
+          "resident"
+        ],
+        "identities": {
+          "harness": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+          },
+          "reference": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+            "sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+          },
+          "candidate": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+            "sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+          },
+          "tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+          },
+          "resident_tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+            "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+          }
+        },
+        "inventory_diff": []
+      },
+      {
+        "route_cases": 180,
+        "verdicts_equal": 180,
+        "side_outputs_equal": 360,
+        "all_equivalent": true,
+        "per_process_wall_seconds": 120.63046179999947,
+        "resident_wall_seconds": 35.89304670000274,
+        "speedup": 3.360830937764619,
+        "name": "original-OLMKiraKira",
+        "corpus": "lifecycle",
+        "order": [
+          "resident",
+          "per_process"
+        ],
+        "identities": {
+          "harness": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+          },
+          "reference": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMKiraKira.aex",
+            "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+          },
+          "candidate": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMKiraKira.aex",
+            "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+          },
+          "tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+          },
+          "resident_tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+            "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+          }
+        },
+        "inventory_diff": []
+      },
+      {
+        "route_cases": 180,
+        "verdicts_equal": 180,
+        "side_outputs_equal": 360,
+        "all_equivalent": true,
+        "per_process_wall_seconds": 59.392498600002,
+        "resident_wall_seconds": 12.923043700000562,
+        "speedup": 4.595859921142217,
+        "name": "original-OLMRadialBlur",
+        "corpus": "lifecycle",
+        "order": [
+          "per_process",
+          "resident"
+        ],
+        "identities": {
+          "harness": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+          },
+          "reference": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+            "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+          },
+          "candidate": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+            "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+          },
+          "tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+          },
+          "resident_tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+            "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+          }
+        },
+        "inventory_diff": []
+      },
+      {
+        "route_cases": 120,
+        "verdicts_equal": 120,
+        "side_outputs_equal": 240,
+        "all_equivalent": true,
+        "per_process_wall_seconds": 38.53656559999945,
+        "resident_wall_seconds": 6.981394800000999,
+        "speedup": 5.519894906959557,
+        "name": "original-OLMSmoother",
+        "corpus": "lifecycle",
+        "order": [
+          "resident",
+          "per_process"
+        ],
+        "identities": {
+          "harness": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+          },
+          "reference": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother.aex",
+            "sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
+          },
+          "candidate": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother.aex",
+            "sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
+          },
+          "tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+          },
+          "resident_tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+            "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+          }
+        },
+        "inventory_diff": []
+      },
+      {
+        "route_cases": 180,
+        "verdicts_equal": 180,
+        "side_outputs_equal": 360,
+        "all_equivalent": true,
+        "per_process_wall_seconds": 60.24761740000031,
+        "resident_wall_seconds": 12.094485300000088,
+        "speedup": 4.981412263984469,
+        "name": "original-OLMSmoother2",
+        "corpus": "lifecycle",
+        "order": [
+          "per_process",
+          "resident"
+        ],
+        "identities": {
+          "harness": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+          },
+          "reference": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother2.aex",
+            "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+          },
+          "candidate": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother2.aex",
+            "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+          },
+          "tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+          },
+          "resident_tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+            "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+          }
+        },
+        "inventory_diff": []
+      },
+      {
+        "route_cases": 180,
+        "verdicts_equal": 180,
+        "side_outputs_equal": 360,
+        "all_equivalent": true,
+        "per_process_wall_seconds": 67.36480759999904,
+        "resident_wall_seconds": 12.345518699999957,
+        "speedup": 5.456620271451152,
+        "name": "original-OLMToonDilate",
+        "corpus": "lifecycle",
+        "order": [
+          "resident",
+          "per_process"
+        ],
+        "identities": {
+          "harness": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+          },
+          "reference": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMToonDilate.aex",
+            "sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
+          },
+          "candidate": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMToonDilate.aex",
+            "sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
+          },
+          "tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+          },
+          "resident_tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+            "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+          }
+        },
+        "inventory_diff": []
+      },
+      {
+        "route_cases": 180,
+        "verdicts_equal": 180,
+        "side_outputs_equal": 360,
+        "all_equivalent": true,
+        "per_process_wall_seconds": 63.9983132999987,
+        "resident_wall_seconds": 12.376517400000012,
+        "speedup": 5.170946820629739,
+        "name": "rust-OLMBlur",
+        "corpus": "full_generator",
+        "order": [
+          "per_process",
+          "resident"
+        ],
+        "identities": {
+          "harness": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+          },
+          "reference": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+            "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+          },
+          "candidate": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMBlur.aex",
+            "sha256": "b5894283c866ac86850ccc9c1aa9d91f2b51d1fba432982484c8c52ca721f54b"
+          },
+          "tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+          },
+          "resident_tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+            "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+          }
+        },
+        "inventory_diff": []
+      },
+      {
+        "route_cases": 180,
+        "verdicts_equal": 180,
+        "side_outputs_equal": 360,
+        "all_equivalent": true,
+        "per_process_wall_seconds": 59.703648700000485,
+        "resident_wall_seconds": 17.920786500002578,
+        "speedup": 3.331530605534076,
+        "name": "rust-ColorKeep",
+        "corpus": "full_generator",
+        "order": [
+          "resident",
+          "per_process"
+        ],
+        "identities": {
+          "harness": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+          },
+          "reference": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\ColorKeep.aex",
+            "sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86"
+          },
+          "candidate": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\ColorKeep.aex",
+            "sha256": "2bcfc5a746c503deba995cfc6cab5500a5b1b61584b4b6a5cf079223e5d235ae"
+          },
+          "tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+            "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+          },
+          "resident_tool": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+            "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+          }
+        },
+        "inventory_diff": []
+      }
+    ]
+  },
+  "colorkey_exception": "Initial per-process case 22 smart8 reference failed to open session with os error 80 (file already exists), before output. Original report retained. Three unchanged replays matched both resident sides, followed by a separate complete 60-case-per-route rerun. No per-case result was overwritten. Root cause is not established.",
+  "colorkey_replays": {
+    "evidence": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\colorkey-startup-replays\\comparison.json",
+      "sha256": "092a48c3d3980bfecb128304e85847b00afd5675e2a2763703356149f377114f"
+    },
+    "results": [
+      {
+        "replay": 0,
+        "exit_code": 0,
+        "sides": {
+          "reference": true,
+          "candidate": true
+        }
+      },
+      {
+        "replay": 1,
+        "exit_code": 0,
+        "sides": {
+          "reference": true,
+          "candidate": true
+        }
+      },
+      {
+        "replay": 2,
+        "exit_code": 0,
+        "sides": {
+          "reference": true,
+          "candidate": true
+        }
+      }
+    ]
+  },
+  "qualified_full_campaigns": [
+    {
+      "route_cases": 180,
+      "verdicts_equal": 180,
+      "side_outputs_equal": 360,
+      "all_equivalent": true,
+      "per_process_wall_seconds": 60.103846399997565,
+      "resident_wall_seconds": 11.742461099998764,
+      "speedup": 5.118505046612749,
+      "name": "original-ColorKeep",
+      "corpus": "lifecycle",
+      "order": [
+        "per_process",
+        "resident"
+      ],
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\ColorKeep.aex",
+          "sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\ColorKeep.aex",
+          "sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+        },
+        "resident_tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+          "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+        }
+      },
+      "inventory_diff": [],
+      "equivalence_evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-ColorKeep\\equivalence.json",
+        "sha256": "190dd1faa741f302b21b35fd1290354881d7e1631c7efbd643f2984727dde81c"
+      },
+      "summaries": {
+        "resident": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-ColorKeep\\resident\\summary.json",
+          "sha256": "777506cf5d95acff2d30e31340256dd4576736c67add3c3edba56b427a340b56"
+        },
+        "per_process": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-ColorKeep\\per_process\\summary.json",
+          "sha256": "bfd8f6b1d5ef13ec206b9c166cb489138a4aee86c876548626c2f2f3a4387c90"
+        }
+      }
+    },
+    {
+      "route_cases": 180,
+      "verdicts_equal": 180,
+      "side_outputs_equal": 360,
+      "all_equivalent": true,
+      "per_process_wall_seconds": 92.67134900000019,
+      "resident_wall_seconds": 17.078647499998624,
+      "speedup": 5.426152685685893,
+      "name": "original-DistanceGradation",
+      "corpus": "lifecycle",
+      "order": [
+        "resident",
+        "per_process"
+      ],
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\DistanceGradation.aex",
+          "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\DistanceGradation.aex",
+          "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+        },
+        "resident_tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+          "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+        }
+      },
+      "inventory_diff": [],
+      "equivalence_evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-DistanceGradation\\equivalence.json",
+        "sha256": "227ac51b40fecab776cafa420d56471e67151ed5b073b50d975fcc675d883dab"
+      },
+      "summaries": {
+        "resident": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-DistanceGradation\\resident\\summary.json",
+          "sha256": "e4566fbe974ec6e45a2f845143f1e015b06cbca5077f2198a30e548411313ac7"
+        },
+        "per_process": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-DistanceGradation\\per_process\\summary.json",
+          "sha256": "7728b023bc62ab8508f3f3a16462335a731feebee10042422fcf91bf1b62b2ba"
+        }
+      }
+    },
+    {
+      "route_cases": 180,
+      "verdicts_equal": 180,
+      "side_outputs_equal": 360,
+      "all_equivalent": true,
+      "per_process_wall_seconds": 59.71076750000066,
+      "resident_wall_seconds": 13.15460990000065,
+      "speedup": 4.539151518282401,
+      "name": "original-OLMBlur",
+      "corpus": "lifecycle",
+      "order": [
+        "per_process",
+        "resident"
+      ],
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+          "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+          "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+        },
+        "resident_tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+          "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+        }
+      },
+      "inventory_diff": [],
+      "equivalence_evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-OLMBlur\\equivalence.json",
+        "sha256": "8e4bc91e7f1a02ce9fb767232131d18893781d25badc48b28aa3f90de6a65920"
+      },
+      "summaries": {
+        "resident": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-OLMBlur\\resident\\summary.json",
+          "sha256": "e3a7971d5fee476d2f6984740d85c11e2c35804e3494e11f372aee961a8396a7"
+        },
+        "per_process": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-OLMBlur\\per_process\\summary.json",
+          "sha256": "413594e71f187e3b66411747a89f39f4d4e55160f5b60957b280b5dac40c1c4b"
+        }
+      }
+    },
+    {
+      "route_cases": 180,
+      "verdicts_equal": 180,
+      "side_outputs_equal": 360,
+      "all_equivalent": true,
+      "per_process_wall_seconds": 60.0622786999993,
+      "resident_wall_seconds": 13.510737800002971,
+      "speedup": 4.445521746413145,
+      "name": "original-OLMColorKey",
+      "corpus": "lifecycle",
+      "order": [
+        "per_process",
+        "resident"
+      ],
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMColorKey.aex",
+          "sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMColorKey.aex",
+          "sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "f53efa307fe5db9971a5740d553c595385634ef2386973d72aa03c20ff4522f3"
+        },
+        "resident_tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+          "sha256": "e8c58b88ccd2b039fa6168a1582bba3eb5e93f06fd371401339a9761c39d2857"
+        }
+      },
+      "inventory_diff": [],
+      "equivalence_evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-colorkey-requalification-60\\original-OLMColorKey\\equivalence.json",
+        "sha256": "5d55fc3dcc38e1249c34e2a9e7adb0ac33d56e89e7181ed9cc694edb4c35badd"
+      },
+      "summaries": {
+        "resident": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-colorkey-requalification-60\\original-OLMColorKey\\resident\\summary.json",
+          "sha256": "5f5b35be80c6517a68239b6732d91816eb6382527e81c4e0465e4b4925319b56"
+        },
+        "per_process": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-colorkey-requalification-60\\original-OLMColorKey\\per_process\\summary.json",
+          "sha256": "8452b814312ca87c9437090aaff6fe403a71336e2b413644b1a10234d21a7856"
+        }
+      }
+    },
+    {
+      "route_cases": 180,
+      "verdicts_equal": 180,
+      "side_outputs_equal": 360,
+      "all_equivalent": true,
+      "per_process_wall_seconds": 59.01774749999822,
+      "resident_wall_seconds": 9.978748099998484,
+      "speedup": 5.914343854416686,
+      "name": "original-OLMDirectionalBlur",
+      "corpus": "lifecycle",
+      "order": [
+        "per_process",
+        "resident"
+      ],
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+          "sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+          "sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+        },
+        "resident_tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+          "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+        }
+      },
+      "inventory_diff": [],
+      "equivalence_evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-OLMDirectionalBlur\\equivalence.json",
+        "sha256": "a8d63b6775dfffda27047b9eaa0c64e31a67c2ec3a533c1b8dfd07757e274925"
+      },
+      "summaries": {
+        "resident": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-OLMDirectionalBlur\\resident\\summary.json",
+          "sha256": "3c3fc8f952d0e6d3689f59fe5485cc947192db684278e5ae3943055558bb8a21"
+        },
+        "per_process": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-OLMDirectionalBlur\\per_process\\summary.json",
+          "sha256": "d0873e65ef173aa3e805d09129dbf1512398c85ef75846cf578f79e9f1271485"
+        }
+      }
+    },
+    {
+      "route_cases": 180,
+      "verdicts_equal": 180,
+      "side_outputs_equal": 360,
+      "all_equivalent": true,
+      "per_process_wall_seconds": 120.63046179999947,
+      "resident_wall_seconds": 35.89304670000274,
+      "speedup": 3.360830937764619,
+      "name": "original-OLMKiraKira",
+      "corpus": "lifecycle",
+      "order": [
+        "resident",
+        "per_process"
+      ],
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMKiraKira.aex",
+          "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMKiraKira.aex",
+          "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+        },
+        "resident_tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+          "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+        }
+      },
+      "inventory_diff": [],
+      "equivalence_evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-OLMKiraKira\\equivalence.json",
+        "sha256": "9629648453ce07fbcb8b40179a5101b7a73e4db4b83d768858a5d62e55f4ca23"
+      },
+      "summaries": {
+        "resident": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-OLMKiraKira\\resident\\summary.json",
+          "sha256": "5e1308bea9c0a501a863b1e1efd570165d94b847a55ac753b157de8ec72d31f0"
+        },
+        "per_process": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-OLMKiraKira\\per_process\\summary.json",
+          "sha256": "cc012bdda7c167b202956166cd5885498641d2a95440af37a7ca9c24edf6acbe"
+        }
+      }
+    },
+    {
+      "route_cases": 180,
+      "verdicts_equal": 180,
+      "side_outputs_equal": 360,
+      "all_equivalent": true,
+      "per_process_wall_seconds": 59.392498600002,
+      "resident_wall_seconds": 12.923043700000562,
+      "speedup": 4.595859921142217,
+      "name": "original-OLMRadialBlur",
+      "corpus": "lifecycle",
+      "order": [
+        "per_process",
+        "resident"
+      ],
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+          "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+          "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+        },
+        "resident_tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+          "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+        }
+      },
+      "inventory_diff": [],
+      "equivalence_evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-OLMRadialBlur\\equivalence.json",
+        "sha256": "4de803ff6ba75fd2a5f5ef424be608f14c7c8f7d860ed28dd3222a92c966a305"
+      },
+      "summaries": {
+        "resident": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-OLMRadialBlur\\resident\\summary.json",
+          "sha256": "c3f4037b5603113d241970b8ede5fb2b8c05051db194d42bde9fb20a0e2ebd3c"
+        },
+        "per_process": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-OLMRadialBlur\\per_process\\summary.json",
+          "sha256": "6881171bf403878640d24755f87e9eee383696c983120593b601159859ef34c7"
+        }
+      }
+    },
+    {
+      "route_cases": 120,
+      "verdicts_equal": 120,
+      "side_outputs_equal": 240,
+      "all_equivalent": true,
+      "per_process_wall_seconds": 38.53656559999945,
+      "resident_wall_seconds": 6.981394800000999,
+      "speedup": 5.519894906959557,
+      "name": "original-OLMSmoother",
+      "corpus": "lifecycle",
+      "order": [
+        "resident",
+        "per_process"
+      ],
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother.aex",
+          "sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother.aex",
+          "sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+        },
+        "resident_tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+          "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+        }
+      },
+      "inventory_diff": [],
+      "equivalence_evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-OLMSmoother\\equivalence.json",
+        "sha256": "85edcfe9bf9b58c4846259c1e6b40ec635231a4e4cb345ae0a9a5a8587064137"
+      },
+      "summaries": {
+        "resident": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-OLMSmoother\\resident\\summary.json",
+          "sha256": "19083b58b490c71a605970b1a5ef00cd28668c71ea4faea2e3fa9bece5431321"
+        },
+        "per_process": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-OLMSmoother\\per_process\\summary.json",
+          "sha256": "98547374a4f4d970d716626a3be29c1e2f130d43dbabb25470ad23645e29e843"
+        }
+      }
+    },
+    {
+      "route_cases": 180,
+      "verdicts_equal": 180,
+      "side_outputs_equal": 360,
+      "all_equivalent": true,
+      "per_process_wall_seconds": 60.24761740000031,
+      "resident_wall_seconds": 12.094485300000088,
+      "speedup": 4.981412263984469,
+      "name": "original-OLMSmoother2",
+      "corpus": "lifecycle",
+      "order": [
+        "per_process",
+        "resident"
+      ],
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother2.aex",
+          "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother2.aex",
+          "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+        },
+        "resident_tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+          "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+        }
+      },
+      "inventory_diff": [],
+      "equivalence_evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-OLMSmoother2\\equivalence.json",
+        "sha256": "84111d6e24db55f94cc06e5fc58eef33c5a2c3b32635dbcb81e84d4c918ff6be"
+      },
+      "summaries": {
+        "resident": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-OLMSmoother2\\resident\\summary.json",
+          "sha256": "999b1ebf7cf6601f77da148ed364b8d5af9d7b0e853f33b7451668c215804136"
+        },
+        "per_process": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-OLMSmoother2\\per_process\\summary.json",
+          "sha256": "9e644f3091658b9402cae1bc038783c2a37030e00b5be4e4dbcff4e1d3aaf5ae"
+        }
+      }
+    },
+    {
+      "route_cases": 180,
+      "verdicts_equal": 180,
+      "side_outputs_equal": 360,
+      "all_equivalent": true,
+      "per_process_wall_seconds": 67.36480759999904,
+      "resident_wall_seconds": 12.345518699999957,
+      "speedup": 5.456620271451152,
+      "name": "original-OLMToonDilate",
+      "corpus": "lifecycle",
+      "order": [
+        "resident",
+        "per_process"
+      ],
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMToonDilate.aex",
+          "sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMToonDilate.aex",
+          "sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+        },
+        "resident_tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+          "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+        }
+      },
+      "inventory_diff": [],
+      "equivalence_evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-OLMToonDilate\\equivalence.json",
+        "sha256": "eb97b5d588e05a9c056ae5ebc746be24621ef7ee5ec06feb00c15e275694bd21"
+      },
+      "summaries": {
+        "resident": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-OLMToonDilate\\resident\\summary.json",
+          "sha256": "4e87e9bc4322765b92cff89f3459c4cc40f04755140a6cbbb07d3301c9e562d9"
+        },
+        "per_process": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\original-OLMToonDilate\\per_process\\summary.json",
+          "sha256": "5218617a9ccd0ace2e2f2dceb6ff0853741ddd5af6606317f414f5ff25d8e2f2"
+        }
+      }
+    },
+    {
+      "route_cases": 180,
+      "verdicts_equal": 180,
+      "side_outputs_equal": 360,
+      "all_equivalent": true,
+      "per_process_wall_seconds": 63.9983132999987,
+      "resident_wall_seconds": 12.376517400000012,
+      "speedup": 5.170946820629739,
+      "name": "rust-OLMBlur",
+      "corpus": "full_generator",
+      "order": [
+        "per_process",
+        "resident"
+      ],
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+          "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMBlur.aex",
+          "sha256": "b5894283c866ac86850ccc9c1aa9d91f2b51d1fba432982484c8c52ca721f54b"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+        },
+        "resident_tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+          "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+        }
+      },
+      "inventory_diff": [],
+      "equivalence_evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\rust-OLMBlur\\equivalence.json",
+        "sha256": "6c0839bd127c1b82f5f5b40eab77b462006e31ebb01d1be8978e3c69d3000e74"
+      },
+      "summaries": {
+        "resident": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\rust-OLMBlur\\resident\\summary.json",
+          "sha256": "4538f6bf1d49eb11b34948c2e34808292e2fec0444f35a7ccf770832abf011e3"
+        },
+        "per_process": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\rust-OLMBlur\\per_process\\summary.json",
+          "sha256": "16ddd713f2c6359f2373d400995720084b00c96be052bb669ef563cd1e98aa61"
+        }
+      }
+    },
+    {
+      "route_cases": 180,
+      "verdicts_equal": 180,
+      "side_outputs_equal": 360,
+      "all_equivalent": true,
+      "per_process_wall_seconds": 59.703648700000485,
+      "resident_wall_seconds": 17.920786500002578,
+      "speedup": 3.331530605534076,
+      "name": "rust-ColorKeep",
+      "corpus": "full_generator",
+      "order": [
+        "resident",
+        "per_process"
+      ],
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\ColorKeep.aex",
+          "sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\ColorKeep.aex",
+          "sha256": "2bcfc5a746c503deba995cfc6cab5500a5b1b61584b4b6a5cf079223e5d235ae"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "44e8ebe6ae905953f4a66efb8675f890132d919dac520ca75459c0bb65aee71b"
+        },
+        "resident_tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+          "sha256": "2c7fff9f35ec85256abaf4e0c9108ac69552dc36869a303daf7ce697c8d9ec70"
+        }
+      },
+      "inventory_diff": [],
+      "equivalence_evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\rust-ColorKeep\\equivalence.json",
+        "sha256": "1f49a4a23c49d07d78e8187ce805dc92739ee216a3da67a770b4416ae4fe4b55"
+      },
+      "summaries": {
+        "resident": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\rust-ColorKeep\\resident\\summary.json",
+          "sha256": "24f899cb6162363ad639b20fc2164cefc7a73290c4b33dd2f1e1e4091b842731"
+        },
+        "per_process": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\rust-ColorKeep\\per_process\\summary.json",
+          "sha256": "d27b7982ad390d57624360272c8f1771051a9b58d0204d6c22c4defa55d833fe"
+        }
+      }
+    }
+  ],
+  "total_route_cases": 2100,
+  "total_side_outputs": 4200,
+  "total_artifact_comparisons": 6960,
+  "per_process_seconds": 801.4399020999954,
+  "resident_seconds": 175.99999750000643,
+  "tests": {
+    "host_audio_runtime_selftest.process": {
+      "evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\fastrender\\runs\\resident-upgrade\\host_audio_runtime_selftest.process.json",
+        "sha256": "07065341b3bb04e25aedec2b93f71ac1edb7f1431ecd78dd3201eb9e28267477"
+      },
+      "returncode": 0
+    },
+    "independent_cases_cli.process": {
+      "evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\fastrender\\runs\\resident-upgrade\\independent_cases_cli.process.json",
+        "sha256": "fc3e30a043681c4a4f4b1827da1beedb6cebcaed25d0b8ce12dda80b6be60ff6"
+      },
+      "returncode": 0
+    },
+    "independent_cases_native.process": {
+      "evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\fastrender\\runs\\resident-upgrade\\independent_cases_native.process.json",
+        "sha256": "47b423b76f1dadc15096a0510912bb6046d30ec759f091136e7085cc8e2f0dff"
+      },
+      "returncode": 0
+    },
+    "native-build-final.process": {
+      "evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\fastrender\\runs\\resident-upgrade\\native-build-final.process.json",
+        "sha256": "7bac4fdc89997ec91353daa7efe6ec514023542426695ef790231bb8428ae71a"
+      },
+      "returncode": 0
+    },
+    "native-build.process": {
+      "evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\fastrender\\runs\\resident-upgrade\\native-build.process.json",
+        "sha256": "be3630da25cc572947ebadfa8dafa8d52a50dc66f8d85fe6ad949138fe66827c"
+      },
+      "returncode": 1
+    },
+    "oracle-tests-final.process": {
+      "evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\fastrender\\runs\\resident-upgrade\\oracle-tests-final.process.json",
+        "sha256": "62be70b183eccf6ae2baf49e3d0ec125f6761f8edceee6255fb64bbb852e0861"
+      },
+      "returncode": 0
+    },
+    "oracle-tests.process": {
+      "evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\fastrender\\runs\\resident-upgrade\\oracle-tests.process.json",
+        "sha256": "4182b4b299045415fa438cc23625292816f7d0d441d516dceb0a7fbe83106c81"
+      },
+      "returncode": 0
+    },
+    "worker_aegp_scene_model_selftest.process": {
+      "evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\fastrender\\runs\\resident-upgrade\\worker_aegp_scene_model_selftest.process.json",
+        "sha256": "120689672dd4aee0d3748f653c2bcff59b07e48c43cc4a5cfceaf9b462602fe4"
+      },
+      "returncode": 0
+    },
+    "worker_handle_runtime_selftest.process": {
+      "evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\fastrender\\runs\\resident-upgrade\\worker_handle_runtime_selftest.process.json",
+        "sha256": "1269ea47e67fb8bfd04a502247a36748f44e4f10047d734fb0e571c4fb2fae82"
+      },
+      "returncode": 0
+    },
+    "worker_render_lifecycle_selftest.process": {
+      "evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\fastrender\\runs\\resident-upgrade\\worker_render_lifecycle_selftest.process.json",
+        "sha256": "c1f485e48a98fbf1e02716a809f137a6c8865a4911eabe31c46b343521e5d3e2"
+      },
+      "returncode": 0
+    },
+    "oracle-tests-final45.process": {
+      "evidence": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\fastrender\\runs\\resident-upgrade\\oracle-tests-final45.process.json",
+        "sha256": "28eda075d6f2fdf8d5406959478d596bb7f539ce8351f2805183ab9dc7906734"
+      },
+      "returncode": 0
+    }
+  },
+  "baseline": {
+    "evidence": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\fastrender\\runs\\rebuilt-baseline\\byte-comparison.json",
+      "sha256": "0f37094de3fd27651e4cedd8618e34f99058dd1b8a4ce7344f1aa70eda5c163b"
+    },
+    "comparison": {
+      "png_files": [
+        {
+          "plugin": "OLMBlur",
+          "case": 0,
+          "side": "reference",
+          "old_sha256": "85c97fa655185a164debecc4490262f54ce5f23e4d6c5d10a8fc90abbc80128a",
+          "new_sha256": "85c97fa655185a164debecc4490262f54ce5f23e4d6c5d10a8fc90abbc80128a",
+          "equal": true
+        },
+        {
+          "plugin": "OLMBlur",
+          "case": 0,
+          "side": "candidate",
+          "old_sha256": "85c97fa655185a164debecc4490262f54ce5f23e4d6c5d10a8fc90abbc80128a",
+          "new_sha256": "85c97fa655185a164debecc4490262f54ce5f23e4d6c5d10a8fc90abbc80128a",
+          "equal": true
+        },
+        {
+          "plugin": "OLMBlur",
+          "case": 1,
+          "side": "reference",
+          "old_sha256": "a46dd869d0d4f68b18a73179da8cbec4b9537d468e6b775cda87ab0c38e11da3",
+          "new_sha256": "a46dd869d0d4f68b18a73179da8cbec4b9537d468e6b775cda87ab0c38e11da3",
+          "equal": true
+        },
+        {
+          "plugin": "OLMBlur",
+          "case": 1,
+          "side": "candidate",
+          "old_sha256": "a46dd869d0d4f68b18a73179da8cbec4b9537d468e6b775cda87ab0c38e11da3",
+          "new_sha256": "a46dd869d0d4f68b18a73179da8cbec4b9537d468e6b775cda87ab0c38e11da3",
+          "equal": true
+        },
+        {
+          "plugin": "OLMBlur",
+          "case": 2,
+          "side": "reference",
+          "old_sha256": "0db210fc64e8dc4a0bce2cb82cdb4c4c5b41bc328857aca04f400c3f057b1813",
+          "new_sha256": "0db210fc64e8dc4a0bce2cb82cdb4c4c5b41bc328857aca04f400c3f057b1813",
+          "equal": true
+        },
+        {
+          "plugin": "OLMBlur",
+          "case": 2,
+          "side": "candidate",
+          "old_sha256": "0db210fc64e8dc4a0bce2cb82cdb4c4c5b41bc328857aca04f400c3f057b1813",
+          "new_sha256": "0db210fc64e8dc4a0bce2cb82cdb4c4c5b41bc328857aca04f400c3f057b1813",
+          "equal": true
+        },
+        {
+          "plugin": "OLMSmoother",
+          "case": 0,
+          "side": "reference",
+          "old_sha256": "2573202841799c7fe6360a8ca4a0ee5a7d0459a3c76da61955301b1880ee6abc",
+          "new_sha256": "2573202841799c7fe6360a8ca4a0ee5a7d0459a3c76da61955301b1880ee6abc",
+          "equal": true
+        },
+        {
+          "plugin": "OLMSmoother",
+          "case": 0,
+          "side": "candidate",
+          "old_sha256": "2573202841799c7fe6360a8ca4a0ee5a7d0459a3c76da61955301b1880ee6abc",
+          "new_sha256": "2573202841799c7fe6360a8ca4a0ee5a7d0459a3c76da61955301b1880ee6abc",
+          "equal": true
+        },
+        {
+          "plugin": "OLMSmoother",
+          "case": 1,
+          "side": "reference",
+          "old_sha256": "d4b5ec924173f06fd2a4420e563d9ed0fba9ae0d4e96e7bdbeb331659cfc9a59",
+          "new_sha256": "d4b5ec924173f06fd2a4420e563d9ed0fba9ae0d4e96e7bdbeb331659cfc9a59",
+          "equal": true
+        },
+        {
+          "plugin": "OLMSmoother",
+          "case": 1,
+          "side": "candidate",
+          "old_sha256": "d4b5ec924173f06fd2a4420e563d9ed0fba9ae0d4e96e7bdbeb331659cfc9a59",
+          "new_sha256": "d4b5ec924173f06fd2a4420e563d9ed0fba9ae0d4e96e7bdbeb331659cfc9a59",
+          "equal": true
+        },
+        {
+          "plugin": "OLMSmoother",
+          "case": 2,
+          "side": "reference",
+          "old_sha256": "42cac20ea1ea8f2218cc96fc679d10ec2ab46bc2cb5416f604e34ebf33a9e7b7",
+          "new_sha256": "42cac20ea1ea8f2218cc96fc679d10ec2ab46bc2cb5416f604e34ebf33a9e7b7",
+          "equal": true
+        },
+        {
+          "plugin": "OLMSmoother",
+          "case": 2,
+          "side": "candidate",
+          "old_sha256": "42cac20ea1ea8f2218cc96fc679d10ec2ab46bc2cb5416f604e34ebf33a9e7b7",
+          "new_sha256": "42cac20ea1ea8f2218cc96fc679d10ec2ab46bc2cb5416f604e34ebf33a9e7b7",
+          "equal": true
+        }
+      ],
+      "all_equal": true
+    }
+  },
+  "controls": {
+    "resident-negative": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-negative\\summary.json",
+      "sha256": "d1e55a6971344449eee64ef798402c5ea838e25f083e8cd033d4601887380e05"
+    },
+    "resident-failure-final": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-failure-final\\summary.json",
+      "sha256": "e21288c400ed7187c7a199f0a1550306a8c9e4388a1490e8fccffde22cbbb999"
+    },
+    "resident-replay-final": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-replay-final\\summary.json",
+      "sha256": "e110d64f6b1f20a6075c7df5fc94467109c3765fd3cd3faa0dbd1f98132a98fa"
+    }
+  },
+  "final_partition_check": {
+    "evidence": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-qualification-60\\final-partition-check.json",
+      "sha256": "4663ee23d4dcc3ca122fe5326a35152618fcb7d96b058556639211c7bd0bba80"
+    },
+    "report": {
+      "all_identical": true,
+      "checks": [
+        {
+          "configuration": "original-ColorKeep",
+          "identical_manifests": 18,
+          "largest_bytes": 16173
+        },
+        {
+          "configuration": "original-DistanceGradation",
+          "identical_manifests": 18,
+          "largest_bytes": 16757
+        },
+        {
+          "configuration": "original-OLMBlur",
+          "identical_manifests": 18,
+          "largest_bytes": 16027
+        },
+        {
+          "configuration": "original-OLMColorKey",
+          "identical_manifests": 18,
+          "largest_bytes": 16319
+        },
+        {
+          "configuration": "original-OLMDirectionalBlur",
+          "identical_manifests": 18,
+          "largest_bytes": 16830
+        },
+        {
+          "configuration": "original-OLMKiraKira",
+          "identical_manifests": 18,
+          "largest_bytes": 16319
+        },
+        {
+          "configuration": "original-OLMRadialBlur",
+          "identical_manifests": 18,
+          "largest_bytes": 16465
+        },
+        {
+          "configuration": "original-OLMSmoother",
+          "identical_manifests": 12,
+          "largest_bytes": 16513
+        },
+        {
+          "configuration": "original-OLMSmoother2",
+          "identical_manifests": 18,
+          "largest_bytes": 16392
+        },
+        {
+          "configuration": "original-OLMToonDilate",
+          "identical_manifests": 18,
+          "largest_bytes": 16465
+        },
+        {
+          "configuration": "rust-ColorKeep",
+          "identical_manifests": 36,
+          "largest_bytes": 6818
+        },
+        {
+          "configuration": "rust-OLMBlur",
+          "identical_manifests": 36,
+          "largest_bytes": 6756
+        }
+      ],
+      "final_resident_source": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_resident.py",
+        "sha256": "e8c58b88ccd2b039fa6168a1582bba3eb5e93f06fd371401339a9761c39d2857"
+      }
+    }
+  },
+  "cleanup": {
+    "evidence": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\resident-cleanup.json",
+      "sha256": "d749a0bdddac952c8fcbc3f5cbb51d055e76861b021d24630fde6cb21378ed9b"
+    },
+    "process_logs": 9500,
+    "recorded_pids": 2690,
+    "states": {
+      "absent": 2665,
+      "pid_reused_after_record": 17,
+      "exited": 7,
+      "uninspectable": 1
+    },
+    "supplemental_observation": {
+      "pid": 35476,
+      "process_name": "svchost",
+      "disposition": "Access to creation time denied; Get-Process identifies an unrelated service reusing the recorded task PID. Left untouched."
+    },
+    "final_test_process": {
+      "pid": 59564,
+      "returncode": 0,
+      "joined_after_private_job_empty": true
+    }
+  },
+  "scope": "Originals: A/B/A/edited-C/B/A lifecycle corpus at 97x61, three scales; Rust OLMBlur/ColorKeep: ordinary full-range generator at 11x7 and 31x19. Single warm-filesystem sample per configuration; native AE conformance not claimed.",
+  "speedup_ratio_of_summed_times": 4.553635872068499,
+  "final_qualification_guard_check": [
+    {
+      "configuration": "original-ColorKeep",
+      "all_outputs_present_successful_equal": true
+    },
+    {
+      "configuration": "original-DistanceGradation",
+      "all_outputs_present_successful_equal": true
+    },
+    {
+      "configuration": "original-OLMBlur",
+      "all_outputs_present_successful_equal": true
+    },
+    {
+      "configuration": "original-OLMColorKey",
+      "all_outputs_present_successful_equal": true
+    },
+    {
+      "configuration": "original-OLMDirectionalBlur",
+      "all_outputs_present_successful_equal": true
+    },
+    {
+      "configuration": "original-OLMKiraKira",
+      "all_outputs_present_successful_equal": true
+    },
+    {
+      "configuration": "original-OLMRadialBlur",
+      "all_outputs_present_successful_equal": true
+    },
+    {
+      "configuration": "original-OLMSmoother",
+      "all_outputs_present_successful_equal": true
+    },
+    {
+      "configuration": "original-OLMSmoother2",
+      "all_outputs_present_successful_equal": true
+    },
+    {
+      "configuration": "original-OLMToonDilate",
+      "all_outputs_present_successful_equal": true
+    },
+    {
+      "configuration": "rust-OLMBlur",
+      "all_outputs_present_successful_equal": true
+    },
+    {
+      "configuration": "rust-ColorKeep",
+      "all_outputs_present_successful_equal": true
+    }
+  ]
+}

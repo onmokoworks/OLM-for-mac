@@ -1,0 +1,16 @@
+{
+  "rust/plugins/olm-directional-blur/src/admission.rs": "abea79a7013e0794f4144e685166e1708a9a7e59573dd4f0f1f49f5348a0dbe3",
+  "rust/plugins/olm-directional-blur/src/ae.rs": "c27f19aa1a535ac4a61d417ceb8f0d601d443014ddd1190ba44ba9b3598a0418",
+  "rust/plugins/olm-directional-blur/src/algorithm.rs": "0b81e22dffde215c778c873c285e2261c8733fca1c539263eaff91eb611dc3cc",
+  "rust/plugins/olm-directional-blur/src/host.rs": "609632389472232cd5480ce5f7e3fd1809a43ae3f802c9234a2409ae3728b7f9",
+  "rust/plugins/olm-directional-blur/src/lib.rs": "c28ce41c4bb26dc87ad06e295ae4949f30ca82633fd524423c5dca645e22ad33",
+  "rust/plugins/olm-directional-blur/src/noise.rs": "0b1f84c25cc2d56594891baa7232c7d792d7b8a4c5d80742f27d1cdda657a241",
+  "rust/plugins/olm-directional-blur/src/rotate.rs": "25927c9de385185ad89d05f2e8b0de6d62c596755101b674f41d1f49e976c2ac",
+  "rust/plugins/olm-directional-blur/src/rowdriver.rs": "0e8ead2ec2500702bec1da12f9cd35fb7788551369f997ee32b192d27ea3da65",
+  "rust/plugins/olm-directional-blur/src/sha256.rs": "b8de41f3039c3ed0696649cec27627f0b812d70774873a6f0db44db31aeed494",
+  "rust/plugins/olm-directional-blur/src/ui.rs": "0e861ab8e0fba88ca27df4253a5c5f1684030fea282e44dc8bcebfef6685f29b",
+  "rust/plugins/olm-directional-blur/Cargo.toml": "e25159625f3fe2f7cc024f6b478c0d7920be6f2ae636058cf936f6cdc82e7726",
+  "rust/plugins/olm-directional-blur/build.rs": "b3b1ecc6efce54690c8e3cacbfbaf1d9cc988f4bb900d27094ef549b49aae1bd",
+  "rust/plugins/olm-directional-blur/tests/conformance.rs": "519024a4ded3323ce7ca3158f3a5dd85d79ce5c08b2a94ecd2272a1ea8600e79",
+  "rust/plugins/olm-directional-blur/tests/reference.cpp": "98c00c654177e07dfd6783286faddff1855bc719de3f5eea604994d806b98265"
+}

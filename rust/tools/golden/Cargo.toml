@@ -1,0 +1,22 @@
+[package]
+name = "olm-golden"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+license.workspace = true
+
+[dependencies]
+olm-core.workspace = true
+olm-math.workspace = true
+color-keep = { path = "../../plugins/color-keep" }
+olm-blur = { path = "../../plugins/olm-blur" }
+olm-color-key = { path = "../../plugins/olm-color-key" }
+olm-directional-blur = { path = "../../plugins/olm-directional-blur" }
+olm-distance-gradation = { path = "../../plugins/olm-distance-gradation" }
+olm-kirakira = { path = "../../plugins/olm-kirakira" }
+olm-radial-blur = { path = "../../plugins/olm-radial-blur" }
+olm-smoother = { path = "../../plugins/olm-smoother" }
+olm-smoother2 = { path = "../../plugins/olm-smoother2" }
+olm-toon-dilate = { path = "../../plugins/olm-toon-dilate" }
+olm-uv-map = { path = "../../plugins/olm-uv-map" }
+olm-anti-anti-alias = { path = "../../plugins/olm-anti-anti-alias" }

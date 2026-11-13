@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "original": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2025\\OLMUVMap.aex",
+    "sha256": "412de99a5af617f41d8c0deddc2bdc7fb8b38065b34af2966730e01b72cb2c62"
+  },
+  "descriptor": {
+    "name": "OLM UV Map",
+    "match_name": "OLM UV Map",
+    "category": "OLM Plug-ins",
+    "entry": "entryPointFunc",
+    "version": 559104,
+    "flags": 33554496,
+    "flags2": 402658304
+  },
+  "resources": [
+    {
+      "name": 16000,
+      "language": 1033,
+      "type": "PIPL",
+      "sha256": "ade072a4261f2b5ae623d0776a0cfaf730e7e11e07020b45fe244405b5c18c52"
+    }
+  ],
+  "limitations": {
+    "algorithm": "TODO: byte-copy stub only; no original render equivalence",
+    "dynamic_ui": "TODO: state transitions cannot be inferred from PARAMS_SETUP/inventory",
+    "custom_ui_events": 0,
+    "supervised_slots": [
+      3
+    ],
+    "arbitrary_slots": [],
+    "arbitrary_semantics": "Opaque flatten/unflatten/copy only; unknown bytes preserved verbatim; no interior interpolation, print/scan or editor. Captured defaults may include unstable inactive bytes.",
+    "host_behavior": "TODO: original ROI expansion, temporal inputs, secondary-layer use, sequence/global state, audio/GPU and dynamic flags are not reconstructed",
+    "platforms": "Windows x64 CPU scaffold; native AE and macOS bundle/PiPL/entry generation unverified"
+  },
+  "generator_sha256": "03ef498e2424841fc92f106b8036f936876cd5951fba084c47505ac07520ff2a"
+}

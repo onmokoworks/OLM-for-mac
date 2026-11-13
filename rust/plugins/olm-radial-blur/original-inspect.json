@@ -1,0 +1,947 @@
+﻿[
+  {
+    "slot": 1,
+    "name": "Blur Type",
+    "kind": "integer",
+    "minimum": 1.0,
+    "maximum": 2.0,
+    "value": 1.0,
+    "choices": [
+      "Zoom ",
+      " Rotation"
+    ],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": true,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 2,
+    "name": "Center",
+    "kind": "point",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      50.0,
+      50.0,
+      0.0
+    ],
+    "component_count": 2,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": true,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 3,
+    "name": "Outer Blur",
+    "kind": "group_start",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 4,
+    "name": "Strength",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 2000.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 5,
+    "name": "Offset Mode",
+    "kind": "integer",
+    "minimum": 1.0,
+    "maximum": 3.0,
+    "value": 1.0,
+    "choices": [
+      "Add ",
+      " Max ",
+      " Override"
+    ],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": true,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 6,
+    "name": "Offset",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 500.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 7,
+    "name": "Edge Fade",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 100.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 8,
+    "name": "",
+    "kind": "group_end",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 9,
+    "name": "Inner Blur",
+    "kind": "group_start",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 10,
+    "name": "Strength",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 2000.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 11,
+    "name": "Offset Mode",
+    "kind": "integer",
+    "minimum": 1.0,
+    "maximum": 3.0,
+    "value": 1.0,
+    "choices": [
+      "Add ",
+      " Max ",
+      " Override"
+    ],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": true,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 12,
+    "name": "Offset",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 500.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 13,
+    "name": "Edge Fade",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 100.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 14,
+    "name": "",
+    "kind": "group_end",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 15,
+    "name": "Repeat Border",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "value": 1.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": true,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 16,
+    "name": "Ellipse",
+    "kind": "group_start",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 17,
+    "name": "Ratio",
+    "kind": "float",
+    "minimum": 1.0,
+    "maximum": 5.0,
+    "value": 1.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": true,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 18,
+    "name": "Angle",
+    "kind": "angle",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 1,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": true,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 19,
+    "name": "",
+    "kind": "group_end",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 20,
+    "name": "Quality",
+    "kind": "float",
+    "minimum": 1.0,
+    "maximum": 50.0,
+    "value": 5.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": true,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 21,
+    "name": "Brightness Gain",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 10.0,
+    "value": 1.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": true,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 22,
+    "name": "Size Variation",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 100.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": true,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 23,
+    "name": "Noise Parameters",
+    "kind": "group_start",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 24,
+    "name": "Noise Variation",
+    "kind": "float",
+    "minimum": 0.0,
+    "maximum": 100.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": true,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 25,
+    "name": "Noise Type",
+    "kind": "integer",
+    "minimum": 1.0,
+    "maximum": 3.0,
+    "value": 1.0,
+    "choices": [
+      "Smooth ",
+      " Block ",
+      " Layer"
+    ],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": true,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 26,
+    "name": "Noise Layer",
+    "kind": "layer",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": true,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 27,
+    "name": "Seed",
+    "kind": "integer",
+    "minimum": 1.0,
+    "maximum": 1000.0,
+    "value": 1.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 28,
+    "name": "Offset",
+    "kind": "angle",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 1,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": true,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 29,
+    "name": "Thickness",
+    "kind": "float",
+    "minimum": 1.0,
+    "maximum": 100.0,
+    "value": 10.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": true,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 30,
+    "name": "",
+    "kind": "group_end",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  }
+]

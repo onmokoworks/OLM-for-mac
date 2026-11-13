@@ -1,0 +1,6 @@
+__pycache__/
+runs/
+local/
+*.sqlite
+*.log
+catalog.json.gz

@@ -1,0 +1,27 @@
+{
+  "observed_result": "10 passed; 0 failed",
+  "command": "CARGO_TARGET_DIR=D:\\olm-rs-target\\P-dgrad cargo test --manifest-path rust/Cargo.toml --release -p olm-distance-gradation -j 2",
+  "observed_at": "2026-11-12T14:08:21.634914",
+  "source_sha256": {
+    "Cargo.toml": "a004f8227755d6dc80b02d8a0afd9f88e192415237246b82f179e40fe7eec1e1",
+    "build.rs": "39f6b234ccedf399532ebcb1629cb04b6a2688930855aa38e767057b2871c197",
+    "src\\ae.rs": "e65e393705e50e69fb505d82bbe8076c6a464080c2fa43d861cea2a901d6c6c1",
+    "src\\algorithm.rs": "ccc6cd02198f4cdb0c887d7762f5916e0ce4c4b01aea866bb102c0045b18d3f5",
+    "src\\bilateral.rs": "5aa8263ddc936747f153c619fa43b401e08c64aba1c24d9bb4c89d3a0b14a229",
+    "src\\bilateral_fma_table.rs": "f1ec8c7c06cf10b554c8d36ada5cc3dc9fd308fd3f51a56d824b02a685308eb5",
+    "src\\bilateral_table.rs": "fd23df01297dcdff3136f47b0a70b798a7efd47006c80f416af0374638e8553f",
+    "src\\field.rs": "acd90e5096deac1454db34e491f430693d6a9bc58b6891b754f2f87cadcbb468",
+    "src\\filters.rs": "198d467dd63d91085af82900979696e83474c45bf2abe7a8518d393f9f9cf713",
+    "src\\lib.rs": "15987ceb6f9c98db944c67c37efae8709288496e839d40fabfff81216b1c2aa9",
+    "src\\reference_tests.rs": "3bf9775300e3edab4309bd5236b33a3a5abc4bdb1ca90daa04b59f95fb663d4b",
+    "src\\shared_candidates.rs": "6fa6f0e5e23e7e489623abbfd85f24ce8606d339f1a4d5c950d9b163fb18bded",
+    "src\\ui.rs": "070eb1710bd2019fb9097bbf7fa96562134d11fa5a139635b33713edef69f625",
+    "tests\\reference.cpp": "89c314eb571d80e55297c515aec745027e58355f30ecb94c535a43ed4ecbd75f"
+  },
+  "fixture_sha256": {
+    "tests\\native-gaussian-kernels.bin": "cf09ebb0f37021dcf635fd89d8f1b1a7c1803aa8e2fdee874d49aa22b90fc2c4",
+    "tests\\native-gaussian.bin": "fc239da35430f61b8bf8ea40308af361b7ae0c6e2fef59b817b35a069de4796e",
+    "tests\\native-ipp-exp.bin": "618abf09467b930a70a19c3c28e9ebc8722139143dfb4f11780cb46275e97051",
+    "tests\\native-ipp-fma.bin": "51309acd067b45d3d4f13327e8fc364b7c84e1262e2d8ee8d3000d2f473ddaf2"
+  }
+}
