@@ -205,32 +205,57 @@ pub fn render(
     let mut a = allocate(n, [0.0; 3], &mut budget)?;
     let mut b = allocate(n, [0.0; 3], &mut budget)?;
     let mut flags = allocate(n, 0u8, &mut budget)?;
-    for y in 0..h {
-        for x in 0..w {
-            let argb = match input.get(x, y)? {
-                Pixel::U8(v) => v.map(|c| c as f32),
-                Pixel::U16(v) => v.map(|c| c as f32),
-                Pixel::F32(v) => {
-                    if w <= 24
-                        && h <= 24
-                        && v.iter()
-                            .any(|c| c.is_finite() && !(-16.0..=16.0).contains(c))
-                    {
-                        return Err(Error::Unsupported);
+    let stage = |first_row: usize, pixels: &mut [[f32; 3]], mask: &mut [u8]| -> Result<bool> {
+        let mut bounded = true;
+        for (row, (pixels, mask)) in pixels.chunks_mut(w).zip(mask.chunks_mut(w)).enumerate() {
+            let y = first_row + row;
+            for x in 0..w {
+                let argb = match input.get(x, y)? {
+                    Pixel::U8(v) => v.map(|c| c as f32),
+                    Pixel::U16(v) => v.map(|c| c as f32),
+                    Pixel::F32(v) => {
+                        if w <= 24
+                            && h <= 24
+                            && v.iter()
+                                .any(|c| c.is_finite() && !(-16.0..=16.0).contains(c))
+                        {
+                            return Err(Error::Unsupported);
+                        }
+                        bounded =
+                            bounded && v[1..].iter().all(|c| c.is_finite() && c.abs() <= 1.0e10);
+                        v
                     }
-                    v
-                }
-            };
-            a[y * w + x] = [argb[1], argb[2], argb[3]];
-            flags[y * w + x] = (argb[0] != 0.0) as u8;
+                };
+                pixels[x] = [argb[1], argb[2], argb[3]];
+                mask[x] = (argb[0] != 0.0) as u8;
+            }
         }
-    }
+        Ok(bounded)
+    };
+    let finite = if threads > 1 && h > 1 {
+        let workers = threads
+            .min(h)
+            .min(std::thread::available_parallelism().map_or(1, usize::from));
+        let chunk = h.div_ceil(workers) * w;
+        std::thread::scope(|scope| -> Result<bool> {
+            let mut handles = Vec::new();
+            for (part, (pixels, mask)) in
+                a.chunks_mut(chunk).zip(flags.chunks_mut(chunk)).enumerate()
+            {
+                let stage = &stage;
+                handles.push(scope.spawn(move || stage(part * (chunk / w), pixels, mask)));
+            }
+            let mut bounded = true;
+            for handle in handles {
+                bounded &= handle.join().expect("staging worker panicked")?;
+            }
+            Ok(bounded)
+        })?
+    } else {
+        stage(0, &mut a, &mut flags)?
+    };
     // Bounded finite RGB cannot overflow these positive weighted averages.
     // Keep the explicit x86 NaN/payload path for all exceptional/HDR extremes.
-    let finite = a
-        .iter()
-        .flatten()
-        .all(|v| v.is_finite() && v.abs() <= 1.0e10);
     let amount = p.amount * p.scale;
     if !amount.is_finite() {
         return Err(Error::Unsupported);

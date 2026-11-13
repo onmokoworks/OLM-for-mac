@@ -134,7 +134,7 @@ the original job's snapshot, not the later integrated build; see
 [workspace integration](../../INTEGRATION.md) for the fresh staged cross-check.
 
 
-## Performance ? S-blurs (2026-11-13)
+## Performance - S-blurs (2026-11-13)
 
 The AE adapter now schedules independent non-Legacy rows using at most
 `available_parallelism()` workers (one worker below 65,536 input pixels).
@@ -142,6 +142,7 @@ Bounded finite RGB uses ordered native arithmetic; exceptional/extreme RGB keeps
 the scalar x86 NaN/payload implementation. Short non-Legacy kernels use four
 independent pixel lanes on SSE2 x86-64; other targets and wider kernels retain the
 scalar path. Wide-kernel SIMD was measured slower and is deliberately not selected.
+Input staging and finite-range classification also run in independent row chunks.
 Legacy's six carry partitions and all coefficient/accumulation orders are unchanged.
 
 1080p median selector-time Rust/original ratios (lower is faster), one warmup
@@ -149,9 +150,9 @@ plus five samples per cell, both sides bit-exact:
 
 | Depth | Default before | Default after | Heavy before | Heavy after |
 |---|---:|---:|---:|---:|
-| 8 | 3.951 | 1.342 | 5.503 | 0.419 |
-| 16 | 4.421 | 1.397 | 5.771 | 0.422 |
-| 32 | 5.403 | 1.262 | 5.954 | 0.371 |
+| 8 | 3.951 | 0.834 | 5.503 | 0.311 |
+| 16 | 4.421 | 0.920 | 5.771 | 0.298 |
+| 32 | 5.403 | 1.030 | 5.954 | 0.257 |
 
 Baseline is commit `5033dd45`; both builds used this job's isolated target.
 Other jobs can contend for the machine; these are bounded samples, not isolated
@@ -159,7 +160,7 @@ hardware measurements. Remaining costs include checked pixel staging and Legacy'
 serial carries. The crate-local thread-selection helper is a possible shared-code
 candidate; no shared crate or project metadata was changed.
 
-Final qualification: release tests and Clippy pass (existing warnings), rustfmt
+Final qualification: release tests and Clippy pass (warnings), rustfmt
 passes, all 54 original-backed golden hashes match. The new four-pixel/scalar test
 includes short/tail rows, transparency barriers, negative values, signed zero and
 subnormals; existing C++ tests retain nonfinite payload and 1/N-worker coverage.
@@ -168,8 +169,8 @@ including 100 random cases per seed; sizes `1x1,3x7,11x7,31x19,97x61`, downsampl
 `1,1/2,1/4`, jobs 2. Inventory is identical. Resident batches had no mismatches or
 failures; the runner retains mandatory per-process replay for any non-exact case.
 
-Local-only evidence: `D:/olm-rs-target/blurs/oracle4-OLMBlur-*`,
-`bench-before`, `bench-final-blur`, and `tests-final4.log`.
-Candidate SHA-256: `532f6b8b768a8d3ff568f9b204229a9370f7e6a9eb134c4079e040d0480a26b1`.
+Local-only evidence: `D:/olm-rs-target/blurs/oracle6-OLMBlur-*`,
+`bench-before`, `bench-final6-blur`, and `tests-final6.log`.
+Candidate SHA-256: `4b62401dc0e9220275515e8a0bff3ebdfdaf4abdb3e286de8ff53962f96862c1`.
 The benchmark offline audit passed. No originals, raw run outputs or binaries are
 committed. Native AE and macOS performance were not tested.
