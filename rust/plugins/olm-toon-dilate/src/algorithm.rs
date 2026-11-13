@@ -107,58 +107,87 @@ fn render_staged_depth<const PIXEL_BYTES: usize>(
         has_seed = dist.contains(&0);
     }
     if has_seed {
-        // These passes have cross-pixel dependencies and must remain serial.
-        for backward in [false, true] {
-            let offsets = if backward {
-                [(1, 0), (1, 1), (0, 1), (-1, 1)]
+        propagate::<PIXEL_BYTES, false>(&mut dist, staged, w, h, ol, radius);
+        propagate::<PIXEL_BYTES, true>(&mut dist, staged, w, h, ol, radius);
+    }
+    Ok(())
+}
+
+// Split the current and adjacent distance rows once. This preserves the ordered
+// recurrence while avoiding full-plane coordinate arithmetic for every neighbor.
+fn propagate<const PIXEL_BYTES: usize, const BACKWARD: bool>(
+    dist: &mut [u32],
+    staged: &mut [u8],
+    w: usize,
+    h: usize,
+    ol: Layout,
+    radius: u32,
+) {
+    let direction = if BACKWARD { 1isize } else { -1 };
+    for step in 0..h {
+        let y = if BACKWARD { h - 1 - step } else { step };
+        let (row, adjacent): (&mut [u32], Option<&[u32]>) = if BACKWARD {
+            let (head, tail) = dist.split_at_mut((y + 1) * w);
+            (&mut head[y * w..], tail.get(..w))
+        } else {
+            let (head, tail) = dist.split_at_mut(y * w);
+            let previous = if y == 0 {
+                None
             } else {
-                [(-1, 0), (-1, -1), (0, -1), (1, -1)]
+                Some(&head[(y - 1) * w..])
             };
-            for row in 0..h {
-                let y = if backward { h - 1 - row } else { row };
-                for col in 0..w {
-                    let x = if backward { w - 1 - col } else { col };
-                    let idx = y * w + x;
-                    if dist[idx] == 0 {
-                        continue;
-                    }
-                    let mut best = u32::MAX;
-                    let mut winner = (0, 0);
-                    for (dx, dy) in offsets {
-                        let nx = x as i64 + dx;
-                        let ny = y as i64 + dy;
-                        if nx < 0 || ny < 0 || nx >= w as i64 || ny >= h as i64 {
-                            continue;
-                        }
-                        let (nx, ny) = (nx as usize, ny as usize);
-                        let d = dist[ny * w + nx];
-                        if d < best {
-                            best = d;
-                            winner = (nx, ny);
-                        }
-                    }
-                    if best == u32::MAX {
-                        continue;
-                    }
-                    let candidate = best + 1;
-                    if candidate >= dist[idx] {
-                        continue;
-                    }
-                    dist[idx] = candidate;
-                    let (nx, ny) = winner;
-                    if candidate <= radius
-                        && nx < ol.width
-                        && ny < ol.height
-                        && x < ol.width
-                        && y < ol.height
-                    {
-                        let src = ny * ol.stride + nx * pixel_bytes;
-                        let dst = y * ol.stride + x * pixel_bytes;
-                        staged.copy_within(src..src + pixel_bytes, dst);
-                    }
+            (&mut tail[..w], previous)
+        };
+        for col in 0..w {
+            let x = if BACKWARD { w - 1 - col } else { col };
+            if row[x] == 0 {
+                continue;
+            }
+            let mut best = u32::MAX;
+            let mut winner = (0, 0);
+            for (dx, other_row) in [
+                (direction, false),
+                (direction, true),
+                (0, true),
+                (-direction, true),
+            ] {
+                let nx = x as isize + dx;
+                if nx < 0 || nx >= w as isize {
+                    continue;
                 }
+                let nx = nx as usize;
+                let (d, ny) = if other_row {
+                    let Some(neighbor) = adjacent else {
+                        continue;
+                    };
+                    (neighbor[nx], if BACKWARD { y + 1 } else { y - 1 })
+                } else {
+                    (row[nx], y)
+                };
+                if d < best {
+                    best = d;
+                    winner = (nx, ny);
+                }
+            }
+            if best == u32::MAX {
+                continue;
+            }
+            let candidate = best + 1;
+            if candidate >= row[x] {
+                continue;
+            }
+            row[x] = candidate;
+            let (nx, ny) = winner;
+            if candidate <= radius
+                && nx < ol.width
+                && ny < ol.height
+                && x < ol.width
+                && y < ol.height
+            {
+                let src = ny * ol.stride + nx * PIXEL_BYTES;
+                let dst = y * ol.stride + x * PIXEL_BYTES;
+                staged.copy_within(src..src + PIXEL_BYTES, dst);
             }
         }
     }
-    Ok(())
 }
