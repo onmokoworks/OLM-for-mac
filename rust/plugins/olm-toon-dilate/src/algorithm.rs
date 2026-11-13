@@ -35,6 +35,25 @@ fn seed(p: &[u8], depth: Depth) -> bool {
 /// Stages output and commits only on success. Padding and pixels outside input
 /// coverage remain untouched. Origins do not offset accesses in the AEX worker.
 pub fn render(input: &[u8], il: Layout, output: &mut [u8], ol: Layout, radius: u32) -> Result<()> {
+    let no = ol.span()?;
+    if output.len() < no {
+        return Err(Error::Bounds);
+    }
+    let mut staged = allocate(no, 0u8, &mut Budget::new(isize::MAX as usize))?;
+    staged.copy_from_slice(&output[..no]);
+    render_staged(input, il, &mut staged, ol, radius)?;
+    output[..no].copy_from_slice(&staged);
+    Ok(())
+}
+
+/// The AE adapter already owns a transaction buffer until pixel checkin succeeds.
+pub(crate) fn render_staged(
+    input: &[u8],
+    il: Layout,
+    output: &mut [u8],
+    ol: Layout,
+    radius: u32,
+) -> Result<()> {
     let ni = il.span()?;
     let no = ol.span()?;
     if input.len() < ni || output.len() < no || il.depth != ol.depth {
@@ -44,8 +63,7 @@ pub fn render(input: &[u8], il: Layout, output: &mut [u8], ol: Layout, radius: u
         return Err(Error::Geometry);
     }
     let mut budget = Budget::new(isize::MAX as usize);
-    let mut staged = allocate(no, 0u8, &mut budget)?;
-    staged.copy_from_slice(&output[..no]);
+    let staged = &mut output[..no];
     let w = il.width;
     let h = il.height;
     let pixel_bytes = il.depth.pixel_bytes();
@@ -55,18 +73,22 @@ pub fn render(input: &[u8], il: Layout, output: &mut [u8], ol: Layout, radius: u
         Vec::new()
     };
     let mut has_seed = false;
-    for y in 0..h {
-        for x in 0..w {
-            let src = y * il.stride + x * pixel_bytes;
-            if x < ol.width && y < ol.height {
-                let dst = y * ol.stride + x * pixel_bytes;
-                staged[dst..dst + pixel_bytes].copy_from_slice(&input[src..src + pixel_bytes]);
+    let copy_bytes = w.min(ol.width) * pixel_bytes;
+    for y in 0..h.min(ol.height) {
+        staged[y * ol.stride..y * ol.stride + copy_bytes]
+            .copy_from_slice(&input[y * il.stride..y * il.stride + copy_bytes]);
+    }
+    if radius > 0 {
+        olm_core::parallel_rows_auto(&mut dist, w, |y, row| {
+            for (d, p) in row.iter_mut().zip(
+                input[y * il.stride..y * il.stride + w * pixel_bytes].chunks_exact(pixel_bytes),
+            ) {
+                if seed(p, il.depth) {
+                    *d = 0;
+                }
             }
-            if radius > 0 && seed(&input[src..src + pixel_bytes], il.depth) {
-                dist[y * w + x] = 0;
-                has_seed = true;
-            }
-        }
+        })?;
+        has_seed = dist.contains(&0);
     }
     if has_seed {
         // These passes have cross-pixel dependencies and must remain serial.
@@ -122,6 +144,5 @@ pub fn render(input: &[u8], il: Layout, output: &mut [u8], ol: Layout, radius: u
             }
         }
     }
-    output[..no].copy_from_slice(&staged);
     Ok(())
 }

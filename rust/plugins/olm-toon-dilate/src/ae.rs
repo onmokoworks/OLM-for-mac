@@ -186,7 +186,7 @@ unsafe fn smart_render(i: &PF_InData, extra: *mut c_void) -> Result<()> {
         let mut staged =
             allocate(no, 0u8, &mut Budget::new(isize::MAX as usize)).map_err(core_error)?;
         staged.copy_from_slice(std::slice::from_raw_parts(b.data.cast(), no));
-        algorithm::render(
+        algorithm::render_staged(
             std::slice::from_raw_parts(a.data.cast(), ni),
             il,
             &mut staged,

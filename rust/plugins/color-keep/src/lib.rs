@@ -33,16 +33,38 @@ pub fn render(
     if !input.layout().rect()?.contains(l.rect()?) {
         return Err(olm_core::Error::Bounds);
     }
-    for y in 0..l.height {
-        for x in 0..l.width {
-            let p = input.get_global(
-                (l.origin.0 as i64 + x as i64) as i32,
-                (l.origin.1 as i64 + y as i64) as i32,
-            )?;
-            output.set(x, y, pixel(p, palette))?;
-        }
+    if input.layout().depth != l.depth {
+        return Err(olm_core::Error::Unsupported);
     }
+    let dx = (i64::from(l.origin.0) - i64::from(input.layout().origin.0)) as usize;
+    let dy = (i64::from(l.origin.1) - i64::from(input.layout().origin.1)) as usize;
+    render_rows(input, output, palette, dx, dy, (0, 0, l.width, l.height));
     Ok(())
+}
+fn render_rows(
+    input: &View<'_>,
+    output: &mut ViewMut<'_>,
+    palette: &[[f32; 4]],
+    dx: usize,
+    dy: usize,
+    rect: (usize, usize, usize, usize),
+) {
+    let depth = output.layout().depth;
+    let bytes = depth.pixel_bytes();
+    let (left, top, right, bottom) = rect;
+    output.for_each_row(|y, row| {
+        if y < top || y >= bottom {
+            return;
+        }
+        let source = input.row(y + dy).expect("validated source coverage");
+        for (src, dst) in source[(left + dx) * bytes..(right + dx) * bytes]
+            .chunks_exact(bytes)
+            .zip(row[left * bytes..right * bytes].chunks_exact_mut(bytes))
+        {
+            let p = pixel(olm_core::read_pixel(src, depth), palette);
+            olm_core::write_pixel(dst, depth, p).expect("same depth");
+        }
+    });
 }
 #[cfg(any(target_os = "windows", target_os = "macos"))]
 mod ae {
@@ -89,15 +111,25 @@ mod ae {
                 let r = ctx
                     .output_extent
                     .intersection(olm_core::Rect::from_size(0, 0, l.width, l.height)?);
-                for y in r.top()..r.bottom() {
-                    for x in r.left()..r.right() {
-                        out.set(
-                            x as usize,
-                            y as usize,
-                            super::pixel(input.get(x as usize, y as usize)?, &colors),
-                        )?;
-                    }
+                if input.layout().depth != l.depth
+                    || input.layout().width < r.right() as usize
+                    || input.layout().height < r.bottom() as usize
+                {
+                    return Err(olm_core::Error::Bounds);
                 }
+                super::render_rows(
+                    input,
+                    out,
+                    &colors,
+                    0,
+                    0,
+                    (
+                        r.left() as usize,
+                        r.top() as usize,
+                        r.right() as usize,
+                        r.bottom() as usize,
+                    ),
+                );
                 Ok(())
             } else {
                 super::render(input, out, &colors)
@@ -143,5 +175,53 @@ mod tests {
     fn unordered_falls_through() {
         let p = Pixel::F32([0.5, f32::NAN, 0.0, 0.0]);
         assert_eq!(pixel(p, &[[0.5, 1.0, 0.0, 0.0]]).alpha(), 0.5);
+    }
+}
+
+#[cfg(test)]
+mod row_render_tests {
+    use super::*;
+    use olm_core::{Depth, Layout};
+    #[test]
+    fn cropped_padded_rows_match_pixel_reference() {
+        for depth in [Depth::U8, Depth::U16, Depth::F32] {
+            let a = Layout {
+                width: 1037,
+                height: 79,
+                stride: 1037 * depth.pixel_bytes() + 3,
+                depth,
+                origin: (-5, 9),
+            };
+            let b = Layout {
+                width: 1031,
+                height: 71,
+                stride: 1031 * depth.pixel_bytes() + 5,
+                depth,
+                origin: (-2, 12),
+            };
+            let input: Vec<u8> = (0..a.span().unwrap())
+                .map(|i| (i * 73 + 19) as u8)
+                .collect();
+            let source = View::new(&input, a).unwrap();
+            for palette in [vec![], vec![[0.0; 4]], vec![[1.0; 4]; 200]] {
+                let mut expected = vec![0x5a; b.span().unwrap()];
+                let mut actual = expected.clone();
+                let mut reference = ViewMut::new(&mut expected, b).unwrap();
+                for y in 0..b.height {
+                    for x in 0..b.width {
+                        reference
+                            .set(x, y, pixel(source.get(x + 3, y + 3).unwrap(), &palette))
+                            .unwrap();
+                    }
+                }
+                render(
+                    &source,
+                    &mut ViewMut::new(&mut actual, b).unwrap(),
+                    &palette,
+                )
+                .unwrap();
+                assert_eq!(actual, expected);
+            }
+        }
     }
 }

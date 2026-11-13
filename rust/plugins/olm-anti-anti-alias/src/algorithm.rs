@@ -242,12 +242,6 @@ pub fn render_with(
         return Err("layout mismatch");
     }
     let n = a.width.checked_mul(a.height).ok_or("dimensions")?;
-    let mut pixels = allocate(n, [0.0; 4])?;
-    for y in 0..a.height {
-        for x in 0..a.width {
-            pixels[y * a.width + x] = load(raw_at(input, a, x, y), a.bytes_per_pixel)
-        }
-    }
     let mut palette = settings.colors.clone();
     for c in &mut palette {
         c[0] = 1.0
@@ -257,6 +251,20 @@ pub fn render_with(
         palette.extend(extra);
     }
     let bypass = palette.is_empty() || (palette.len() == 1 && palette[0][1..] == [0.0; 3]);
+    // A bypass publishes original bytes, so it needs no decoded image planes.
+    let mut pixels = if bypass {
+        Vec::new()
+    } else {
+        allocate(n, [0.0; 4])?
+    };
+    if !bypass && a.width != 0 {
+        olm_core::parallel_rows_auto(&mut pixels, a.width, |y, row| {
+            for (x, pixel) in row.iter_mut().enumerate() {
+                *pixel = load(raw_at(input, a, x, y), a.bytes_per_pixel);
+            }
+        })
+        .map_err(|_| "dimensions")?;
+    }
     let mut result = pixels.clone();
     if !bypass {
         let mut first = allocate(n, -1i32)?;
@@ -363,12 +371,27 @@ pub fn render_with(
             }
         }
     }
-    for y in 0..b.height {
+    if b.width == 0 || b.height == 0 {
+        return Ok(());
+    }
+    let layout = olm_core::Layout {
+        width: b.width,
+        height: b.height,
+        stride: b.row_bytes,
+        origin: b.origin,
+        depth: match b.bytes_per_pixel {
+            4 => olm_core::Depth::U8,
+            8 => olm_core::Depth::U16,
+            _ => olm_core::Depth::F32,
+        },
+    };
+    let mut destination = olm_core::ViewMut::new(output, layout).map_err(|_| "output layout")?;
+    destination.for_each_row(|y, row| {
         for x in 0..b.width {
             let sx = i64::from(b.origin.0) + x as i64 - i64::from(a.origin.0);
             let sy = i64::from(b.origin.1) + y as i64 - i64::from(a.origin.1);
-            let dst = y * b.row_bytes + x * b.bytes_per_pixel;
-            let target = &mut output[dst..dst + b.bytes_per_pixel];
+            let dst = x * b.bytes_per_pixel;
+            let target = &mut row[dst..dst + b.bytes_per_pixel];
             if sx >= 0 && sy >= 0 && (sx as usize) < a.width && (sy as usize) < a.height {
                 if bypass {
                     target.copy_from_slice(raw_at(input, a, sx as usize, sy as usize))
@@ -383,7 +406,7 @@ pub fn render_with(
                 target.fill(0)
             }
         }
-    }
+    });
     Ok(())
 }
 pub fn render(input: &[u8], a: Layout, output: &mut [u8], b: Layout) -> Result<(), &'static str> {

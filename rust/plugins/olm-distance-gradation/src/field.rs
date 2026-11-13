@@ -19,20 +19,27 @@ fn edt_impl(mask: &[u8], w: usize, h: usize, native: bool) -> Vec<f32> {
     let mut g = vec![0i64; w * h];
     for x in 0..w {
         g[x] = if mask[x] != 0 { inf } else { 0 };
-        for y in 1..h {
-            let i = y * w + x;
-            g[i] = if mask[i] == 0 {
+    }
+    // Columns are independent: walk contiguous rows while retaining each
+    // column's forward/backward recurrence exactly.
+    for y in 1..h {
+        let (before, after) = g.split_at_mut(y * w);
+        let previous = &before[(y - 1) * w..y * w];
+        for (x, value) in after[..w].iter_mut().enumerate() {
+            *value = if mask[y * w + x] == 0 {
                 0
-            } else if g[i - w] == inf {
+            } else if previous[x] == inf {
                 inf
             } else {
-                g[i - w] + 1
+                previous[x] + 1
             };
         }
-        for y in (0..h - 1).rev() {
-            let i = y * w + x;
-            if g[i + w] != inf && g[i + w] + 1 < g[i] {
-                g[i] = g[i + w] + 1;
+    }
+    for y in (0..h - 1).rev() {
+        let (before, after) = g.split_at_mut((y + 1) * w);
+        for (x, value) in before[y * w..].iter_mut().enumerate() {
+            if after[x] != inf && after[x] + 1 < *value {
+                *value = after[x] + 1;
             }
         }
     }
