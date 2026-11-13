@@ -124,6 +124,9 @@ pub unsafe extern "C" fn EffectMain(
     w: *mut PF_LayerDef,
     e: *mut c_void,
 ) -> PF_Err {
+    if cmd == PF_Cmd_RENDER {
+        return crate::byte_boundary::render(i, o, p, w);
+    }
     if cmd == PF_Cmd_PARAMS_SETUP {
         return std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| setup(i, o)))
             .unwrap_or(olm_ae::BAD);

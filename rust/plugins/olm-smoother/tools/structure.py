@@ -67,4 +67,7 @@ for name in names:
 excluded=set(names)|{'ColorCompare8','ColorCompare16','NeighborExtract8','NeighborExtract16','ScanlinePixel8_Main','ScanlinePixel16_Main','Classifier8'}
 parts=re.split(r'(?=pub\(super\) unsafe fn )',s)
 kept=[f for f in parts[1:] if re.match(r'pub\(super\) unsafe fn (\w+)',f)[1] not in excluded]
-(root/'src/kernels.rs').write_text('// Retained contour loops and blending helpers.\nuse super::{support::*,hot::*};\npub(super) use super::structured::*;\n'+''.join(kept))
+(root/'src/kernels.rs').write_text('// Retained contour loops and blending helpers.\nuse super::support::*;\npub(super) use super::structured::*;\n'+''.join(kept))
+
+import runpy
+runpy.run_path(str(root/'tools/structure_loops.py'))

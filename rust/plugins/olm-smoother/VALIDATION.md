@@ -220,5 +220,112 @@ serial-audit.json. The combined benchmark audit passed: 10 exact cells, 60
 frame pairs, 120 PNGs and 72 deep files verified. Tested OLMSmoother.aex SHA256:
 d116782f0c49ddcd0f23b8d12755902a77c4b157498c10cd9a77aadd29b5485a.
 
-The combined job is not PR-ready because Smoother2's cropped-output oracle gate
-fails on both the baseline and optimized builds; see its validation note.
+Round 1 withheld the PR because Smoother2's cropped-output oracle gate failed.
+Round 2 classified this as an unchanged preexisting port defect on baseline,
+main and perf. The user's Round 2 instruction permits the documented exception;
+see Smoother2's minimal reproducer and original-vs-original evidence.
+
+### Round 2 implementation and independence argument
+
+The diagnostic `--features profile --example smoother-profile` uses 1080p seeded integer
+pixels and records staging, classification, ordered dispatch and packing clocks.
+Before the split, staging/packing cost about 23-44 ms and filtering 560-1650 ms
+on this shared machine. After the split, classification took about 40-100 ms;
+the remaining ordered dispatch dominated. These are diagnostic observations,
+not benchmark ratios or isolated CPU measurements.
+
+Classification reads only src_world pixels, tolerance values and immutable
+direction tables. Its writes target local neighbor arrays, virtual registers
+and synthetic stack addresses; no destination world is provided. Scoped row
+workers have private World/RenderState/stack carriers and disjoint classification
+records. Source storage stays alive and immutable until all workers join. Worker
+count is capped by available_parallelism and 16K pixels per worker. Single-worker
+and small-frame execution stays inline. No global mutable cache is introduced.
+
+Destination interpolation is deliberately serial: InterpExecutor compares current
+destination with source and blends with previous destination values. Therefore
+arbitrary rows or halo tiles cannot be independently committed. The exact y/x
+and direction order 5,3,1,7 remains unchanged. Classification type 4 is the
+exception: ColorBlend with weight 5 reads only its source neighborhood, so its
+value is precomputed alongside classification and written at the original point
+in that ordered sequence. It is not moved past other destination writes.
+
+The structured color blend retains row-major neighbor sums (excluding center),
+five separate center additions, division/truncation, alpha normalization and
+unpremultiplication. It preserves CVTTSS2SI behavior and low-word masking before
+the 16-bit clamp. All 256 neighbor-presence masks times 256 randomized full-range
+pixel sets at both depths are compared against the frozen generated routine.
+The center is always valid for a production in-bounds callback.
+
+`tools/structure_loops.py` extends the CFG transformation to contour walkers and
+interpolation executors. Single-entry strongly connected components become
+nested loops; header edges become continue, forward exits become lexical breaks.
+Every reachable block is emitted once, with operations unchanged; multiple-entry
+components and nested closure dispatch remain in their original form. The tool
+checks reachability, unique entry, topological ordering and block coverage.
+This remains a structured mechanical translation, not a handwritten algorithm.
+
+Added 257x193 reference comparisons cross the actual parallel threshold, with
+odd byte stride, nonzero origins, cropped extents, color key, four tolerances,
+both depths and 1/2/3/available workers. The reference remains byte-for-byte
+unchanged and test-only. The checked allocation budget includes 24-byte per-pixel
+classification/blend records plus both contiguous source/destination buffers
+(40 bytes/pixel worst case, bounded by the existing image dimensions).
+
+Clippy policy: handwritten code is corrected; generated modules have enumerated
+style/ABI exceptions to retain regeneration fidelity (casts, explicit unit
+expressions, parentheses, raw-pointer comparisons and source argument lists).
+No blanket crate-wide Clippy suppression or shared-crate edits are introduced.
+
+The Classic adapter now validates pixel formats, disjoint byte spans, positive
+strides, parameter values and extent once, then uses `render_bytes`. Active row
+bytes are copied into the same aligned, contiguous ARGB working buffers; padding
+is neither read as pixels nor overwritten. Color-key handling is restricted to
+the original extent. The checked View API and new row-copy API call the same
+ordered kernel and are compared against generated reference frames. This removes
+per-pixel enum/bounds dispatch at the AE boundary. It keeps the color suite's
+callback/error handling and balanced suite release; no Smart or float route is
+added. A shared checked row-span API is a possible future hoisting candidate;
+shared crates remain read-only in this job.
+
+### Round 2 final evidence
+
+All four 1080p cells now meet Rust/original < 1 (median selector times):
+
+| Depth / preset | Original ms | Rust ms | Round 1 ratio | Round 2 ratio |
+|---|---:|---:|---:|---:|
+| Classic8 default | 265.86 | 200.28 | 2.011 | 0.753 |
+| Classic8 heavy | 237.30 | 188.05 | 1.672 | 0.792 |
+| Classic16 default | 262.43 | 190.25 | 3.527 | 0.725 |
+| Classic16 heavy | 227.93 | 202.18 | 2.282 | 0.887 |
+
+Serial benchmark, normal priority, no overlapping task build. Other jobs may
+still use the shared machine. All warm-up and timed frame pairs are exact.
+The combined ten-cell audit verified 20 raw reports, 120 PNGs, 72 deep files,
+60 frame pairs (50 timed), worker identity and unchanged executables.
+
+Final release tests: 11 passed, including frozen reference, all neighbor masks,
+zero-alpha/all-zero/full-range blend edges, worker-count comparisons and byte-row
+staging comparisons. Golden: 36 exact. Two-seed oracle: 412 exact, no errors or
+mismatches, 103 cases per depth per seed with all three downsample factors.
+An additional per-process control (seed 20261123, nine cases per Classic depth,
+3x7/31x19/257x193, all three downsample factors) passed 18/18 exactly; evidence
+is in round2-classic-process/summary.json under the same local target directory.
+The oracle CLI rejects --extent for Classic routes before rendering; cropped
+extents are covered by the checked/byte-row/generated differential frame tests,
+not claimed as direct-host cropped-output oracle coverage.
+
+Formatting passes. All-target release Clippy with generated-reference enabled
+has zero warnings in the two owned Rust crates, including examples/tests.
+Read-only shared dependency warnings and the native C++ reference's unused
+variable warning remain outside this Rust lint result. Regeneration reproduced
+structured.rs and kernels.rs byte-for-byte; generated.rs is unchanged.
+
+Evidence under D:\olm-rs-target\smoother: round2-byte-bench/evidence.json,
+round2-final-report.json, round2-final-audit.json, round2-clean2-{fmt,tests}.log,
+round2-clean2-clippy.jsonl, round2-final-golden-olm-smoother.log, round2-oracle/.
+Final benchmark/oracle binary SHA256:
+b8f19b7d61076cb3d6d54d65defbc93f3de9abc80314480933303486605c3da0.
+The remaining cost is ordered contour/interpolation dispatch plus classification;
+destination dependencies prevent arbitrary row parallelism. No measured cell
+remains >= 1. Native AE performance and acceptance are still unverified.

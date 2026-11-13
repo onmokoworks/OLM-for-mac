@@ -1,5 +1,5 @@
 // Retained contour loops and blending helpers.
-use super::{support::*,hot::*};
+use super::support::*;
 pub(super) use super::structured::*;
 pub(super) unsafe fn ColorBlend16(mut param_1: *mut u64, mut param_2: *mut u16, mut param_3: i32) -> () {
 let mut uVar1: u16 = 0;
@@ -299,332 +299,1252 @@ let mut M: Memory = Memory::default();
 let mut T: u64 = 0;
 let mut args: [u64; 4] = [0; 4];
 let mut i: u64 = 0;
-let mut pc: u32=1402;
-loop {match pc {
-1 => { let _ = M.write64((((R).rsp).wrapping_add(16_u64)),(R).rbx);let _ = M.write64((((R).rsp).wrapping_add(24_u64)),(R).rbp);let _ = M.write64((((R).rsp).wrapping_add(32_u64)),(R).rsi);let _ = M.write64((((R).rsp).wrapping_add(8_u64)),(R).rcx);let _ = {(R).rsp = (((R).rsp).wrapping_sub((8_i32 as u64))) as u64; (R).rsp};let _ = M.write64((R).rsp,(R).rdi);let _ = {(R).rsp = (((R).rsp).wrapping_sub((8_i32 as u64))) as u64; (R).rsp};let _ = M.write64((R).rsp,(R).r12);let _ = {(R).rsp = (((R).rsp).wrapping_sub((8_i32 as u64))) as u64; (R).rsp};let _ = M.write64((R).rsp,(R).r13);let _ = {(R).rsp = (((R).rsp).wrapping_sub((8_i32 as u64))) as u64; (R).rsp};let _ = M.write64((R).rsp,(R).r14);let _ = {(R).rsp = (((R).rsp).wrapping_sub((8_i32 as u64))) as u64; (R).rsp};let _ = M.write64((R).rsp,(R).r15);let _ = {(R).r15 = M.read64((((R).rsp).wrapping_add(88_u64))); (R).r15};let _ = {(R).r11 = (((6442490249_i64 as u64)).wrapping_sub(39305_u64)); (R).r11};let _ = {(R).r12 = M.read64((((R).rsp).wrapping_add(96_u64))); (R).r12};let _ = {T = (((((R).rbp as u32)) ^ (((R).rbp as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rbp = ((T as u32) as u64); (R).rbp};let _ = {(R).r14 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r14};let _ = {(R).r10 = (((((R).rdx as u32) as i32) as i64) as u64); (R).r10};let _ = {(R).rax = (((((R).r9 as u32) as i32) as i64) as u64); (R).rax};let _ = {(R).r9 = ((((R).rax).wrapping_mul(4_u64))); (R).r9};let _ = {(R).rsi = (M.read32(((((R).r9).wrapping_add((R).r11)).wrapping_add(61640_u64))) as u64); (R).rsi};let _ = {(R).rdi = (M.read32(((((R).r9).wrapping_add((R).r11)).wrapping_add(61680_u64))) as u64); (R).rdi};let _ = {T = M.addflags((((R).rsi as u32) as u64),(((R).r10 as u32) as u64),32_i32); T};let _ = {(R).rsi = ((T as u32) as u64); (R).rsi};let _ = M.write32(((R).r15),((R).r10 as u32));let _ = {T = M.addflags((((R).rdi as u32) as u64),(((R).r8 as u32) as u64),32_i32); T};let _ = {(R).rdi = ((T as u32) as u64); (R).rdi};let _ = M.write32(((R).r12),((R).r8 as u32));let _ = {(R).r9 = (((R).rbp as u32) as u64); (R).r9};let _ = {(R).rdx = M.read64((((R).rcx).wrapping_add(24_u64))); (R).rdx};let _ = {T = (((((R).r10 as u32)) & (((R).r10 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=1322;} else {pc=1321;} continue; },
-426 => { let _ = {(R).rax = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rax};let _ = {T = M.subflags((M.read32(((R).r15)) as u64),(((R).r13 as u32) as u64),32_i32); T};let _ = M.write32(((R).r15),(T as u32));let _ = {T = M.subflags((M.read32(((R).r12)) as u64),(((R).rax as u32) as u64),32_i32); T};let _ = M.write32(((R).r12),(T as u32));let _ = {(R).rax = (((R).rbp as u32) as u64); (R).rax};let _ = {(R).rbp = M.read64((((R).rsp).wrapping_add(64_u64))); (R).rbp};let _ = {(R).rbx = M.read64((((R).rsp).wrapping_add(56_u64))); (R).rbx};let _ = {(R).rsi = M.read64((((R).rsp).wrapping_add(72_u64))); (R).rsi};let _ = {(R).r15 = M.read64((R).rsp); (R).r15};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r14 = M.read64((R).rsp); (R).r14};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r13 = M.read64((R).rsp); (R).r13};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r12 = M.read64((R).rsp); (R).r12};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).rdi = M.read64((R).rsp); (R).rdi};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};return ((R).rax as *mut u16); },
-427 => { let _ = {(R).rbp = (((R).rax as u32) as u64); (R).rbp};let _ = {(R).rax = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rax};let _ = {T = M.subflags((M.read32(((R).r15)) as u64),(((R).r13 as u32) as u64),32_i32); T};let _ = M.write32(((R).r15),(T as u32));let _ = {T = M.subflags((M.read32(((R).r12)) as u64),(((R).rax as u32) as u64),32_i32); T};let _ = M.write32(((R).r12),(T as u32));let _ = {(R).rax = (((R).rbp as u32) as u64); (R).rax};let _ = {(R).rbp = M.read64((((R).rsp).wrapping_add(64_u64))); (R).rbp};let _ = {(R).rbx = M.read64((((R).rsp).wrapping_add(56_u64))); (R).rbx};let _ = {(R).rsi = M.read64((((R).rsp).wrapping_add(72_u64))); (R).rsi};let _ = {(R).r15 = M.read64((R).rsp); (R).r15};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r14 = M.read64((R).rsp); (R).r14};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r13 = M.read64((R).rsp); (R).r13};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r12 = M.read64((R).rsp); (R).r12};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).rdi = M.read64((R).rsp); (R).rdi};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};return ((R).rax as *mut u16); },
-434 => { let _ = {T = ((((((R).r11 as u8)) as i32) & ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((2_u64 as u32) as u64); (R).rax};if (M).zf {pc=427;} else {pc=426;} continue; },
-435 => { let _ = {(R).rax = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rax};let _ = {T = M.subflags((M.read32(((R).r15)) as u64),(((R).r13 as u32) as u64),32_i32); T};let _ = M.write32(((R).r15),(T as u32));let _ = {T = M.subflags((M.read32(((R).r12)) as u64),(((R).rax as u32) as u64),32_i32); T};let _ = M.write32(((R).r12),(T as u32));let _ = {(R).rax = (((R).rbp as u32) as u64); (R).rax};let _ = {(R).rbp = M.read64((((R).rsp).wrapping_add(64_u64))); (R).rbp};let _ = {(R).rbx = M.read64((((R).rsp).wrapping_add(56_u64))); (R).rbx};let _ = {(R).rsi = M.read64((((R).rsp).wrapping_add(72_u64))); (R).rsi};let _ = {(R).r15 = M.read64((R).rsp); (R).r15};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r14 = M.read64((R).rsp); (R).r14};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r13 = M.read64((R).rsp); (R).r13};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r12 = M.read64((R).rsp); (R).r12};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).rdi = M.read64((R).rsp); (R).rdi};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};return ((R).rax as *mut u16); },
-440 => { let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=435;} else {pc=434;} continue; },
-441 => { let _ = {(R).rbp = (((R).rax as u32) as u64); (R).rbp};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=435;} else {pc=434;} continue; },
-448 => { let _ = {(R).rax = ((1_u64 as u32) as u64); (R).rax};let _ = {T = ((((((R).r11 as u8)) as i32) & ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=441;} else {pc=440;} continue; },
-449 => { let _ = {(R).rbp = (M.read32((((R).rsp).wrapping_add(80_u64))) as u64); (R).rbp};let _ = {(R).rax = ((1_u64 as u32) as u64); (R).rax};let _ = {T = ((((((R).r11 as u8)) as i32) & ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=441;} else {pc=440;} continue; },
-454 => { let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=449;} else {pc=448;} continue; },
-455 => { let _ = {T = ((((((R).r11 as u8)) as i32) & ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1031;} else {pc=1030;} continue; },
-473 => { let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=455;} else {pc=454;} continue; },
-474 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=455;} else {pc=454;} continue; },
-494 => { let _ = {(R).rdx = ((M.read16(((R).rcx)) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read16(((R).r8)) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r9 as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=474;} else {pc=473;} continue; },
-495 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=455;} else {pc=454;} continue; },
-515 => { let _ = {(R).rdx = ((M.read16((((R).rcx).wrapping_add(4_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read16((((R).r8).wrapping_add(4_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r9 as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=495;} else {pc=494;} continue; },
-516 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=455;} else {pc=454;} continue; },
-536 => { let _ = {(R).rdx = ((M.read16((((R).rcx).wrapping_add(6_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read16((((R).r8).wrapping_add(6_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r9 as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=516;} else {pc=515;} continue; },
-537 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=455;} else {pc=454;} continue; },
-561 => { let _ = {(R).rdx = ((M.read16((((R).rcx).wrapping_add(2_u64))) as u32) as u64); (R).rdx};let _ = {(R).r9 = (((R).r14 as u32) as u64); (R).r9};let _ = {(R).rax = ((M.read16((((R).r8).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).r9 = (((((R).r9 as u32))).wrapping_shl((((7_u64) & (63_i32 as u64))) as u32) as u64); (R).r9};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r9 as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=537;} else {pc=536;} continue; },
-562 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=455;} else {pc=454;} continue; },
-567 => { let _ = {T = (((R).rcx) & ((R).rcx)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=562;} else {pc=561;} continue; },
-568 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=455;} else {pc=454;} continue; },
-580 => { let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=568;} else {pc=567;} continue; },
-581 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=568;} else {pc=567;} continue; },
-603 => { let _ = {(R).rax = ((M.read16(((R).rcx)) as u32) as u64); (R).rax};let _ = {(R).rdx = ((M.read16(((R).r10)) as u32) as u64); (R).rdx};let _ = {T = M.subflags((((R).rdx as u32) as u64),(((R).rax as u32) as u64),32_i32); T};let _ = {(R).rdx = ((T as u32) as u64); (R).rdx};let _ = {(R).rax = (((R).rdx as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r9 as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=581;} else {pc=580;} continue; },
-604 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=568;} else {pc=567;} continue; },
-624 => { let _ = {(R).rdx = ((M.read16((((R).rcx).wrapping_add(4_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read16((((R).r10).wrapping_add(4_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r9 as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=604;} else {pc=603;} continue; },
-625 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=568;} else {pc=567;} continue; },
-645 => { let _ = {(R).rdx = ((M.read16((((R).rcx).wrapping_add(6_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read16((((R).r10).wrapping_add(6_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r9 as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=625;} else {pc=624;} continue; },
-646 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=568;} else {pc=567;} continue; },
-670 => { let _ = {(R).rdx = ((M.read16((((R).rcx).wrapping_add(2_u64))) as u32) as u64); (R).rdx};let _ = {(R).r9 = (((R).r14 as u32) as u64); (R).r9};let _ = {(R).rax = ((M.read16((((R).r10).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).r9 = (((((R).r9 as u32))).wrapping_shl((((7_u64) & (63_i32 as u64))) as u32) as u64); (R).r9};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r9 as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=646;} else {pc=645;} continue; },
-671 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=568;} else {pc=567;} continue; },
-676 => { let _ = {T = (((R).rcx) & ((R).rcx)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=671;} else {pc=670;} continue; },
-677 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=568;} else {pc=567;} continue; },
-689 => { let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=677;} else {pc=676;} continue; },
-690 => { let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=677;} else {pc=676;} continue; },
-712 => { let _ = {(R).rax = ((M.read16(((R).r8)) as u32) as u64); (R).rax};let _ = {(R).rdx = ((M.read16(((R).r9)) as u32) as u64); (R).rdx};let _ = {T = M.subflags((((R).rdx as u32) as u64),(((R).rax as u32) as u64),32_i32); T};let _ = {(R).rdx = ((T as u32) as u64); (R).rdx};let _ = {(R).rax = (((R).rdx as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r11 as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=690;} else {pc=689;} continue; },
-713 => { let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=677;} else {pc=676;} continue; },
-733 => { let _ = {(R).rdx = ((M.read16((((R).r8).wrapping_add(4_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read16((((R).r9).wrapping_add(4_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r11 as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=713;} else {pc=712;} continue; },
-734 => { let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=677;} else {pc=676;} continue; },
-754 => { let _ = {(R).rdx = ((M.read16((((R).r8).wrapping_add(6_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read16((((R).r9).wrapping_add(6_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r11 as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=734;} else {pc=733;} continue; },
-755 => { let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=677;} else {pc=676;} continue; },
-779 => { let _ = {(R).rdx = ((M.read16((((R).r8).wrapping_add(2_u64))) as u32) as u64); (R).rdx};let _ = {(R).r11 = (((R).r14 as u32) as u64); (R).r11};let _ = {(R).rax = ((M.read16((((R).r9).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).r11 = (((((R).r11 as u32))).wrapping_shl((((7_u64) & (63_i32 as u64))) as u32) as u64); (R).r11};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r11 as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=755;} else {pc=754;} continue; },
-780 => { let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=677;} else {pc=676;} continue; },
-785 => { let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=780;} else {pc=779;} continue; },
-786 => { let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=677;} else {pc=676;} continue; },
-794 => { let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=455;} else {pc=454;} continue; },
-795 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=455;} else {pc=454;} continue; },
-801 => { let _ = {(R).rax = ((M.read16(((R).rcx)) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16(((R).r8)) as u64),(((R).rax as u16) as u64),16_i32); T};if (!(M).zf) {pc=795;} else {pc=794;} continue; },
-802 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=455;} else {pc=454;} continue; },
-808 => { let _ = {(R).rax = ((M.read16((((R).rcx).wrapping_add(4_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r8).wrapping_add(4_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};if (!(M).zf) {pc=802;} else {pc=801;} continue; },
-809 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=455;} else {pc=454;} continue; },
-815 => { let _ = {(R).rax = ((M.read16((((R).rcx).wrapping_add(6_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r8).wrapping_add(6_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};if (!(M).zf) {pc=809;} else {pc=808;} continue; },
-816 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=455;} else {pc=454;} continue; },
-822 => { let _ = {(R).rax = ((M.read16((((R).rcx).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r8).wrapping_add(2_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};if (!(M).zf) {pc=816;} else {pc=815;} continue; },
-823 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=455;} else {pc=454;} continue; },
-828 => { let _ = {T = (((R).rcx) & ((R).rcx)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=823;} else {pc=822;} continue; },
-829 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=455;} else {pc=454;} continue; },
-841 => { let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=829;} else {pc=828;} continue; },
-842 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=829;} else {pc=828;} continue; },
-848 => { let _ = {(R).rax = ((M.read16(((R).rcx)) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16(((R).r10)) as u64),(((R).rax as u16) as u64),16_i32); T};if (!(M).zf) {pc=842;} else {pc=841;} continue; },
-849 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=829;} else {pc=828;} continue; },
-855 => { let _ = {(R).rax = ((M.read16((((R).rcx).wrapping_add(4_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r10).wrapping_add(4_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};if (!(M).zf) {pc=849;} else {pc=848;} continue; },
-856 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=829;} else {pc=828;} continue; },
-862 => { let _ = {(R).rax = ((M.read16((((R).rcx).wrapping_add(6_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r10).wrapping_add(6_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};if (!(M).zf) {pc=856;} else {pc=855;} continue; },
-863 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=829;} else {pc=828;} continue; },
-869 => { let _ = {(R).rax = ((M.read16((((R).rcx).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r10).wrapping_add(2_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};if (!(M).zf) {pc=863;} else {pc=862;} continue; },
-870 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=829;} else {pc=828;} continue; },
-875 => { let _ = {T = (((R).rcx) & ((R).rcx)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=870;} else {pc=869;} continue; },
-876 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=829;} else {pc=828;} continue; },
-888 => { let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=876;} else {pc=875;} continue; },
-889 => { let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=876;} else {pc=875;} continue; },
-895 => { let _ = {(R).rax = ((M.read16(((R).r8)) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16(((R).r9)) as u64),(((R).rax as u16) as u64),16_i32); T};if (!(M).zf) {pc=889;} else {pc=888;} continue; },
-896 => { let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=876;} else {pc=875;} continue; },
-902 => { let _ = {(R).rax = ((M.read16((((R).r8).wrapping_add(4_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r9).wrapping_add(4_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};if (!(M).zf) {pc=896;} else {pc=895;} continue; },
-903 => { let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=876;} else {pc=875;} continue; },
-909 => { let _ = {(R).rax = ((M.read16((((R).r8).wrapping_add(6_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r9).wrapping_add(6_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};if (!(M).zf) {pc=903;} else {pc=902;} continue; },
-910 => { let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=876;} else {pc=875;} continue; },
-916 => { let _ = {(R).rax = ((M.read16((((R).r8).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r9).wrapping_add(2_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};if (!(M).zf) {pc=910;} else {pc=909;} continue; },
-917 => { let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=876;} else {pc=875;} continue; },
-922 => { let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=917;} else {pc=916;} continue; },
-923 => { let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=876;} else {pc=875;} continue; },
-928 => { let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=923;} else {pc=922;} continue; },
-929 => { let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=786;} else {pc=785;} continue; },
-947 => { let _ = {(R).rax = (((R).rdi as u32) as u64); (R).rax};let _ = {(R).rax = (((((((R).rax as u32) as i32) as i64)).wrapping_mul(((M.read32((((R).rdx).wrapping_add(32_u64))) as i32) as i64)) as u32) as u64); (R).rax};let _ = {(R).rcx = (((((R).rax as u32) as i32) as i64) as u64); (R).rcx};let _ = {(R).rax = (((((R).rsi as u32) as i32) as i64) as u64); (R).rax};let _ = {(R).rcx = (((R).rcx).wrapping_add((((R).rax).wrapping_mul(8_u64)))); (R).rcx};let _ = {T = M.addflags((R).rcx,M.read64((((R).rdx).wrapping_add(24_u64))),64_i32); T};let _ = {(R).rcx = T; (R).rcx};let _ = {T = (((((R).r14 as u32)) & (((R).r14 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (!(M).zf) {pc=929;} else {pc=928;} continue; },
-948 => { let _ = {T = (((((R).r14 as u32)) & (((R).r14 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (!(M).zf) {pc=929;} else {pc=928;} continue; },
-952 => { let _ = {T = M.subflags((((R).rdi as u32) as u64),(M.read32((((R).rdx).wrapping_add(40_u64))) as u64),32_i32); T};if (((M).sf as i32) == ((M).of as i32)) {pc=948;} else {pc=947;} continue; },
-953 => { let _ = {T = (((((R).r14 as u32)) & (((R).r14 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (!(M).zf) {pc=929;} else {pc=928;} continue; },
-958 => { let _ = {T = (((((R).rdi as u32)) & (((R).rdi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=953;} else {pc=952;} continue; },
-959 => { let _ = {T = (((((R).r14 as u32)) & (((R).r14 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (!(M).zf) {pc=929;} else {pc=928;} continue; },
-963 => { let _ = {T = M.subflags((((R).rsi as u32) as u64),(M.read32((((R).rdx).wrapping_add(36_u64))) as u64),32_i32); T};if (((M).sf as i32) == ((M).of as i32)) {pc=959;} else {pc=958;} continue; },
-964 => { let _ = {T = (((((R).r14 as u32)) & (((R).r14 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (!(M).zf) {pc=929;} else {pc=928;} continue; },
-980 => { let _ = {(R).rax = (((((((R).rax as u32) as i32) as i64)).wrapping_mul(((M.read32((((R).rdx).wrapping_add(32_u64))) as i32) as i64)) as u32) as u64); (R).rax};let _ = {(R).rcx = (((((R).rax as u32) as i32) as i64) as u64); (R).rcx};let _ = {(R).r8 = (((R).rcx).wrapping_add((((R).r11).wrapping_mul(8_u64)))); (R).r8};let _ = {T = M.addflags((R).r8,M.read64((((R).rdx).wrapping_add(24_u64))),64_i32); T};let _ = {(R).r8 = T; (R).r8};let _ = {(R).rcx = (R).rbp; (R).rcx};let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=964;} else {pc=963;} continue; },
-981 => { let _ = {(R).rcx = (R).rbp; (R).rcx};let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=964;} else {pc=963;} continue; },
-985 => { let _ = {T = M.subflags((((R).rax as u32) as u64),(M.read32((((R).rdx).wrapping_add(40_u64))) as u64),32_i32); T};if (((M).sf as i32) == ((M).of as i32)) {pc=981;} else {pc=980;} continue; },
-986 => { let _ = {(R).rcx = (R).rbp; (R).rcx};let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=964;} else {pc=963;} continue; },
-991 => { let _ = {T = (((((R).rax as u32)) & (((R).rax as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=986;} else {pc=985;} continue; },
-992 => { let _ = {(R).rcx = (R).rbp; (R).rcx};let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=964;} else {pc=963;} continue; },
-996 => { let _ = {T = M.subflags((((R).r11 as u32) as u64),(M.read32((((R).rdx).wrapping_add(36_u64))) as u64),32_i32); T};if (((M).sf as i32) == ((M).of as i32)) {pc=992;} else {pc=991;} continue; },
-997 => { let _ = {(R).rcx = (R).rbp; (R).rcx};let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=964;} else {pc=963;} continue; },
-1024 => { let _ = {T = M.addflags((M.read32(((R).r15)) as u64),(((R).r13 as u32) as u64),32_i32); T};let _ = M.write32(((R).r15),(T as u32));let _ = {T = M.addflags((((R).rdi as u32) as u64),(((R).rcx as u32) as u64),32_i32); T};let _ = {(R).rdi = ((T as u32) as u64); (R).rdi};let _ = {T = M.addflags((M.read32(((R).r12)) as u64),(((R).rcx as u32) as u64),32_i32); T};let _ = M.write32(((R).r12),(T as u32));let _ = {T = M.addflags((((R).rsi as u32) as u64),(((R).r13 as u32) as u64),32_i32); T};let _ = {(R).rsi = ((T as u32) as u64); (R).rsi};let _ = {(R).rcx = M.read64((((R).rsp).wrapping_add(48_u64))); (R).rcx};let _ = {(R).r8 = (R).rbp; (R).r8};let _ = {(R).r11 = (((M.read32(((R).r15)) as i32) as i64) as u64); (R).r11};let _ = {(R).rax = (M.read32(((R).r12)) as u64); (R).rax};let _ = {(R).rdx = M.read64((((R).rcx).wrapping_add(24_u64))); (R).rdx};let _ = {T = (((((R).r11 as u32)) & (((R).r11 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=997;} else {pc=996;} continue; },
-1025 => { let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=449;} else {pc=448;} continue; },
-1030 => { let _ = {T = ((((((R).rax as u8)) as i32) & ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=1025;} else {pc=1024;} continue; },
-1031 => { let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=449;} else {pc=448;} continue; },
-1037 => { let _ = {T = ((((((R).r11 as u8)) as i32) & ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1031;} else {pc=1030;} continue; },
-1038 => { if (!(M).zf) {pc=449;} else {pc=448;} continue; },
-1054 => { let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1038;} else {pc=1037;} continue; },
-1055 => { let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1038;} else {pc=1037;} continue; },
-1077 => { let _ = {(R).rax = ((M.read16(((R).r10)) as u32) as u64); (R).rax};let _ = {(R).rcx = ((M.read16(((R).r9)) as u32) as u64); (R).rcx};let _ = {T = M.subflags((((R).rcx as u32) as u64),(((R).rax as u32) as u64),32_i32); T};let _ = {(R).rcx = ((T as u32) as u64); (R).rcx};let _ = {(R).rax = (((R).rcx as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r8 as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=1055;} else {pc=1054;} continue; },
-1078 => { let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1038;} else {pc=1037;} continue; },
-1098 => { let _ = {(R).rcx = ((M.read16((((R).r10).wrapping_add(4_u64))) as u32) as u64); (R).rcx};let _ = {(R).rax = ((M.read16((((R).r9).wrapping_add(4_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rcx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r8 as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=1078;} else {pc=1077;} continue; },
-1099 => { let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1038;} else {pc=1037;} continue; },
-1119 => { let _ = {(R).rcx = ((M.read16((((R).r10).wrapping_add(6_u64))) as u32) as u64); (R).rcx};let _ = {(R).rax = ((M.read16((((R).r9).wrapping_add(6_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rcx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r8 as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=1099;} else {pc=1098;} continue; },
-1120 => { let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1038;} else {pc=1037;} continue; },
-1142 => { let _ = {(R).rax = ((M.read16((((R).r10).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {(R).rcx = ((M.read16((((R).r9).wrapping_add(2_u64))) as u32) as u64); (R).rcx};let _ = {T = M.subflags((((R).rcx as u32) as u64),(((R).rax as u32) as u64),32_i32); T};let _ = {(R).rcx = ((T as u32) as u64); (R).rcx};let _ = {(R).rax = (((R).rcx as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r8 as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=1120;} else {pc=1119;} continue; },
-1143 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1038;} else {pc=1037;} continue; },
-1148 => { let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=1143;} else {pc=1142;} continue; },
-1149 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1038;} else {pc=1037;} continue; },
-1164 => { let _ = {T = (((((R).r8 as u32)) & (((R).r8 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | ((((!(M).sf) as u8)) as u64)); (R).r11};let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=1149;} else {pc=1148;} continue; },
-1165 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=1149;} else {pc=1148;} continue; },
-1184 => { let _ = {(R).r8 = (((((R).r8 as u32))).wrapping_shl((((7_u64) & (63_i32 as u64))) as u32) as u64); (R).r8};let _ = {T = (((((R).r8 as u32)) & (((R).r8 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | ((((!(M).sf) as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=1165;} else {pc=1164;} continue; },
-1185 => { let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {(R).r8 = (((((R).r8 as u32))).wrapping_shl((((7_u64) & (63_i32 as u64))) as u32) as u64); (R).r8};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=1165;} else {pc=1164;} continue; },
-1195 => { let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1038;} else {pc=1037;} continue; },
-1196 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1038;} else {pc=1037;} continue; },
-1202 => { let _ = {(R).rax = ((M.read16(((R).r10)) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16(((R).r9)) as u64),(((R).rax as u16) as u64),16_i32); T};if (!(M).zf) {pc=1196;} else {pc=1195;} continue; },
-1203 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1038;} else {pc=1037;} continue; },
-1209 => { let _ = {(R).rax = ((M.read16((((R).r10).wrapping_add(4_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r9).wrapping_add(4_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};if (!(M).zf) {pc=1203;} else {pc=1202;} continue; },
-1210 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1038;} else {pc=1037;} continue; },
-1216 => { let _ = {(R).rax = ((M.read16((((R).r10).wrapping_add(6_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r9).wrapping_add(6_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};if (!(M).zf) {pc=1210;} else {pc=1209;} continue; },
-1217 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1038;} else {pc=1037;} continue; },
-1223 => { let _ = {(R).rax = ((M.read16((((R).r10).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r9).wrapping_add(2_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};if (!(M).zf) {pc=1217;} else {pc=1216;} continue; },
-1224 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1038;} else {pc=1037;} continue; },
-1229 => { let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=1224;} else {pc=1223;} continue; },
-1230 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1038;} else {pc=1037;} continue; },
-1245 => { let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | ((((!(M).zf) as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | ((((!(M).zf) as u8)) as u64)); (R).r11};let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=1230;} else {pc=1229;} continue; },
-1246 => { let _ = {(R).r8 = (((R).r14 as u32) as u64); (R).r8};let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=1185;} else {pc=1184;} continue; },
-1272 => { let _ = {(R).rax = (((R).rdi as u32) as u64); (R).rax};let _ = {(R).rax = (((((((R).rax as u32) as i32) as i64)).wrapping_mul(((M.read32((((R).rdx).wrapping_add(32_u64))) as i32) as i64)) as u32) as u64); (R).rax};let _ = {(R).rcx = (((((R).rax as u32) as i32) as i64) as u64); (R).rcx};let _ = {(R).rax = (((((R).rsi as u32) as i32) as i64) as u64); (R).rax};let _ = {(R).r10 = (((R).rcx).wrapping_add((((R).rax).wrapping_mul(8_u64)))); (R).r10};let _ = {T = M.addflags((R).r10,M.read64((((R).rdx).wrapping_add(24_u64))),64_i32); T};let _ = {(R).r10 = T; (R).r10};let _ = {(R).rax = (((M.read32((((R).rsp).wrapping_add(80_u64))) as i32) as i64) as u64); (R).rax};let _ = {(R).rcx = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61680_u64))) as u64); (R).rcx};let _ = {(R).r13 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61640_u64))) as u64); (R).r13};let _ = M.write32((((R).rsp).wrapping_add(104_u64)),((R).rcx as u32));let _ = {T = (((((R).r14 as u32)) & (((R).r14 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (!(M).zf) {pc=1246;} else {pc=1245;} continue; },
-1273 => { let _ = {(R).rax = (((M.read32((((R).rsp).wrapping_add(80_u64))) as i32) as i64) as u64); (R).rax};let _ = {(R).rcx = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61680_u64))) as u64); (R).rcx};let _ = {(R).r13 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61640_u64))) as u64); (R).r13};let _ = M.write32((((R).rsp).wrapping_add(104_u64)),((R).rcx as u32));let _ = {T = (((((R).r14 as u32)) & (((R).r14 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (!(M).zf) {pc=1246;} else {pc=1245;} continue; },
-1277 => { let _ = {T = M.subflags((((R).rdi as u32) as u64),(M.read32((((R).rdx).wrapping_add(40_u64))) as u64),32_i32); T};if (((M).sf as i32) == ((M).of as i32)) {pc=1273;} else {pc=1272;} continue; },
-1278 => { let _ = {(R).rax = (((M.read32((((R).rsp).wrapping_add(80_u64))) as i32) as i64) as u64); (R).rax};let _ = {(R).rcx = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61680_u64))) as u64); (R).rcx};let _ = {(R).r13 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61640_u64))) as u64); (R).r13};let _ = M.write32((((R).rsp).wrapping_add(104_u64)),((R).rcx as u32));let _ = {T = (((((R).r14 as u32)) & (((R).r14 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (!(M).zf) {pc=1246;} else {pc=1245;} continue; },
-1283 => { let _ = {T = (((((R).rdi as u32)) & (((R).rdi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=1278;} else {pc=1277;} continue; },
-1284 => { let _ = {(R).rax = (((M.read32((((R).rsp).wrapping_add(80_u64))) as i32) as i64) as u64); (R).rax};let _ = {(R).rcx = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61680_u64))) as u64); (R).rcx};let _ = {(R).r13 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61640_u64))) as u64); (R).r13};let _ = M.write32((((R).rsp).wrapping_add(104_u64)),((R).rcx as u32));let _ = {T = (((((R).r14 as u32)) & (((R).r14 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (!(M).zf) {pc=1246;} else {pc=1245;} continue; },
-1288 => { let _ = {T = M.subflags((((R).rsi as u32) as u64),(M.read32((((R).rdx).wrapping_add(36_u64))) as u64),32_i32); T};if (((M).sf as i32) == ((M).of as i32)) {pc=1284;} else {pc=1283;} continue; },
-1289 => { let _ = {(R).rax = (((M.read32((((R).rsp).wrapping_add(80_u64))) as i32) as i64) as u64); (R).rax};let _ = {(R).rcx = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61680_u64))) as u64); (R).rcx};let _ = {(R).r13 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61640_u64))) as u64); (R).r13};let _ = M.write32((((R).rsp).wrapping_add(104_u64)),((R).rcx as u32));let _ = {T = (((((R).r14 as u32)) & (((R).r14 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (!(M).zf) {pc=1246;} else {pc=1245;} continue; },
-1305 => { let _ = {(R).r8 = (((((((R).r8 as u32) as i32) as i64)).wrapping_mul(((M.read32((((R).rdx).wrapping_add(32_u64))) as i32) as i64)) as u32) as u64); (R).r8};let _ = {(R).rcx = (((((R).r8 as u32) as i32) as i64) as u64); (R).rcx};let _ = {(R).r9 = (((R).rcx).wrapping_add((((R).r10).wrapping_mul(8_u64)))); (R).r9};let _ = {T = M.addflags((R).r9,M.read64((((R).rdx).wrapping_add(24_u64))),64_i32); T};let _ = {(R).r9 = T; (R).r9};let _ = {(R).r10 = (R).rbp; (R).r10};let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=1289;} else {pc=1288;} continue; },
-1306 => { let _ = {(R).r10 = (R).rbp; (R).r10};let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=1289;} else {pc=1288;} continue; },
-1310 => { let _ = {T = M.subflags((((R).r8 as u32) as u64),(M.read32((((R).rdx).wrapping_add(40_u64))) as u64),32_i32); T};if (((M).sf as i32) == ((M).of as i32)) {pc=1306;} else {pc=1305;} continue; },
-1311 => { let _ = {(R).r10 = (R).rbp; (R).r10};let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=1289;} else {pc=1288;} continue; },
-1316 => { let _ = {T = (((((R).r8 as u32)) & (((R).r8 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=1311;} else {pc=1310;} continue; },
-1317 => { let _ = {(R).r10 = (R).rbp; (R).r10};let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=1289;} else {pc=1288;} continue; },
-1321 => { let _ = {T = M.subflags((((R).r10 as u32) as u64),(M.read32((((R).rdx).wrapping_add(36_u64))) as u64),32_i32); T};if (((M).sf as i32) == ((M).of as i32)) {pc=1317;} else {pc=1316;} continue; },
-1322 => { let _ = {(R).r10 = (R).rbp; (R).r10};let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=1289;} else {pc=1288;} continue; },
-1388 => { let _ = M.write64((((R).rsp).wrapping_add((40_i32 as u64))).wrapping_add((i).wrapping_mul((8_i32 as u64))),(*((args).as_mut_ptr() as *mut u64).wrapping_offset(i as isize)));let _ = {let old=i; i=(i).wrapping_add(1); i};if (i < ((std::mem::size_of::<[u64; 4]>() as u64) / (std::mem::size_of::<u64>() as u64))) {pc=1388;} else {pc=1;} continue; },
-1402 => { R = Regs::default();M = Memory::default();T = (0_i32 as u64);let _ = {(M).state = state; (M).state};let _ = {(M).world = (*state).src_world; (M).world};let _ = {(M).pf16 = true; (M).pf16};let _ = {(R).rcx = (state as u64); (R).rcx};let _ = {(R).rdx = ((x as u32) as u64); (R).rdx};let _ = {(R).r8 = ((y as u32) as u64); (R).r8};let _ = {(R).r9 = ((dir1 as u32) as u64); (R).r9};let _ = {(R).rsp = (KSTACK).wrapping_add((2048_i32 as u64)); (R).rsp};let _ = M.write64((R).rsp,16045690984833335023_u64);args = [(dir2 as u64), (out_x as u64), (out_y as u64), ((threshold as u32) as u64)];i = (0_i32 as u64);if (i < ((std::mem::size_of::<[u64; 4]>() as u64) / (std::mem::size_of::<u64>() as u64))) {pc=1388;} else {pc=1;} continue; },
-_ => unreachable!(),
-}}}
+'b435: {
+'b427: {
+'b426: {
+'b434: {
+'b441: {
+'b440: {
+'b449: {
+'b448: {
+'b1038: {
+'b1031: {
+'b454: {
+'b1025: {
+'b1030: {
+'b1037: {
+'b1149: {
+'b1143: {
+'b1120: {
+'b1099: {
+'b1078: {
+'b1055: {
+'b1054: {
+'b1077: {
+'b1098: {
+'b1119: {
+'b1142: {
+'b1148: {
+'b1165: {
+'b1164: {
+'b1185: {
+'b1184: {
+'b1246: {
+'b1230: {
+'b1224: {
+'b1217: {
+'b1210: {
+'b1203: {
+'b1196: {
+'b1195: {
+'b1202: {
+'b1209: {
+'b1216: {
+'b1223: {
+'b1229: {
+'b1245: {
+'b1289: {
+'b1284: {
+'b1278: {
+'b1273: {
+'b1272: {
+'b1277: {
+'b1283: {
+'b1288: {
+'b1322: {
+'b1317: {
+'b1311: {
+'b1306: {
+'b1305: {
+'b1310: {
+'b1316: {
+'b1321: {
+'b1: {
+'b1388: {
+R = Regs::default();M = Memory::default();T = (0_i32 as u64);let _ = {(M).state = state; (M).state};let _ = {(M).world = (*state).src_world; (M).world};let _ = {(M).pf16 = true; (M).pf16};let _ = {(R).rcx = (state as u64); (R).rcx};let _ = {(R).rdx = ((x as u32) as u64); (R).rdx};let _ = {(R).r8 = ((y as u32) as u64); (R).r8};let _ = {(R).r9 = ((dir1 as u32) as u64); (R).r9};let _ = {(R).rsp = (KSTACK).wrapping_add((2048_i32 as u64)); (R).rsp};let _ = M.write64((R).rsp,16045690984833335023_u64);args = [(dir2 as u64), (out_x as u64), (out_y as u64), ((threshold as u32) as u64)];i = (0_i32 as u64);
+if (i < ((std::mem::size_of::<[u64; 4]>() as u64) / (std::mem::size_of::<u64>() as u64))) { break 'b1388; } else { break 'b1; }
+}
+'l1388: loop {
+let _ = M.write64((((R).rsp).wrapping_add((40_i32 as u64))).wrapping_add((i).wrapping_mul((8_i32 as u64))),(*((args).as_mut_ptr() as *mut u64).wrapping_offset(i as isize)));let _ = {let old=i; i=(i).wrapping_add(1); i};
+if (i < ((std::mem::size_of::<[u64; 4]>() as u64) / (std::mem::size_of::<u64>() as u64))) { continue 'l1388; } else { break 'b1; }
+}
+}
+let _ = M.write64((((R).rsp).wrapping_add(16_u64)),(R).rbx);let _ = M.write64((((R).rsp).wrapping_add(24_u64)),(R).rbp);let _ = M.write64((((R).rsp).wrapping_add(32_u64)),(R).rsi);let _ = M.write64((((R).rsp).wrapping_add(8_u64)),(R).rcx);let _ = {(R).rsp = (((R).rsp).wrapping_sub((8_i32 as u64))) as u64; (R).rsp};let _ = M.write64((R).rsp,(R).rdi);let _ = {(R).rsp = (((R).rsp).wrapping_sub((8_i32 as u64))) as u64; (R).rsp};let _ = M.write64((R).rsp,(R).r12);let _ = {(R).rsp = (((R).rsp).wrapping_sub((8_i32 as u64))) as u64; (R).rsp};let _ = M.write64((R).rsp,(R).r13);let _ = {(R).rsp = (((R).rsp).wrapping_sub((8_i32 as u64))) as u64; (R).rsp};let _ = M.write64((R).rsp,(R).r14);let _ = {(R).rsp = (((R).rsp).wrapping_sub((8_i32 as u64))) as u64; (R).rsp};let _ = M.write64((R).rsp,(R).r15);let _ = {(R).r15 = M.read64((((R).rsp).wrapping_add(88_u64))); (R).r15};let _ = {(R).r11 = (((6442490249_i64 as u64)).wrapping_sub(39305_u64)); (R).r11};let _ = {(R).r12 = M.read64((((R).rsp).wrapping_add(96_u64))); (R).r12};let _ = {T = (((((R).rbp as u32)) ^ (((R).rbp as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rbp = ((T as u32) as u64); (R).rbp};let _ = {(R).r14 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r14};let _ = {(R).r10 = (((((R).rdx as u32) as i32) as i64) as u64); (R).r10};let _ = {(R).rax = (((((R).r9 as u32) as i32) as i64) as u64); (R).rax};let _ = {(R).r9 = ((((R).rax).wrapping_mul(4_u64))); (R).r9};let _ = {(R).rsi = (M.read32(((((R).r9).wrapping_add((R).r11)).wrapping_add(61640_u64))) as u64); (R).rsi};let _ = {(R).rdi = (M.read32(((((R).r9).wrapping_add((R).r11)).wrapping_add(61680_u64))) as u64); (R).rdi};let _ = {T = M.addflags((((R).rsi as u32) as u64),(((R).r10 as u32) as u64),32_i32); T};let _ = {(R).rsi = ((T as u32) as u64); (R).rsi};let _ = M.write32(((R).r15),((R).r10 as u32));let _ = {T = M.addflags((((R).rdi as u32) as u64),(((R).r8 as u32) as u64),32_i32); T};let _ = {(R).rdi = ((T as u32) as u64); (R).rdi};let _ = M.write32(((R).r12),((R).r8 as u32));let _ = {(R).r9 = (((R).rbp as u32) as u64); (R).r9};let _ = {(R).rdx = M.read64((((R).rcx).wrapping_add(24_u64))); (R).rdx};let _ = {T = (((((R).r10 as u32)) & (((R).r10 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b1322; } else { break 'b1321; }
+}
+let _ = {T = M.subflags((((R).r10 as u32) as u64),(M.read32((((R).rdx).wrapping_add(36_u64))) as u64),32_i32); T};
+if (((M).sf as i32) == ((M).of as i32)) { break 'b1317; } else { break 'b1316; }
+}
+let _ = {T = (((((R).r8 as u32)) & (((R).r8 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b1311; } else { break 'b1310; }
+}
+let _ = {T = M.subflags((((R).r8 as u32) as u64),(M.read32((((R).rdx).wrapping_add(40_u64))) as u64),32_i32); T};
+if (((M).sf as i32) == ((M).of as i32)) { break 'b1306; } else { break 'b1305; }
+}
+let _ = {(R).r8 = (((((((R).r8 as u32) as i32) as i64)).wrapping_mul(((M.read32((((R).rdx).wrapping_add(32_u64))) as i32) as i64)) as u32) as u64); (R).r8};let _ = {(R).rcx = (((((R).r8 as u32) as i32) as i64) as u64); (R).rcx};let _ = {(R).r9 = (((R).rcx).wrapping_add((((R).r10).wrapping_mul(8_u64)))); (R).r9};let _ = {T = M.addflags((R).r9,M.read64((((R).rdx).wrapping_add(24_u64))),64_i32); T};let _ = {(R).r9 = T; (R).r9};let _ = {(R).r10 = (R).rbp; (R).r10};let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b1289; } else { break 'b1288; }
+}
+let _ = {(R).r10 = (R).rbp; (R).r10};let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b1289; } else { break 'b1288; }
+}
+let _ = {(R).r10 = (R).rbp; (R).r10};let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b1289; } else { break 'b1288; }
+}
+let _ = {(R).r10 = (R).rbp; (R).r10};let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b1289; } else { break 'b1288; }
+}
+let _ = {(R).r10 = (R).rbp; (R).r10};let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b1289; } else { break 'b1288; }
+}
+let _ = {T = M.subflags((((R).rsi as u32) as u64),(M.read32((((R).rdx).wrapping_add(36_u64))) as u64),32_i32); T};
+if (((M).sf as i32) == ((M).of as i32)) { break 'b1284; } else { break 'b1283; }
+}
+let _ = {T = (((((R).rdi as u32)) & (((R).rdi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b1278; } else { break 'b1277; }
+}
+let _ = {T = M.subflags((((R).rdi as u32) as u64),(M.read32((((R).rdx).wrapping_add(40_u64))) as u64),32_i32); T};
+if (((M).sf as i32) == ((M).of as i32)) { break 'b1273; } else { break 'b1272; }
+}
+let _ = {(R).rax = (((R).rdi as u32) as u64); (R).rax};let _ = {(R).rax = (((((((R).rax as u32) as i32) as i64)).wrapping_mul(((M.read32((((R).rdx).wrapping_add(32_u64))) as i32) as i64)) as u32) as u64); (R).rax};let _ = {(R).rcx = (((((R).rax as u32) as i32) as i64) as u64); (R).rcx};let _ = {(R).rax = (((((R).rsi as u32) as i32) as i64) as u64); (R).rax};let _ = {(R).r10 = (((R).rcx).wrapping_add((((R).rax).wrapping_mul(8_u64)))); (R).r10};let _ = {T = M.addflags((R).r10,M.read64((((R).rdx).wrapping_add(24_u64))),64_i32); T};let _ = {(R).r10 = T; (R).r10};let _ = {(R).rax = (((M.read32((((R).rsp).wrapping_add(80_u64))) as i32) as i64) as u64); (R).rax};let _ = {(R).rcx = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61680_u64))) as u64); (R).rcx};let _ = {(R).r13 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61640_u64))) as u64); (R).r13};let _ = M.write32((((R).rsp).wrapping_add(104_u64)),((R).rcx as u32));let _ = {T = (((((R).r14 as u32)) & (((R).r14 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (!(M).zf) { break 'b1246; } else { break 'b1245; }
+}
+let _ = {(R).rax = (((M.read32((((R).rsp).wrapping_add(80_u64))) as i32) as i64) as u64); (R).rax};let _ = {(R).rcx = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61680_u64))) as u64); (R).rcx};let _ = {(R).r13 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61640_u64))) as u64); (R).r13};let _ = M.write32((((R).rsp).wrapping_add(104_u64)),((R).rcx as u32));let _ = {T = (((((R).r14 as u32)) & (((R).r14 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (!(M).zf) { break 'b1246; } else { break 'b1245; }
+}
+let _ = {(R).rax = (((M.read32((((R).rsp).wrapping_add(80_u64))) as i32) as i64) as u64); (R).rax};let _ = {(R).rcx = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61680_u64))) as u64); (R).rcx};let _ = {(R).r13 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61640_u64))) as u64); (R).r13};let _ = M.write32((((R).rsp).wrapping_add(104_u64)),((R).rcx as u32));let _ = {T = (((((R).r14 as u32)) & (((R).r14 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (!(M).zf) { break 'b1246; } else { break 'b1245; }
+}
+let _ = {(R).rax = (((M.read32((((R).rsp).wrapping_add(80_u64))) as i32) as i64) as u64); (R).rax};let _ = {(R).rcx = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61680_u64))) as u64); (R).rcx};let _ = {(R).r13 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61640_u64))) as u64); (R).r13};let _ = M.write32((((R).rsp).wrapping_add(104_u64)),((R).rcx as u32));let _ = {T = (((((R).r14 as u32)) & (((R).r14 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (!(M).zf) { break 'b1246; } else { break 'b1245; }
+}
+let _ = {(R).rax = (((M.read32((((R).rsp).wrapping_add(80_u64))) as i32) as i64) as u64); (R).rax};let _ = {(R).rcx = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61680_u64))) as u64); (R).rcx};let _ = {(R).r13 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61640_u64))) as u64); (R).r13};let _ = M.write32((((R).rsp).wrapping_add(104_u64)),((R).rcx as u32));let _ = {T = (((((R).r14 as u32)) & (((R).r14 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (!(M).zf) { break 'b1246; } else { break 'b1245; }
+}
+let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | ((((!(M).zf) as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | ((((!(M).zf) as u8)) as u64)); (R).r11};let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b1230; } else { break 'b1229; }
+}
+let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b1224; } else { break 'b1223; }
+}
+let _ = {(R).rax = ((M.read16((((R).r10).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r9).wrapping_add(2_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};
+if (!(M).zf) { break 'b1217; } else { break 'b1216; }
+}
+let _ = {(R).rax = ((M.read16((((R).r10).wrapping_add(6_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r9).wrapping_add(6_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};
+if (!(M).zf) { break 'b1210; } else { break 'b1209; }
+}
+let _ = {(R).rax = ((M.read16((((R).r10).wrapping_add(4_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r9).wrapping_add(4_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};
+if (!(M).zf) { break 'b1203; } else { break 'b1202; }
+}
+let _ = {(R).rax = ((M.read16(((R).r10)) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16(((R).r9)) as u64),(((R).rax as u16) as u64),16_i32); T};
+if (!(M).zf) { break 'b1196; } else { break 'b1195; }
+}
+let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1038; } else { break 'b1037; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1038; } else { break 'b1037; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1038; } else { break 'b1037; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1038; } else { break 'b1037; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1038; } else { break 'b1037; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1038; } else { break 'b1037; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1038; } else { break 'b1037; }
+}
+let _ = {(R).r8 = (((R).r14 as u32) as u64); (R).r8};let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b1185; } else { break 'b1184; }
+}
+let _ = {(R).r8 = (((((R).r8 as u32))).wrapping_shl((((7_u64) & (63_i32 as u64))) as u32) as u64); (R).r8};let _ = {T = (((((R).r8 as u32)) & (((R).r8 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | ((((!(M).sf) as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b1165; } else { break 'b1164; }
+}
+let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {(R).r8 = (((((R).r8 as u32))).wrapping_shl((((7_u64) & (63_i32 as u64))) as u32) as u64); (R).r8};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b1165; } else { break 'b1164; }
+}
+let _ = {T = (((((R).r8 as u32)) & (((R).r8 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | ((((!(M).sf) as u8)) as u64)); (R).r11};let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b1149; } else { break 'b1148; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b1149; } else { break 'b1148; }
+}
+let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b1143; } else { break 'b1142; }
+}
+let _ = {(R).rax = ((M.read16((((R).r10).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {(R).rcx = ((M.read16((((R).r9).wrapping_add(2_u64))) as u32) as u64); (R).rcx};let _ = {T = M.subflags((((R).rcx as u32) as u64),(((R).rax as u32) as u64),32_i32); T};let _ = {(R).rcx = ((T as u32) as u64); (R).rcx};let _ = {(R).rax = (((R).rcx as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r8 as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b1120; } else { break 'b1119; }
+}
+let _ = {(R).rcx = ((M.read16((((R).r10).wrapping_add(6_u64))) as u32) as u64); (R).rcx};let _ = {(R).rax = ((M.read16((((R).r9).wrapping_add(6_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rcx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r8 as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b1099; } else { break 'b1098; }
+}
+let _ = {(R).rcx = ((M.read16((((R).r10).wrapping_add(4_u64))) as u32) as u64); (R).rcx};let _ = {(R).rax = ((M.read16((((R).r9).wrapping_add(4_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rcx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r8 as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b1078; } else { break 'b1077; }
+}
+let _ = {(R).rax = ((M.read16(((R).r10)) as u32) as u64); (R).rax};let _ = {(R).rcx = ((M.read16(((R).r9)) as u32) as u64); (R).rcx};let _ = {T = M.subflags((((R).rcx as u32) as u64),(((R).rax as u32) as u64),32_i32); T};let _ = {(R).rcx = ((T as u32) as u64); (R).rcx};let _ = {(R).rax = (((R).rcx as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r8 as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b1055; } else { break 'b1054; }
+}
+let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1038; } else { break 'b1037; }
+}
+let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1038; } else { break 'b1037; }
+}
+let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1038; } else { break 'b1037; }
+}
+let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1038; } else { break 'b1037; }
+}
+let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1038; } else { break 'b1037; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1038; } else { break 'b1037; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1038; } else { break 'b1037; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) & ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1031; } else { break 'b1030; }
+}
+'l1030: loop {
+'b455: {
+'b568: {
+'b562: {
+'b537: {
+'b516: {
+'b495: {
+'b474: {
+'b473: {
+'b494: {
+'b515: {
+'b536: {
+'b561: {
+'b567: {
+'b677: {
+'b671: {
+'b646: {
+'b625: {
+'b604: {
+'b581: {
+'b580: {
+'b603: {
+'b624: {
+'b645: {
+'b670: {
+'b676: {
+'b786: {
+'b780: {
+'b755: {
+'b734: {
+'b713: {
+'b690: {
+'b689: {
+'b712: {
+'b733: {
+'b754: {
+'b779: {
+'b785: {
+'b929: {
+'b829: {
+'b823: {
+'b816: {
+'b809: {
+'b802: {
+'b795: {
+'b794: {
+'b801: {
+'b808: {
+'b815: {
+'b822: {
+'b828: {
+'b876: {
+'b870: {
+'b863: {
+'b856: {
+'b849: {
+'b842: {
+'b841: {
+'b848: {
+'b855: {
+'b862: {
+'b869: {
+'b875: {
+'b923: {
+'b917: {
+'b910: {
+'b903: {
+'b896: {
+'b889: {
+'b888: {
+'b895: {
+'b902: {
+'b909: {
+'b916: {
+'b922: {
+'b928: {
+'b964: {
+'b959: {
+'b953: {
+'b948: {
+'b947: {
+'b952: {
+'b958: {
+'b963: {
+'b997: {
+'b992: {
+'b986: {
+'b981: {
+'b980: {
+'b985: {
+'b991: {
+'b996: {
+'b1024: {
+let _ = {T = ((((((R).rax as u8)) as i32) & ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b1025; } else { break 'b1024; }
+}
+let _ = {T = M.addflags((M.read32(((R).r15)) as u64),(((R).r13 as u32) as u64),32_i32); T};let _ = M.write32(((R).r15),(T as u32));let _ = {T = M.addflags((((R).rdi as u32) as u64),(((R).rcx as u32) as u64),32_i32); T};let _ = {(R).rdi = ((T as u32) as u64); (R).rdi};let _ = {T = M.addflags((M.read32(((R).r12)) as u64),(((R).rcx as u32) as u64),32_i32); T};let _ = M.write32(((R).r12),(T as u32));let _ = {T = M.addflags((((R).rsi as u32) as u64),(((R).r13 as u32) as u64),32_i32); T};let _ = {(R).rsi = ((T as u32) as u64); (R).rsi};let _ = {(R).rcx = M.read64((((R).rsp).wrapping_add(48_u64))); (R).rcx};let _ = {(R).r8 = (R).rbp; (R).r8};let _ = {(R).r11 = (((M.read32(((R).r15)) as i32) as i64) as u64); (R).r11};let _ = {(R).rax = (M.read32(((R).r12)) as u64); (R).rax};let _ = {(R).rdx = M.read64((((R).rcx).wrapping_add(24_u64))); (R).rdx};let _ = {T = (((((R).r11 as u32)) & (((R).r11 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b997; } else { break 'b996; }
+}
+let _ = {T = M.subflags((((R).r11 as u32) as u64),(M.read32((((R).rdx).wrapping_add(36_u64))) as u64),32_i32); T};
+if (((M).sf as i32) == ((M).of as i32)) { break 'b992; } else { break 'b991; }
+}
+let _ = {T = (((((R).rax as u32)) & (((R).rax as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b986; } else { break 'b985; }
+}
+let _ = {T = M.subflags((((R).rax as u32) as u64),(M.read32((((R).rdx).wrapping_add(40_u64))) as u64),32_i32); T};
+if (((M).sf as i32) == ((M).of as i32)) { break 'b981; } else { break 'b980; }
+}
+let _ = {(R).rax = (((((((R).rax as u32) as i32) as i64)).wrapping_mul(((M.read32((((R).rdx).wrapping_add(32_u64))) as i32) as i64)) as u32) as u64); (R).rax};let _ = {(R).rcx = (((((R).rax as u32) as i32) as i64) as u64); (R).rcx};let _ = {(R).r8 = (((R).rcx).wrapping_add((((R).r11).wrapping_mul(8_u64)))); (R).r8};let _ = {T = M.addflags((R).r8,M.read64((((R).rdx).wrapping_add(24_u64))),64_i32); T};let _ = {(R).r8 = T; (R).r8};let _ = {(R).rcx = (R).rbp; (R).rcx};let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b964; } else { break 'b963; }
+}
+let _ = {(R).rcx = (R).rbp; (R).rcx};let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b964; } else { break 'b963; }
+}
+let _ = {(R).rcx = (R).rbp; (R).rcx};let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b964; } else { break 'b963; }
+}
+let _ = {(R).rcx = (R).rbp; (R).rcx};let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b964; } else { break 'b963; }
+}
+let _ = {(R).rcx = (R).rbp; (R).rcx};let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b964; } else { break 'b963; }
+}
+let _ = {T = M.subflags((((R).rsi as u32) as u64),(M.read32((((R).rdx).wrapping_add(36_u64))) as u64),32_i32); T};
+if (((M).sf as i32) == ((M).of as i32)) { break 'b959; } else { break 'b958; }
+}
+let _ = {T = (((((R).rdi as u32)) & (((R).rdi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b953; } else { break 'b952; }
+}
+let _ = {T = M.subflags((((R).rdi as u32) as u64),(M.read32((((R).rdx).wrapping_add(40_u64))) as u64),32_i32); T};
+if (((M).sf as i32) == ((M).of as i32)) { break 'b948; } else { break 'b947; }
+}
+let _ = {(R).rax = (((R).rdi as u32) as u64); (R).rax};let _ = {(R).rax = (((((((R).rax as u32) as i32) as i64)).wrapping_mul(((M.read32((((R).rdx).wrapping_add(32_u64))) as i32) as i64)) as u32) as u64); (R).rax};let _ = {(R).rcx = (((((R).rax as u32) as i32) as i64) as u64); (R).rcx};let _ = {(R).rax = (((((R).rsi as u32) as i32) as i64) as u64); (R).rax};let _ = {(R).rcx = (((R).rcx).wrapping_add((((R).rax).wrapping_mul(8_u64)))); (R).rcx};let _ = {T = M.addflags((R).rcx,M.read64((((R).rdx).wrapping_add(24_u64))),64_i32); T};let _ = {(R).rcx = T; (R).rcx};let _ = {T = (((((R).r14 as u32)) & (((R).r14 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (!(M).zf) { break 'b929; } else { break 'b928; }
+}
+let _ = {T = (((((R).r14 as u32)) & (((R).r14 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (!(M).zf) { break 'b929; } else { break 'b928; }
+}
+let _ = {T = (((((R).r14 as u32)) & (((R).r14 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (!(M).zf) { break 'b929; } else { break 'b928; }
+}
+let _ = {T = (((((R).r14 as u32)) & (((R).r14 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (!(M).zf) { break 'b929; } else { break 'b928; }
+}
+let _ = {T = (((((R).r14 as u32)) & (((R).r14 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (!(M).zf) { break 'b929; } else { break 'b928; }
+}
+let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b923; } else { break 'b922; }
+}
+let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b917; } else { break 'b916; }
+}
+let _ = {(R).rax = ((M.read16((((R).r8).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r9).wrapping_add(2_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};
+if (!(M).zf) { break 'b910; } else { break 'b909; }
+}
+let _ = {(R).rax = ((M.read16((((R).r8).wrapping_add(6_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r9).wrapping_add(6_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};
+if (!(M).zf) { break 'b903; } else { break 'b902; }
+}
+let _ = {(R).rax = ((M.read16((((R).r8).wrapping_add(4_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r9).wrapping_add(4_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};
+if (!(M).zf) { break 'b896; } else { break 'b895; }
+}
+let _ = {(R).rax = ((M.read16(((R).r8)) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16(((R).r9)) as u64),(((R).rax as u16) as u64),16_i32); T};
+if (!(M).zf) { break 'b889; } else { break 'b888; }
+}
+let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b876; } else { break 'b875; }
+}
+let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b876; } else { break 'b875; }
+}
+let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b876; } else { break 'b875; }
+}
+let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b876; } else { break 'b875; }
+}
+let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b876; } else { break 'b875; }
+}
+let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b876; } else { break 'b875; }
+}
+let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b876; } else { break 'b875; }
+}
+let _ = {T = (((R).rcx) & ((R).rcx)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b870; } else { break 'b869; }
+}
+let _ = {(R).rax = ((M.read16((((R).rcx).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r10).wrapping_add(2_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};
+if (!(M).zf) { break 'b863; } else { break 'b862; }
+}
+let _ = {(R).rax = ((M.read16((((R).rcx).wrapping_add(6_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r10).wrapping_add(6_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};
+if (!(M).zf) { break 'b856; } else { break 'b855; }
+}
+let _ = {(R).rax = ((M.read16((((R).rcx).wrapping_add(4_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r10).wrapping_add(4_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};
+if (!(M).zf) { break 'b849; } else { break 'b848; }
+}
+let _ = {(R).rax = ((M.read16(((R).rcx)) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16(((R).r10)) as u64),(((R).rax as u16) as u64),16_i32); T};
+if (!(M).zf) { break 'b842; } else { break 'b841; }
+}
+let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b829; } else { break 'b828; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b829; } else { break 'b828; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b829; } else { break 'b828; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b829; } else { break 'b828; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b829; } else { break 'b828; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b829; } else { break 'b828; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b829; } else { break 'b828; }
+}
+let _ = {T = (((R).rcx) & ((R).rcx)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b823; } else { break 'b822; }
+}
+let _ = {(R).rax = ((M.read16((((R).rcx).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r8).wrapping_add(2_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};
+if (!(M).zf) { break 'b816; } else { break 'b815; }
+}
+let _ = {(R).rax = ((M.read16((((R).rcx).wrapping_add(6_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r8).wrapping_add(6_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};
+if (!(M).zf) { break 'b809; } else { break 'b808; }
+}
+let _ = {(R).rax = ((M.read16((((R).rcx).wrapping_add(4_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16((((R).r8).wrapping_add(4_u64))) as u64),(((R).rax as u16) as u64),16_i32); T};
+if (!(M).zf) { break 'b802; } else { break 'b801; }
+}
+let _ = {(R).rax = ((M.read16(((R).rcx)) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read16(((R).r8)) as u64),(((R).rax as u16) as u64),16_i32); T};
+if (!(M).zf) { break 'b795; } else { break 'b794; }
+}
+let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b455; } else { break 'b454; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b455; } else { break 'b454; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b455; } else { break 'b454; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b455; } else { break 'b454; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b455; } else { break 'b454; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b455; } else { break 'b454; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b455; } else { break 'b454; }
+}
+let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b786; } else { break 'b785; }
+}
+let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b780; } else { break 'b779; }
+}
+let _ = {(R).rdx = ((M.read16((((R).r8).wrapping_add(2_u64))) as u32) as u64); (R).rdx};let _ = {(R).r11 = (((R).r14 as u32) as u64); (R).r11};let _ = {(R).rax = ((M.read16((((R).r9).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).r11 = (((((R).r11 as u32))).wrapping_shl((((7_u64) & (63_i32 as u64))) as u32) as u64); (R).r11};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r11 as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b755; } else { break 'b754; }
+}
+let _ = {(R).rdx = ((M.read16((((R).r8).wrapping_add(6_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read16((((R).r9).wrapping_add(6_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r11 as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b734; } else { break 'b733; }
+}
+let _ = {(R).rdx = ((M.read16((((R).r8).wrapping_add(4_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read16((((R).r9).wrapping_add(4_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r11 as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b713; } else { break 'b712; }
+}
+let _ = {(R).rax = ((M.read16(((R).r8)) as u32) as u64); (R).rax};let _ = {(R).rdx = ((M.read16(((R).r9)) as u32) as u64); (R).rdx};let _ = {T = M.subflags((((R).rdx as u32) as u64),(((R).rax as u32) as u64),32_i32); T};let _ = {(R).rdx = ((T as u32) as u64); (R).rdx};let _ = {(R).rax = (((R).rdx as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r11 as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b690; } else { break 'b689; }
+}
+let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b677; } else { break 'b676; }
+}
+let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b677; } else { break 'b676; }
+}
+let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b677; } else { break 'b676; }
+}
+let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b677; } else { break 'b676; }
+}
+let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b677; } else { break 'b676; }
+}
+let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b677; } else { break 'b676; }
+}
+let _ = {T = ((((((R).rbx as u8)) as i32) ^ ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rbx = ((((R).rbx & (!255_u64))) | (((T as u8)) as u64)); (R).rbx};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b677; } else { break 'b676; }
+}
+let _ = {T = (((R).rcx) & ((R).rcx)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b671; } else { break 'b670; }
+}
+let _ = {(R).rdx = ((M.read16((((R).rcx).wrapping_add(2_u64))) as u32) as u64); (R).rdx};let _ = {(R).r9 = (((R).r14 as u32) as u64); (R).r9};let _ = {(R).rax = ((M.read16((((R).r10).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).r9 = (((((R).r9 as u32))).wrapping_shl((((7_u64) & (63_i32 as u64))) as u32) as u64); (R).r9};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r9 as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b646; } else { break 'b645; }
+}
+let _ = {(R).rdx = ((M.read16((((R).rcx).wrapping_add(6_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read16((((R).r10).wrapping_add(6_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r9 as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b625; } else { break 'b624; }
+}
+let _ = {(R).rdx = ((M.read16((((R).rcx).wrapping_add(4_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read16((((R).r10).wrapping_add(4_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r9 as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b604; } else { break 'b603; }
+}
+let _ = {(R).rax = ((M.read16(((R).rcx)) as u32) as u64); (R).rax};let _ = {(R).rdx = ((M.read16(((R).r10)) as u32) as u64); (R).rdx};let _ = {T = M.subflags((((R).rdx as u32) as u64),(((R).rax as u32) as u64),32_i32); T};let _ = {(R).rdx = ((T as u32) as u64); (R).rdx};let _ = {(R).rax = (((R).rdx as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r9 as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b581; } else { break 'b580; }
+}
+let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b568; } else { break 'b567; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b568; } else { break 'b567; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b568; } else { break 'b567; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b568; } else { break 'b567; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b568; } else { break 'b567; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b568; } else { break 'b567; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b568; } else { break 'b567; }
+}
+let _ = {T = (((R).rcx) & ((R).rcx)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b562; } else { break 'b561; }
+}
+let _ = {(R).rdx = ((M.read16((((R).rcx).wrapping_add(2_u64))) as u32) as u64); (R).rdx};let _ = {(R).r9 = (((R).r14 as u32) as u64); (R).r9};let _ = {(R).rax = ((M.read16((((R).r8).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).r9 = (((((R).r9 as u32))).wrapping_shl((((7_u64) & (63_i32 as u64))) as u32) as u64); (R).r9};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r9 as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b537; } else { break 'b536; }
+}
+let _ = {(R).rdx = ((M.read16((((R).rcx).wrapping_add(6_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read16((((R).r8).wrapping_add(6_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r9 as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b516; } else { break 'b515; }
+}
+let _ = {(R).rdx = ((M.read16((((R).rcx).wrapping_add(4_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read16((((R).r8).wrapping_add(4_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r9 as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b495; } else { break 'b494; }
+}
+let _ = {(R).rdx = ((M.read16(((R).rcx)) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read16(((R).r8)) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).r9 as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b474; } else { break 'b473; }
+}
+let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b455; } else { break 'b454; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b455; } else { break 'b454; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b455; } else { break 'b454; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b455; } else { break 'b454; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b455; } else { break 'b454; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b455; } else { break 'b454; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {(R).rcx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rcx};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b455; } else { break 'b454; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) & ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1031; } else { continue 'l1030; }
+}
+}
+let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b449; } else { break 'b448; }
+}
+let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b449; } else { break 'b448; }
+}
+let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b449; } else { break 'b448; }
+}
 
+if (!(M).zf) { break 'b449; } else { break 'b448; }
+}
+let _ = {(R).rax = ((1_u64 as u32) as u64); (R).rax};let _ = {T = ((((((R).r11 as u8)) as i32) & ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b441; } else { break 'b440; }
+}
+let _ = {(R).rbp = (M.read32((((R).rsp).wrapping_add(80_u64))) as u64); (R).rbp};let _ = {(R).rax = ((1_u64 as u32) as u64); (R).rax};let _ = {T = ((((((R).r11 as u8)) as i32) & ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b441; } else { break 'b440; }
+}
+let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b435; } else { break 'b434; }
+}
+let _ = {(R).rbp = (((R).rax as u32) as u64); (R).rbp};let _ = {T = ((((((R).rbx as u8)) as i32) & ((((R).rbx as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b435; } else { break 'b434; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) & ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((2_u64 as u32) as u64); (R).rax};
+if (M).zf { break 'b427; } else { break 'b426; }
+}
+let _ = {(R).rax = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rax};let _ = {T = M.subflags((M.read32(((R).r15)) as u64),(((R).r13 as u32) as u64),32_i32); T};let _ = M.write32(((R).r15),(T as u32));let _ = {T = M.subflags((M.read32(((R).r12)) as u64),(((R).rax as u32) as u64),32_i32); T};let _ = M.write32(((R).r12),(T as u32));let _ = {(R).rax = (((R).rbp as u32) as u64); (R).rax};let _ = {(R).rbp = M.read64((((R).rsp).wrapping_add(64_u64))); (R).rbp};let _ = {(R).rbx = M.read64((((R).rsp).wrapping_add(56_u64))); (R).rbx};let _ = {(R).rsi = M.read64((((R).rsp).wrapping_add(72_u64))); (R).rsi};let _ = {(R).r15 = M.read64((R).rsp); (R).r15};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r14 = M.read64((R).rsp); (R).r14};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r13 = M.read64((R).rsp); (R).r13};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r12 = M.read64((R).rsp); (R).r12};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).rdi = M.read64((R).rsp); (R).rdi};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};return ((R).rax as *mut u16);
+}
+let _ = {(R).rbp = (((R).rax as u32) as u64); (R).rbp};let _ = {(R).rax = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rax};let _ = {T = M.subflags((M.read32(((R).r15)) as u64),(((R).r13 as u32) as u64),32_i32); T};let _ = M.write32(((R).r15),(T as u32));let _ = {T = M.subflags((M.read32(((R).r12)) as u64),(((R).rax as u32) as u64),32_i32); T};let _ = M.write32(((R).r12),(T as u32));let _ = {(R).rax = (((R).rbp as u32) as u64); (R).rax};let _ = {(R).rbp = M.read64((((R).rsp).wrapping_add(64_u64))); (R).rbp};let _ = {(R).rbx = M.read64((((R).rsp).wrapping_add(56_u64))); (R).rbx};let _ = {(R).rsi = M.read64((((R).rsp).wrapping_add(72_u64))); (R).rsi};let _ = {(R).r15 = M.read64((R).rsp); (R).r15};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r14 = M.read64((R).rsp); (R).r14};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r13 = M.read64((R).rsp); (R).r13};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r12 = M.read64((R).rsp); (R).r12};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).rdi = M.read64((R).rsp); (R).rdi};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};return ((R).rax as *mut u16);
+}
+let _ = {(R).rax = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rax};let _ = {T = M.subflags((M.read32(((R).r15)) as u64),(((R).r13 as u32) as u64),32_i32); T};let _ = M.write32(((R).r15),(T as u32));let _ = {T = M.subflags((M.read32(((R).r12)) as u64),(((R).rax as u32) as u64),32_i32); T};let _ = M.write32(((R).r12),(T as u32));let _ = {(R).rax = (((R).rbp as u32) as u64); (R).rax};let _ = {(R).rbp = M.read64((((R).rsp).wrapping_add(64_u64))); (R).rbp};let _ = {(R).rbx = M.read64((((R).rsp).wrapping_add(56_u64))); (R).rbx};let _ = {(R).rsi = M.read64((((R).rsp).wrapping_add(72_u64))); (R).rsi};let _ = {(R).r15 = M.read64((R).rsp); (R).r15};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r14 = M.read64((R).rsp); (R).r14};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r13 = M.read64((R).rsp); (R).r13};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r12 = M.read64((R).rsp); (R).r12};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).rdi = M.read64((R).rsp); (R).rdi};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};return ((R).rax as *mut u16);
+}
 pub(super) unsafe fn EdgeWalker8Exact(mut state: *mut RenderState, mut x: i32, mut y: i32, mut dir1: i32, mut dir2: u32, mut out_x: *mut i32, mut out_y: *mut i32, mut threshold: i32) -> *mut u8 {
 let mut R: Regs = Regs::default();
 let mut M: Memory = Memory::default();
 let mut T: u64 = 0;
 let mut args: [u64; 4] = [0; 4];
 let mut i: u64 = 0;
-let mut pc: u32=1363;
-loop {match pc {
-1 => { let _ = M.write64((((R).rsp).wrapping_add(16_u64)),(R).rbx);let _ = M.write64((((R).rsp).wrapping_add(24_u64)),(R).rbp);let _ = M.write64((((R).rsp).wrapping_add(32_u64)),(R).rsi);let _ = M.write64((((R).rsp).wrapping_add(8_u64)),(R).rcx);let _ = {(R).rsp = (((R).rsp).wrapping_sub((8_i32 as u64))) as u64; (R).rsp};let _ = M.write64((R).rsp,(R).rdi);let _ = {(R).rsp = (((R).rsp).wrapping_sub((8_i32 as u64))) as u64; (R).rsp};let _ = M.write64((R).rsp,(R).r12);let _ = {(R).rsp = (((R).rsp).wrapping_sub((8_i32 as u64))) as u64; (R).rsp};let _ = M.write64((R).rsp,(R).r13);let _ = {(R).rsp = (((R).rsp).wrapping_sub((8_i32 as u64))) as u64; (R).rsp};let _ = M.write64((R).rsp,(R).r14);let _ = {(R).rsp = (((R).rsp).wrapping_sub((8_i32 as u64))) as u64; (R).rsp};let _ = M.write64((R).rsp,(R).r15);let _ = {(R).r15 = M.read64((((R).rsp).wrapping_add(88_u64))); (R).r15};let _ = {(R).r11 = (((6442491481_i64 as u64)).wrapping_sub(40537_u64)); (R).r11};let _ = {(R).r12 = M.read64((((R).rsp).wrapping_add(96_u64))); (R).r12};let _ = {T = (((((R).r14 as u32)) ^ (((R).r14 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).r14 = ((T as u32) as u64); (R).r14};let _ = {(R).rbx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rbx};let _ = {(R).r10 = (((((R).rdx as u32) as i32) as i64) as u64); (R).r10};let _ = {(R).rax = (((((R).r9 as u32) as i32) as i64) as u64); (R).rax};let _ = {(R).r9 = ((((R).rax).wrapping_mul(4_u64))); (R).r9};let _ = {(R).rbp = (M.read32(((((R).r9).wrapping_add((R).r11)).wrapping_add(61640_u64))) as u64); (R).rbp};let _ = {(R).rsi = (M.read32(((((R).r9).wrapping_add((R).r11)).wrapping_add(61680_u64))) as u64); (R).rsi};let _ = {T = M.addflags((((R).rbp as u32) as u64),(((R).r10 as u32) as u64),32_i32); T};let _ = {(R).rbp = ((T as u32) as u64); (R).rbp};let _ = M.write32(((R).r15),((R).r10 as u32));let _ = {T = M.addflags((((R).rsi as u32) as u64),(((R).r8 as u32) as u64),32_i32); T};let _ = {(R).rsi = ((T as u32) as u64); (R).rsi};let _ = M.write32(((R).r12),((R).r8 as u32));let _ = {(R).r9 = (((R).r14 as u32) as u64); (R).r9};let _ = {(R).rdx = M.read64((((R).rcx).wrapping_add(16_u64))); (R).rdx};let _ = {T = (((((R).r10 as u32)) & (((R).r10 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=1284;} else {pc=1283;} continue; },
-411 => { let _ = {T = M.subflags((M.read32(((R).r15)) as u64),(((R).r13 as u32) as u64),32_i32); T};let _ = M.write32(((R).r15),(T as u32));let _ = {(R).rax = (((R).r14 as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read32(((R).r12)) as u64),(((R).r8 as u32) as u64),32_i32); T};let _ = M.write32(((R).r12),(T as u32));let _ = {(R).rbx = M.read64((((R).rsp).wrapping_add(56_u64))); (R).rbx};let _ = {(R).rbp = M.read64((((R).rsp).wrapping_add(64_u64))); (R).rbp};let _ = {(R).rsi = M.read64((((R).rsp).wrapping_add(72_u64))); (R).rsi};let _ = {(R).r15 = M.read64((R).rsp); (R).r15};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r14 = M.read64((R).rsp); (R).r14};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r13 = M.read64((R).rsp); (R).r13};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r12 = M.read64((R).rsp); (R).r12};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).rdi = M.read64((R).rsp); (R).rdi};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};return ((R).rax as *mut u8); },
-412 => { let _ = {(R).r14 = (((R).rax as u32) as u64); (R).r14};let _ = {T = M.subflags((M.read32(((R).r15)) as u64),(((R).r13 as u32) as u64),32_i32); T};let _ = M.write32(((R).r15),(T as u32));let _ = {(R).rax = (((R).r14 as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read32(((R).r12)) as u64),(((R).r8 as u32) as u64),32_i32); T};let _ = M.write32(((R).r12),(T as u32));let _ = {(R).rbx = M.read64((((R).rsp).wrapping_add(56_u64))); (R).rbx};let _ = {(R).rbp = M.read64((((R).rsp).wrapping_add(64_u64))); (R).rbp};let _ = {(R).rsi = M.read64((((R).rsp).wrapping_add(72_u64))); (R).rsi};let _ = {(R).r15 = M.read64((R).rsp); (R).r15};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r14 = M.read64((R).rsp); (R).r14};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r13 = M.read64((R).rsp); (R).r13};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r12 = M.read64((R).rsp); (R).r12};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).rdi = M.read64((R).rsp); (R).rdi};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};return ((R).rax as *mut u8); },
-419 => { let _ = {T = ((((((R).r11 as u8)) as i32) & ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((2_u64 as u32) as u64); (R).rax};if (M).zf {pc=412;} else {pc=411;} continue; },
-420 => { let _ = {T = M.subflags((M.read32(((R).r15)) as u64),(((R).r13 as u32) as u64),32_i32); T};let _ = M.write32(((R).r15),(T as u32));let _ = {(R).rax = (((R).r14 as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read32(((R).r12)) as u64),(((R).r8 as u32) as u64),32_i32); T};let _ = M.write32(((R).r12),(T as u32));let _ = {(R).rbx = M.read64((((R).rsp).wrapping_add(56_u64))); (R).rbx};let _ = {(R).rbp = M.read64((((R).rsp).wrapping_add(64_u64))); (R).rbp};let _ = {(R).rsi = M.read64((((R).rsp).wrapping_add(72_u64))); (R).rsi};let _ = {(R).r15 = M.read64((R).rsp); (R).r15};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r14 = M.read64((R).rsp); (R).r14};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r13 = M.read64((R).rsp); (R).r13};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r12 = M.read64((R).rsp); (R).r12};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).rdi = M.read64((R).rsp); (R).rdi};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};return ((R).rax as *mut u8); },
-425 => { let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=420;} else {pc=419;} continue; },
-426 => { let _ = {(R).r14 = (((R).rax as u32) as u64); (R).r14};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=420;} else {pc=419;} continue; },
-433 => { let _ = {(R).rax = ((1_u64 as u32) as u64); (R).rax};let _ = {T = ((((((R).r11 as u8)) as i32) & ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=426;} else {pc=425;} continue; },
-434 => { let _ = {(R).r14 = (M.read32((((R).rsp).wrapping_add(80_u64))) as u64); (R).r14};let _ = {(R).rax = ((1_u64 as u32) as u64); (R).rax};let _ = {T = ((((((R).r11 as u8)) as i32) & ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=426;} else {pc=425;} continue; },
-439 => { let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=434;} else {pc=433;} continue; },
-440 => { let _ = {T = ((((((R).r11 as u8)) as i32) & ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1004;} else {pc=1003;} continue; },
-458 => { let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=440;} else {pc=439;} continue; },
-459 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=440;} else {pc=439;} continue; },
-479 => { let _ = {(R).rdx = ((M.read8(((R).rcx)) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read8(((R).r8)) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=459;} else {pc=458;} continue; },
-480 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=440;} else {pc=439;} continue; },
-500 => { let _ = {(R).rdx = ((M.read8((((R).rcx).wrapping_add(2_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read8((((R).r8).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=480;} else {pc=479;} continue; },
-501 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=440;} else {pc=439;} continue; },
-521 => { let _ = {(R).rdx = ((M.read8((((R).rcx).wrapping_add(3_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read8((((R).r8).wrapping_add(3_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=501;} else {pc=500;} continue; },
-522 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=440;} else {pc=439;} continue; },
-542 => { let _ = {(R).rdx = ((M.read8((((R).rcx).wrapping_add(1_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read8((((R).r8).wrapping_add(1_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=522;} else {pc=521;} continue; },
-543 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=440;} else {pc=439;} continue; },
-548 => { let _ = {T = (((R).rcx) & ((R).rcx)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=543;} else {pc=542;} continue; },
-549 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=440;} else {pc=439;} continue; },
-561 => { let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=549;} else {pc=548;} continue; },
-562 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=549;} else {pc=548;} continue; },
-584 => { let _ = {(R).rax = ((M.read8(((R).rcx)) as u32) as u64); (R).rax};let _ = {(R).rdx = ((M.read8(((R).r10)) as u32) as u64); (R).rdx};let _ = {T = M.subflags((((R).rdx as u32) as u64),(((R).rax as u32) as u64),32_i32); T};let _ = {(R).rdx = ((T as u32) as u64); (R).rdx};let _ = {(R).rax = (((R).rdx as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=562;} else {pc=561;} continue; },
-585 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=549;} else {pc=548;} continue; },
-605 => { let _ = {(R).rdx = ((M.read8((((R).rcx).wrapping_add(2_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read8((((R).r10).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=585;} else {pc=584;} continue; },
-606 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=549;} else {pc=548;} continue; },
-626 => { let _ = {(R).rdx = ((M.read8((((R).rcx).wrapping_add(3_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read8((((R).r10).wrapping_add(3_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=606;} else {pc=605;} continue; },
-627 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=549;} else {pc=548;} continue; },
-647 => { let _ = {(R).rdx = ((M.read8((((R).rcx).wrapping_add(1_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read8((((R).r10).wrapping_add(1_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=627;} else {pc=626;} continue; },
-648 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=549;} else {pc=548;} continue; },
-653 => { let _ = {T = (((R).rcx) & ((R).rcx)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=648;} else {pc=647;} continue; },
-654 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=549;} else {pc=548;} continue; },
-666 => { let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=654;} else {pc=653;} continue; },
-667 => { let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=654;} else {pc=653;} continue; },
-689 => { let _ = {(R).rax = ((M.read8(((R).r8)) as u32) as u64); (R).rax};let _ = {(R).rdx = ((M.read8(((R).r9)) as u32) as u64); (R).rdx};let _ = {T = M.subflags((((R).rdx as u32) as u64),(((R).rax as u32) as u64),32_i32); T};let _ = {(R).rdx = ((T as u32) as u64); (R).rdx};let _ = {(R).rax = (((R).rdx as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=667;} else {pc=666;} continue; },
-690 => { let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=654;} else {pc=653;} continue; },
-710 => { let _ = {(R).rdx = ((M.read8((((R).r8).wrapping_add(2_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read8((((R).r9).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=690;} else {pc=689;} continue; },
-711 => { let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=654;} else {pc=653;} continue; },
-731 => { let _ = {(R).rdx = ((M.read8((((R).r8).wrapping_add(3_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read8((((R).r9).wrapping_add(3_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=711;} else {pc=710;} continue; },
-732 => { let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=654;} else {pc=653;} continue; },
-752 => { let _ = {(R).rdx = ((M.read8((((R).r8).wrapping_add(1_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read8((((R).r9).wrapping_add(1_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=732;} else {pc=731;} continue; },
-753 => { let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=654;} else {pc=653;} continue; },
-758 => { let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=753;} else {pc=752;} continue; },
-759 => { let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=654;} else {pc=653;} continue; },
-767 => { let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=440;} else {pc=439;} continue; },
-768 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=440;} else {pc=439;} continue; },
-774 => { let _ = {(R).rax = ((M.read8(((R).rcx)) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8(((R).r8)) as u64),(((R).rax as u8) as u64),8_i32); T};if (!(M).zf) {pc=768;} else {pc=767;} continue; },
-775 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=440;} else {pc=439;} continue; },
-781 => { let _ = {(R).rax = ((M.read8((((R).rcx).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r8).wrapping_add(2_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};if (!(M).zf) {pc=775;} else {pc=774;} continue; },
-782 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=440;} else {pc=439;} continue; },
-788 => { let _ = {(R).rax = ((M.read8((((R).rcx).wrapping_add(3_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r8).wrapping_add(3_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};if (!(M).zf) {pc=782;} else {pc=781;} continue; },
-789 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=440;} else {pc=439;} continue; },
-795 => { let _ = {(R).rax = ((M.read8((((R).rcx).wrapping_add(1_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r8).wrapping_add(1_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};if (!(M).zf) {pc=789;} else {pc=788;} continue; },
-796 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=440;} else {pc=439;} continue; },
-801 => { let _ = {T = (((R).rcx) & ((R).rcx)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=796;} else {pc=795;} continue; },
-802 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=440;} else {pc=439;} continue; },
-814 => { let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=802;} else {pc=801;} continue; },
-815 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=802;} else {pc=801;} continue; },
-821 => { let _ = {(R).rax = ((M.read8(((R).rcx)) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8(((R).r10)) as u64),(((R).rax as u8) as u64),8_i32); T};if (!(M).zf) {pc=815;} else {pc=814;} continue; },
-822 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=802;} else {pc=801;} continue; },
-828 => { let _ = {(R).rax = ((M.read8((((R).rcx).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r10).wrapping_add(2_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};if (!(M).zf) {pc=822;} else {pc=821;} continue; },
-829 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=802;} else {pc=801;} continue; },
-835 => { let _ = {(R).rax = ((M.read8((((R).rcx).wrapping_add(3_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r10).wrapping_add(3_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};if (!(M).zf) {pc=829;} else {pc=828;} continue; },
-836 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=802;} else {pc=801;} continue; },
-842 => { let _ = {(R).rax = ((M.read8((((R).rcx).wrapping_add(1_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r10).wrapping_add(1_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};if (!(M).zf) {pc=836;} else {pc=835;} continue; },
-843 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=802;} else {pc=801;} continue; },
-848 => { let _ = {T = (((R).rcx) & ((R).rcx)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=843;} else {pc=842;} continue; },
-849 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=802;} else {pc=801;} continue; },
-861 => { let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=849;} else {pc=848;} continue; },
-862 => { let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=849;} else {pc=848;} continue; },
-868 => { let _ = {(R).rax = ((M.read8(((R).r8)) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8(((R).r9)) as u64),(((R).rax as u8) as u64),8_i32); T};if (!(M).zf) {pc=862;} else {pc=861;} continue; },
-869 => { let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=849;} else {pc=848;} continue; },
-875 => { let _ = {(R).rax = ((M.read8((((R).r8).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r9).wrapping_add(2_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};if (!(M).zf) {pc=869;} else {pc=868;} continue; },
-876 => { let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=849;} else {pc=848;} continue; },
-882 => { let _ = {(R).rax = ((M.read8((((R).r8).wrapping_add(3_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r9).wrapping_add(3_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};if (!(M).zf) {pc=876;} else {pc=875;} continue; },
-883 => { let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=849;} else {pc=848;} continue; },
-889 => { let _ = {(R).rax = ((M.read8((((R).r8).wrapping_add(1_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r9).wrapping_add(1_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};if (!(M).zf) {pc=883;} else {pc=882;} continue; },
-890 => { let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=849;} else {pc=848;} continue; },
-895 => { let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=890;} else {pc=889;} continue; },
-896 => { let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=849;} else {pc=848;} continue; },
-901 => { let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=896;} else {pc=895;} continue; },
-902 => { let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=759;} else {pc=758;} continue; },
-920 => { let _ = {(R).rax = (((R).rsi as u32) as u64); (R).rax};let _ = {(R).rax = (((((((R).rax as u32) as i32) as i64)).wrapping_mul(((M.read32((((R).rdx).wrapping_add(32_u64))) as i32) as i64)) as u32) as u64); (R).rax};let _ = {(R).rcx = (((((R).rax as u32) as i32) as i64) as u64); (R).rcx};let _ = {(R).rax = (((((R).rbp as u32) as i32) as i64) as u64); (R).rax};let _ = {(R).rcx = (((R).rcx).wrapping_add((((R).rax).wrapping_mul(4_u64)))); (R).rcx};let _ = {T = M.addflags((R).rcx,M.read64((((R).rdx).wrapping_add(24_u64))),64_i32); T};let _ = {(R).rcx = T; (R).rcx};let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (!(M).zf) {pc=902;} else {pc=901;} continue; },
-921 => { let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (!(M).zf) {pc=902;} else {pc=901;} continue; },
-925 => { let _ = {T = M.subflags((((R).rsi as u32) as u64),(M.read32((((R).rdx).wrapping_add(40_u64))) as u64),32_i32); T};if (((M).sf as i32) == ((M).of as i32)) {pc=921;} else {pc=920;} continue; },
-926 => { let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (!(M).zf) {pc=902;} else {pc=901;} continue; },
-931 => { let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=926;} else {pc=925;} continue; },
-932 => { let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (!(M).zf) {pc=902;} else {pc=901;} continue; },
-936 => { let _ = {T = M.subflags((((R).rbp as u32) as u64),(M.read32((((R).rdx).wrapping_add(36_u64))) as u64),32_i32); T};if (((M).sf as i32) == ((M).of as i32)) {pc=932;} else {pc=931;} continue; },
-937 => { let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (!(M).zf) {pc=902;} else {pc=901;} continue; },
-953 => { let _ = {(R).rax = (((((((R).rax as u32) as i32) as i64)).wrapping_mul(((M.read32((((R).rdx).wrapping_add(32_u64))) as i32) as i64)) as u32) as u64); (R).rax};let _ = {(R).rcx = (((((R).rax as u32) as i32) as i64) as u64); (R).rcx};let _ = {(R).r8 = (((R).rcx).wrapping_add((((R).r11).wrapping_mul(4_u64)))); (R).r8};let _ = {T = M.addflags((R).r8,M.read64((((R).rdx).wrapping_add(24_u64))),64_i32); T};let _ = {(R).r8 = T; (R).r8};let _ = {(R).rcx = (R).r14; (R).rcx};let _ = {T = (((((R).rbp as u32)) & (((R).rbp as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=937;} else {pc=936;} continue; },
-954 => { let _ = {(R).rcx = (R).r14; (R).rcx};let _ = {T = (((((R).rbp as u32)) & (((R).rbp as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=937;} else {pc=936;} continue; },
-958 => { let _ = {T = M.subflags((((R).rax as u32) as u64),(M.read32((((R).rdx).wrapping_add(40_u64))) as u64),32_i32); T};if (((M).sf as i32) == ((M).of as i32)) {pc=954;} else {pc=953;} continue; },
-959 => { let _ = {(R).rcx = (R).r14; (R).rcx};let _ = {T = (((((R).rbp as u32)) & (((R).rbp as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=937;} else {pc=936;} continue; },
-964 => { let _ = {T = (((((R).rax as u32)) & (((R).rax as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=959;} else {pc=958;} continue; },
-965 => { let _ = {(R).rcx = (R).r14; (R).rcx};let _ = {T = (((((R).rbp as u32)) & (((R).rbp as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=937;} else {pc=936;} continue; },
-969 => { let _ = {T = M.subflags((((R).r11 as u32) as u64),(M.read32((((R).rdx).wrapping_add(36_u64))) as u64),32_i32); T};if (((M).sf as i32) == ((M).of as i32)) {pc=965;} else {pc=964;} continue; },
-970 => { let _ = {(R).rcx = (R).r14; (R).rcx};let _ = {T = (((((R).rbp as u32)) & (((R).rbp as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=937;} else {pc=936;} continue; },
-997 => { let _ = {T = M.addflags((M.read32(((R).r15)) as u64),(((R).r13 as u32) as u64),32_i32); T};let _ = M.write32(((R).r15),(T as u32));let _ = {T = M.addflags((((R).rsi as u32) as u64),(((R).r8 as u32) as u64),32_i32); T};let _ = {(R).rsi = ((T as u32) as u64); (R).rsi};let _ = {T = M.addflags((M.read32(((R).r12)) as u64),(((R).r8 as u32) as u64),32_i32); T};let _ = M.write32(((R).r12),(T as u32));let _ = {T = M.addflags((((R).rbp as u32) as u64),(((R).r13 as u32) as u64),32_i32); T};let _ = {(R).rbp = ((T as u32) as u64); (R).rbp};let _ = {(R).rcx = M.read64((((R).rsp).wrapping_add(48_u64))); (R).rcx};let _ = {(R).r8 = (R).r14; (R).r8};let _ = {(R).r11 = (((M.read32(((R).r15)) as i32) as i64) as u64); (R).r11};let _ = {(R).rax = (M.read32(((R).r12)) as u64); (R).rax};let _ = {(R).rdx = M.read64((((R).rcx).wrapping_add(16_u64))); (R).rdx};let _ = {T = (((((R).r11 as u32)) & (((R).r11 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=970;} else {pc=969;} continue; },
-998 => { let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=434;} else {pc=433;} continue; },
-1003 => { let _ = {T = ((((((R).rax as u8)) as i32) & ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=998;} else {pc=997;} continue; },
-1004 => { let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (!(M).zf) {pc=434;} else {pc=433;} continue; },
-1009 => { let _ = {T = ((((((R).r11 as u8)) as i32) & ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1004;} else {pc=1003;} continue; },
-1010 => { if (!(M).zf) {pc=434;} else {pc=433;} continue; },
-1022 => { let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1010;} else {pc=1009;} continue; },
-1023 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1010;} else {pc=1009;} continue; },
-1045 => { let _ = {(R).rax = ((M.read8(((R).r10)) as u32) as u64); (R).rax};let _ = {(R).rcx = ((M.read8(((R).r9)) as u32) as u64); (R).rcx};let _ = {T = M.subflags((((R).rcx as u32) as u64),(((R).rax as u32) as u64),32_i32); T};let _ = {(R).rcx = ((T as u32) as u64); (R).rcx};let _ = {(R).rax = (((R).rcx as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=1023;} else {pc=1022;} continue; },
-1046 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1010;} else {pc=1009;} continue; },
-1066 => { let _ = {(R).rcx = ((M.read8((((R).r10).wrapping_add(2_u64))) as u32) as u64); (R).rcx};let _ = {(R).rax = ((M.read8((((R).r9).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rcx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=1046;} else {pc=1045;} continue; },
-1067 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1010;} else {pc=1009;} continue; },
-1087 => { let _ = {(R).rcx = ((M.read8((((R).r10).wrapping_add(3_u64))) as u32) as u64); (R).rcx};let _ = {(R).rax = ((M.read8((((R).r9).wrapping_add(3_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rcx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=1067;} else {pc=1066;} continue; },
-1088 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1010;} else {pc=1009;} continue; },
-1110 => { let _ = {(R).rax = ((M.read8((((R).r10).wrapping_add(1_u64))) as u32) as u64); (R).rax};let _ = {(R).rcx = ((M.read8((((R).r9).wrapping_add(1_u64))) as u32) as u64); (R).rcx};let _ = {T = M.subflags((((R).rcx as u32) as u64),(((R).rax as u32) as u64),32_i32); T};let _ = {(R).rcx = ((T as u32) as u64); (R).rcx};let _ = {(R).rax = (((R).rcx as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) {pc=1088;} else {pc=1087;} continue; },
-1111 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1010;} else {pc=1009;} continue; },
-1116 => { let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=1111;} else {pc=1110;} continue; },
-1117 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1010;} else {pc=1009;} continue; },
-1132 => { let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | ((((!(M).sf) as u8)) as u64)); (R).r11};let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=1117;} else {pc=1116;} continue; },
-1133 => { let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=1117;} else {pc=1116;} continue; },
-1148 => { let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | ((((!(M).sf) as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=1133;} else {pc=1132;} continue; },
-1149 => { let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=1133;} else {pc=1132;} continue; },
-1157 => { let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1010;} else {pc=1009;} continue; },
-1158 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1010;} else {pc=1009;} continue; },
-1164 => { let _ = {(R).rax = ((M.read8(((R).r10)) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8(((R).r9)) as u64),(((R).rax as u8) as u64),8_i32); T};if (!(M).zf) {pc=1158;} else {pc=1157;} continue; },
-1165 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1010;} else {pc=1009;} continue; },
-1171 => { let _ = {(R).rax = ((M.read8((((R).r10).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r9).wrapping_add(2_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};if (!(M).zf) {pc=1165;} else {pc=1164;} continue; },
-1172 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1010;} else {pc=1009;} continue; },
-1178 => { let _ = {(R).rax = ((M.read8((((R).r10).wrapping_add(3_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r9).wrapping_add(3_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};if (!(M).zf) {pc=1172;} else {pc=1171;} continue; },
-1179 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1010;} else {pc=1009;} continue; },
-1185 => { let _ = {(R).rax = ((M.read8((((R).r10).wrapping_add(1_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r9).wrapping_add(1_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};if (!(M).zf) {pc=1179;} else {pc=1178;} continue; },
-1186 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1010;} else {pc=1009;} continue; },
-1191 => { let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=1186;} else {pc=1185;} continue; },
-1192 => { let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);if (M).zf {pc=1010;} else {pc=1009;} continue; },
-1207 => { let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | ((((!(M).zf) as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | ((((!(M).zf) as u8)) as u64)); (R).r11};let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=1192;} else {pc=1191;} continue; },
-1208 => { let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);if (M).zf {pc=1149;} else {pc=1148;} continue; },
-1234 => { let _ = {(R).rax = (((R).rsi as u32) as u64); (R).rax};let _ = {(R).rax = (((((((R).rax as u32) as i32) as i64)).wrapping_mul(((M.read32((((R).rdx).wrapping_add(32_u64))) as i32) as i64)) as u32) as u64); (R).rax};let _ = {(R).rcx = (((((R).rax as u32) as i32) as i64) as u64); (R).rcx};let _ = {(R).rax = (((((R).rbp as u32) as i32) as i64) as u64); (R).rax};let _ = {(R).r10 = (((R).rcx).wrapping_add((((R).rax).wrapping_mul(4_u64)))); (R).r10};let _ = {T = M.addflags((R).r10,M.read64((((R).rdx).wrapping_add(24_u64))),64_i32); T};let _ = {(R).r10 = T; (R).r10};let _ = {(R).rax = (((M.read32((((R).rsp).wrapping_add(80_u64))) as i32) as i64) as u64); (R).rax};let _ = {(R).r8 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61680_u64))) as u64); (R).r8};let _ = {(R).r13 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61640_u64))) as u64); (R).r13};let _ = M.write32((((R).rsp).wrapping_add(104_u64)),((R).r8 as u32));let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (!(M).zf) {pc=1208;} else {pc=1207;} continue; },
-1235 => { let _ = {(R).rax = (((M.read32((((R).rsp).wrapping_add(80_u64))) as i32) as i64) as u64); (R).rax};let _ = {(R).r8 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61680_u64))) as u64); (R).r8};let _ = {(R).r13 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61640_u64))) as u64); (R).r13};let _ = M.write32((((R).rsp).wrapping_add(104_u64)),((R).r8 as u32));let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (!(M).zf) {pc=1208;} else {pc=1207;} continue; },
-1239 => { let _ = {T = M.subflags((((R).rsi as u32) as u64),(M.read32((((R).rdx).wrapping_add(40_u64))) as u64),32_i32); T};if (((M).sf as i32) == ((M).of as i32)) {pc=1235;} else {pc=1234;} continue; },
-1240 => { let _ = {(R).rax = (((M.read32((((R).rsp).wrapping_add(80_u64))) as i32) as i64) as u64); (R).rax};let _ = {(R).r8 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61680_u64))) as u64); (R).r8};let _ = {(R).r13 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61640_u64))) as u64); (R).r13};let _ = M.write32((((R).rsp).wrapping_add(104_u64)),((R).r8 as u32));let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (!(M).zf) {pc=1208;} else {pc=1207;} continue; },
-1245 => { let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=1240;} else {pc=1239;} continue; },
-1246 => { let _ = {(R).rax = (((M.read32((((R).rsp).wrapping_add(80_u64))) as i32) as i64) as u64); (R).rax};let _ = {(R).r8 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61680_u64))) as u64); (R).r8};let _ = {(R).r13 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61640_u64))) as u64); (R).r13};let _ = M.write32((((R).rsp).wrapping_add(104_u64)),((R).r8 as u32));let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (!(M).zf) {pc=1208;} else {pc=1207;} continue; },
-1250 => { let _ = {T = M.subflags((((R).rbp as u32) as u64),(M.read32((((R).rdx).wrapping_add(36_u64))) as u64),32_i32); T};if (((M).sf as i32) == ((M).of as i32)) {pc=1246;} else {pc=1245;} continue; },
-1251 => { let _ = {(R).rax = (((M.read32((((R).rsp).wrapping_add(80_u64))) as i32) as i64) as u64); (R).rax};let _ = {(R).r8 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61680_u64))) as u64); (R).r8};let _ = {(R).r13 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61640_u64))) as u64); (R).r13};let _ = M.write32((((R).rsp).wrapping_add(104_u64)),((R).r8 as u32));let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (!(M).zf) {pc=1208;} else {pc=1207;} continue; },
-1267 => { let _ = {(R).r8 = (((((((R).r8 as u32) as i32) as i64)).wrapping_mul(((M.read32((((R).rdx).wrapping_add(32_u64))) as i32) as i64)) as u32) as u64); (R).r8};let _ = {(R).rcx = (((((R).r8 as u32) as i32) as i64) as u64); (R).rcx};let _ = {(R).r9 = (((R).rcx).wrapping_add((((R).r10).wrapping_mul(4_u64)))); (R).r9};let _ = {T = M.addflags((R).r9,M.read64((((R).rdx).wrapping_add(24_u64))),64_i32); T};let _ = {(R).r9 = T; (R).r9};let _ = {(R).r10 = (R).r14; (R).r10};let _ = {T = (((((R).rbp as u32)) & (((R).rbp as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=1251;} else {pc=1250;} continue; },
-1268 => { let _ = {(R).r10 = (R).r14; (R).r10};let _ = {T = (((((R).rbp as u32)) & (((R).rbp as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=1251;} else {pc=1250;} continue; },
-1272 => { let _ = {T = M.subflags((((R).r8 as u32) as u64),(M.read32((((R).rdx).wrapping_add(40_u64))) as u64),32_i32); T};if (((M).sf as i32) == ((M).of as i32)) {pc=1268;} else {pc=1267;} continue; },
-1273 => { let _ = {(R).r10 = (R).r14; (R).r10};let _ = {T = (((((R).rbp as u32)) & (((R).rbp as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=1251;} else {pc=1250;} continue; },
-1278 => { let _ = {T = (((((R).r8 as u32)) & (((R).r8 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=1273;} else {pc=1272;} continue; },
-1279 => { let _ = {(R).r10 = (R).r14; (R).r10};let _ = {T = (((((R).rbp as u32)) & (((R).rbp as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=1251;} else {pc=1250;} continue; },
-1283 => { let _ = {T = M.subflags((((R).r10 as u32) as u64),(M.read32((((R).rdx).wrapping_add(36_u64))) as u64),32_i32); T};if (((M).sf as i32) == ((M).of as i32)) {pc=1279;} else {pc=1278;} continue; },
-1284 => { let _ = {(R).r10 = (R).r14; (R).r10};let _ = {T = (((((R).rbp as u32)) & (((R).rbp as u32))) as u64); T};let _ = M.logicflags(T,32_i32);if (M).sf {pc=1251;} else {pc=1250;} continue; },
-1350 => { let _ = M.write64((((R).rsp).wrapping_add((40_i32 as u64))).wrapping_add((i).wrapping_mul((8_i32 as u64))),(*((args).as_mut_ptr() as *mut u64).wrapping_offset(i as isize)));let _ = {let old=i; i=(i).wrapping_add(1); i};if (i < ((std::mem::size_of::<[u64; 4]>() as u64) / (std::mem::size_of::<u64>() as u64))) {pc=1350;} else {pc=1;} continue; },
-1363 => { R = Regs::default();M = Memory::default();T = (0_i32 as u64);let _ = {(M).state = state; (M).state};let _ = {(M).world = (*state).src_world; (M).world};let _ = {(R).rcx = (state as u64); (R).rcx};let _ = {(R).rdx = ((x as u32) as u64); (R).rdx};let _ = {(R).r8 = ((y as u32) as u64); (R).r8};let _ = {(R).r9 = ((dir1 as u32) as u64); (R).r9};let _ = {(R).rsp = (KSTACK).wrapping_add((2048_i32 as u64)); (R).rsp};let _ = M.write64((R).rsp,16045690984833335023_u64);args = [(dir2 as u64), (out_x as u64), (out_y as u64), ((threshold as u32) as u64)];i = (0_i32 as u64);if (i < ((std::mem::size_of::<[u64; 4]>() as u64) / (std::mem::size_of::<u64>() as u64))) {pc=1350;} else {pc=1;} continue; },
-_ => unreachable!(),
-}}}
+'b420: {
+'b412: {
+'b411: {
+'b419: {
+'b426: {
+'b425: {
+'b434: {
+'b433: {
+'b1010: {
+'b1004: {
+'b439: {
+'b998: {
+'b1003: {
+'b1009: {
+'b1117: {
+'b1111: {
+'b1088: {
+'b1067: {
+'b1046: {
+'b1023: {
+'b1022: {
+'b1045: {
+'b1066: {
+'b1087: {
+'b1110: {
+'b1116: {
+'b1133: {
+'b1132: {
+'b1149: {
+'b1148: {
+'b1208: {
+'b1192: {
+'b1186: {
+'b1179: {
+'b1172: {
+'b1165: {
+'b1158: {
+'b1157: {
+'b1164: {
+'b1171: {
+'b1178: {
+'b1185: {
+'b1191: {
+'b1207: {
+'b1251: {
+'b1246: {
+'b1240: {
+'b1235: {
+'b1234: {
+'b1239: {
+'b1245: {
+'b1250: {
+'b1284: {
+'b1279: {
+'b1273: {
+'b1268: {
+'b1267: {
+'b1272: {
+'b1278: {
+'b1283: {
+'b1: {
+'b1350: {
+R = Regs::default();M = Memory::default();T = (0_i32 as u64);let _ = {(M).state = state; (M).state};let _ = {(M).world = (*state).src_world; (M).world};let _ = {(R).rcx = (state as u64); (R).rcx};let _ = {(R).rdx = ((x as u32) as u64); (R).rdx};let _ = {(R).r8 = ((y as u32) as u64); (R).r8};let _ = {(R).r9 = ((dir1 as u32) as u64); (R).r9};let _ = {(R).rsp = (KSTACK).wrapping_add((2048_i32 as u64)); (R).rsp};let _ = M.write64((R).rsp,16045690984833335023_u64);args = [(dir2 as u64), (out_x as u64), (out_y as u64), ((threshold as u32) as u64)];i = (0_i32 as u64);
+if (i < ((std::mem::size_of::<[u64; 4]>() as u64) / (std::mem::size_of::<u64>() as u64))) { break 'b1350; } else { break 'b1; }
+}
+'l1350: loop {
+let _ = M.write64((((R).rsp).wrapping_add((40_i32 as u64))).wrapping_add((i).wrapping_mul((8_i32 as u64))),(*((args).as_mut_ptr() as *mut u64).wrapping_offset(i as isize)));let _ = {let old=i; i=(i).wrapping_add(1); i};
+if (i < ((std::mem::size_of::<[u64; 4]>() as u64) / (std::mem::size_of::<u64>() as u64))) { continue 'l1350; } else { break 'b1; }
+}
+}
+let _ = M.write64((((R).rsp).wrapping_add(16_u64)),(R).rbx);let _ = M.write64((((R).rsp).wrapping_add(24_u64)),(R).rbp);let _ = M.write64((((R).rsp).wrapping_add(32_u64)),(R).rsi);let _ = M.write64((((R).rsp).wrapping_add(8_u64)),(R).rcx);let _ = {(R).rsp = (((R).rsp).wrapping_sub((8_i32 as u64))) as u64; (R).rsp};let _ = M.write64((R).rsp,(R).rdi);let _ = {(R).rsp = (((R).rsp).wrapping_sub((8_i32 as u64))) as u64; (R).rsp};let _ = M.write64((R).rsp,(R).r12);let _ = {(R).rsp = (((R).rsp).wrapping_sub((8_i32 as u64))) as u64; (R).rsp};let _ = M.write64((R).rsp,(R).r13);let _ = {(R).rsp = (((R).rsp).wrapping_sub((8_i32 as u64))) as u64; (R).rsp};let _ = M.write64((R).rsp,(R).r14);let _ = {(R).rsp = (((R).rsp).wrapping_sub((8_i32 as u64))) as u64; (R).rsp};let _ = M.write64((R).rsp,(R).r15);let _ = {(R).r15 = M.read64((((R).rsp).wrapping_add(88_u64))); (R).r15};let _ = {(R).r11 = (((6442491481_i64 as u64)).wrapping_sub(40537_u64)); (R).r11};let _ = {(R).r12 = M.read64((((R).rsp).wrapping_add(96_u64))); (R).r12};let _ = {T = (((((R).r14 as u32)) ^ (((R).r14 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).r14 = ((T as u32) as u64); (R).r14};let _ = {(R).rbx = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).rbx};let _ = {(R).r10 = (((((R).rdx as u32) as i32) as i64) as u64); (R).r10};let _ = {(R).rax = (((((R).r9 as u32) as i32) as i64) as u64); (R).rax};let _ = {(R).r9 = ((((R).rax).wrapping_mul(4_u64))); (R).r9};let _ = {(R).rbp = (M.read32(((((R).r9).wrapping_add((R).r11)).wrapping_add(61640_u64))) as u64); (R).rbp};let _ = {(R).rsi = (M.read32(((((R).r9).wrapping_add((R).r11)).wrapping_add(61680_u64))) as u64); (R).rsi};let _ = {T = M.addflags((((R).rbp as u32) as u64),(((R).r10 as u32) as u64),32_i32); T};let _ = {(R).rbp = ((T as u32) as u64); (R).rbp};let _ = M.write32(((R).r15),((R).r10 as u32));let _ = {T = M.addflags((((R).rsi as u32) as u64),(((R).r8 as u32) as u64),32_i32); T};let _ = {(R).rsi = ((T as u32) as u64); (R).rsi};let _ = M.write32(((R).r12),((R).r8 as u32));let _ = {(R).r9 = (((R).r14 as u32) as u64); (R).r9};let _ = {(R).rdx = M.read64((((R).rcx).wrapping_add(16_u64))); (R).rdx};let _ = {T = (((((R).r10 as u32)) & (((R).r10 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b1284; } else { break 'b1283; }
+}
+let _ = {T = M.subflags((((R).r10 as u32) as u64),(M.read32((((R).rdx).wrapping_add(36_u64))) as u64),32_i32); T};
+if (((M).sf as i32) == ((M).of as i32)) { break 'b1279; } else { break 'b1278; }
+}
+let _ = {T = (((((R).r8 as u32)) & (((R).r8 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b1273; } else { break 'b1272; }
+}
+let _ = {T = M.subflags((((R).r8 as u32) as u64),(M.read32((((R).rdx).wrapping_add(40_u64))) as u64),32_i32); T};
+if (((M).sf as i32) == ((M).of as i32)) { break 'b1268; } else { break 'b1267; }
+}
+let _ = {(R).r8 = (((((((R).r8 as u32) as i32) as i64)).wrapping_mul(((M.read32((((R).rdx).wrapping_add(32_u64))) as i32) as i64)) as u32) as u64); (R).r8};let _ = {(R).rcx = (((((R).r8 as u32) as i32) as i64) as u64); (R).rcx};let _ = {(R).r9 = (((R).rcx).wrapping_add((((R).r10).wrapping_mul(4_u64)))); (R).r9};let _ = {T = M.addflags((R).r9,M.read64((((R).rdx).wrapping_add(24_u64))),64_i32); T};let _ = {(R).r9 = T; (R).r9};let _ = {(R).r10 = (R).r14; (R).r10};let _ = {T = (((((R).rbp as u32)) & (((R).rbp as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b1251; } else { break 'b1250; }
+}
+let _ = {(R).r10 = (R).r14; (R).r10};let _ = {T = (((((R).rbp as u32)) & (((R).rbp as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b1251; } else { break 'b1250; }
+}
+let _ = {(R).r10 = (R).r14; (R).r10};let _ = {T = (((((R).rbp as u32)) & (((R).rbp as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b1251; } else { break 'b1250; }
+}
+let _ = {(R).r10 = (R).r14; (R).r10};let _ = {T = (((((R).rbp as u32)) & (((R).rbp as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b1251; } else { break 'b1250; }
+}
+let _ = {(R).r10 = (R).r14; (R).r10};let _ = {T = (((((R).rbp as u32)) & (((R).rbp as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b1251; } else { break 'b1250; }
+}
+let _ = {T = M.subflags((((R).rbp as u32) as u64),(M.read32((((R).rdx).wrapping_add(36_u64))) as u64),32_i32); T};
+if (((M).sf as i32) == ((M).of as i32)) { break 'b1246; } else { break 'b1245; }
+}
+let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b1240; } else { break 'b1239; }
+}
+let _ = {T = M.subflags((((R).rsi as u32) as u64),(M.read32((((R).rdx).wrapping_add(40_u64))) as u64),32_i32); T};
+if (((M).sf as i32) == ((M).of as i32)) { break 'b1235; } else { break 'b1234; }
+}
+let _ = {(R).rax = (((R).rsi as u32) as u64); (R).rax};let _ = {(R).rax = (((((((R).rax as u32) as i32) as i64)).wrapping_mul(((M.read32((((R).rdx).wrapping_add(32_u64))) as i32) as i64)) as u32) as u64); (R).rax};let _ = {(R).rcx = (((((R).rax as u32) as i32) as i64) as u64); (R).rcx};let _ = {(R).rax = (((((R).rbp as u32) as i32) as i64) as u64); (R).rax};let _ = {(R).r10 = (((R).rcx).wrapping_add((((R).rax).wrapping_mul(4_u64)))); (R).r10};let _ = {T = M.addflags((R).r10,M.read64((((R).rdx).wrapping_add(24_u64))),64_i32); T};let _ = {(R).r10 = T; (R).r10};let _ = {(R).rax = (((M.read32((((R).rsp).wrapping_add(80_u64))) as i32) as i64) as u64); (R).rax};let _ = {(R).r8 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61680_u64))) as u64); (R).r8};let _ = {(R).r13 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61640_u64))) as u64); (R).r13};let _ = M.write32((((R).rsp).wrapping_add(104_u64)),((R).r8 as u32));let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (!(M).zf) { break 'b1208; } else { break 'b1207; }
+}
+let _ = {(R).rax = (((M.read32((((R).rsp).wrapping_add(80_u64))) as i32) as i64) as u64); (R).rax};let _ = {(R).r8 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61680_u64))) as u64); (R).r8};let _ = {(R).r13 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61640_u64))) as u64); (R).r13};let _ = M.write32((((R).rsp).wrapping_add(104_u64)),((R).r8 as u32));let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (!(M).zf) { break 'b1208; } else { break 'b1207; }
+}
+let _ = {(R).rax = (((M.read32((((R).rsp).wrapping_add(80_u64))) as i32) as i64) as u64); (R).rax};let _ = {(R).r8 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61680_u64))) as u64); (R).r8};let _ = {(R).r13 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61640_u64))) as u64); (R).r13};let _ = M.write32((((R).rsp).wrapping_add(104_u64)),((R).r8 as u32));let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (!(M).zf) { break 'b1208; } else { break 'b1207; }
+}
+let _ = {(R).rax = (((M.read32((((R).rsp).wrapping_add(80_u64))) as i32) as i64) as u64); (R).rax};let _ = {(R).r8 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61680_u64))) as u64); (R).r8};let _ = {(R).r13 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61640_u64))) as u64); (R).r13};let _ = M.write32((((R).rsp).wrapping_add(104_u64)),((R).r8 as u32));let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (!(M).zf) { break 'b1208; } else { break 'b1207; }
+}
+let _ = {(R).rax = (((M.read32((((R).rsp).wrapping_add(80_u64))) as i32) as i64) as u64); (R).rax};let _ = {(R).r8 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61680_u64))) as u64); (R).r8};let _ = {(R).r13 = (M.read32(((((R).r11).wrapping_add((((R).rax).wrapping_mul(4_u64)))).wrapping_add(61640_u64))) as u64); (R).r13};let _ = M.write32((((R).rsp).wrapping_add(104_u64)),((R).r8 as u32));let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (!(M).zf) { break 'b1208; } else { break 'b1207; }
+}
+let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | ((((!(M).zf) as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | ((((!(M).zf) as u8)) as u64)); (R).r11};let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b1192; } else { break 'b1191; }
+}
+let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b1186; } else { break 'b1185; }
+}
+let _ = {(R).rax = ((M.read8((((R).r10).wrapping_add(1_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r9).wrapping_add(1_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};
+if (!(M).zf) { break 'b1179; } else { break 'b1178; }
+}
+let _ = {(R).rax = ((M.read8((((R).r10).wrapping_add(3_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r9).wrapping_add(3_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};
+if (!(M).zf) { break 'b1172; } else { break 'b1171; }
+}
+let _ = {(R).rax = ((M.read8((((R).r10).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r9).wrapping_add(2_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};
+if (!(M).zf) { break 'b1165; } else { break 'b1164; }
+}
+let _ = {(R).rax = ((M.read8(((R).r10)) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8(((R).r9)) as u64),(((R).rax as u8) as u64),8_i32); T};
+if (!(M).zf) { break 'b1158; } else { break 'b1157; }
+}
+let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1010; } else { break 'b1009; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1010; } else { break 'b1009; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1010; } else { break 'b1009; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1010; } else { break 'b1009; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1010; } else { break 'b1009; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1010; } else { break 'b1009; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1010; } else { break 'b1009; }
+}
+let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b1149; } else { break 'b1148; }
+}
+let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | ((((!(M).sf) as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b1133; } else { break 'b1132; }
+}
+let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b1133; } else { break 'b1132; }
+}
+let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | ((((!(M).sf) as u8)) as u64)); (R).r11};let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b1117; } else { break 'b1116; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b1117; } else { break 'b1116; }
+}
+let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b1111; } else { break 'b1110; }
+}
+let _ = {(R).rax = ((M.read8((((R).r10).wrapping_add(1_u64))) as u32) as u64); (R).rax};let _ = {(R).rcx = ((M.read8((((R).r9).wrapping_add(1_u64))) as u32) as u64); (R).rcx};let _ = {T = M.subflags((((R).rcx as u32) as u64),(((R).rax as u32) as u64),32_i32); T};let _ = {(R).rcx = ((T as u32) as u64); (R).rcx};let _ = {(R).rax = (((R).rcx as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b1088; } else { break 'b1087; }
+}
+let _ = {(R).rcx = ((M.read8((((R).r10).wrapping_add(3_u64))) as u32) as u64); (R).rcx};let _ = {(R).rax = ((M.read8((((R).r9).wrapping_add(3_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rcx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b1067; } else { break 'b1066; }
+}
+let _ = {(R).rcx = ((M.read8((((R).r10).wrapping_add(2_u64))) as u32) as u64); (R).rcx};let _ = {(R).rax = ((M.read8((((R).r9).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rcx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b1046; } else { break 'b1045; }
+}
+let _ = {(R).rax = ((M.read8(((R).r10)) as u32) as u64); (R).rax};let _ = {(R).rcx = ((M.read8(((R).r9)) as u32) as u64); (R).rcx};let _ = {T = M.subflags((((R).rcx as u32) as u64),(((R).rax as u32) as u64),32_i32); T};let _ = {(R).rcx = ((T as u32) as u64); (R).rcx};let _ = {(R).rax = (((R).rcx as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b1023; } else { break 'b1022; }
+}
+let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1010; } else { break 'b1009; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1010; } else { break 'b1009; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1010; } else { break 'b1009; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1010; } else { break 'b1009; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1010; } else { break 'b1009; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1010; } else { break 'b1009; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1010; } else { break 'b1009; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) & ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1004; } else { break 'b1003; }
+}
+'l1003: loop {
+'b440: {
+'b549: {
+'b543: {
+'b522: {
+'b501: {
+'b480: {
+'b459: {
+'b458: {
+'b479: {
+'b500: {
+'b521: {
+'b542: {
+'b548: {
+'b654: {
+'b648: {
+'b627: {
+'b606: {
+'b585: {
+'b562: {
+'b561: {
+'b584: {
+'b605: {
+'b626: {
+'b647: {
+'b653: {
+'b759: {
+'b753: {
+'b732: {
+'b711: {
+'b690: {
+'b667: {
+'b666: {
+'b689: {
+'b710: {
+'b731: {
+'b752: {
+'b758: {
+'b902: {
+'b802: {
+'b796: {
+'b789: {
+'b782: {
+'b775: {
+'b768: {
+'b767: {
+'b774: {
+'b781: {
+'b788: {
+'b795: {
+'b801: {
+'b849: {
+'b843: {
+'b836: {
+'b829: {
+'b822: {
+'b815: {
+'b814: {
+'b821: {
+'b828: {
+'b835: {
+'b842: {
+'b848: {
+'b896: {
+'b890: {
+'b883: {
+'b876: {
+'b869: {
+'b862: {
+'b861: {
+'b868: {
+'b875: {
+'b882: {
+'b889: {
+'b895: {
+'b901: {
+'b937: {
+'b932: {
+'b926: {
+'b921: {
+'b920: {
+'b925: {
+'b931: {
+'b936: {
+'b970: {
+'b965: {
+'b959: {
+'b954: {
+'b953: {
+'b958: {
+'b964: {
+'b969: {
+'b997: {
+let _ = {T = ((((((R).rax as u8)) as i32) & ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b998; } else { break 'b997; }
+}
+let _ = {T = M.addflags((M.read32(((R).r15)) as u64),(((R).r13 as u32) as u64),32_i32); T};let _ = M.write32(((R).r15),(T as u32));let _ = {T = M.addflags((((R).rsi as u32) as u64),(((R).r8 as u32) as u64),32_i32); T};let _ = {(R).rsi = ((T as u32) as u64); (R).rsi};let _ = {T = M.addflags((M.read32(((R).r12)) as u64),(((R).r8 as u32) as u64),32_i32); T};let _ = M.write32(((R).r12),(T as u32));let _ = {T = M.addflags((((R).rbp as u32) as u64),(((R).r13 as u32) as u64),32_i32); T};let _ = {(R).rbp = ((T as u32) as u64); (R).rbp};let _ = {(R).rcx = M.read64((((R).rsp).wrapping_add(48_u64))); (R).rcx};let _ = {(R).r8 = (R).r14; (R).r8};let _ = {(R).r11 = (((M.read32(((R).r15)) as i32) as i64) as u64); (R).r11};let _ = {(R).rax = (M.read32(((R).r12)) as u64); (R).rax};let _ = {(R).rdx = M.read64((((R).rcx).wrapping_add(16_u64))); (R).rdx};let _ = {T = (((((R).r11 as u32)) & (((R).r11 as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b970; } else { break 'b969; }
+}
+let _ = {T = M.subflags((((R).r11 as u32) as u64),(M.read32((((R).rdx).wrapping_add(36_u64))) as u64),32_i32); T};
+if (((M).sf as i32) == ((M).of as i32)) { break 'b965; } else { break 'b964; }
+}
+let _ = {T = (((((R).rax as u32)) & (((R).rax as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b959; } else { break 'b958; }
+}
+let _ = {T = M.subflags((((R).rax as u32) as u64),(M.read32((((R).rdx).wrapping_add(40_u64))) as u64),32_i32); T};
+if (((M).sf as i32) == ((M).of as i32)) { break 'b954; } else { break 'b953; }
+}
+let _ = {(R).rax = (((((((R).rax as u32) as i32) as i64)).wrapping_mul(((M.read32((((R).rdx).wrapping_add(32_u64))) as i32) as i64)) as u32) as u64); (R).rax};let _ = {(R).rcx = (((((R).rax as u32) as i32) as i64) as u64); (R).rcx};let _ = {(R).r8 = (((R).rcx).wrapping_add((((R).r11).wrapping_mul(4_u64)))); (R).r8};let _ = {T = M.addflags((R).r8,M.read64((((R).rdx).wrapping_add(24_u64))),64_i32); T};let _ = {(R).r8 = T; (R).r8};let _ = {(R).rcx = (R).r14; (R).rcx};let _ = {T = (((((R).rbp as u32)) & (((R).rbp as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b937; } else { break 'b936; }
+}
+let _ = {(R).rcx = (R).r14; (R).rcx};let _ = {T = (((((R).rbp as u32)) & (((R).rbp as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b937; } else { break 'b936; }
+}
+let _ = {(R).rcx = (R).r14; (R).rcx};let _ = {T = (((((R).rbp as u32)) & (((R).rbp as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b937; } else { break 'b936; }
+}
+let _ = {(R).rcx = (R).r14; (R).rcx};let _ = {T = (((((R).rbp as u32)) & (((R).rbp as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b937; } else { break 'b936; }
+}
+let _ = {(R).rcx = (R).r14; (R).rcx};let _ = {T = (((((R).rbp as u32)) & (((R).rbp as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b937; } else { break 'b936; }
+}
+let _ = {T = M.subflags((((R).rbp as u32) as u64),(M.read32((((R).rdx).wrapping_add(36_u64))) as u64),32_i32); T};
+if (((M).sf as i32) == ((M).of as i32)) { break 'b932; } else { break 'b931; }
+}
+let _ = {T = (((((R).rsi as u32)) & (((R).rsi as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (M).sf { break 'b926; } else { break 'b925; }
+}
+let _ = {T = M.subflags((((R).rsi as u32) as u64),(M.read32((((R).rdx).wrapping_add(40_u64))) as u64),32_i32); T};
+if (((M).sf as i32) == ((M).of as i32)) { break 'b921; } else { break 'b920; }
+}
+let _ = {(R).rax = (((R).rsi as u32) as u64); (R).rax};let _ = {(R).rax = (((((((R).rax as u32) as i32) as i64)).wrapping_mul(((M.read32((((R).rdx).wrapping_add(32_u64))) as i32) as i64)) as u32) as u64); (R).rax};let _ = {(R).rcx = (((((R).rax as u32) as i32) as i64) as u64); (R).rcx};let _ = {(R).rax = (((((R).rbp as u32) as i32) as i64) as u64); (R).rax};let _ = {(R).rcx = (((R).rcx).wrapping_add((((R).rax).wrapping_mul(4_u64)))); (R).rcx};let _ = {T = M.addflags((R).rcx,M.read64((((R).rdx).wrapping_add(24_u64))),64_i32); T};let _ = {(R).rcx = T; (R).rcx};let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (!(M).zf) { break 'b902; } else { break 'b901; }
+}
+let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (!(M).zf) { break 'b902; } else { break 'b901; }
+}
+let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (!(M).zf) { break 'b902; } else { break 'b901; }
+}
+let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (!(M).zf) { break 'b902; } else { break 'b901; }
+}
+let _ = {T = (((((R).rbx as u32)) & (((R).rbx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);
+if (!(M).zf) { break 'b902; } else { break 'b901; }
+}
+let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b896; } else { break 'b895; }
+}
+let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b890; } else { break 'b889; }
+}
+let _ = {(R).rax = ((M.read8((((R).r8).wrapping_add(1_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r9).wrapping_add(1_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};
+if (!(M).zf) { break 'b883; } else { break 'b882; }
+}
+let _ = {(R).rax = ((M.read8((((R).r8).wrapping_add(3_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r9).wrapping_add(3_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};
+if (!(M).zf) { break 'b876; } else { break 'b875; }
+}
+let _ = {(R).rax = ((M.read8((((R).r8).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r9).wrapping_add(2_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};
+if (!(M).zf) { break 'b869; } else { break 'b868; }
+}
+let _ = {(R).rax = ((M.read8(((R).r8)) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8(((R).r9)) as u64),(((R).rax as u8) as u64),8_i32); T};
+if (!(M).zf) { break 'b862; } else { break 'b861; }
+}
+let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b849; } else { break 'b848; }
+}
+let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b849; } else { break 'b848; }
+}
+let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b849; } else { break 'b848; }
+}
+let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b849; } else { break 'b848; }
+}
+let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b849; } else { break 'b848; }
+}
+let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b849; } else { break 'b848; }
+}
+let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b849; } else { break 'b848; }
+}
+let _ = {T = (((R).rcx) & ((R).rcx)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b843; } else { break 'b842; }
+}
+let _ = {(R).rax = ((M.read8((((R).rcx).wrapping_add(1_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r10).wrapping_add(1_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};
+if (!(M).zf) { break 'b836; } else { break 'b835; }
+}
+let _ = {(R).rax = ((M.read8((((R).rcx).wrapping_add(3_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r10).wrapping_add(3_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};
+if (!(M).zf) { break 'b829; } else { break 'b828; }
+}
+let _ = {(R).rax = ((M.read8((((R).rcx).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r10).wrapping_add(2_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};
+if (!(M).zf) { break 'b822; } else { break 'b821; }
+}
+let _ = {(R).rax = ((M.read8(((R).rcx)) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8(((R).r10)) as u64),(((R).rax as u8) as u64),8_i32); T};
+if (!(M).zf) { break 'b815; } else { break 'b814; }
+}
+let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b802; } else { break 'b801; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b802; } else { break 'b801; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b802; } else { break 'b801; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b802; } else { break 'b801; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b802; } else { break 'b801; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b802; } else { break 'b801; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b802; } else { break 'b801; }
+}
+let _ = {T = (((R).rcx) & ((R).rcx)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b796; } else { break 'b795; }
+}
+let _ = {(R).rax = ((M.read8((((R).rcx).wrapping_add(1_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r8).wrapping_add(1_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};
+if (!(M).zf) { break 'b789; } else { break 'b788; }
+}
+let _ = {(R).rax = ((M.read8((((R).rcx).wrapping_add(3_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r8).wrapping_add(3_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};
+if (!(M).zf) { break 'b782; } else { break 'b781; }
+}
+let _ = {(R).rax = ((M.read8((((R).rcx).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8((((R).r8).wrapping_add(2_u64))) as u64),(((R).rax as u8) as u64),8_i32); T};
+if (!(M).zf) { break 'b775; } else { break 'b774; }
+}
+let _ = {(R).rax = ((M.read8(((R).rcx)) as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read8(((R).r8)) as u64),(((R).rax as u8) as u64),8_i32); T};
+if (!(M).zf) { break 'b768; } else { break 'b767; }
+}
+let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b440; } else { break 'b439; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b440; } else { break 'b439; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b440; } else { break 'b439; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b440; } else { break 'b439; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b440; } else { break 'b439; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b440; } else { break 'b439; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b440; } else { break 'b439; }
+}
+let _ = {T = (((R).r9) & ((R).r9)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b759; } else { break 'b758; }
+}
+let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b753; } else { break 'b752; }
+}
+let _ = {(R).rdx = ((M.read8((((R).r8).wrapping_add(1_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read8((((R).r9).wrapping_add(1_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b732; } else { break 'b731; }
+}
+let _ = {(R).rdx = ((M.read8((((R).r8).wrapping_add(3_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read8((((R).r9).wrapping_add(3_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b711; } else { break 'b710; }
+}
+let _ = {(R).rdx = ((M.read8((((R).r8).wrapping_add(2_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read8((((R).r9).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b690; } else { break 'b689; }
+}
+let _ = {(R).rax = ((M.read8(((R).r8)) as u32) as u64); (R).rax};let _ = {(R).rdx = ((M.read8(((R).r9)) as u32) as u64); (R).rdx};let _ = {T = M.subflags((((R).rdx as u32) as u64),(((R).rax as u32) as u64),32_i32); T};let _ = {(R).rdx = ((T as u32) as u64); (R).rdx};let _ = {(R).rax = (((R).rdx as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b667; } else { break 'b666; }
+}
+let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b654; } else { break 'b653; }
+}
+let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b654; } else { break 'b653; }
+}
+let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b654; } else { break 'b653; }
+}
+let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b654; } else { break 'b653; }
+}
+let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b654; } else { break 'b653; }
+}
+let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b654; } else { break 'b653; }
+}
+let _ = {T = ((((((R).rdi as u8)) as i32) ^ ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rdi = ((((R).rdi & (!255_u64))) | (((T as u8)) as u64)); (R).rdi};let _ = {T = (((R).r10) & ((R).r10)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b654; } else { break 'b653; }
+}
+let _ = {T = (((R).rcx) & ((R).rcx)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b648; } else { break 'b647; }
+}
+let _ = {(R).rdx = ((M.read8((((R).rcx).wrapping_add(1_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read8((((R).r10).wrapping_add(1_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b627; } else { break 'b626; }
+}
+let _ = {(R).rdx = ((M.read8((((R).rcx).wrapping_add(3_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read8((((R).r10).wrapping_add(3_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b606; } else { break 'b605; }
+}
+let _ = {(R).rdx = ((M.read8((((R).rcx).wrapping_add(2_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read8((((R).r10).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b585; } else { break 'b584; }
+}
+let _ = {(R).rax = ((M.read8(((R).rcx)) as u32) as u64); (R).rax};let _ = {(R).rdx = ((M.read8(((R).r10)) as u32) as u64); (R).rdx};let _ = {T = M.subflags((((R).rdx as u32) as u64),(((R).rax as u32) as u64),32_i32); T};let _ = {(R).rdx = ((T as u32) as u64); (R).rdx};let _ = {(R).rax = (((R).rdx as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b562; } else { break 'b561; }
+}
+let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b549; } else { break 'b548; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b549; } else { break 'b548; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b549; } else { break 'b548; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b549; } else { break 'b548; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b549; } else { break 'b548; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b549; } else { break 'b548; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) ^ ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).r11 = ((((R).r11 & (!255_u64))) | (((T as u8)) as u64)); (R).r11};let _ = {T = (((R).r8) & ((R).r8)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b549; } else { break 'b548; }
+}
+let _ = {T = (((R).rcx) & ((R).rcx)); T};let _ = M.logicflags(T,64_i32);
+if (M).zf { break 'b543; } else { break 'b542; }
+}
+let _ = {(R).rdx = ((M.read8((((R).rcx).wrapping_add(1_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read8((((R).r8).wrapping_add(1_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b522; } else { break 'b521; }
+}
+let _ = {(R).rdx = ((M.read8((((R).rcx).wrapping_add(3_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read8((((R).r8).wrapping_add(3_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b501; } else { break 'b500; }
+}
+let _ = {(R).rdx = ((M.read8((((R).rcx).wrapping_add(2_u64))) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read8((((R).r8).wrapping_add(2_u64))) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b480; } else { break 'b479; }
+}
+let _ = {(R).rdx = ((M.read8(((R).rcx)) as u32) as u64); (R).rdx};let _ = {(R).rax = ((M.read8(((R).r8)) as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {(R).rdx = ((if (((((R).rax as u32) & 2147483648_u32)) != 0) { 4294967295_u32 } else { 0_u32 }) as u64); (R).rdx};let _ = {T = (((((R).rax as u32)) ^ (((R).rdx as u32))) as u64); T};let _ = M.logicflags(T,32_i32);let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rdx as u32) as u64),32_i32); T};let _ = {(R).rax = ((T as u32) as u64); (R).rax};let _ = {T = M.subflags((((R).rax as u32) as u64),(((R).rbx as u32) as u64),32_i32); T};
+if ((!(M).zf) && ((((M).sf as i32) == ((M).of as i32)))) { break 'b459; } else { break 'b458; }
+}
+let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((1_u64 as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b440; } else { break 'b439; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b440; } else { break 'b439; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b440; } else { break 'b439; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b440; } else { break 'b439; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b440; } else { break 'b439; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b440; } else { break 'b439; }
+}
+let _ = {T = ((((((R).rax as u8)) as i32) ^ ((((R).rax as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((((R).rax & (!255_u64))) | (((T as u8)) as u64)); (R).rax};let _ = {(R).r9 = (R).r8; (R).r9};let _ = {(R).r8 = (M.read32((((R).rsp).wrapping_add(104_u64))) as u64); (R).r8};let _ = {(R).r10 = (R).rcx; (R).r10};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b440; } else { break 'b439; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) & ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b1004; } else { continue 'l1003; }
+}
+}
+let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b434; } else { break 'b433; }
+}
+let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b434; } else { break 'b433; }
+}
+let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b434; } else { break 'b433; }
+}
 
+if (!(M).zf) { break 'b434; } else { break 'b433; }
+}
+let _ = {(R).rax = ((1_u64 as u32) as u64); (R).rax};let _ = {T = ((((((R).r11 as u8)) as i32) & ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b426; } else { break 'b425; }
+}
+let _ = {(R).r14 = (M.read32((((R).rsp).wrapping_add(80_u64))) as u64); (R).r14};let _ = {(R).rax = ((1_u64 as u32) as u64); (R).rax};let _ = {T = ((((((R).r11 as u8)) as i32) & ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (M).zf { break 'b426; } else { break 'b425; }
+}
+let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b420; } else { break 'b419; }
+}
+let _ = {(R).r14 = (((R).rax as u32) as u64); (R).r14};let _ = {T = ((((((R).rdi as u8)) as i32) & ((((R).rdi as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);
+if (!(M).zf) { break 'b420; } else { break 'b419; }
+}
+let _ = {T = ((((((R).r11 as u8)) as i32) & ((((R).r11 as u8)) as i32)) as u64); T};let _ = M.logicflags(T,8_i32);let _ = {(R).rax = ((2_u64 as u32) as u64); (R).rax};
+if (M).zf { break 'b412; } else { break 'b411; }
+}
+let _ = {T = M.subflags((M.read32(((R).r15)) as u64),(((R).r13 as u32) as u64),32_i32); T};let _ = M.write32(((R).r15),(T as u32));let _ = {(R).rax = (((R).r14 as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read32(((R).r12)) as u64),(((R).r8 as u32) as u64),32_i32); T};let _ = M.write32(((R).r12),(T as u32));let _ = {(R).rbx = M.read64((((R).rsp).wrapping_add(56_u64))); (R).rbx};let _ = {(R).rbp = M.read64((((R).rsp).wrapping_add(64_u64))); (R).rbp};let _ = {(R).rsi = M.read64((((R).rsp).wrapping_add(72_u64))); (R).rsi};let _ = {(R).r15 = M.read64((R).rsp); (R).r15};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r14 = M.read64((R).rsp); (R).r14};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r13 = M.read64((R).rsp); (R).r13};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r12 = M.read64((R).rsp); (R).r12};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).rdi = M.read64((R).rsp); (R).rdi};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};return ((R).rax as *mut u8);
+}
+let _ = {(R).r14 = (((R).rax as u32) as u64); (R).r14};let _ = {T = M.subflags((M.read32(((R).r15)) as u64),(((R).r13 as u32) as u64),32_i32); T};let _ = M.write32(((R).r15),(T as u32));let _ = {(R).rax = (((R).r14 as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read32(((R).r12)) as u64),(((R).r8 as u32) as u64),32_i32); T};let _ = M.write32(((R).r12),(T as u32));let _ = {(R).rbx = M.read64((((R).rsp).wrapping_add(56_u64))); (R).rbx};let _ = {(R).rbp = M.read64((((R).rsp).wrapping_add(64_u64))); (R).rbp};let _ = {(R).rsi = M.read64((((R).rsp).wrapping_add(72_u64))); (R).rsi};let _ = {(R).r15 = M.read64((R).rsp); (R).r15};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r14 = M.read64((R).rsp); (R).r14};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r13 = M.read64((R).rsp); (R).r13};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r12 = M.read64((R).rsp); (R).r12};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).rdi = M.read64((R).rsp); (R).rdi};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};return ((R).rax as *mut u8);
+}
+let _ = {T = M.subflags((M.read32(((R).r15)) as u64),(((R).r13 as u32) as u64),32_i32); T};let _ = M.write32(((R).r15),(T as u32));let _ = {(R).rax = (((R).r14 as u32) as u64); (R).rax};let _ = {T = M.subflags((M.read32(((R).r12)) as u64),(((R).r8 as u32) as u64),32_i32); T};let _ = M.write32(((R).r12),(T as u32));let _ = {(R).rbx = M.read64((((R).rsp).wrapping_add(56_u64))); (R).rbx};let _ = {(R).rbp = M.read64((((R).rsp).wrapping_add(64_u64))); (R).rbp};let _ = {(R).rsi = M.read64((((R).rsp).wrapping_add(72_u64))); (R).rsi};let _ = {(R).r15 = M.read64((R).rsp); (R).r15};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r14 = M.read64((R).rsp); (R).r14};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r13 = M.read64((R).rsp); (R).r13};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).r12 = M.read64((R).rsp); (R).r12};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};let _ = {(R).rdi = M.read64((R).rsp); (R).rdi};let _ = {(R).rsp = (((R).rsp).wrapping_add((8_i32 as u64))) as u64; (R).rsp};return ((R).rax as *mut u8);
+}
 pub(super) unsafe fn InterpExecutor16(mut state: *mut RenderState, mut param_2: i32, mut param_3: i32, mut param_4: i32, mut param_5: *mut u16, mut param_6: i32, mut param_7: i32, mut param_8: *mut u16, mut evaluator: *mut Eval, mut param_10: i8, mut param_11: i32) -> () {
 let mut iVar7: i32 = 0;
 let mut cVar6: i8 = 0;
@@ -651,34 +1571,98 @@ let mut uVar9: u16 = 0;
 let mut uVar10: u16 = 0;
 let mut uVar11: u16 = 0;
 let mut dst_eq_src: bool = false;
-let mut pc: u32=75;
-loop {match pc {
-1 => { return ; },
-7 => { let _ = AlphaBlend16((local_68).as_mut_ptr() as *mut u16, (fVar4 - fVar19), (param_5_arr).as_mut_ptr() as *mut u16, fVar19, (param_8_arr).as_mut_ptr() as *mut u16);let _ = AlphaBlend16((param_8_arr).as_mut_ptr() as *mut u16, fVar3, (if (ppuVar15 != std::ptr::null_mut()) { ppuVar15 } else { (param_8_arr).as_mut_ptr() as *mut u16 }), fVar3, ppuVar15);let _ = {param_3 = ((param_3).wrapping_add(dx_step)) as i32; param_3};let _ = {let old=iVar12_loop; iVar12_loop=(iVar12_loop).wrapping_add(1); old};let _ = {param_4 = ((param_4).wrapping_add(dy_step)) as i32; param_4};if (iVar12_loop <= iVar16) {pc=53;} else {pc=1;} continue; },
-8 => { let _ = AlphaBlend16((local_68).as_mut_ptr() as *mut u16, (fVar4 - fVar19), (param_5_arr).as_mut_ptr() as *mut u16, fVar19, ppuVar15);let _ = {param_3 = ((param_3).wrapping_add(dx_step)) as i32; param_3};let _ = {let old=iVar12_loop; iVar12_loop=(iVar12_loop).wrapping_add(1); old};let _ = {param_4 = ((param_4).wrapping_add(dy_step)) as i32; param_4};if (iVar12_loop <= iVar16) {pc=53;} else {pc=1;} continue; },
-10 => { dst_eq_src = (((((((ppuVar15 != (std::ptr::null_mut::<u8>() as *mut u16)) && (puVar17 != (std::ptr::null_mut::<u8>() as *mut u16))) && (((*(ppuVar15).wrapping_offset(1_i32 as isize)) as i32) == ((*(puVar17).wrapping_offset(1_i32 as isize)) as i32))) && (((*(ppuVar15).wrapping_offset(3_i32 as isize)) as i32) == ((*(puVar17).wrapping_offset(3_i32 as isize)) as i32))) && (((*(ppuVar15).wrapping_offset(2_i32 as isize)) as i32) == ((*(puVar17).wrapping_offset(2_i32 as isize)) as i32))) && (((*(ppuVar15).wrapping_offset(0_i32 as isize)) as i32) == ((*(puVar17).wrapping_offset(0_i32 as isize)) as i32))));if (!dst_eq_src) {pc=7;} else {pc=8;} continue; },
-11 => { let _ = {fVar19 = 0.0_f32; fVar19};dst_eq_src = (((((((ppuVar15 != (std::ptr::null_mut::<u8>() as *mut u16)) && (puVar17 != (std::ptr::null_mut::<u8>() as *mut u16))) && (((*(ppuVar15).wrapping_offset(1_i32 as isize)) as i32) == ((*(puVar17).wrapping_offset(1_i32 as isize)) as i32))) && (((*(ppuVar15).wrapping_offset(3_i32 as isize)) as i32) == ((*(puVar17).wrapping_offset(3_i32 as isize)) as i32))) && (((*(ppuVar15).wrapping_offset(2_i32 as isize)) as i32) == ((*(puVar17).wrapping_offset(2_i32 as isize)) as i32))) && (((*(ppuVar15).wrapping_offset(0_i32 as isize)) as i32) == ((*(puVar17).wrapping_offset(0_i32 as isize)) as i32))));if (!dst_eq_src) {pc=7;} else {pc=8;} continue; },
-16 => { let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize)) = uVar8; (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize))};let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize)) = uVar9; (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize))};let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize)) = uVar10; (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize))};let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize)) = uVar11; (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize))};if (((fVar4 < fVar19)) || ((fVar19 < 0.0_f32))) {pc=11;} else {pc=10;} continue; },
-24 => { let _ = {uVar8 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize)); uVar8};let _ = {uVar9 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize)); uVar9};let _ = {uVar10 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize)); uVar10};let _ = {uVar11 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize)); uVar11};let _ = {(*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize)) = (*(puVar17).wrapping_offset(0_i32 as isize)); (*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize))};let _ = {(*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize)) = (*(puVar17).wrapping_offset(1_i32 as isize)); (*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize))};let _ = {(*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize)) = (*(puVar17).wrapping_offset(2_i32 as isize)); (*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize))};let _ = {(*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize)) = (*(puVar17).wrapping_offset(3_i32 as isize)); (*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize))};let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize)) = uVar8; (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize))};let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize)) = uVar9; (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize))};let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize)) = uVar10; (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize))};let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize)) = uVar11; (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize))};if (((fVar4 < fVar19)) || ((fVar19 < 0.0_f32))) {pc=11;} else {pc=10;} continue; },
-29 => { let _ = {uVar8 = (*(puVar17).wrapping_offset(0_i32 as isize)); uVar8};let _ = {uVar9 = (*(puVar17).wrapping_offset(1_i32 as isize)); uVar9};let _ = {uVar10 = (*(puVar17).wrapping_offset(2_i32 as isize)); uVar10};let _ = {uVar11 = (*(puVar17).wrapping_offset(3_i32 as isize)); uVar11};if (iVar12_loop <= iVar7) {pc=24;} else {pc=16;} continue; },
-34 => { uVar8 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize));uVar9 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize));uVar10 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize));uVar11 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize));if (((cVar6 as i32) != (0_i8 as i32)) && (puVar17 != (std::ptr::null_mut::<u8>() as *mut u16))) {pc=29;} else {pc=16;} continue; },
-35 => { let _ = {ppuVar15 = ((((((*dst).data as *mut u8)).wrapping_offset(((((param_4).wrapping_mul((*dst).rowbytes)) as i64) as isize))).wrapping_offset((((param_3 as i64)).wrapping_mul((8_i32 as i64)) as isize))) as *mut u16); ppuVar15};uVar8 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize));uVar9 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize));uVar10 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize));uVar11 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize));if (((cVar6 as i32) != (0_i8 as i32)) && (puVar17 != (std::ptr::null_mut::<u8>() as *mut u16))) {pc=29;} else {pc=16;} continue; },
-37 => { dst = (*state).dst_world;if ((((param_3 < (*dst).width)) && (((1_i32).wrapping_neg() < param_4))) && ((param_4 < (*dst).height))) {pc=35;} else {pc=34;} continue; },
-38 => { if ((puVar17 != (std::ptr::null_mut::<u8>() as *mut u16)) || (param_3 >= 0_i32)) {pc=37;} else {pc=34;} continue; },
-39 => { let _ = {puVar17 = ((((((*src).data as *mut u8)).wrapping_offset(((((param_4).wrapping_mul((*src).rowbytes)) as i64) as isize))).wrapping_offset((((param_3 as i64)).wrapping_mul((8_i32 as i64)) as isize))) as *mut u16); puVar17};if ((puVar17 != (std::ptr::null_mut::<u8>() as *mut u16)) || (param_3 >= 0_i32)) {pc=37;} else {pc=34;} continue; },
-43 => { puVar17 = (std::ptr::null_mut::<u8>() as *mut u16);ppuVar15 = (std::ptr::null_mut::<u8>() as *mut u16);src = (*state).src_world;if (!((((((param_3 < 0_i32)) || (((*src).width <= param_3))) || ((param_4 < 0_i32))) || (((*src).height <= param_4))))) {pc=39;} else {pc=38;} continue; },
-44 => { let _ = {fVar19 = fVar2; fVar19};puVar17 = (std::ptr::null_mut::<u8>() as *mut u16);ppuVar15 = (std::ptr::null_mut::<u8>() as *mut u16);src = (*state).src_world;if (!((((((param_3 < 0_i32)) || (((*src).width <= param_3))) || ((param_4 < 0_i32))) || (((*src).height <= param_4))))) {pc=39;} else {pc=38;} continue; },
-46 => { let _ = {fVar19 = 0.0_f32; fVar19};if (0.0_f32 <= fVar2) {pc=44;} else {pc=43;} continue; },
-47 => { let _ = {fVar2 = fVar19; fVar2};let _ = {fVar19 = 0.0_f32; fVar19};if (0.0_f32 <= fVar2) {pc=44;} else {pc=43;} continue; },
-51 => { let _ = {t = ((iVar12_loop as f32) / (iVar16 as f32)); t};fVar19 = (*evaluator).evaluate(t);fVar2 = fVar4;if (fVar19 <= fVar4) {pc=47;} else {pc=46;} continue; },
-52 => { let _ = {t = 0.0_f32; t};fVar19 = (*evaluator).evaluate(t);fVar2 = fVar4;if (fVar19 <= fVar4) {pc=47;} else {pc=46;} continue; },
-53 => { if (iVar16 > 0_i32) {pc=51;} else {pc=52;} continue; },
-55 => { iVar12_loop = 0_i32;if ((1_i32).wrapping_neg() < iVar16) {pc=53;} else {pc=1;} continue; },
-56 => { let _ = {iVar16 = iVar12; iVar16};iVar12_loop = 0_i32;if ((1_i32).wrapping_neg() < iVar16) {pc=53;} else {pc=1;} continue; },
-75 => { iVar7 = param_11;cVar6 = param_10;fVar4 = DAT_18000d1f4;fVar3 = DAT_18000d1f0;let _ = {(*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize)) = (*(param_5).wrapping_offset(0_i32 as isize)); (*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize))};let _ = {(*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize)) = (*(param_5).wrapping_offset(1_i32 as isize)); (*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize))};let _ = {(*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize)) = (*(param_5).wrapping_offset(2_i32 as isize)); (*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize))};let _ = {(*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize)) = (*(param_5).wrapping_offset(3_i32 as isize)); (*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize))};let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize)) = (*(param_8).wrapping_offset(0_i32 as isize)); (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize))};let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize)) = (*(param_8).wrapping_offset(1_i32 as isize)); (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize))};let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize)) = (*(param_8).wrapping_offset(2_i32 as isize)); (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize))};let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize)) = (*(param_8).wrapping_offset(3_i32 as isize)); (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize))};let _ = {uVar14 = (((((param_4).wrapping_sub(param_7))).wrapping_shr(31_i32 as u32)) as u32); uVar14};iVar16 = (((((param_4).wrapping_sub(param_7)) ^ (uVar14 as i32)))).wrapping_sub((uVar14 as i32));let _ = {uVar14 = (((((param_3).wrapping_sub(param_6))).wrapping_shr(31_i32 as u32)) as u32); uVar14};iVar12 = (((((param_3).wrapping_sub(param_6)) ^ (uVar14 as i32)))).wrapping_sub((uVar14 as i32));dx_step = (*((DAT_18000f0c8).as_ptr() as *mut i32).wrapping_offset((param_2 as i64) as isize));dy_step = (*((DAT_18000f0f0).as_ptr() as *mut i32).wrapping_offset((param_2 as i64) as isize));if (iVar16 < iVar12) {pc=56;} else {pc=55;} continue; },
-_ => unreachable!(),
-}}}
+'b1: {
+'b53: {
+'b56: {
+'b55: {
+iVar7 = param_11;cVar6 = param_10;fVar4 = DAT_18000d1f4;fVar3 = DAT_18000d1f0;let _ = {(*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize)) = (*(param_5).wrapping_offset(0_i32 as isize)); (*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize))};let _ = {(*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize)) = (*(param_5).wrapping_offset(1_i32 as isize)); (*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize))};let _ = {(*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize)) = (*(param_5).wrapping_offset(2_i32 as isize)); (*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize))};let _ = {(*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize)) = (*(param_5).wrapping_offset(3_i32 as isize)); (*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize))};let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize)) = (*(param_8).wrapping_offset(0_i32 as isize)); (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize))};let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize)) = (*(param_8).wrapping_offset(1_i32 as isize)); (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize))};let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize)) = (*(param_8).wrapping_offset(2_i32 as isize)); (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize))};let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize)) = (*(param_8).wrapping_offset(3_i32 as isize)); (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize))};let _ = {uVar14 = (((((param_4).wrapping_sub(param_7))).wrapping_shr(31_i32 as u32)) as u32); uVar14};iVar16 = (((((param_4).wrapping_sub(param_7)) ^ (uVar14 as i32)))).wrapping_sub((uVar14 as i32));let _ = {uVar14 = (((((param_3).wrapping_sub(param_6))).wrapping_shr(31_i32 as u32)) as u32); uVar14};iVar12 = (((((param_3).wrapping_sub(param_6)) ^ (uVar14 as i32)))).wrapping_sub((uVar14 as i32));dx_step = (*((DAT_18000f0c8).as_ptr() as *mut i32).wrapping_offset((param_2 as i64) as isize));dy_step = (*((DAT_18000f0f0).as_ptr() as *mut i32).wrapping_offset((param_2 as i64) as isize));
+if (iVar16 < iVar12) { break 'b56; } else { break 'b55; }
+}
+iVar12_loop = 0_i32;
+if ((1_i32).wrapping_neg() < iVar16) { break 'b53; } else { break 'b1; }
+}
+let _ = {iVar16 = iVar12; iVar16};iVar12_loop = 0_i32;
+if ((1_i32).wrapping_neg() < iVar16) { break 'b53; } else { break 'b1; }
+}
+'l53: loop {
+'b7: {
+'b8: {
+'b11: {
+'b10: {
+'b24: {
+'b16: {
+'b29: {
+'b35: {
+'b34: {
+'b37: {
+'b39: {
+'b38: {
+'b44: {
+'b43: {
+'b47: {
+'b46: {
+'b51: {
+'b52: {
 
+if (iVar16 > 0_i32) { break 'b51; } else { break 'b52; }
+}
+let _ = {t = 0.0_f32; t};fVar19 = (*evaluator).evaluate(t);fVar2 = fVar4;
+if (fVar19 <= fVar4) { break 'b47; } else { break 'b46; }
+}
+let _ = {t = ((iVar12_loop as f32) / (iVar16 as f32)); t};fVar19 = (*evaluator).evaluate(t);fVar2 = fVar4;
+if (fVar19 <= fVar4) { break 'b47; } else { break 'b46; }
+}
+let _ = {fVar19 = 0.0_f32; fVar19};
+if (0.0_f32 <= fVar2) { break 'b44; } else { break 'b43; }
+}
+let _ = {fVar2 = fVar19; fVar2};let _ = {fVar19 = 0.0_f32; fVar19};
+if (0.0_f32 <= fVar2) { break 'b44; } else { break 'b43; }
+}
+puVar17 = (std::ptr::null_mut::<u8>() as *mut u16);ppuVar15 = (std::ptr::null_mut::<u8>() as *mut u16);src = (*state).src_world;
+if (!((((((param_3 < 0_i32)) || (((*src).width <= param_3))) || ((param_4 < 0_i32))) || (((*src).height <= param_4))))) { break 'b39; } else { break 'b38; }
+}
+let _ = {fVar19 = fVar2; fVar19};puVar17 = (std::ptr::null_mut::<u8>() as *mut u16);ppuVar15 = (std::ptr::null_mut::<u8>() as *mut u16);src = (*state).src_world;
+if (!((((((param_3 < 0_i32)) || (((*src).width <= param_3))) || ((param_4 < 0_i32))) || (((*src).height <= param_4))))) { break 'b39; } else { break 'b38; }
+}
+
+if ((puVar17 != (std::ptr::null_mut::<u8>() as *mut u16)) || (param_3 >= 0_i32)) { break 'b37; } else { break 'b34; }
+}
+let _ = {puVar17 = ((((((*src).data as *mut u8)).wrapping_offset(((((param_4).wrapping_mul((*src).rowbytes)) as i64) as isize))).wrapping_offset((((param_3 as i64)).wrapping_mul((8_i32 as i64)) as isize))) as *mut u16); puVar17};
+if ((puVar17 != (std::ptr::null_mut::<u8>() as *mut u16)) || (param_3 >= 0_i32)) { break 'b37; } else { break 'b34; }
+}
+dst = (*state).dst_world;
+if ((((param_3 < (*dst).width)) && (((1_i32).wrapping_neg() < param_4))) && ((param_4 < (*dst).height))) { break 'b35; } else { break 'b34; }
+}
+uVar8 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize));uVar9 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize));uVar10 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize));uVar11 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize));
+if (((cVar6 as i32) != (0_i8 as i32)) && (puVar17 != (std::ptr::null_mut::<u8>() as *mut u16))) { break 'b29; } else { break 'b16; }
+}
+let _ = {ppuVar15 = ((((((*dst).data as *mut u8)).wrapping_offset(((((param_4).wrapping_mul((*dst).rowbytes)) as i64) as isize))).wrapping_offset((((param_3 as i64)).wrapping_mul((8_i32 as i64)) as isize))) as *mut u16); ppuVar15};uVar8 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize));uVar9 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize));uVar10 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize));uVar11 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize));
+if (((cVar6 as i32) != (0_i8 as i32)) && (puVar17 != (std::ptr::null_mut::<u8>() as *mut u16))) { break 'b29; } else { break 'b16; }
+}
+let _ = {uVar8 = (*(puVar17).wrapping_offset(0_i32 as isize)); uVar8};let _ = {uVar9 = (*(puVar17).wrapping_offset(1_i32 as isize)); uVar9};let _ = {uVar10 = (*(puVar17).wrapping_offset(2_i32 as isize)); uVar10};let _ = {uVar11 = (*(puVar17).wrapping_offset(3_i32 as isize)); uVar11};
+if (iVar12_loop <= iVar7) { break 'b24; } else { break 'b16; }
+}
+let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize)) = uVar8; (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize))};let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize)) = uVar9; (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize))};let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize)) = uVar10; (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize))};let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize)) = uVar11; (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize))};
+if (((fVar4 < fVar19)) || ((fVar19 < 0.0_f32))) { break 'b11; } else { break 'b10; }
+}
+let _ = {uVar8 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize)); uVar8};let _ = {uVar9 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize)); uVar9};let _ = {uVar10 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize)); uVar10};let _ = {uVar11 = (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize)); uVar11};let _ = {(*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize)) = (*(puVar17).wrapping_offset(0_i32 as isize)); (*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize))};let _ = {(*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize)) = (*(puVar17).wrapping_offset(1_i32 as isize)); (*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize))};let _ = {(*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize)) = (*(puVar17).wrapping_offset(2_i32 as isize)); (*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize))};let _ = {(*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize)) = (*(puVar17).wrapping_offset(3_i32 as isize)); (*((local_68).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize))};let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize)) = uVar8; (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(0_i32 as isize))};let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize)) = uVar9; (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(1_i32 as isize))};let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize)) = uVar10; (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(2_i32 as isize))};let _ = {(*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize)) = uVar11; (*((param_5_arr).as_mut_ptr() as *mut u16).wrapping_offset(3_i32 as isize))};
+if (((fVar4 < fVar19)) || ((fVar19 < 0.0_f32))) { break 'b11; } else { break 'b10; }
+}
+dst_eq_src = (((((((ppuVar15 != (std::ptr::null_mut::<u8>() as *mut u16)) && (puVar17 != (std::ptr::null_mut::<u8>() as *mut u16))) && (((*(ppuVar15).wrapping_offset(1_i32 as isize)) as i32) == ((*(puVar17).wrapping_offset(1_i32 as isize)) as i32))) && (((*(ppuVar15).wrapping_offset(3_i32 as isize)) as i32) == ((*(puVar17).wrapping_offset(3_i32 as isize)) as i32))) && (((*(ppuVar15).wrapping_offset(2_i32 as isize)) as i32) == ((*(puVar17).wrapping_offset(2_i32 as isize)) as i32))) && (((*(ppuVar15).wrapping_offset(0_i32 as isize)) as i32) == ((*(puVar17).wrapping_offset(0_i32 as isize)) as i32))));
+if (!dst_eq_src) { break 'b7; } else { break 'b8; }
+}
+let _ = {fVar19 = 0.0_f32; fVar19};dst_eq_src = (((((((ppuVar15 != (std::ptr::null_mut::<u8>() as *mut u16)) && (puVar17 != (std::ptr::null_mut::<u8>() as *mut u16))) && (((*(ppuVar15).wrapping_offset(1_i32 as isize)) as i32) == ((*(puVar17).wrapping_offset(1_i32 as isize)) as i32))) && (((*(ppuVar15).wrapping_offset(3_i32 as isize)) as i32) == ((*(puVar17).wrapping_offset(3_i32 as isize)) as i32))) && (((*(ppuVar15).wrapping_offset(2_i32 as isize)) as i32) == ((*(puVar17).wrapping_offset(2_i32 as isize)) as i32))) && (((*(ppuVar15).wrapping_offset(0_i32 as isize)) as i32) == ((*(puVar17).wrapping_offset(0_i32 as isize)) as i32))));
+if (!dst_eq_src) { break 'b7; } else { break 'b8; }
+}
+let _ = AlphaBlend16((local_68).as_mut_ptr() as *mut u16, (fVar4 - fVar19), (param_5_arr).as_mut_ptr() as *mut u16, fVar19, ppuVar15);let _ = {param_3 = ((param_3).wrapping_add(dx_step)) as i32; param_3};let _ = {let old=iVar12_loop; iVar12_loop=(iVar12_loop).wrapping_add(1); old};let _ = {param_4 = ((param_4).wrapping_add(dy_step)) as i32; param_4};
+if (iVar12_loop <= iVar16) { continue 'l53; } else { break 'b1; }
+}
+let _ = AlphaBlend16((local_68).as_mut_ptr() as *mut u16, (fVar4 - fVar19), (param_5_arr).as_mut_ptr() as *mut u16, fVar19, (param_8_arr).as_mut_ptr() as *mut u16);let _ = AlphaBlend16((param_8_arr).as_mut_ptr() as *mut u16, fVar3, (if (ppuVar15 != std::ptr::null_mut()) { ppuVar15 } else { (param_8_arr).as_mut_ptr() as *mut u16 }), fVar3, ppuVar15);let _ = {param_3 = ((param_3).wrapping_add(dx_step)) as i32; param_3};let _ = {let old=iVar12_loop; iVar12_loop=(iVar12_loop).wrapping_add(1); old};let _ = {param_4 = ((param_4).wrapping_add(dy_step)) as i32; param_4};
+if (iVar12_loop <= iVar16) { continue 'l53; } else { break 'b1; }
+}
+}
+return ;
+}
 pub(super) unsafe fn InterpExecutor8(mut state: *mut RenderState, mut param_2: i32, mut param_3: i32, mut param_4: i32, mut param_5: *mut u8, mut param_6: i32, mut param_7: i32, mut param_8: *mut u8, mut evaluator: *mut Eval, mut param_10: i8, mut param_11: i32) -> () {
 let mut trace_x: i32 = 0;
 let mut trace_y: i32 = 0;
@@ -710,61 +1694,133 @@ let mut bVar10: u8 = 0;
 let mut bVar11: u8 = 0;
 let mut bVar12: u8 = 0;
 let mut dst_eq_src: bool = false;
-let mut pc: u32=77;
-loop {match pc {
-1 => { return ; },
-7 => { let _ = AlphaBlend8((local_res18).as_mut_ptr() as *mut u8, (fVar5 - fVar19), (local_res10).as_mut_ptr() as *mut u8, fVar19, (param_7_arr).as_mut_ptr() as *mut u8);let _ = AlphaBlend8((param_7_arr).as_mut_ptr() as *mut u8, fVar4, (if (pbVar15 != std::ptr::null_mut()) { pbVar15 } else { (param_7_arr).as_mut_ptr() as *mut u8 }), fVar4, pbVar15);let _ = {param_3 = ((param_3).wrapping_add(iVar1)) as i32; param_3};let _ = {let old=iVar13_loop; iVar13_loop=(iVar13_loop).wrapping_add(1); old};let _ = {param_4 = ((param_4).wrapping_add(local_res20)) as i32; param_4};if (iVar13_loop <= iVar16) {pc=53;} else {pc=1;} continue; },
-8 => { let _ = AlphaBlend8((local_res18).as_mut_ptr() as *mut u8, (fVar5 - fVar19), (local_res10).as_mut_ptr() as *mut u8, fVar19, pbVar15);let _ = {param_3 = ((param_3).wrapping_add(iVar1)) as i32; param_3};let _ = {let old=iVar13_loop; iVar13_loop=(iVar13_loop).wrapping_add(1); old};let _ = {param_4 = ((param_4).wrapping_add(local_res20)) as i32; param_4};if (iVar13_loop <= iVar16) {pc=53;} else {pc=1;} continue; },
-10 => { dst_eq_src = (((((((pbVar15 != (std::ptr::null_mut::<u8>() as *mut u8)) && (pbVar17 != (std::ptr::null_mut::<u8>() as *mut u8))) && (((*(pbVar15).wrapping_offset(1_i32 as isize)) as i32) == ((*(pbVar17).wrapping_offset(1_i32 as isize)) as i32))) && (((*(pbVar15).wrapping_offset(3_i32 as isize)) as i32) == ((*(pbVar17).wrapping_offset(3_i32 as isize)) as i32))) && (((*(pbVar15).wrapping_offset(2_i32 as isize)) as i32) == ((*(pbVar17).wrapping_offset(2_i32 as isize)) as i32))) && (((*(pbVar15).wrapping_offset(0_i32 as isize)) as i32) == ((*(pbVar17).wrapping_offset(0_i32 as isize)) as i32))));if (!dst_eq_src) {pc=7;} else {pc=8;} continue; },
-11 => { let _ = {fVar19 = 0.0_f32; fVar19};dst_eq_src = (((((((pbVar15 != (std::ptr::null_mut::<u8>() as *mut u8)) && (pbVar17 != (std::ptr::null_mut::<u8>() as *mut u8))) && (((*(pbVar15).wrapping_offset(1_i32 as isize)) as i32) == ((*(pbVar17).wrapping_offset(1_i32 as isize)) as i32))) && (((*(pbVar15).wrapping_offset(3_i32 as isize)) as i32) == ((*(pbVar17).wrapping_offset(3_i32 as isize)) as i32))) && (((*(pbVar15).wrapping_offset(2_i32 as isize)) as i32) == ((*(pbVar17).wrapping_offset(2_i32 as isize)) as i32))) && (((*(pbVar15).wrapping_offset(0_i32 as isize)) as i32) == ((*(pbVar17).wrapping_offset(0_i32 as isize)) as i32))));if (!dst_eq_src) {pc=7;} else {pc=8;} continue; },
-16 => { let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize)) = bVar9; (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize))};let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize)) = bVar10; (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize))};let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize)) = bVar11; (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize))};let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize)) = bVar12; (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize))};if (((fVar5 < fVar19)) || ((fVar19 < 0.0_f32))) {pc=11;} else {pc=10;} continue; },
-24 => { let _ = {bVar9 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize)); bVar9};let _ = {bVar10 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize)); bVar10};let _ = {bVar11 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize)); bVar11};let _ = {bVar12 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize)); bVar12};let _ = {(*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize)) = (*(pbVar17).wrapping_offset(0_i32 as isize)); (*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize))};let _ = {(*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize)) = (*(pbVar17).wrapping_offset(1_i32 as isize)); (*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize))};let _ = {(*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize)) = (*(pbVar17).wrapping_offset(2_i32 as isize)); (*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize))};let _ = {(*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize)) = (*(pbVar17).wrapping_offset(3_i32 as isize)); (*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize))};let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize)) = bVar9; (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize))};let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize)) = bVar10; (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize))};let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize)) = bVar11; (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize))};let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize)) = bVar12; (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize))};if (((fVar5 < fVar19)) || ((fVar19 < 0.0_f32))) {pc=11;} else {pc=10;} continue; },
-29 => { let _ = {bVar9 = (*(pbVar17).wrapping_offset(0_i32 as isize)); bVar9};let _ = {bVar10 = (*(pbVar17).wrapping_offset(1_i32 as isize)); bVar10};let _ = {bVar11 = (*(pbVar17).wrapping_offset(2_i32 as isize)); bVar11};let _ = {bVar12 = (*(pbVar17).wrapping_offset(3_i32 as isize)); bVar12};if (iVar13_loop <= iVar8) {pc=24;} else {pc=16;} continue; },
-32 => { bVar9 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize));
-bVar10 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize));bVar11 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize));
-bVar12 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize));if (((cVar7 as i32) != (0_i8 as i32)) && (pbVar17 != (std::ptr::null_mut::<u8>() as *mut u8))) {pc=29;} else {pc=16;} continue; },
-33 => { let _ = {pbVar15 = ((((*dst).data as *mut u8)).wrapping_offset(((((param_4).wrapping_mul((*dst).rowbytes)) as i64) as isize))).wrapping_offset((((param_3 as i64)).wrapping_mul((4_i32 as i64)) as isize)); pbVar15};bVar9 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize));
-bVar10 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize));bVar11 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize));
-bVar12 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize));if (((cVar7 as i32) != (0_i8 as i32)) && (pbVar17 != (std::ptr::null_mut::<u8>() as *mut u8))) {pc=29;} else {pc=16;} continue; },
-35 => { dst = (*state).dst_world;if ((((param_3 < (*dst).width)) && (((1_i32).wrapping_neg() < param_4))) && ((param_4 < (*dst).height))) {pc=33;} else {pc=32;} continue; },
-36 => { if ((pbVar17 != (std::ptr::null_mut::<u8>() as *mut u8)) || (param_3 >= 0_i32)) {pc=35;} else {pc=32;} continue; },
-37 => { let _ = {pbVar17 = ((((*src).data as *mut u8)).wrapping_offset(((((param_4).wrapping_mul((*src).rowbytes)) as i64) as isize))).wrapping_offset((((param_3 as i64)).wrapping_mul((4_i32 as i64)) as isize)); pbVar17};if ((pbVar17 != (std::ptr::null_mut::<u8>() as *mut u8)) || (param_3 >= 0_i32)) {pc=35;} else {pc=32;} continue; },
-41 => { pbVar17 = (std::ptr::null_mut::<u8>() as *mut u8);pbVar15 = (std::ptr::null_mut::<u8>() as *mut u8);src = (*state).src_world;if (!((((((param_3 < 0_i32)) || (((*src).width <= param_3))) || ((param_4 < 0_i32))) || (((*src).height <= param_4))))) {pc=37;} else {pc=36;} continue; },
-42 => { let _ = {fVar19 = fVar3; fVar19};pbVar17 = (std::ptr::null_mut::<u8>() as *mut u8);pbVar15 = (std::ptr::null_mut::<u8>() as *mut u8);src = (*state).src_world;if (!((((((param_3 < 0_i32)) || (((*src).width <= param_3))) || ((param_4 < 0_i32))) || (((*src).height <= param_4))))) {pc=37;} else {pc=36;} continue; },
-44 => { let _ = {fVar19 = 0.0_f32; fVar19};if (0.0_f32 <= fVar3) {pc=42;} else {pc=41;} continue; },
-45 => { let _ = {fVar3 = fVar19; fVar3};let _ = {fVar19 = 0.0_f32; fVar19};if (0.0_f32 <= fVar3) {pc=42;} else {pc=41;} continue; },
-47 => { fVar3 = fVar5;if (fVar19 <= fVar5) {pc=45;} else {pc=44;} continue; },
-48 => { let _ = ();fVar3 = fVar5;if (fVar19 <= fVar5) {pc=45;} else {pc=44;} continue; },
-51 => { let _ = {t = ((iVar13_loop as f32) / (iVar16 as f32)); t};fVar19 = (*evaluator).evaluate(t);if ((tracing && (param_3 == trace_x)) && (param_4 == trace_y)) {pc=48;} else {pc=47;} continue; },
-52 => { let _ = {t = 0.0_f32; t};fVar19 = (*evaluator).evaluate(t);if ((tracing && (param_3 == trace_x)) && (param_4 == trace_y)) {pc=48;} else {pc=47;} continue; },
-53 => { if (iVar16 > 0_i32) {pc=51;} else {pc=52;} continue; },
-55 => { iVar13_loop = 0_i32;if ((1_i32).wrapping_neg() < iVar16) {pc=53;} else {pc=1;} continue; },
-56 => { let _ = {iVar16 = iVar13; iVar16};iVar13_loop = 0_i32;if ((1_i32).wrapping_neg() < iVar16) {pc=53;} else {pc=1;} continue; },
-77 => { tracing = false;start_x = param_3;
-start_y = param_4;iVar8 = param_11;cVar7 = param_10;fVar5 = DAT_18000d1f4;fVar4 = DAT_18000d1f0;let _ = {(*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize)) = (*(param_5).wrapping_offset(0_i32 as isize)); (*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize))};let _ = {(*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize)) = (*(param_5).wrapping_offset(1_i32 as isize)); (*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize))};let _ = {(*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize)) = (*(param_5).wrapping_offset(2_i32 as isize)); (*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize))};let _ = {(*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize)) = (*(param_5).wrapping_offset(3_i32 as isize)); (*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize))};let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize)) = (*(param_8).wrapping_offset(0_i32 as isize)); (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize))};let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize)) = (*(param_8).wrapping_offset(1_i32 as isize)); (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize))};let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize)) = (*(param_8).wrapping_offset(2_i32 as isize)); (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize))};let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize)) = (*(param_8).wrapping_offset(3_i32 as isize)); (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize))};let _ = {uVar14 = (((((param_4).wrapping_sub(param_7))).wrapping_shr(31_i32 as u32)) as u32); uVar14};iVar16 = (((((param_4).wrapping_sub(param_7)) ^ (uVar14 as i32)))).wrapping_sub((uVar14 as i32));let _ = {uVar14 = (((((param_3).wrapping_sub(param_6))).wrapping_shr(31_i32 as u32)) as u32); uVar14};iVar13 = (((((param_3).wrapping_sub(param_6)) ^ (uVar14 as i32)))).wrapping_sub((uVar14 as i32));iVar1 = (*((DAT_18000f0c8).as_ptr() as *mut i32).wrapping_offset((param_2 as i64) as isize));local_res20 = (*((DAT_18000f0f0).as_ptr() as *mut i32).wrapping_offset((param_2 as i64) as isize));if (iVar16 < iVar13) {pc=56;} else {pc=55;} continue; },
-_ => unreachable!(),
-}}}
+'b1: {
+'b53: {
+'b56: {
+'b55: {
+tracing = false;start_x = param_3;
+start_y = param_4;iVar8 = param_11;cVar7 = param_10;fVar5 = DAT_18000d1f4;fVar4 = DAT_18000d1f0;let _ = {(*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize)) = (*(param_5).wrapping_offset(0_i32 as isize)); (*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize))};let _ = {(*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize)) = (*(param_5).wrapping_offset(1_i32 as isize)); (*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize))};let _ = {(*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize)) = (*(param_5).wrapping_offset(2_i32 as isize)); (*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize))};let _ = {(*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize)) = (*(param_5).wrapping_offset(3_i32 as isize)); (*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize))};let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize)) = (*(param_8).wrapping_offset(0_i32 as isize)); (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize))};let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize)) = (*(param_8).wrapping_offset(1_i32 as isize)); (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize))};let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize)) = (*(param_8).wrapping_offset(2_i32 as isize)); (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize))};let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize)) = (*(param_8).wrapping_offset(3_i32 as isize)); (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize))};let _ = {uVar14 = (((((param_4).wrapping_sub(param_7))).wrapping_shr(31_i32 as u32)) as u32); uVar14};iVar16 = (((((param_4).wrapping_sub(param_7)) ^ (uVar14 as i32)))).wrapping_sub((uVar14 as i32));let _ = {uVar14 = (((((param_3).wrapping_sub(param_6))).wrapping_shr(31_i32 as u32)) as u32); uVar14};iVar13 = (((((param_3).wrapping_sub(param_6)) ^ (uVar14 as i32)))).wrapping_sub((uVar14 as i32));iVar1 = (*((DAT_18000f0c8).as_ptr() as *mut i32).wrapping_offset((param_2 as i64) as isize));local_res20 = (*((DAT_18000f0f0).as_ptr() as *mut i32).wrapping_offset((param_2 as i64) as isize));
+if (iVar16 < iVar13) { break 'b56; } else { break 'b55; }
+}
+iVar13_loop = 0_i32;
+if ((1_i32).wrapping_neg() < iVar16) { break 'b53; } else { break 'b1; }
+}
+let _ = {iVar16 = iVar13; iVar16};iVar13_loop = 0_i32;
+if ((1_i32).wrapping_neg() < iVar16) { break 'b53; } else { break 'b1; }
+}
+'l53: loop {
+'b7: {
+'b8: {
+'b11: {
+'b10: {
+'b24: {
+'b16: {
+'b29: {
+'b33: {
+'b32: {
+'b35: {
+'b37: {
+'b36: {
+'b42: {
+'b41: {
+'b45: {
+'b44: {
+'b48: {
+'b47: {
+'b51: {
+'b52: {
 
+if (iVar16 > 0_i32) { break 'b51; } else { break 'b52; }
+}
+let _ = {t = 0.0_f32; t};fVar19 = (*evaluator).evaluate(t);
+if ((tracing && (param_3 == trace_x)) && (param_4 == trace_y)) { break 'b48; } else { break 'b47; }
+}
+let _ = {t = ((iVar13_loop as f32) / (iVar16 as f32)); t};fVar19 = (*evaluator).evaluate(t);
+if ((tracing && (param_3 == trace_x)) && (param_4 == trace_y)) { break 'b48; } else { break 'b47; }
+}
+fVar3 = fVar5;
+if (fVar19 <= fVar5) { break 'b45; } else { break 'b44; }
+}
+let _ = ();fVar3 = fVar5;
+if (fVar19 <= fVar5) { break 'b45; } else { break 'b44; }
+}
+let _ = {fVar19 = 0.0_f32; fVar19};
+if (0.0_f32 <= fVar3) { break 'b42; } else { break 'b41; }
+}
+let _ = {fVar3 = fVar19; fVar3};let _ = {fVar19 = 0.0_f32; fVar19};
+if (0.0_f32 <= fVar3) { break 'b42; } else { break 'b41; }
+}
+pbVar17 = (std::ptr::null_mut::<u8>() as *mut u8);pbVar15 = (std::ptr::null_mut::<u8>() as *mut u8);src = (*state).src_world;
+if (!((((((param_3 < 0_i32)) || (((*src).width <= param_3))) || ((param_4 < 0_i32))) || (((*src).height <= param_4))))) { break 'b37; } else { break 'b36; }
+}
+let _ = {fVar19 = fVar3; fVar19};pbVar17 = (std::ptr::null_mut::<u8>() as *mut u8);pbVar15 = (std::ptr::null_mut::<u8>() as *mut u8);src = (*state).src_world;
+if (!((((((param_3 < 0_i32)) || (((*src).width <= param_3))) || ((param_4 < 0_i32))) || (((*src).height <= param_4))))) { break 'b37; } else { break 'b36; }
+}
+
+if ((pbVar17 != (std::ptr::null_mut::<u8>() as *mut u8)) || (param_3 >= 0_i32)) { break 'b35; } else { break 'b32; }
+}
+let _ = {pbVar17 = ((((*src).data as *mut u8)).wrapping_offset(((((param_4).wrapping_mul((*src).rowbytes)) as i64) as isize))).wrapping_offset((((param_3 as i64)).wrapping_mul((4_i32 as i64)) as isize)); pbVar17};
+if ((pbVar17 != (std::ptr::null_mut::<u8>() as *mut u8)) || (param_3 >= 0_i32)) { break 'b35; } else { break 'b32; }
+}
+dst = (*state).dst_world;
+if ((((param_3 < (*dst).width)) && (((1_i32).wrapping_neg() < param_4))) && ((param_4 < (*dst).height))) { break 'b33; } else { break 'b32; }
+}
+bVar9 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize));
+bVar10 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize));bVar11 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize));
+bVar12 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize));
+if (((cVar7 as i32) != (0_i8 as i32)) && (pbVar17 != (std::ptr::null_mut::<u8>() as *mut u8))) { break 'b29; } else { break 'b16; }
+}
+let _ = {pbVar15 = ((((*dst).data as *mut u8)).wrapping_offset(((((param_4).wrapping_mul((*dst).rowbytes)) as i64) as isize))).wrapping_offset((((param_3 as i64)).wrapping_mul((4_i32 as i64)) as isize)); pbVar15};bVar9 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize));
+bVar10 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize));bVar11 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize));
+bVar12 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize));
+if (((cVar7 as i32) != (0_i8 as i32)) && (pbVar17 != (std::ptr::null_mut::<u8>() as *mut u8))) { break 'b29; } else { break 'b16; }
+}
+let _ = {bVar9 = (*(pbVar17).wrapping_offset(0_i32 as isize)); bVar9};let _ = {bVar10 = (*(pbVar17).wrapping_offset(1_i32 as isize)); bVar10};let _ = {bVar11 = (*(pbVar17).wrapping_offset(2_i32 as isize)); bVar11};let _ = {bVar12 = (*(pbVar17).wrapping_offset(3_i32 as isize)); bVar12};
+if (iVar13_loop <= iVar8) { break 'b24; } else { break 'b16; }
+}
+let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize)) = bVar9; (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize))};let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize)) = bVar10; (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize))};let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize)) = bVar11; (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize))};let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize)) = bVar12; (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize))};
+if (((fVar5 < fVar19)) || ((fVar19 < 0.0_f32))) { break 'b11; } else { break 'b10; }
+}
+let _ = {bVar9 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize)); bVar9};let _ = {bVar10 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize)); bVar10};let _ = {bVar11 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize)); bVar11};let _ = {bVar12 = (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize)); bVar12};let _ = {(*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize)) = (*(pbVar17).wrapping_offset(0_i32 as isize)); (*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize))};let _ = {(*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize)) = (*(pbVar17).wrapping_offset(1_i32 as isize)); (*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize))};let _ = {(*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize)) = (*(pbVar17).wrapping_offset(2_i32 as isize)); (*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize))};let _ = {(*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize)) = (*(pbVar17).wrapping_offset(3_i32 as isize)); (*((local_res18).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize))};let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize)) = bVar9; (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(0_i32 as isize))};let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize)) = bVar10; (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(1_i32 as isize))};let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize)) = bVar11; (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(2_i32 as isize))};let _ = {(*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize)) = bVar12; (*((local_res10).as_mut_ptr() as *mut u8).wrapping_offset(3_i32 as isize))};
+if (((fVar5 < fVar19)) || ((fVar19 < 0.0_f32))) { break 'b11; } else { break 'b10; }
+}
+dst_eq_src = (((((((pbVar15 != (std::ptr::null_mut::<u8>() as *mut u8)) && (pbVar17 != (std::ptr::null_mut::<u8>() as *mut u8))) && (((*(pbVar15).wrapping_offset(1_i32 as isize)) as i32) == ((*(pbVar17).wrapping_offset(1_i32 as isize)) as i32))) && (((*(pbVar15).wrapping_offset(3_i32 as isize)) as i32) == ((*(pbVar17).wrapping_offset(3_i32 as isize)) as i32))) && (((*(pbVar15).wrapping_offset(2_i32 as isize)) as i32) == ((*(pbVar17).wrapping_offset(2_i32 as isize)) as i32))) && (((*(pbVar15).wrapping_offset(0_i32 as isize)) as i32) == ((*(pbVar17).wrapping_offset(0_i32 as isize)) as i32))));
+if (!dst_eq_src) { break 'b7; } else { break 'b8; }
+}
+let _ = {fVar19 = 0.0_f32; fVar19};dst_eq_src = (((((((pbVar15 != (std::ptr::null_mut::<u8>() as *mut u8)) && (pbVar17 != (std::ptr::null_mut::<u8>() as *mut u8))) && (((*(pbVar15).wrapping_offset(1_i32 as isize)) as i32) == ((*(pbVar17).wrapping_offset(1_i32 as isize)) as i32))) && (((*(pbVar15).wrapping_offset(3_i32 as isize)) as i32) == ((*(pbVar17).wrapping_offset(3_i32 as isize)) as i32))) && (((*(pbVar15).wrapping_offset(2_i32 as isize)) as i32) == ((*(pbVar17).wrapping_offset(2_i32 as isize)) as i32))) && (((*(pbVar15).wrapping_offset(0_i32 as isize)) as i32) == ((*(pbVar17).wrapping_offset(0_i32 as isize)) as i32))));
+if (!dst_eq_src) { break 'b7; } else { break 'b8; }
+}
+let _ = AlphaBlend8((local_res18).as_mut_ptr() as *mut u8, (fVar5 - fVar19), (local_res10).as_mut_ptr() as *mut u8, fVar19, pbVar15);let _ = {param_3 = ((param_3).wrapping_add(iVar1)) as i32; param_3};let _ = {let old=iVar13_loop; iVar13_loop=(iVar13_loop).wrapping_add(1); old};let _ = {param_4 = ((param_4).wrapping_add(local_res20)) as i32; param_4};
+if (iVar13_loop <= iVar16) { continue 'l53; } else { break 'b1; }
+}
+let _ = AlphaBlend8((local_res18).as_mut_ptr() as *mut u8, (fVar5 - fVar19), (local_res10).as_mut_ptr() as *mut u8, fVar19, (param_7_arr).as_mut_ptr() as *mut u8);let _ = AlphaBlend8((param_7_arr).as_mut_ptr() as *mut u8, fVar4, (if (pbVar15 != std::ptr::null_mut()) { pbVar15 } else { (param_7_arr).as_mut_ptr() as *mut u8 }), fVar4, pbVar15);let _ = {param_3 = ((param_3).wrapping_add(iVar1)) as i32; param_3};let _ = {let old=iVar13_loop; iVar13_loop=(iVar13_loop).wrapping_add(1); old};let _ = {param_4 = ((param_4).wrapping_add(local_res20)) as i32; param_4};
+if (iVar13_loop <= iVar16) { continue 'l53; } else { break 'b1; }
+}
+}
+return ;
+}
 pub(super) unsafe fn ScanlinePixel8_KeyMask(mut refconV: *mut (), mut arg1: i32, mut arg2: i32, mut inP: *mut Pixel8, mut outP: *mut Pixel8) -> i32 {
 let mut state: *mut RenderState = std::ptr::null_mut();
 let mut key_r: u8 = 0;
 let mut key_g: u8 = 0;
 let mut key_b: u8 = 0;
-let mut pc: u32=11;
-loop {match pc {
-2 => { return PF_Err_NONE; },
-6 => { let _ = {(*outP).alpha = (0_i32 as u8); (*outP).alpha};let _ = {(*outP).red = key_r; (*outP).red};let _ = {(*outP).green = key_g; (*outP).green};let _ = {(*outP).blue = key_b; (*outP).blue};return PF_Err_NONE; },
-11 => { state = (refconV as *mut RenderState);key_r = (((((*state).key_rg_packed as u32) & 255_u32)) as u8);key_g = (((((*state).key_rg_packed as i32)).wrapping_shr(8_i32 as u32)) as u8);key_b = ((*state).key_b as u8);if ((((((inP != (std::ptr::null_mut::<u8>() as *mut Pixel8)) && (outP != (std::ptr::null_mut::<u8>() as *mut Pixel8))) && (((*inP).alpha as i32) == ((*state).key_a as i32))) && (((*inP).red as i32) == (key_r as i32))) && (((*inP).green as i32) == (key_g as i32))) && (((*inP).blue as i32) == (key_b as i32))) {pc=6;} else {pc=2;} continue; },
-_ => unreachable!(),
-}}}
-
+'b6: {
+'b2: {
+state = (refconV as *mut RenderState);key_r = (((((*state).key_rg_packed as u32) & 255_u32)) as u8);key_g = (((((*state).key_rg_packed as i32)).wrapping_shr(8_i32 as u32)) as u8);key_b = ((*state).key_b as u8);
+if ((((((inP != (std::ptr::null_mut::<u8>() as *mut Pixel8)) && (outP != (std::ptr::null_mut::<u8>() as *mut Pixel8))) && (((*inP).alpha as i32) == ((*state).key_a as i32))) && (((*inP).red as i32) == (key_r as i32))) && (((*inP).green as i32) == (key_g as i32))) && (((*inP).blue as i32) == (key_b as i32))) { break 'b6; } else { break 'b2; }
+}
+return PF_Err_NONE;
+}
+let _ = {(*outP).alpha = (0_i32 as u8); (*outP).alpha};let _ = {(*outP).red = key_r; (*outP).red};let _ = {(*outP).green = key_g; (*outP).green};let _ = {(*outP).blue = key_b; (*outP).blue};return PF_Err_NONE;
+}
 pub(super) unsafe fn ScanlinePixel16_KeyMask(mut refconV: *mut (), mut arg1: i32, mut arg2: i32, mut inP: *mut Pixel16, mut outP: *mut Pixel16) -> i32 {
 let mut state: *mut RenderState = std::ptr::null_mut();
-let mut pc: u32=8;
-loop {match pc {
-2 => { return PF_Err_NONE; },
-6 => { let _ = {(*outP).alpha = (0_i32 as u16); (*outP).alpha};let _ = {(*outP).red = (*state).key16_r; (*outP).red};let _ = {(*outP).green = (*state).key16_g; (*outP).green};let _ = {(*outP).blue = (*state).key16_b; (*outP).blue};return PF_Err_NONE; },
-8 => { state = (refconV as *mut RenderState);if ((((((inP != (std::ptr::null_mut::<u8>() as *mut Pixel16)) && (outP != (std::ptr::null_mut::<u8>() as *mut Pixel16))) && (((*inP).alpha as i32) == ((*state).key16_a as i32))) && (((*inP).red as i32) == ((*state).key16_r as i32))) && (((*inP).green as i32) == ((*state).key16_g as i32))) && (((*inP).blue as i32) == ((*state).key16_b as i32))) {pc=6;} else {pc=2;} continue; },
-_ => unreachable!(),
-}}}
-
+'b6: {
+'b2: {
+state = (refconV as *mut RenderState);
+if ((((((inP != (std::ptr::null_mut::<u8>() as *mut Pixel16)) && (outP != (std::ptr::null_mut::<u8>() as *mut Pixel16))) && (((*inP).alpha as i32) == ((*state).key16_a as i32))) && (((*inP).red as i32) == ((*state).key16_r as i32))) && (((*inP).green as i32) == ((*state).key16_g as i32))) && (((*inP).blue as i32) == ((*state).key16_b as i32))) { break 'b6; } else { break 'b2; }
+}
+return PF_Err_NONE;
+}
+let _ = {(*outP).alpha = (0_i32 as u16); (*outP).alpha};let _ = {(*outP).red = (*state).key16_r; (*outP).red};let _ = {(*outP).green = (*state).key16_g; (*outP).green};let _ = {(*outP).blue = (*state).key16_b; (*outP).blue};return PF_Err_NONE;
+}

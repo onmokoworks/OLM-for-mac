@@ -21,3 +21,9 @@ cc.workspace = true
 [features]
 # Compiles the untouched mechanical reference only into unit tests.
 generated-reference = []
+# Diagnostic stage clocks; absent from production builds.
+profile = []
+
+[[example]]
+name = "smoother-profile"
+path = "examples/profile.rs"

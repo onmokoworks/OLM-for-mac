@@ -44,7 +44,7 @@ fn main() {
             if &bytes[at + 4..at + 8] == b"FNIe" {
                 bytes[at + 12..at + 16].copy_from_slice(&2u32.to_le_bytes());
             }
-            at += 16 + (len + 3) / 4 * 4;
+            at += 16 + len.div_ceil(4) * 4;
         }
         let path =
             std::path::PathBuf::from(std::env::var_os("OUT_DIR").unwrap()).join("effect.pipl");

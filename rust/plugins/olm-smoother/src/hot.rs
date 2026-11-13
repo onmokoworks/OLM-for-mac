@@ -3,6 +3,54 @@
 //! operation order. No reassociation, reciprocal approximation or FMA is used.
 use super::{kernels, support::*};
 
+// The production ColorBlend call always uses five center contributions. Each
+// channel retains its original left-to-right sum, truncation, then unpremultiply.
+// Integer inputs bound all sums; zero alpha still uses CVTTSS2SI's indefinite
+// result, including the original low-word truncation before the 16-bit clamp.
+pub(super) unsafe fn color_blend5<const DEEP: bool>(n: *const u64) -> [u16; 4] {
+    let read = |address: u64| {
+        if DEEP {
+            (address as *const [u16; 4]).read()
+        } else {
+            (address as *const [u8; 4]).read().map(u16::from)
+        }
+    };
+    let mut sum = [0.0f32; 4];
+    let mut count = 0.0f32;
+    for i in [0, 1, 2, 3, 5, 6, 7, 8, 4, 4, 4, 4, 4] {
+        let address = *n.add(i);
+        if address == 0 {
+            continue;
+        }
+        let p = read(address);
+        let alpha = if DEEP {
+            p[0] as f32 * (1.0 / 32768.0)
+        } else {
+            p[0] as f32 / 255.0
+        };
+        count += 1.0;
+        sum[0] += p[0] as f32;
+        for c in [1, 3, 2] {
+            sum[c] += p[c] as f32 * alpha;
+        }
+    }
+    let mask = if DEEP { 65535 } else { 255 };
+    let mut value = sum.map(|v| (olm_math::x86::cvttss2si(v / count) as u32 & mask) as u16);
+    let alpha = if DEEP {
+        value[0] as f32 * (1.0 / 32768.0)
+    } else {
+        value[0] as f32 / 255.0
+    };
+    for c in [1, 3, 2] {
+        value[c] = (olm_math::x86::cvttss2si(value[c] as f32 / alpha) as u32 & mask) as u16;
+    }
+    if DEEP {
+        value.map(|v| v.min(32768))
+    } else {
+        value
+    }
+}
+
 #[inline]
 fn compare(a: [u16; 4], b: [u16; 4], deep: bool) -> i32 {
     if a == b {

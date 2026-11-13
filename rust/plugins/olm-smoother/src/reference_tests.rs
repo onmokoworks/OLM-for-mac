@@ -78,7 +78,7 @@ fn bytes_mut(a: &mut [u64], n: usize) -> &mut [u8] {
     unsafe { std::slice::from_raw_parts_mut(a.as_mut_ptr().cast(), n) }
 }
 fn frame(case: usize, deep: bool) -> (Vec<u64>, usize, usize, Params) {
-    let (w, h) = [(1, 1), (3, 7), (11, 7), (17, 13), (31, 19)][case % 5];
+    let (w, h): (usize, usize) = [(1, 1), (3, 7), (11, 7), (17, 13), (31, 19)][case % 5];
     let mut seed = 0x632be59bd9b4e019u64.wrapping_add(case as u64);
     let palette: [[u16; 4]; 6] = std::array::from_fn(|i| {
         std::array::from_fn(|c| {
@@ -89,7 +89,7 @@ fn frame(case: usize, deep: bool) -> (Vec<u64>, usize, usize, Params) {
             }
         })
     });
-    let mut src = vec![0u64; (w * h * if deep { 8 } else { 4 } + 7) / 8];
+    let mut src = vec![0u64; (w * h * if deep { 8 } else { 4 }).div_ceil(8)];
     for y in 0..h {
         for x in 0..w {
             let index = match case % 5 {
@@ -145,7 +145,7 @@ fn frame(case: usize, deep: bool) -> (Vec<u64>, usize, usize, Params) {
 }
 fn run_rust(src: &[u64], w: usize, h: usize, p: Params, deep: bool, rect: Rect) -> Vec<u64> {
     let n = w * h * if deep { 8 } else { 4 };
-    let mut out = vec![0u64; (n + 7) / 8];
+    let mut out = vec![0u64; n.div_ceil(8)];
     let l = Layout {
         width: w,
         height: h,
@@ -174,7 +174,7 @@ fn cpp_frames() {
                 Rect::from_size(0, 0, w, h).unwrap()
             };
             let actual = run_rust(&src, w, h, p, deep, rect);
-            let mut expected = vec![0u64; (n + 7) / 8];
+            let mut expected = vec![0u64; n.div_ceil(8)];
             unsafe {
                 smoother_reference(
                     src.as_ptr().cast(),
@@ -361,20 +361,13 @@ fn cpp_steps() {
                     for x in 0..w {
                         for dir in [5, 3, 1, 7] {
                             let mut n = [0u64; 10];
-                            let c;
-                            if deep {
+                            let c = if deep {
                                 NeighborExtract16(x as i32, y as i32, &mut s, n.as_mut_ptr());
-                                c = Classifier16Exact(
-                                    &mut s,
-                                    x as u32,
-                                    y as u32,
-                                    n.as_mut_ptr(),
-                                    dir,
-                                );
+                                Classifier16Exact(&mut s, x as u32, y as u32, n.as_mut_ptr(), dir)
                             } else {
                                 NeighborExtract8(x as i32, y as i32, &mut s, n.as_mut_ptr());
-                                c = Classifier8(&mut s, x as u32, y as u32, n.as_mut_ptr(), dir);
-                            }
+                                Classifier8(&mut s, x as u32, y as u32, n.as_mut_ptr(), dir)
+                            };
                             let ec = smoother_step(
                                 src.as_mut_ptr().cast(),
                                 expected.as_mut_ptr().cast(),

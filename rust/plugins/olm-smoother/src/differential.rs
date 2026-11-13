@@ -144,6 +144,12 @@ fn generated_frames_all_tolerances() {
                     actual, expected,
                     "{depth:?} tolerance={tolerance} pattern={pattern}"
                 );
+                let mut raw = vec![0xab; input.len()];
+                algorithm::render_bytes(&input, layout, &mut raw, layout, params, extent).unwrap();
+                assert_eq!(
+                    raw, expected,
+                    "byte rows {depth:?} tolerance={tolerance} pattern={pattern}"
+                );
             }
         }
     }
@@ -199,6 +205,147 @@ fn classifiers_exhaustive_three_color_neighborhoods() {
                         assert_eq!(
                             actual, expected,
                             "deep={deep} tol={tolerance} pattern={code} dir={d}"
+                        );
+                    }
+                }
+            }
+        }
+    }
+}
+
+#[test]
+fn parallel_classification_matches_ordered_reference() {
+    use crate::algorithm::{self, Params};
+    use olm_core::{Depth, Layout, Rect, View, ViewMut};
+    for depth in [Depth::U8, Depth::U16] {
+        let (w, h) = (257, 193);
+        let layout = Layout {
+            width: w,
+            height: h,
+            stride: w * depth.pixel_bytes() + 3,
+            depth,
+            origin: (-7, 11),
+        };
+        for (case, tolerance) in [0, 6, 64, 255].into_iter().enumerate() {
+            let mut input = vec![0x9a; layout.span().unwrap()];
+            let mut seed = 0x12345678u32;
+            for y in 0..h {
+                for x in 0..w {
+                    seed ^= seed << 13;
+                    seed ^= seed >> 17;
+                    seed ^= seed << 5;
+                    let color = match case {
+                        0 => [255, if x + y > 190 { 255 } else { 0 }, 0, 0],
+                        1 => [[255, 255, 255, 255], [128, 63, 129, 250], [0, 32, 127, 255]]
+                            [seed as usize % 3],
+                        _ => seed.to_ne_bytes(),
+                    };
+                    let at = y * layout.stride + x * depth.pixel_bytes();
+                    if depth == Depth::U8 {
+                        input[at..at + 4].copy_from_slice(&color);
+                    } else {
+                        for (c, value) in color.into_iter().enumerate() {
+                            input[at + 2 * c..at + 2 * c + 2]
+                                .copy_from_slice(&(u16::from(value) * 128).to_ne_bytes());
+                        }
+                    }
+                }
+            }
+            let extent = if case % 2 == 0 {
+                Rect::from_size(0, 0, w, h).unwrap()
+            } else {
+                Rect::new(1, 2, w as i32 - 2, h as i32 - 1).unwrap()
+            };
+            let params = Params {
+                tolerance,
+                use_key: true,
+                key: [255; 4],
+            };
+            let view = View::new(&input, layout).unwrap();
+            let mut expected = vec![0xab; input.len()];
+            algorithm::render_impl::<true>(
+                &view,
+                &mut ViewMut::new(&mut expected, layout).unwrap(),
+                params,
+                extent,
+            )
+            .unwrap();
+            for workers in [1, 2, 3, usize::MAX] {
+                let mut actual = vec![0xab; input.len()];
+                algorithm::render_with_workers(
+                    &view,
+                    &mut ViewMut::new(&mut actual, layout).unwrap(),
+                    params,
+                    extent,
+                    workers,
+                )
+                .unwrap();
+                assert_eq!(
+                    actual, expected,
+                    "depth={depth:?} case={case} workers={workers}"
+                );
+            }
+        }
+    }
+}
+
+#[test]
+fn color_blend5_all_neighbor_masks_and_random_full_range() {
+    let mut seed = 0x8472931u32;
+    for mask in 0..256usize {
+        for iteration in 0..256 {
+            let mut pixels: [[u16; 4]; 9] = std::array::from_fn(|_| {
+                std::array::from_fn(|_| {
+                    seed ^= seed << 13;
+                    seed ^= seed >> 17;
+                    seed ^= seed << 5;
+                    seed as u16
+                })
+            });
+            if iteration == 0 {
+                for p in &mut pixels {
+                    p[0] = 0;
+                }
+            }
+            if iteration == 1 {
+                pixels = [[0; 4]; 9];
+            }
+            if iteration == 2 {
+                pixels = [[u16::MAX; 4]; 9];
+            }
+            let pixels8 = pixels.map(|p| p.map(|v| v as u8));
+            for deep in [false, true] {
+                let mut n = [0u64; 10];
+                for (bit, i) in [0, 1, 2, 3, 5, 6, 7, 8].into_iter().enumerate() {
+                    if mask & (1 << bit) != 0 {
+                        n[i] = if deep {
+                            pixels[i].as_ptr() as u64
+                        } else {
+                            pixels8[i].as_ptr() as u64
+                        };
+                    }
+                }
+                n[4] = if deep {
+                    pixels[4].as_ptr() as u64
+                } else {
+                    pixels8[4].as_ptr() as u64
+                };
+                unsafe {
+                    if deep {
+                        let mut expected = [0u16; 4];
+                        generated::ColorBlend16(n.as_mut_ptr(), expected.as_mut_ptr(), 5);
+                        assert_eq!(
+                            hot::color_blend5::<true>(n.as_ptr()),
+                            expected,
+                            "mask={mask}"
+                        );
+                    } else {
+                        let mut expected = [0u8; 4];
+                        generated::ColorBlend8(n.as_mut_ptr(), expected.as_mut_ptr(), 5);
+                        assert_eq!(
+                            hot::color_blend5::<false>(n.as_ptr()),
+                            expected.map(u16::from),
+                            "mask={mask}"
                         );
                     }
                 }
