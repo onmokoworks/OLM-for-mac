@@ -109,7 +109,6 @@ impl Effect for Plugin {
         if !ctx.smart
             || a.width != b.width
             || a.height != b.height
-            || a.origin != b.origin
             || a.depth != b.depth
             || a.width > 8192
             || a.height > 8192
