@@ -60,9 +60,16 @@ pub fn unpremultiply(pixels: &mut [Pixel]) {
 
 fn key_match(p: Pixel, key: Pixel) -> bool {
     // Ordered >= rejection means an unordered (NaN) component is accepted.
-    !((p.r - key.r).abs() >= COLOR_TOL)
-        && !((p.g - key.g).abs() >= COLOR_TOL)
-        && !((p.b - key.b).abs() >= COLOR_TOL)
+    !matches!(
+        (p.r - key.r).abs().partial_cmp(&COLOR_TOL),
+        Some(std::cmp::Ordering::Greater | std::cmp::Ordering::Equal)
+    ) && !matches!(
+        (p.g - key.g).abs().partial_cmp(&COLOR_TOL),
+        Some(std::cmp::Ordering::Greater | std::cmp::Ordering::Equal)
+    ) && !matches!(
+        (p.b - key.b).abs().partial_cmp(&COLOR_TOL),
+        Some(std::cmp::Ordering::Greater | std::cmp::Ordering::Equal)
+    )
 }
 pub fn palette_filter(pixels: &mut [Pixel], palette: &[Pixel]) {
     if palette.is_empty() {
@@ -111,7 +118,9 @@ pub fn setup(pixels: &mut [Pixel], version: i32, key: Option<(Pixel, bool)>) {
             p.r = lut::decode(p.r);
             p.g = lut::decode(p.g);
             p.b = lut::decode(p.b);
-            if version == 3 { *p = crate::oklab::from_linear(*p); }
+            if version == 3 {
+                *p = crate::oklab::from_linear(*p);
+            }
         }
     }
 }

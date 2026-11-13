@@ -33,11 +33,25 @@ pub fn build(
     threads: usize,
     budget: &mut Budget,
 ) -> Result<Vec<[u8; 4]>> {
-    build_with_range(input, width, height, smooth_range as f32, 2, threads, budget)
+    build_with_range(
+        input,
+        width,
+        height,
+        smooth_range as f32,
+        2,
+        threads,
+        budget,
+    )
 }
 
-pub fn build_with_range(input: &[Pixel], width: usize, height: usize,
-    smooth_range: f32, version: i32, threads: usize, budget: &mut Budget,
+pub fn build_with_range(
+    input: &[Pixel],
+    width: usize,
+    height: usize,
+    smooth_range: f32,
+    version: i32,
+    threads: usize,
+    budget: &mut Budget,
 ) -> Result<Vec<[u8; 4]>> {
     let n = olm_core::image_len(width, height)?;
     if width >= i32::MAX as usize || height >= i32::MAX as usize || threads == 0 {
@@ -48,7 +62,7 @@ pub fn build_with_range(input: &[Pixel], width: usize, height: usize,
     }
     let mut output = olm_core::allocate(n, [0; 4], budget)?;
     let threshold = smooth_range * 0.01 + 0.001;
-    olm_core::parallel_rows(&mut output, width, threads, |y, row| {
+    crate::rows::parallel_rows(&mut output, width, threads, |y, row| {
         for (x, out) in row.iter_mut().enumerate() {
             let p = input[y * width + x];
             let edge = |xx, yy| {
