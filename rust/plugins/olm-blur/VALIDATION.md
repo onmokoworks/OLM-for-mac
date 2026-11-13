@@ -263,3 +263,24 @@ tests pass. Native AE/macOS performance remains untested.
 [Compact round-three evidence](performance-round3.json) preserves samples,
 identities and exclusion proofs. Per user instruction, no manual run-directory
 or worktree cleanup was performed; local task artifacts are retained for review.
+
+## Round four: portable NaN semantics
+
+The finite-input fast path could still generate nonfinite intermediates: Legacy
+border taps may have a subnormal weight sum, whose reciprocal overflows. A later
+zero-times-infinity produces a hardware default NaN. AArch64 makes that positive,
+whereas the x86 original requires 0xffc00000. Main's unconditional x86 helpers
+previously handled this; the new FINITE specialization bypassed them.
+
+Non-x86 fast add/multiply now inspect the result and call the existing
+olm_math::x86::result only for NaNs, preserving the first operand's quieted payload
+(or the second if only it is NaN), and using the negative default for generated
+NaNs. Finite results keep their original arithmetic; x86-64 code and SIMD are
+unchanged. Copied pixel/alpha bits are not canonicalized. No shared code changed.
+
+Two architecture-independent regression tests assert exact generated NaN bits,
+first-operand payload/sign quieting, signed zero, and the Legacy subnormal-border
+case. Local Windows release tests for all three blur crates pass (25 tests,
+one explicitly ignored reciprocal-profile regeneration). The existing complete
+C++ comparison and thread-count tests are retained. Native aarch64 execution is
+verified by the PR CI, not by pretending Windows can run that target.

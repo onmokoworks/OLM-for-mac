@@ -350,8 +350,9 @@ fn render_impl(
     } else {
         stage(0, &mut a, &mut flags)?
     };
-    // Bounded finite RGB cannot overflow these positive weighted averages.
-    // Keep the explicit x86 NaN/payload path for all exceptional/HDR extremes.
+    // Bounded inputs permit the fast path, but Legacy border normalization can
+    // overflow a subnormal reciprocal and generate NaNs in later passes.
+    // Non-x86 fast arithmetic repairs those results with SSE NaN semantics.
     #[cfg(feature = "profile")]
     let staged_at = clock.elapsed();
     let amount = p.amount * p.scale;
@@ -432,7 +433,10 @@ fn render_impl(
 #[inline(always)]
 fn ordered_add<const FINITE: bool>(a: f32, b: f32) -> f32 {
     if FINITE {
-        a + b
+        let result = a + b;
+        #[cfg(not(target_arch = "x86_64"))]
+        let result = finite_result(result, a, b);
+        result
     } else {
         x86::add(a, b)
     }
@@ -440,9 +444,70 @@ fn ordered_add<const FINITE: bool>(a: f32, b: f32) -> f32 {
 #[inline(always)]
 fn ordered_mul<const FINITE: bool>(a: f32, b: f32) -> f32 {
     if FINITE {
-        a * b
+        let result = a * b;
+        #[cfg(not(target_arch = "x86_64"))]
+        let result = finite_result(result, a, b);
+        result
     } else {
         x86::mul(a, b)
+    }
+}
+
+// Only exceptional results need operand inspection. Reuse the shared first-NaN
+// quieting/default-invalid policy; never canonicalize copied input pixels.
+#[cfg(any(test, not(target_arch = "x86_64")))]
+#[inline(always)]
+fn finite_result(result: f32, a: f32, b: f32) -> f32 {
+    if result.is_nan() {
+        x86::result(result, a, b)
+    } else {
+        result
+    }
+}
+
+#[cfg(test)]
+mod nan_tests {
+    use super::*;
+
+    #[test]
+    fn generated_and_propagated_nan_bits_match_sse() {
+        let inf = std::hint::black_box(f32::INFINITY);
+        for (a, b, result) in [
+            (0.0, inf, 0.0 * inf),
+            (inf, -inf, inf - inf),
+            (0.0, 0.0, std::hint::black_box(0.0f32) / 0.0),
+        ] {
+            assert_eq!(finite_result(result, a, b).to_bits(), 0xffc00000);
+        }
+        assert_eq!(ordered_mul::<true>(0.0, inf).to_bits(), 0xffc00000);
+        assert_eq!(ordered_add::<true>(inf, -inf).to_bits(), 0xffc00000);
+        for bits in [0x7f801234, 0xff801234, 0x7fc05678, 0xffc05678] {
+            let a = f32::from_bits(bits);
+            let b = f32::from_bits(0x7fc09876);
+            // Model a host choosing the wrong operand/sign, even on x86 CI.
+            assert_eq!(finite_result(b, a, b).to_bits(), bits | 0x00400000);
+            assert_eq!(finite_result(b, 1.0, a).to_bits(), bits | 0x00400000);
+            assert_eq!(ordered_mul::<false>(a, b).to_bits(), bits | 0x00400000);
+        }
+        assert_eq!(finite_result(-0.0, -0.0, 1.0).to_bits(), 0x80000000);
+    }
+
+    #[test]
+    fn legacy_subnormal_normalization_generates_negative_nan() {
+        // Border excludes the center: one tiny weighted tap yields an infinite
+        // reciprocal. Zero RGB times that reciprocal must use SSE default NaN.
+        let src = [[0.0; 3]; 2];
+        let mut dst = src;
+        legacy_pass::<true>(
+            &[1, 1],
+            &src,
+            &mut dst,
+            &[f32::from_bits(1), 1.0, f32::from_bits(1)],
+            2,
+            1,
+            false,
+        );
+        assert_eq!(dst[0].map(f32::to_bits), [0xffc00000; 3]);
     }
 }
 
