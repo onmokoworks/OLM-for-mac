@@ -2,7 +2,7 @@ name: Rust macOS and Windows
 
 on:
   push:
-    branches: [rust-port]
+    branches: [main, rust-port]
     paths: ['rust/**', 'core/**', 'ucrtmath/**', 'mac/**', '.github/workflows/rust-macos.yml']
   pull_request:
     paths: ['rust/**', 'core/**', 'ucrtmath/**', 'mac/**', '.github/workflows/rust-macos.yml']

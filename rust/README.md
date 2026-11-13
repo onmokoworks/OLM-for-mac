@@ -12,6 +12,28 @@ x86_64 builds and original-verified golden tests run in CI (see below).
 See [integration report](INTEGRATION.md) for the 2026-11-12 upstream release integration,
 build/lint counts, hygiene inventory and unresolved limitations.
 
+## Release criteria (leaving "in development")
+
+The Rust version is published as a release, replacing the C++ v1.0.0 build as
+the distributed version, only when every item below is done and recorded:
+
+1. **Native AE on Windows.** Each of the 12 plug-ins loads, renders and shows
+   its controls in After Effects. The same frames rendered with the original
+   `.aex` and with the Rust `.aex` (same footage, settings, 8/16/32 bpc,
+   Full and Half resolution) are byte-identical when exported.
+2. **Native AE on macOS.** The same check on Apple Silicon and on Intel, using
+   the macOS build. Frames are compared with the Windows exports from item 1.
+3. **Saved projects.** A project saved with the original plug-ins (and one
+   saved with C++ v1.0.0) opens with every parameter value intact and renders
+   the same. This includes Smoother2's integer→float Smooth Range migration and
+   OLMColorKey's slots above 1,024.
+4. **Render quality.** The oracle comparison also passes at Low (Draft) render
+   quality (`render_environment.quality: "low"`), not only at High.
+5. **Packaging.** Release archives for macOS and Windows with all 12 plug-ins,
+   updated install guides, and Known Limitations entries for the original
+   defects listed below.
+6. **CI** is green on `main` for Windows x64, macOS arm64 and macOS x86_64.
+
 ## Status and retained qualification
 
 The six release rows show fresh direct-oracle exact cases **per depth** against
