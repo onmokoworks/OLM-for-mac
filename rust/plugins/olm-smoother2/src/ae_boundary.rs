@@ -1,10 +1,16 @@
 //! Local pilot boundary: retained-fixture admission and transactional output.
 #![allow(non_upper_case_globals)]
 use super::*;
-use olm_core::{Depth,Layout,View,ViewMut};
 use olm_ae::Downsample;
+use olm_core::{Depth, Layout, View, ViewMut};
 type Result<T> = olm_ae::Result<T>;
-fn check(e:PF_Err)->Result<()>{if e==0{Ok(())}else{Err(e)}}
+fn check(e: PF_Err) -> Result<()> {
+    if e == 0 {
+        Ok(())
+    } else {
+        Err(e)
+    }
+}
 struct CheckedParam<'a> {
     i: &'a PF_InData,
     p: Box<PF_ParamDef>,
@@ -31,15 +37,23 @@ impl Drop for CheckedParam<'_> {
 struct ColorSuite<'a> {
     i: &'a PF_InData,
     p: *const PF_ColorParamSuite1,
-    active:bool,
+    active: bool,
 }
-impl ColorSuite<'_>{
-    unsafe fn finish(&mut self)->Result<()>{self.active=false;check((*self.i.pica_basicP).ReleaseSuite.ok_or(BAD)?(kPFColorParamSuite.as_ptr().cast(),1) as PF_Err)}
+impl ColorSuite<'_> {
+    unsafe fn finish(&mut self) -> Result<()> {
+        self.active = false;
+        check(
+            (*self.i.pica_basicP).ReleaseSuite.ok_or(BAD)?(kPFColorParamSuite.as_ptr().cast(), 1)
+                as PF_Err,
+        )
+    }
 }
 impl Drop for ColorSuite<'_> {
     fn drop(&mut self) {
         unsafe {
-            if self.active {let _=self.finish();}
+            if self.active {
+                let _ = self.finish();
+            }
         }
     }
 }
@@ -53,12 +67,19 @@ unsafe fn values<E: Effect>(
     basic.ReleaseSuite.ok_or(BAD)?;
     let mut raw = ptr::null();
     check(acquire(kPFColorParamSuite.as_ptr().cast(), 1, &mut raw) as PF_Err)?;
-    let mut suite = ColorSuite { i, p: raw.cast(),active:true };
-    let color = (*suite.p.as_ref().ok_or(BAD)?)
+    let mut suite = ColorSuite {
+        i,
+        p: raw.cast(),
+        active: true,
+    };
+    let color = suite
+        .p
+        .as_ref()
+        .ok_or(BAD)?
         .PF_GetFloatingPointColorFromColorDef
         .ok_or(BAD)?;
     let specs = E::params();
-    let mut out:Vec<Value> = Vec::with_capacity(specs.len());
+    let mut out: Vec<Value> = Vec::with_capacity(specs.len());
     for (n, s) in specs.iter().enumerate() {
         let mut checked = None;
         // Topics carry no stream and must not be checked out in SmartRender.
@@ -104,7 +125,12 @@ unsafe fn values<E: Effect>(
             Kind::Color => {
                 let mut c = std::mem::zeroed();
                 // Original reads suite floats only for enabled key/active gamma colors.
-                if (n==1 && out[0].number!=0.0) || (n>=10 && out[6].number!=3.0 && out[7].number==2.0 && n-10<(out[9].number as usize).min(5)) {
+                if (n == 1 && out[0].number != 0.0)
+                    || (n >= 10
+                        && out[6].number != 3.0
+                        && out[7].number == 2.0
+                        && n - 10 < (out[9].number as usize).min(5))
+                {
                     check(color(i.effect_ref, p, &mut c))?;
                 }
                 v.color = [c.alpha, c.red, c.green, c.blue];
@@ -196,18 +222,29 @@ unsafe fn render<E: Effect>(
         downsample_x: Downsample::new(i.downsample_x.num, i.downsample_x.den)?,
         downsample_y: Downsample::new(i.downsample_y.num, i.downsample_y.den)?,
         smart,
-        output_extent: olm_core::Rect::new(
-            extent.left as i32,
-            extent.top as i32,
-            extent.right as i32,
-            extent.bottom as i32,
-        )
-        .map_err(|_| BAD)?,
+        output_extent: olm_core::Rect::new(extent.left, extent.top, extent.right, extent.bottom)
+            .map_err(|_| BAD)?,
     };
     let v = values::<E>(i, params, smart)?;
     if crate::admission::retained(&v, a, depth)? {
-        let flags=if depth==Depth::U8{0}else{PF_WorldFlag_DEEP as i32};
-        if a.rowbytes as usize!=la.width*depth.pixel_bytes() || a.world_flags!=flags || b.world_flags!=flags || i.output_origin_x!=0 || i.output_origin_y!=0 || i.downsample_x.num!=1 || i.downsample_x.den!=1 || i.downsample_y.num!=1 || i.downsample_y.den!=1{return Err(BAD);}
+        // World flag types differ between the Windows and macOS SDK headers (i32 / u32).
+        let flags: i64 = if depth == Depth::U8 {
+            0
+        } else {
+            PF_WorldFlag_DEEP as i64
+        };
+        if a.rowbytes as usize != la.width * depth.pixel_bytes()
+            || a.world_flags as i64 != flags
+            || b.world_flags as i64 != flags
+            || i.output_origin_x != 0
+            || i.output_origin_y != 0
+            || i.downsample_x.num != 1
+            || i.downsample_x.den != 1
+            || i.downsample_y.num != 1
+            || i.downsample_y.den != 1
+        {
+            return Err(BAD);
+        }
     }
     let input = View::new(std::slice::from_raw_parts(a.data.cast(), na), la).map_err(|_| BAD)?;
     let mut output =
@@ -316,23 +353,44 @@ pub(super) unsafe fn entry<E: Effect>(
                 };
                 let mut output = ptr::null_mut();
                 check(cb.checkout_output.ok_or(BAD)?(i.effect_ref, &mut output))?;
-                if world_depth(i,input,output)?!=depth{return Err(BAD);}
-                let original=output.as_ref().ok_or(BAD)?;
-                let layout=world_layout(original,depth)?;
-                let il=world_layout(input.as_ref().ok_or(BAD)?,depth)?;
-                if il.width!=layout.width || il.height!=layout.height || il.origin!=layout.origin || il.width>8192 || il.height>8192 || il.stride.checked_mul(il.height).ok_or(BAD)?>i32::MAX as usize || layout.stride.checked_mul(layout.height).ok_or(BAD)?>i32::MAX as usize{return Err(BAD);}
-                let ib=(*input).data as usize;let ob=original.data as usize;
-                let ie=ib.checked_add(il.span().map_err(|_|BAD)?).ok_or(BAD)?;
-                let oe=ob.checked_add(layout.span().map_err(|_|BAD)?).ok_or(BAD)?;
-                if ib<oe && ob<ie{return Err(BAD);}
-                let len=layout.span().map_err(|_|BAD)?;
-                let mut staged=Vec::new();staged.try_reserve_exact(len).map_err(|_|BAD)?;staged.resize(len,0u8);
-                let mut staged_world=*original;staged_world.data=staged.as_mut_ptr().cast();
+                if world_depth(i, input, output)? != depth {
+                    return Err(BAD);
+                }
+                let original = output.as_ref().ok_or(BAD)?;
+                let layout = world_layout(original, depth)?;
+                let il = world_layout(input.as_ref().ok_or(BAD)?, depth)?;
+                if il.width != layout.width
+                    || il.height != layout.height
+                    || il.origin != layout.origin
+                    || il.width > 8192
+                    || il.height > 8192
+                    || il.stride.checked_mul(il.height).ok_or(BAD)? > i32::MAX as usize
+                    || layout.stride.checked_mul(layout.height).ok_or(BAD)? > i32::MAX as usize
+                {
+                    return Err(BAD);
+                }
+                let ib = (*input).data as usize;
+                let ob = original.data as usize;
+                let ie = ib.checked_add(il.span().map_err(|_| BAD)?).ok_or(BAD)?;
+                let oe = ob.checked_add(layout.span().map_err(|_| BAD)?).ok_or(BAD)?;
+                if ib < oe && ob < ie {
+                    return Err(BAD);
+                }
+                let len = layout.span().map_err(|_| BAD)?;
+                let mut staged = Vec::new();
+                staged.try_reserve_exact(len).map_err(|_| BAD)?;
+                staged.resize(len, 0u8);
+                let mut staged_world = *original;
+                staged_world.data = staged.as_mut_ptr().cast();
                 // Keep the caller's padding; publish active rows only after checkout cleanup succeeds.
                 render::<E>(i, params, input, &mut staged_world, depth, true)?;
                 guard.finish()?;
                 for y in 0..layout.height {
-                    ptr::copy_nonoverlapping(staged.as_ptr().add(y*layout.stride),(original.data as *mut u8).add(y*layout.stride),layout.width*depth.pixel_bytes());
+                    ptr::copy_nonoverlapping(
+                        staged.as_ptr().add(y * layout.stride),
+                        (original.data as *mut u8).add(y * layout.stride),
+                        layout.width * depth.pixel_bytes(),
+                    );
                 }
             }
             _ => {}
@@ -343,7 +401,6 @@ pub(super) unsafe fn entry<E: Effect>(
     .err()
     .unwrap_or(0)
 }
-
 
 #[cfg(test)]
 mod tests {
@@ -429,52 +486,157 @@ mod tests {
     }
 
     struct Host {
-        input:PF_EffectWorld,output:PF_EffectWorld,input_bytes:[u8;4],output_bytes:[u8;4],
-        world_suite:PF_WorldSuite2,color_suite:PF_ColorParamSuite1,
-        checkin_error:PF_Err,checkins:usize,acquires:usize,releases:usize,formats:usize,
+        input: PF_EffectWorld,
+        output: PF_EffectWorld,
+        input_bytes: [u8; 4],
+        output_bytes: [u8; 4],
+        world_suite: PF_WorldSuite2,
+        color_suite: PF_ColorParamSuite1,
+        checkin_error: PF_Err,
+        checkins: usize,
+        acquires: usize,
+        releases: usize,
+        formats: usize,
     }
-    thread_local!{static HOST:std::cell::Cell<*mut Host>=const{std::cell::Cell::new(ptr::null_mut())};}
-    unsafe extern "C" fn host_acquire(name:*const std::ffi::c_char,_version:i32,out:*mut *const c_void)->i32{
-        HOST.with(|cell|{let h=&mut *cell.get();h.acquires+=1;
-            *out=if std::ffi::CStr::from_ptr(name).to_bytes_with_nul()==kPFWorldSuite{(&h.world_suite as *const PF_WorldSuite2).cast()}else{(&h.color_suite as *const PF_ColorParamSuite1).cast()};0
+    thread_local! {static HOST:std::cell::Cell<*mut Host>=const{std::cell::Cell::new(ptr::null_mut())};}
+    unsafe extern "C" fn host_acquire(
+        name: *const std::ffi::c_char,
+        _version: i32,
+        out: *mut *const c_void,
+    ) -> i32 {
+        HOST.with(|cell| {
+            let h = &mut *cell.get();
+            h.acquires += 1;
+            *out = if std::ffi::CStr::from_ptr(name).to_bytes_with_nul() == kPFWorldSuite {
+                (&h.world_suite as *const PF_WorldSuite2).cast()
+            } else {
+                (&h.color_suite as *const PF_ColorParamSuite1).cast()
+            };
+            0
         })
     }
-    unsafe extern "C" fn host_release(_name:*const std::ffi::c_char,_version:i32)->i32{HOST.with(|cell|{(*cell.get()).releases+=1;});0}
-    unsafe extern "C" fn host_format(world:*const PF_EffectWorld,out:*mut PF_PixelFormat)->PF_Err{
-        HOST.with(|cell|{let h=&mut *cell.get();h.formats+=1;
-            if !std::ptr::eq(world,&h.input) && !std::ptr::eq(world,&h.output){return 44;}
-            *out=PF_PixelFormat_ARGB32;0
+    unsafe extern "C" fn host_release(_name: *const std::ffi::c_char, _version: i32) -> i32 {
+        HOST.with(|cell| {
+            (*cell.get()).releases += 1;
+        });
+        0
+    }
+    unsafe extern "C" fn host_format(
+        world: *const PF_EffectWorld,
+        out: *mut PF_PixelFormat,
+    ) -> PF_Err {
+        HOST.with(|cell| {
+            let h = &mut *cell.get();
+            h.formats += 1;
+            if !std::ptr::eq(world, &h.input) && !std::ptr::eq(world, &h.output) {
+                return 44;
+            }
+            *out = PF_PixelFormat_ARGB32;
+            0
         })
     }
-    unsafe extern "C" fn host_color(_:PF_ProgPtr,_:*const PF_ParamDef,_:*mut PF_PixelFloat)->PF_Err{45}
-    unsafe extern "C" fn host_input(effect:PF_ProgPtr,_:i32,out:*mut *mut PF_EffectWorld)->PF_Err{*out=&mut (*(effect as *mut Host)).input;0}
-    unsafe extern "C" fn host_output(effect:PF_ProgPtr,out:*mut *mut PF_EffectWorld)->PF_Err{*out=&mut (*(effect as *mut Host)).output;0}
-    unsafe extern "C" fn host_checkin(effect:PF_ProgPtr,_:i32)->PF_Err{let h=&mut *(effect as *mut Host);h.checkins+=1;h.checkin_error}
+    unsafe extern "C" fn host_color(
+        _: PF_ProgPtr,
+        _: *const PF_ParamDef,
+        _: *mut PF_PixelFloat,
+    ) -> PF_Err {
+        45
+    }
+    unsafe extern "C" fn host_input(
+        effect: PF_ProgPtr,
+        _: i32,
+        out: *mut *mut PF_EffectWorld,
+    ) -> PF_Err {
+        *out = &mut (*(effect as *mut Host)).input;
+        0
+    }
+    unsafe extern "C" fn host_output(effect: PF_ProgPtr, out: *mut *mut PF_EffectWorld) -> PF_Err {
+        *out = &mut (*(effect as *mut Host)).output;
+        0
+    }
+    unsafe extern "C" fn host_checkin(effect: PF_ProgPtr, _: i32) -> PF_Err {
+        let h = &mut *(effect as *mut Host);
+        h.checkins += 1;
+        h.checkin_error
+    }
     struct Paint;
     impl Effect for Paint {
-        const NAME:&'static str="test";const VERSION:u32=0;const FLAGS:u32=0;
-        fn params()->Vec<Param>{vec![]}
-        fn render(_:&[Value],_:RenderContext,_:&View<'_>,out:&mut ViewMut<'_>)->olm_core::Result<()>{out.set(0,0,olm_core::Pixel::U8([255,11,22,33]))}
+        const NAME: &'static str = "test";
+        const VERSION: u32 = 0;
+        const FLAGS: u32 = 0;
+        fn params() -> Vec<Param> {
+            vec![]
+        }
+        fn render(
+            _: &[Value],
+            _: RenderContext,
+            _: &View<'_>,
+            out: &mut ViewMut<'_>,
+        ) -> olm_core::Result<()> {
+            out.set(0, 0, olm_core::Pixel::U8([255, 11, 22, 33]))
+        }
     }
     #[test]
-    fn host_world_validation_and_transactional_publication(){unsafe{
-        for late_error in [0,43] {
-            let mut h:Box<Host>=Box::new(std::mem::zeroed());h.checkin_error=late_error;
-            h.input_bytes=[255,1,2,3];h.output_bytes=[7;4];
-            h.input.width=1;h.input.height=1;h.input.rowbytes=4;h.input.data=h.input_bytes.as_mut_ptr().cast();
-            h.output=h.input;h.output.data=h.output_bytes.as_mut_ptr().cast();
-            h.world_suite.PF_GetPixelFormat=Some(host_format);h.color_suite.PF_GetFloatingPointColorFromColorDef=Some(host_color);
-            HOST.with(|cell|cell.set(&mut *h));
-            let mut basic:SPBasicSuite=std::mem::zeroed();basic.AcquireSuite=Some(host_acquire);basic.ReleaseSuite=Some(host_release);
-            let mut i:PF_InData=std::mem::zeroed();i.effect_ref=(&mut *h as *mut Host).cast();i.pica_basicP=&mut basic;
-            i.downsample_x.num=1;i.downsample_x.den=1;i.downsample_y=i.downsample_x;
-            let mut o=std::mem::zeroed();let mut input:PF_SmartRenderInput=std::mem::zeroed();input.bitdepth=8;
-            let mut cb=PF_SmartRenderCallbacks{checkout_layer_pixels:Some(host_input),checkout_output:Some(host_output),checkin_layer_pixels:Some(host_checkin)};
-            let mut extra=PF_SmartRenderExtra{input:&mut input,cb:&mut cb};
-            let error=entry::<Paint>(PF_Cmd_SMART_RENDER,&mut i,&mut o,ptr::null_mut(),ptr::null_mut(),(&mut extra as *mut PF_SmartRenderExtra).cast());
-            assert_eq!(error,late_error);assert_eq!(h.checkins,1);assert_eq!(h.formats,2);assert_eq!(h.acquires,h.releases);
-            assert_eq!(h.output_bytes,if late_error==0{[255,11,22,33]}else{[7;4]});assert_eq!(h.input_bytes,[255,1,2,3]);
-            HOST.with(|cell|cell.set(ptr::null_mut()));
+    fn host_world_validation_and_transactional_publication() {
+        unsafe {
+            for late_error in [0, 43] {
+                let mut h: Box<Host> = Box::new(std::mem::zeroed());
+                h.checkin_error = late_error;
+                h.input_bytes = [255, 1, 2, 3];
+                h.output_bytes = [7; 4];
+                h.input.width = 1;
+                h.input.height = 1;
+                h.input.rowbytes = 4;
+                h.input.data = h.input_bytes.as_mut_ptr().cast();
+                h.output = h.input;
+                h.output.data = h.output_bytes.as_mut_ptr().cast();
+                h.world_suite.PF_GetPixelFormat = Some(host_format);
+                h.color_suite.PF_GetFloatingPointColorFromColorDef = Some(host_color);
+                HOST.with(|cell| cell.set(&mut *h));
+                let mut basic: SPBasicSuite = std::mem::zeroed();
+                basic.AcquireSuite = Some(host_acquire);
+                basic.ReleaseSuite = Some(host_release);
+                let mut i: PF_InData = std::mem::zeroed();
+                i.effect_ref = (&mut *h as *mut Host).cast();
+                i.pica_basicP = &mut basic;
+                i.downsample_x.num = 1;
+                i.downsample_x.den = 1;
+                i.downsample_y = i.downsample_x;
+                let mut o = std::mem::zeroed();
+                let mut input: PF_SmartRenderInput = std::mem::zeroed();
+                input.bitdepth = 8;
+                let mut cb = PF_SmartRenderCallbacks {
+                    checkout_layer_pixels: Some(host_input),
+                    checkout_output: Some(host_output),
+                    checkin_layer_pixels: Some(host_checkin),
+                };
+                let mut extra = PF_SmartRenderExtra {
+                    input: &mut input,
+                    cb: &mut cb,
+                };
+                let error = entry::<Paint>(
+                    PF_Cmd_SMART_RENDER,
+                    &mut i,
+                    &mut o,
+                    ptr::null_mut(),
+                    ptr::null_mut(),
+                    (&mut extra as *mut PF_SmartRenderExtra).cast(),
+                );
+                assert_eq!(error, late_error);
+                assert_eq!(h.checkins, 1);
+                assert_eq!(h.formats, 2);
+                assert_eq!(h.acquires, h.releases);
+                assert_eq!(
+                    h.output_bytes,
+                    if late_error == 0 {
+                        [255, 11, 22, 33]
+                    } else {
+                        [7; 4]
+                    }
+                );
+                assert_eq!(h.input_bytes, [255, 1, 2, 3]);
+                HOST.with(|cell| cell.set(ptr::null_mut()));
+            }
         }
-    }}
+    }
 }

@@ -124,7 +124,32 @@ def run_side(args, directory, side, plugin, route, input_path, request):
         result['status'] = 'ok'
     except (ValueError, KeyError, OSError) as exc:
         result.update(status='incomplete', error=str(exc))
+    finally:
+        if not getattr(args, 'keep_frames', False):
+            result['frames_deleted'] = drop_frames(manifest)
     return result
+
+
+FRAME_SUFFIXES = ('.png', '.rgba16le', '.rgba32f-le')
+
+
+def drop_frames(manifest):
+    """Delete rendered frames after hashing; only their digests are evidence.
+
+    1080p deep frames are several MB each, and a campaign renders thousands, so
+    keeping them filled the disk. Pass --keep-frames to retain them for diagnosis.
+    """
+    deleted = 0
+    for c in manifest['cases']:
+        base = Path(c['output'])
+        for suffix in FRAME_SUFFIXES:
+            frame = base.with_suffix(suffix)
+            try:
+                frame.unlink()
+                deleted += 1
+            except FileNotFoundError:
+                pass
+    return deleted
 
 
 def main():
@@ -134,6 +159,8 @@ def main():
     p.add_argument('--harness', type=Path, default=o.DEFAULT_HARNESS)
     p.add_argument('--only', nargs='+', choices=list(HEAVY))
     p.add_argument('--sizes', default='1x1,960x540,1920x1080')
+    p.add_argument('--keep-frames', action='store_true',
+                   help='keep rendered frames (default: delete after hashing to save disk)')
     p.add_argument('--frame-cap', type=int, default=10)
     p.add_argument('--batch-cap', type=int, default=70)
     p.add_argument('--budget', type=int, default=1680)

@@ -54,6 +54,11 @@ def main():
                 if r['pixel_format'] != expected_format:
                     raise ValueError('actual dispatch depth differs: ' + r['pixel_format'])
                 path = Path(case['output'])
+                if result.get('frames_deleted') and not path.exists():
+                    # Frames were deleted after hashing (default); the recorded
+                    # digests are the evidence and the equality check below uses them.
+                    counts['frames_deleted_digest_only'] += 1
+                    continue
                 if o.sha256(path) != result['outputs'][i]['png']:
                     raise ValueError('PNG changed')
                 counts['png_files_verified'] += 1
