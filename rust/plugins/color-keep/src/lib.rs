@@ -111,6 +111,9 @@ mod ae {
                 let r = ctx
                     .output_extent
                     .intersection(olm_core::Rect::from_size(0, 0, l.width, l.height)?);
+                if r.is_empty() {
+                    return Ok(());
+                }
                 if input.layout().depth != l.depth
                     || input.layout().width < r.right() as usize
                     || input.layout().height < r.bottom() as usize
@@ -223,5 +226,43 @@ mod row_render_tests {
                 assert_eq!(actual, expected);
             }
         }
+    }
+}
+
+#[cfg(all(test, any(target_os = "windows", target_os = "macos")))]
+#[test]
+fn smart_empty_extent_preserves_output() {
+    use olm_ae::{Downsample, Effect, RenderContext, Value};
+    use olm_core::{Depth, Layout, Rect};
+    let layout = Layout {
+        width: 1,
+        height: 1,
+        stride: 4,
+        depth: Depth::U8,
+        origin: (0, 0),
+    };
+    let mut output = [71u8; 4];
+    let scale = Downsample::new(1, 1).unwrap();
+    for extent in [
+        Rect::new(10, 0, 12, 1).unwrap(),
+        Rect::new(0, 10, 1, 12).unwrap(),
+    ] {
+        ae::Plugin::render(
+            &[Value {
+                number: 0.0,
+                color: [0.0; 4],
+                color8: [0; 4],
+            }],
+            RenderContext {
+                downsample_x: scale,
+                downsample_y: scale,
+                smart: true,
+                output_extent: extent,
+            },
+            &View::new(&[0; 4], layout).unwrap(),
+            &mut ViewMut::new(&mut output, layout).unwrap(),
+        )
+        .unwrap();
+        assert_eq!(output, [71; 4]);
     }
 }
