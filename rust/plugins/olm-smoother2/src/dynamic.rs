@@ -91,9 +91,9 @@ pub(super) unsafe fn update(i: *mut PF_InData, params: PF_ParamList) -> Result<(
     ] {
         let mut p = *at(slot)?;
         if disabled {
-            p.ui_flags |= PF_PUI_DISABLED as i32;
+            p.ui_flags |= PF_PUI_DISABLED;
         } else {
-            p.ui_flags &= !(PF_PUI_DISABLED as i32);
+            p.ui_flags &= !(PF_PUI_DISABLED);
         }
         suite::<PF_ParamUtilsSuite3, _, _>(i, kPFParamUtilsSuite, 3, |s| {
             check(s.PF_UpdateParamUI.ok_or(BAD)?(

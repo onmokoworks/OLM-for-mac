@@ -18,7 +18,8 @@ pub(crate) unsafe fn retained(
         if !color(2, [255; 4]) {
             return Ok(false);
         }
-        let tuples: [(i32, i32, i32, i32, i32, i32, i32, i32, f64, i32); 12] = [
+        type FixtureParams = (i32, i32, i32, i32, i32, i32, i32, i32, f64, i32);
+        let tuples: [FixtureParams; 12] = [
             (0, 0, 100, 2, 0, 2, 1, 1, 2.40000009536743, 0),
             (1, 1, 100, 2, 0, 2, 1, 1, 2.40000009536743, 0),
             (1, 0, 0, 2, 0, 2, 1, 1, 2.40000009536743, 0),

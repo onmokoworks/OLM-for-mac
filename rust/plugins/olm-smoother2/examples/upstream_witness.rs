@@ -1,16 +1,22 @@
 //! Test-only scalar ABI adapters for the headless native witness.
 use olm_smoother2::{class_plane, oklab, types::Pixel};
 #[no_mangle]
+/// # Safety
+/// `input` must point to a readable Pixel and `out` to a writable Pixel.
 pub unsafe extern "C" fn to_oklab(out: *mut Pixel, input: *const Pixel) -> *mut Pixel {
     *out = oklab::from_linear(*input);
     out
 }
 #[no_mangle]
+/// # Safety
+/// `input` must point to a readable Pixel and `out` to a writable Pixel.
 pub unsafe extern "C" fn from_oklab(out: *mut Pixel, input: *const Pixel) -> *mut Pixel {
     *out = oklab::to_linear(*input);
     out
 }
 #[no_mangle]
+/// # Safety
+/// Both pointers must address readable Pixels; `space` must be a fixture mode 0..=2.
 pub unsafe extern "C" fn distance(a: *const Pixel, b: *const Pixel, space: i32) -> f32 {
     class_plane::distance_in_space(*a, *b, space + 1)
 }
@@ -22,6 +28,10 @@ pub struct Plane {
     stride: i32,
 }
 #[no_mangle]
+/// # Safety
+/// `plane` must describe valid aligned Pixel rows with positive dimensions and
+/// stride. `(x,y)` must be in bounds. `params` must contain the aligned 0x94-byte
+/// witness configuration with consistent range fields; `out` must hold 4 bytes.
 pub unsafe extern "C" fn classify(
     out: *mut u8,
     plane: *const Plane,

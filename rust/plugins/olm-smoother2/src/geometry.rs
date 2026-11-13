@@ -5,7 +5,10 @@ use crate::{
     types::{Pixel, Vertex},
 };
 use olm_core::{Error, Result};
-#[allow(unused_parens,unused_mut,unused_assignments,while_true,unused_variables)]
+// Retain generated control flow, casts and expressions for source comparison.
+#[allow(clippy::unnecessary_cast, clippy::double_parens, clippy::needless_return,
+    clippy::unused_unit, clippy::identity_op, clippy::collapsible_else_if,
+    clippy::assign_op_pattern, unused_parens,unused_mut,unused_assignments,while_true,unused_variables)]
 #[path="geometry_generated.rs"]
 #[rustfmt::skip]
 mod generated;
@@ -107,6 +110,7 @@ pub(crate) struct State<'a> {
     preserve_pf32_scalar_rounding: bool,
 }
 impl<'a> State<'a> {
+    #[allow(clippy::too_many_arguments)] // One-to-one parameters of the source geometry context.
     pub(crate) fn new(
         plane: &'a [Pixel],
         classes: &'a [u8],

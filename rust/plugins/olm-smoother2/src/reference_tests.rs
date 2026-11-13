@@ -179,7 +179,7 @@ fn stage7_complete_polygons() {
                     };
                     let mut p = crate::geometry::State::new(
                         &pixels,
-                        &classes,
+                        classes,
                         w,
                         h,
                         x,
@@ -313,12 +313,10 @@ fn stage6_directional_leaves() {
                     } else {
                         0
                     }
+                } else if rng.word() % 3 == 0 {
+                    255
                 } else {
-                    if rng.word() % 3 == 0 {
-                        255
-                    } else {
-                        0
-                    }
+                    0
                 };
             }
             let desc = [
@@ -593,14 +591,7 @@ fn stage3_gamma_stages() {
                 let mut expected = center;
                 let mut es = samples.clone();
                 unsafe {
-                    sm2_ref_gamma(
-                        op,
-                        &mut expected,
-                        es.as_mut_ptr(),
-                        n as i32,
-                        enable as i32,
-                        value,
-                    );
+                    sm2_ref_gamma(op, &mut expected, es.as_mut_ptr(), n, enable as i32, value);
                 }
                 let mut actual = center;
                 let mut ss = samples.clone();
@@ -666,7 +657,7 @@ fn stage3_palette_membership() {
                             mode as i32,
                             2.2,
                             palette.as_ptr(),
-                            count as i32,
+                            count,
                             &mut expected_value,
                         )
                     };

@@ -525,3 +525,39 @@ This is deferred to a separate compatibility job: prior crop/resize hypotheses
 did not reproduce the original processing order, so a small verified fix is
 not available. Per the Round 2 instruction, this unchanged documented defect
 does not block the performance PR. The previous no-PR decision is superseded.
+
+### Round 2 final evidence and lint cleanup
+
+Fresh final 1080p benchmark (Rust/original):
+
+| Depth | Default | Heavy |
+|---|---:|---:|
+| 8 | 0.342 | 0.179 |
+| 16 | 0.329 | 0.186 |
+| 32 | 0.265 | 0.153 |
+
+All six cells remain below 1 and exact. This is a separate shared-machine sweep;
+the changes since Round 1 are lint cleanup, not further math/parallel algorithm
+optimization. Scalar cbrtf and shared olm-math remain untouched. Clippy fixes
+make unordered float comparisons explicit with partial_cmp, retain exact
+binary64 literal rounding, remove redundant casts, and name a fixture tuple.
+Generated geometry has narrow documented style allowances; source clamps retain
+branch order for NaN payloads and signed zero. Test/example lints are also fixed.
+
+Final release tests: 21 passed; 54 goldens exact; 618 two-seed full-world oracle
+comparisons exact with no errors/mismatches (103 per depth per seed, all three
+downsamples). Formatting passes; all-target release Clippy reports zero owned
+Rust warnings. Shared dependency and native C++ reference warnings remain.
+The combined benchmark audit verifies all 10 cells / 60 frame pairs exactly.
+
+The final candidate repeats the same ROI failure: round2-roi-final has 9/9
+candidate failures with error 516 and no original failures. All nine reference
+PNGs were also identical across the main/perf/original classification campaigns.
+The defect remains classified (b), unchanged and deferred; no failing case is
+counted as an exact comparison.
+
+Local evidence under D:\olm-rs-target\smoother: round2-byte-bench/evidence.json,
+round2-final-{report,audit}.json, round2-clean2-tests.log,
+round2-clean2-clippy.jsonl, round2-final-golden-olm-smoother2.log,
+round2-oracle/ and round2-roi-final/. Final benchmark/oracle AEX SHA256:
+dad3a101117257fa0ded1cec3f19011264359ab7d6c1fc9328b6131173dc49d2.

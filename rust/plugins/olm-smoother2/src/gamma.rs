@@ -1,4 +1,6 @@
 //! Pure stages from gamma_composite.inc. All imported pow calls use UCRT FMA.
+// Preserve source branch order, NaN payloads and signed zero in clamps.
+#![allow(clippy::manual_clamp)]
 use crate::{
     lut,
     types::{Pixel, Vertex, COLOR_TOL},
@@ -171,7 +173,7 @@ pub fn srgb_encode_literal(v: f64) -> f64 {
     if v >= 1.0 {
         return 1.0;
     }
-    if v < 0.00313066844250060782 {
+    if v < 0.003_130_668_442_500_608 {
         return v * 12.92;
     }
     olm_math::pow(v, 1.0 / 2.4, Mode::Fma) * 1.055 - 0.055

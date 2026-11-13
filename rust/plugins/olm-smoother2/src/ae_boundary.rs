@@ -72,7 +72,10 @@ unsafe fn values<E: Effect>(
         p: raw.cast(),
         active: true,
     };
-    let color = (*suite.p.as_ref().ok_or(BAD)?)
+    let color = suite
+        .p
+        .as_ref()
+        .ok_or(BAD)?
         .PF_GetFloatingPointColorFromColorDef
         .ok_or(BAD)?;
     let specs = E::params();
@@ -219,20 +222,15 @@ unsafe fn render<E: Effect>(
         downsample_x: Downsample::new(i.downsample_x.num, i.downsample_x.den)?,
         downsample_y: Downsample::new(i.downsample_y.num, i.downsample_y.den)?,
         smart,
-        output_extent: olm_core::Rect::new(
-            extent.left as i32,
-            extent.top as i32,
-            extent.right as i32,
-            extent.bottom as i32,
-        )
-        .map_err(|_| BAD)?,
+        output_extent: olm_core::Rect::new(extent.left, extent.top, extent.right, extent.bottom)
+            .map_err(|_| BAD)?,
     };
     let v = values::<E>(i, params, smart)?;
     if crate::admission::retained(&v, a, depth)? {
         let flags = if depth == Depth::U8 {
             0
         } else {
-            PF_WorldFlag_DEEP as i32
+            PF_WorldFlag_DEEP
         };
         if a.rowbytes as usize != la.width * depth.pixel_bytes()
             || a.world_flags != flags

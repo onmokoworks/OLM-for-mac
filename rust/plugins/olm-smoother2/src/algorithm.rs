@@ -115,7 +115,10 @@ pub fn render_with_range(
                 center.b = lut::encode(center.b);
             }
             for c in [&mut center.r, &mut center.g, &mut center.b, &mut center.a] {
-                if !(*c >= 0.0) {
+                if !matches!(
+                    (*c).partial_cmp(&0.0),
+                    Some(std::cmp::Ordering::Greater | std::cmp::Ordering::Equal)
+                ) {
                     *c = 0.0;
                 } else if *c >= 1.0 {
                     *c = 1.0;
