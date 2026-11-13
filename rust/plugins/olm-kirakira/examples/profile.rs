@@ -1,4 +1,4 @@
-//! Bounded release microbenchmark: cargo run --release -p olm-kirakira --example profile
+//! Bounded release microbenchmark: cargo run --release -p olm-kirakira --example kirakira-profile
 use olm_core::{Depth, Layout, Pixel, View, ViewMut};
 use olm_kirakira::{algorithm, filters};
 use std::{hint::black_box, time::Instant};

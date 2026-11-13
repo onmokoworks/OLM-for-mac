@@ -1,5 +1,5 @@
 //! Bounded phase timings, no host required. Run with `cargo run --release
-//! -p olm-smoother2 --example profile`; arithmetic remains the public pipeline.
+//! -p olm-smoother2 --example smoother2-profile`; arithmetic remains the public pipeline.
 use olm_smoother2::{
     algorithm::{self, Params},
     class_plane, frame,
