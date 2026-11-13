@@ -1,5 +1,8 @@
 //! Ordered filters from KiraFilters.inc and core/kirakira_*.h.
 use olm_math::{self as math, Mode::Fma};
+#[cfg(test)]
+#[path = "filter_tests.rs"]
+mod row_tests;
 pub fn reflect(mut x: i32, n: i32) -> usize {
     if n <= 1 {
         return 0;
@@ -34,6 +37,73 @@ pub fn crop(src: &[f32], sw: usize, sh: usize, dw: usize, dh: usize) -> Vec<f32>
     out
 }
 pub fn warp(src: &[f32], w: usize, h: usize, angle: f64) -> Vec<f32> {
+    warp_with_workers(src, w, h, angle, crate::parallel::workers(w * h))
+}
+
+fn warp_with_workers(src: &[f32], w: usize, h: usize, angle: f64, workers: usize) -> Vec<f32> {
+    // Preserve the retained scalar NaN-payload selection when input is nonfinite.
+    if src.iter().any(|v| !v.is_finite()) {
+        return warp_scalar(src, w, h, angle);
+    }
+    let radians = angle * std::f64::consts::PI / 180.0;
+    let alpha = math::cos(radians, Fma);
+    let beta = math::sin(radians, Fma);
+    let cx = w as f64 * 0.5;
+    let cy = h as f64 * 0.5;
+    let m02 = (1.0 - alpha) * cx - beta * cy;
+    let m12 = beta * cx + (1.0 - alpha) * cy;
+    let determinant = alpha * alpha + beta * beta;
+    let i00 = alpha / determinant;
+    let i01 = -beta / determinant;
+    let i02 = (beta * m12 - alpha * m02) / determinant;
+    let i10 = beta / determinant;
+    let i11 = alpha / determinant;
+    let i12 = (-beta * m02 - alpha * m12) / determinant;
+    let mut out = vec![0.0; w * h];
+    let sample = |x: i32, y: i32| {
+        if x < 0 || y < 0 || x >= w as i32 || y >= h as i32 {
+            0.0
+        } else {
+            src[y as usize * w + x as usize]
+        }
+    };
+    // Preserve the two multiplications before rounding; factoring 1024 into
+    // the coefficient would change rounding at some coordinates.
+    let deltas: Vec<_> = (0..w)
+        .map(|x| {
+            (
+                (i00 * x as f64 * 1024.0).round_ties_even() as i32,
+                (i10 * x as f64 * 1024.0).round_ties_even() as i32,
+            )
+        })
+        .collect();
+    crate::parallel::chunks(&mut out, w.max(1), workers, |start, chunk| {
+        for (row, output) in chunk.chunks_mut(w).enumerate() {
+            let y = start / w + row;
+            let bx = ((i01 * y as f64 + i02) * 1024.0).round_ties_even() as i32 + 16;
+            let by = ((i11 * y as f64 + i12) * 1024.0).round_ties_even() as i32 + 16;
+            for x in 0..w {
+                let xf = (bx + deltas[x].0) >> 5;
+                let yf = (by + deltas[x].1) >> 5;
+                let x0 = xf >> 5;
+                let y0 = yf >> 5;
+                let fx = xf & 31;
+                let fy = yf & 31;
+                let w00 = ((32 - fx) * (32 - fy)) as f32 * (1.0 / 1024.0);
+                let w10 = (fx * (32 - fy)) as f32 * (1.0 / 1024.0);
+                let w01 = ((32 - fx) * fy) as f32 * (1.0 / 1024.0);
+                let w11 = (fx * fy) as f32 * (1.0 / 1024.0);
+                let mut v = sample(x0 + 1, y0) * w10;
+                v += sample(x0, y0) * w00;
+                v += sample(x0, y0 + 1) * w01;
+                v += sample(x0 + 1, y0 + 1) * w11;
+                output[x] = v;
+            }
+        }
+    });
+    out
+}
+fn warp_scalar(src: &[f32], w: usize, h: usize, angle: f64) -> Vec<f32> {
     let radians = angle * std::f64::consts::PI / 180.0;
     let alpha = math::cos(radians, Fma);
     let beta = math::sin(radians, Fma);
@@ -79,7 +149,85 @@ pub fn warp(src: &[f32], w: usize, h: usize, angle: f64) -> Vec<f32> {
     }
     out
 }
+
 pub fn box_horizontal(
+    src: &[f32],
+    w: usize,
+    h: usize,
+    len: i32,
+    passes: usize,
+    normalize: bool,
+    recovered: bool,
+) -> Vec<f32> {
+    if recovered && len > 0 && w > 0 && h > 0 {
+        return box_rows(
+            src,
+            w,
+            h,
+            len as usize,
+            passes,
+            normalize,
+            crate::parallel::workers(w * h),
+        );
+    }
+    box_horizontal_scalar(src, w, h, len, passes, normalize, recovered)
+}
+
+fn box_rows(
+    input: &[f32],
+    w: usize,
+    h: usize,
+    len: usize,
+    passes: usize,
+    normalize: bool,
+    workers: usize,
+) -> Vec<f32> {
+    let indices: Vec<_> = (0..w + len - 1)
+        .map(|x| reflect(x as i32 - (len / 2) as i32, w as i32))
+        .collect();
+    let scale = if normalize { 1.0 / len as f64 } else { 1.0 };
+    let mut src = input.to_vec();
+    let mut dst = vec![0.0; src.len()];
+    for _ in 0..passes {
+        // The recovered filter carries rounding residue across groups of four
+        // rows. Never split one of these groups between workers.
+        crate::parallel::chunks(&mut dst[..w * h], w * 4, workers, |start, chunk| {
+            let mut column = vec![0.0f64; w];
+            let mut padded = vec![0.0f32; indices.len()];
+            for (row, out) in chunk.chunks_mut(w).enumerate() {
+                if row % 4 == 0 {
+                    column.fill(0.0);
+                }
+                let source = &src[start + row * w..start + (row + 1) * w];
+                for (v, &i) in padded.iter_mut().zip(&indices) {
+                    *v = source[i];
+                }
+                let mut sum = 0.0f64;
+                for &v in &padded[..len] {
+                    sum += v as f64;
+                }
+                for x in 0..w {
+                    if len == 3 || len == 5 {
+                        sum = padded[x] as f64;
+                        for &v in &padded[x + 1..x + len] {
+                            sum += v as f64;
+                        }
+                    }
+                    let total = column[x] + sum;
+                    out[x] = (total * scale) as f32;
+                    column[x] = total - sum;
+                    if x + 1 < w && len != 3 && len != 5 {
+                        sum += padded[x + len] as f64 - padded[x] as f64;
+                    }
+                }
+            }
+        });
+        std::mem::swap(&mut src, &mut dst);
+    }
+    src
+}
+
+fn box_horizontal_scalar(
     src: &[f32],
     w: usize,
     h: usize,
