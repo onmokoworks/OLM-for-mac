@@ -393,3 +393,50 @@ case plans, exclusion proofs and counts. The resident audit verified 15 exact ce
 and 90 frame pairs; its three incomplete cells are original Radial heavy. Raw
 run folders were deleted after compaction; local compact summaries/logs are under
 `D:/olm-rs-target/blurs-evidence`.
+
+## Performance round three - S-blurs
+
+Merged origin/main (74bcd6ae, including shared core/AE changes) and reverified.
+No shared source was authored. Blur/Radial profile examples have unique names.
+Directional now probes four integer controls on the stack, avoiding metadata,
+Vec and Box allocations. Packed full equal-sized worlds with matching origins
+use one contiguous copy with no staging or threads; other layouts use the original
+legacy PF_COPY callback. [Static/ABI/runtime witness](../olm-directional-blur/NOOP_PROOF.md)
+records the original call and repeated default measurements. Active kernels and
+Radial's Zen 3 reciprocal profile are unchanged in this round.
+
+1080p median Rust/original ratios (lower is faster; historical R2 is a separate run):
+
+| bpc | Default R2 -> R3 | Heavy R2 -> R3 |
+|---|---:|---:|
+| 8 | 0.866 -> 1.094 | 0.633 -> 0.636 |
+| 16 | 0.936 -> 0.982 | 0.705 -> 0.727 |
+| 32 | 0.928 -> 0.902 | 0.719 -> 0.733 |
+
+Resident timing uses one warmup and five measured selector samples. Radial heavy
+is measured in bounded fresh processes (one warmup, five samples, alternating
+side order), including process startup and I/O: its original fails the resident
+protocol. All 54 per-process outputs match. Radial before/after binaries in that
+control are identical; their variation is not a code speedup.
+
+The all-cells <1 acceptance bar is **not fully met**: the single final sweep has
+Directional defaults 16=1.059, 32=1.001 and Radial defaults 8=1.094. The separate
+40-sample alternating Directional campaign has ratios 0.9520/0.9645/0.8565;
+5/8, 5/8 and 8/8 block medians win respectively. Timing overlap remains, and no
+observations were dropped or final sweep rerun.
+
+Verification: 23 owned + 8 shared release tests pass (one profile-regeneration
+test ignored), fmt and Clippy pass (warnings). Golden: 148 exact, 14 historical
+Radial exclusions unchanged. Targeted no-op/geometry: 84 exact, including 18
+scaled integer-to-zero cases. Oracle: 1,835 exact across the three plugins and
+two seeds; 19 qualified original-nondeterminism exclusions, not passes (2
+Directional, 17 Radial). Three fixed replay pairs each, one additional ten-pair
+block and existing Directional original-original/zero-offset controls establish
+those exclusions. No unexplained stable mismatch, failure or timeout remains.
+Resident audit passes: 15 exact cells / 90 frame pairs, three incomplete original
+Radial heavy cells covered by the separate process measurement. Two cleanup-helper
+tests pass. Native AE/macOS performance remains untested.
+
+[Compact round-three evidence](performance-round3.json) preserves samples,
+identities and exclusion proofs. Per user instruction, no manual run-directory
+or worktree cleanup was performed; local task artifacts are retained for review.
