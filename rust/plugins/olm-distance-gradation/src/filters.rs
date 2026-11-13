@@ -64,11 +64,26 @@ pub fn gaussian(mat: &mut [f32], w: usize, h: usize, kx: usize, ky: usize) {
 pub fn gaussian_native(mat: &mut [f32], w: usize, h: usize, kx: usize, ky: usize) {
     gaussian_mode(mat, w, h, kx, ky, true);
 }
-fn gaussian_mode(mat: &mut [f32], w: usize, h: usize, kx: usize, ky: usize, native: bool) { #[cfg(feature = "stage-dump")] let native = crate::stage_dump::native_mode(native); #[cfg(feature = "stage-dump")] let capture = crate::stage_dump::begin(mat, w, h, kx, ky, native);
+fn gaussian_mode(mat: &mut [f32], w: usize, h: usize, kx: usize, ky: usize, native: bool) {
+    gaussian_mode_threads(mat, w, h, kx, ky, native, olm_core::row_workers(h, w));
+}
+fn gaussian_mode_threads(
+    mat: &mut [f32],
+    w: usize,
+    h: usize,
+    kx: usize,
+    ky: usize,
+    native: bool,
+    threads: usize,
+) {
+    #[cfg(feature = "stage-dump")]
+    let native = crate::stage_dump::native_mode(native);
+    #[cfg(feature = "stage-dump")]
+    let capture = crate::stage_dump::begin(mat, w, h, kx, ky, native);
     let a = kernel(kx);
     let b = kernel(ky);
     let mut tmp = vec![0.; w * h];
-    for y in 0..h {
+    olm_core::parallel_rows(&mut tmp, w, threads, |y, row| {
         for x in 0..w {
             let at = |dx: isize| mat[y * w + cl(x as isize + dx, w)];
             let fused = native && x < w / 8 * 8;
@@ -94,11 +109,23 @@ fn gaussian_mode(mat: &mut [f32], w: usize, h: usize, kx: usize, ky: usize, nati
                 }
                 v
             };
-            tmp[y * w + x] = v;
+            row[x] = v;
         }
-    } #[cfg(feature = "stage-dump")] crate::stage_dump::middle(&mut tmp, &capture);
+    })
+    .expect("validated Gaussian plane");
+    #[cfg(feature = "stage-dump")]
+    crate::stage_dump::middle(&mut tmp, &capture);
     for y in 0..h {
-        for x in 0..w {
+        let mut vector_end = 0;
+        #[cfg(target_arch = "x86_64")]
+        if native
+            && std::arch::is_x86_feature_detected!("avx2")
+            && std::arch::is_x86_feature_detected!("fma")
+        {
+            // Geometry and kernel lengths were established by the scalar driver.
+            vector_end = unsafe { gaussian_column_avx2(&tmp, mat, w, h, y, kx, ky, &b) };
+        }
+        for x in vector_end..w {
             let at = |dy: isize| tmp[cl(y as isize + dy, h) * w + x];
             let mut v = at(0);
             if (h != 1 || (kx == 3 && ky == 3)) && ky != 1 {
@@ -118,8 +145,47 @@ fn gaussian_mode(mat: &mut [f32], w: usize, h: usize, kx: usize, ky: usize, nati
             }
             mat[y * w + x] = v;
         }
-    } #[cfg(feature = "stage-dump")] crate::stage_dump::end(mat, capture);
+    }
+    #[cfg(feature = "stage-dump")]
+    crate::stage_dump::end(mat, capture);
 }
+// Same eight-lane FMA boundary as the native column profile; tails stay scalar.
+#[cfg(target_arch = "x86_64")]
+#[target_feature(enable = "avx2,fma")]
+unsafe fn gaussian_column_avx2(
+    src: &[f32],
+    dst: &mut [f32],
+    w: usize,
+    h: usize,
+    y: usize,
+    kx: usize,
+    ky: usize,
+    b: &[f32],
+) -> usize {
+    use std::arch::x86_64::*;
+    let end = w / 8 * 8;
+    for x in (0..end).step_by(8) {
+        let at = |dy: isize| _mm256_loadu_ps(src.as_ptr().add(cl(y as isize + dy, h) * w + x));
+        let mut v = at(0);
+        if (h != 1 || (kx == 3 && ky == 3)) && ky != 1 {
+            if ky == 3 {
+                v = _mm256_add_ps(
+                    _mm256_mul_ps(_mm256_add_ps(at(-1), at(1)), _mm256_set1_ps(0.25)),
+                    _mm256_mul_ps(v, _mm256_set1_ps(0.5)),
+                );
+            } else {
+                v = _mm256_mul_ps(v, _mm256_set1_ps(b[ky / 2]));
+                for i in 1..=ky / 2 {
+                    let sample = _mm256_add_ps(at(-(i as isize)), at(i as isize));
+                    v = _mm256_fmadd_ps(sample, _mm256_set1_ps(b[ky / 2 + i]), v);
+                }
+            }
+        }
+        _mm256_storeu_ps(dst.as_mut_ptr().add(y * w + x), v);
+    }
+    end
+}
+
 pub fn box_blur(mat: &mut [f32], w: usize, h: usize, kx: usize, ky: usize) {
     let area = kx as f64 * ky as f64;
     let rx = kx / 2;
@@ -251,4 +317,86 @@ pub fn median(mat: &mut [f32], w: usize, h: usize, n: usize) {
 #[cfg(feature = "stage-dump")]
 pub(crate) fn stage_dump_gaussian_sse(mat: &mut [f32], w: usize, h: usize, kx: usize, ky: usize) {
     gaussian_mode(mat, w, h, kx, ky, false);
+}
+
+#[cfg(all(test, target_arch = "x86_64"))]
+mod simd_tests {
+    use super::*;
+    #[test]
+    fn column_matches_scalar_bits() {
+        if !std::arch::is_x86_feature_detected!("avx2")
+            || !std::arch::is_x86_feature_detected!("fma")
+        {
+            return;
+        }
+        let mut seed = 0x12345678u32;
+        for w in [1, 7, 8, 9, 15, 16, 17, 31, 64, 127] {
+            for h in [1, 2, 7, 19] {
+                let src: Vec<f32> = (0..w * h)
+                    .map(|i| {
+                        seed ^= seed << 13;
+                        seed ^= seed >> 17;
+                        seed ^= seed << 5;
+                        match i % 17 {
+                            0 => 0.0,
+                            1 => -0.0,
+                            2 => f32::from_bits(1),
+                            3 => f32::MAX,
+                            _ => (seed as i32 as f32) * (1.0 / 2147483648.0),
+                        }
+                    })
+                    .collect();
+                for ky in [1, 3, 5, 7, 9, 13, 25] {
+                    let b = kernel(ky);
+                    let mut dst = vec![123.0; w * h];
+                    for y in 0..h {
+                        let end =
+                            unsafe { gaussian_column_avx2(&src, &mut dst, w, h, y, 3, ky, &b) };
+                        for x in 0..end {
+                            let at = |dy: isize| src[cl(y as isize + dy, h) * w + x];
+                            let mut v = at(0);
+                            if (h != 1 || ky == 3) && ky != 1 {
+                                if ky == 3 {
+                                    v = (at(-1) + at(1)) * 0.25 + v * 0.5;
+                                } else {
+                                    v *= b[ky / 2];
+                                    for i in 1..=ky / 2 {
+                                        v = (at(-(i as isize)) + at(i as isize))
+                                            .mul_add(b[ky / 2 + i], v);
+                                    }
+                                }
+                            }
+                            assert_eq!(
+                                dst[y * w + x].to_bits(),
+                                v.to_bits(),
+                                "{w} {h} {ky} {y} {x}"
+                            );
+                        }
+                        assert!(dst[y * w + end..(y + 1) * w].iter().all(|&v| v == 123.0));
+                    }
+                }
+            }
+        }
+    }
+}
+
+#[cfg(test)]
+mod parallel_tests {
+    use super::*;
+    #[test]
+    fn gaussian_rows_match_one_and_seven_workers() {
+        let (w, h) = (257, 521);
+        let source: Vec<f32> = (0..w * h)
+            .map(|i| ((i * 7919 % 65536) as f32 - 32768.0) / 32768.0)
+            .collect();
+        for native in [false, true] {
+            for (kx, ky) in [(3, 3), (5, 7), (13, 9)] {
+                let mut a = source.clone();
+                let mut b = source.clone();
+                gaussian_mode_threads(&mut a, w, h, kx, ky, native, 1);
+                gaussian_mode_threads(&mut b, w, h, kx, ky, native, 7);
+                assert!(a.iter().zip(b).all(|(a, b)| a.to_bits() == b.to_bits()));
+            }
+        }
+    }
 }

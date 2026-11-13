@@ -359,10 +359,7 @@ pub(super) unsafe fn entry<E: Effect>(
                 let original = output.as_ref().ok_or(BAD)?;
                 let layout = world_layout(original, depth)?;
                 let il = world_layout(input.as_ref().ok_or(BAD)?, depth)?;
-                if il.width != layout.width
-                    || il.height != layout.height
-                    || il.origin != layout.origin
-                    || il.width > 8192
+                if il.width > 8192
                     || il.height > 8192
                     || il.stride.checked_mul(il.height).ok_or(BAD)? > i32::MAX as usize
                     || layout.stride.checked_mul(layout.height).ok_or(BAD)? > i32::MAX as usize
@@ -383,7 +380,23 @@ pub(super) unsafe fn entry<E: Effect>(
                 let mut staged_world = *original;
                 staged_world.data = staged.as_mut_ptr().cast();
                 // Keep the caller's padding; publish active rows only after checkout cleanup succeeds.
-                render::<E>(i, params, input, &mut staged_world, depth, true)?;
+                // The original first calls PF_COPY with null rectangles. Its
+                // pipeline then throws on unequal dimensions; the entry point
+                // catches that exception, leaving the host copy as successful
+                // output. Preserve the host's resampling/depth semantics rather
+                // than cropping or smoothing a resized image (2025 RVA 0x2000,
+                // 0x2139, 0x2272; dimension checks at 0x464d/0x4dad/0x49fd).
+                if il.width != layout.width || il.height != layout.height {
+                    check(i.utils.as_ref().ok_or(BAD)?.copy.ok_or(BAD)?(
+                        i.effect_ref,
+                        input,
+                        &mut staged_world,
+                        ptr::null_mut(),
+                        ptr::null_mut(),
+                    ))?;
+                } else {
+                    render::<E>(i, params, input, &mut staged_world, depth, true)?;
+                }
                 guard.finish()?;
                 for y in 0..layout.height {
                     ptr::copy_nonoverlapping(
@@ -489,7 +502,9 @@ mod tests {
         input: PF_EffectWorld,
         output: PF_EffectWorld,
         input_bytes: [u8; 4],
-        output_bytes: [u8; 4],
+        output_bytes: [u8; 8],
+        copy_error: PF_Err,
+        copies: usize,
         world_suite: PF_WorldSuite2,
         color_suite: PF_ColorParamSuite1,
         checkin_error: PF_Err,
@@ -559,6 +574,22 @@ mod tests {
         h.checkins += 1;
         h.checkin_error
     }
+    unsafe extern "C" fn host_copy(
+        effect: PF_ProgPtr,
+        src: *mut PF_EffectWorld,
+        dst: *mut PF_EffectWorld,
+        src_rect: *mut PF_Rect,
+        dst_rect: *mut PF_Rect,
+    ) -> PF_Err {
+        let h = &mut *(effect as *mut Host);
+        assert!(std::ptr::eq(src, &h.input));
+        assert!(src_rect.is_null() && dst_rect.is_null());
+        assert_ne!((*dst).data, h.output.data);
+        h.copies += 1;
+        // Write even on failure: no partial callback result may be published.
+        std::ptr::write_bytes((*dst).data.cast::<u8>(), 99, 8);
+        h.copy_error
+    }
     struct Paint;
     impl Effect for Paint {
         const NAME: &'static str = "test";
@@ -579,16 +610,22 @@ mod tests {
     #[test]
     fn host_world_validation_and_transactional_publication() {
         unsafe {
-            for late_error in [0, 43] {
+            for (height, copy_error, late_error) in
+                [(1, 0, 0), (1, 0, 43), (2, 0, 0), (2, 0, 43), (2, 46, 0)]
+            {
                 let mut h: Box<Host> = Box::new(std::mem::zeroed());
                 h.checkin_error = late_error;
                 h.input_bytes = [255, 1, 2, 3];
-                h.output_bytes = [7; 4];
+                h.output_bytes = [7; 8];
+                h.copy_error = copy_error;
                 h.input.width = 1;
                 h.input.height = 1;
                 h.input.rowbytes = 4;
                 h.input.data = h.input_bytes.as_mut_ptr().cast();
                 h.output = h.input;
+                h.output.height = height;
+                h.output.origin_x = 3;
+                h.output.origin_y = -2;
                 h.output.data = h.output_bytes.as_mut_ptr().cast();
                 h.world_suite.PF_GetPixelFormat = Some(host_format);
                 h.color_suite.PF_GetFloatingPointColorFromColorDef = Some(host_color);
@@ -599,6 +636,9 @@ mod tests {
                 let mut i: PF_InData = std::mem::zeroed();
                 i.effect_ref = (&mut *h as *mut Host).cast();
                 i.pica_basicP = &mut basic;
+                let mut utils: _PF_UtilCallbacks = std::mem::zeroed();
+                utils.copy = Some(host_copy);
+                i.utils = &mut utils;
                 i.downsample_x.num = 1;
                 i.downsample_x.den = 1;
                 i.downsample_y = i.downsample_x;
@@ -622,16 +662,26 @@ mod tests {
                     ptr::null_mut(),
                     (&mut extra as *mut PF_SmartRenderExtra).cast(),
                 );
-                assert_eq!(error, late_error);
+                assert_eq!(
+                    error,
+                    if copy_error != 0 {
+                        copy_error
+                    } else {
+                        late_error
+                    }
+                );
+                assert_eq!(h.copies, usize::from(height == 2));
                 assert_eq!(h.checkins, 1);
                 assert_eq!(h.formats, 2);
                 assert_eq!(h.acquires, h.releases);
                 assert_eq!(
                     h.output_bytes,
-                    if late_error == 0 {
-                        [255, 11, 22, 33]
+                    if copy_error != 0 || late_error != 0 {
+                        [7; 8]
+                    } else if height == 2 {
+                        [99; 8]
                     } else {
-                        [7; 4]
+                        [255, 11, 22, 33, 7, 7, 7, 7]
                     }
                 );
                 assert_eq!(h.input_bytes, [255, 1, 2, 3]);

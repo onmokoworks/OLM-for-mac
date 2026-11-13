@@ -101,6 +101,9 @@ pub fn render(input: &View<'_>, out: &mut ViewMut<'_>, p: &Params) -> olm_core::
 pub fn render_smart(input: &View<'_>, out: &mut ViewMut<'_>, p: &Params) -> olm_core::Result<()> {
     let a = input.layout();
     let b = out.layout();
+    if b.depth != a.depth {
+        return Err(Error::Unsupported);
+    }
     if b.width > a.width || b.height > a.height {
         return Err(Error::Geometry);
     }
@@ -118,9 +121,8 @@ pub fn render_smart(input: &View<'_>, out: &mut ViewMut<'_>, p: &Params) -> olm_
     )?;
     let stage = View::new(&bytes, l)?;
     for y in 0..b.height {
-        for x in 0..b.width {
-            out.set(x, y, stage.get(x, y)?)?;
-        }
+        out.row_mut(y)?
+            .copy_from_slice(&stage.row(y)?[..b.width * b.depth.pixel_bytes()]);
     }
     Ok(())
 }
@@ -150,13 +152,12 @@ fn render_impl(
     {
         return Err(Error::Unsupported);
     }
+    if input.layout().depth != l.depth {
+        return Err(Error::Unsupported);
+    }
     // Worst-case live planes including distance/envelope scratch, bounded before allocations.
     let mut budget = Budget::new(1024 * 1024 * 1024);
     budget.reserve(n.checked_mul(128).ok_or(Error::Overflow)?)?;
-    let mut source = allocate(n, Pixel::U8([0; 4]), &mut budget)?;
-    let mut matched = allocate(n, 0u8, &mut budget)?;
-    let mut indices = allocate(n, None, &mut budget)?;
-    let mut expanded = allocate(n, false, &mut budget)?;
     let mut epsilon = match l.depth {
         Depth::U8 => 0.5 / 255.0,
         Depth::U16 => 1.0 / 65536.0,
@@ -167,51 +168,71 @@ fn render_impl(
     } else if p.precision == 2 && epsilon < 1.0 / 65536.0 {
         epsilon = 1.0 / 65536.0
     }
-    for y in 0..h {
-        for x in 0..w {
-            let i = y * w + x;
-            let src = input.get_global(
-                (l.origin.0 as i64 + x as i64) as i32,
-                (l.origin.1 as i64 + y as i64) as i32,
-            )?;
-            source[i] = src;
-            if x >= classify.0 || y >= classify.1 {
-                continue;
-            }
-            let norm = src.normalized();
-            let mut cmp = [norm[1], norm[2], norm[3]];
-            if p.premultiplied {
-                for c in &mut cmp {
-                    *c *= norm[0]
-                }
-            }
-            cmp = crate::color::convert(cmp, p.space);
-            for (j, k) in p.keys.iter().enumerate() {
-                if !k.enabled {
-                    continue;
-                }
-                let key = crate::color::convert(k.color, p.space);
-                let t = if p.per_component {
-                    if p.per_color {
-                        k.components
-                    } else {
-                        p.components
-                    }
-                } else {
-                    [if p.per_color {
-                        k.threshold
-                    } else {
-                        p.threshold
-                    }; 3]
-                };
-                if crate::color::hit(&mut cmp, key, p.space, p.per_component, t, epsilon) {
-                    matched[i] = 1;
-                    if indices[i].is_none() {
-                        indices[i] = Some(j);
-                    }
-                }
-            }
+    // Conversion depends only on the key and selected color space. Preserve key
+    // order because hit() may mutate cmp and the first matching index is retained.
+    let converted: Vec<_> = p
+        .keys
+        .iter()
+        .map(|k| crate::color::convert(k.color, p.space))
+        .collect();
+    if p.thin == 0 && p.blur == 0.0 {
+        let il = input.layout();
+        if !il.rect()?.contains(l.rect()?) {
+            return Err(Error::Bounds);
         }
+        let dx = (i64::from(l.origin.0) - i64::from(il.origin.0)) as usize;
+        let dy = (i64::from(l.origin.1) - i64::from(il.origin.1)) as usize;
+        let bytes = l.depth.pixel_bytes();
+        out.for_each_row(|y, row| {
+            let source = input.row(y + dy).expect("validated coverage");
+            for (x, target) in row.chunks_exact_mut(bytes).enumerate() {
+                let src = olm_core::read_pixel(&source[(x + dx) * bytes..], l.depth);
+                let index = if x < classify.0 && y < classify.1 {
+                    classify_pixel(src, p, &converted, epsilon)
+                } else {
+                    None
+                };
+                let mut dst = if index.is_some() {
+                    src
+                } else {
+                    src.with_alpha(0.0)
+                };
+                if p.keep && p.replace {
+                    if let Some(j) = index {
+                        if p.keys[j].replace {
+                            dst = replacement(dst, p.keys[j].replacement);
+                        }
+                    }
+                }
+                if !p.keep {
+                    dst = dst.with_alpha(x86::sub(src.alpha(), dst.alpha()));
+                }
+                olm_core::write_pixel(target, l.depth, dst).expect("same depth");
+            }
+        });
+        return Ok(());
+    }
+    let mut source = allocate(n, Pixel::U8([0; 4]), &mut budget)?;
+    let mut matched = allocate(n, 0u8, &mut budget)?;
+    let mut indices = allocate(n, None, &mut budget)?;
+    let mut expanded = allocate(n, false, &mut budget)?;
+    // The neighborhood path has already required identical input/output geometry.
+    // Decode and classify disjoint rows; retain every key comparison within a pixel.
+    olm_core::parallel_rows_auto(&mut source, w, |y, row| {
+        for (dst, src) in row.iter_mut().zip(input.pixels(y).expect("validated row")) {
+            *dst = src;
+        }
+    })?;
+    olm_core::parallel_rows_auto(&mut indices, w, |y, row| {
+        if y >= classify.1 {
+            return;
+        }
+        for (x, index) in row.iter_mut().take(classify.0).enumerate() {
+            *index = classify_pixel(source[y * w + x], p, &converted, epsilon);
+        }
+    })?;
+    for (value, index) in matched.iter_mut().zip(&indices) {
+        *value = index.is_some() as u8;
     }
     let edge = p.thin != 0 || p.blur > 0.0;
     if edge {
@@ -280,7 +301,7 @@ fn render_impl(
     } else {
         None
     };
-    for y in 0..h {
+    out.for_each_row(|y, row| {
         for x in 0..w {
             let i = y * w + x;
             let src = source[i];
@@ -338,8 +359,46 @@ fn render_impl(
             if !p.keep {
                 dst = dst.with_alpha(x86::sub(src.alpha(), dst.alpha()));
             }
-            out.set(x, y, dst)?;
+            let bytes = l.depth.pixel_bytes();
+            olm_core::write_pixel(&mut row[x * bytes..(x + 1) * bytes], l.depth, dst)
+                .expect("matching output depth");
+        }
+    });
+    Ok(())
+}
+
+fn classify_pixel(src: Pixel, p: &Params, converted: &[[f32; 3]], epsilon: f32) -> Option<usize> {
+    let norm = src.normalized();
+    let mut cmp = [norm[1], norm[2], norm[3]];
+    if p.premultiplied {
+        for c in &mut cmp {
+            *c *= norm[0];
         }
     }
-    Ok(())
+    cmp = crate::color::convert(cmp, p.space);
+    let mut index = None;
+    for (j, k) in p.keys.iter().enumerate() {
+        if !k.enabled {
+            continue;
+        }
+        let t = if p.per_component {
+            if p.per_color {
+                k.components
+            } else {
+                p.components
+            }
+        } else {
+            [if p.per_color {
+                k.threshold
+            } else {
+                p.threshold
+            }; 3]
+        };
+        if crate::color::hit(&mut cmp, converted[j], p.space, p.per_component, t, epsilon)
+            && index.is_none()
+        {
+            index = Some(j);
+        }
+    }
+    index
 }

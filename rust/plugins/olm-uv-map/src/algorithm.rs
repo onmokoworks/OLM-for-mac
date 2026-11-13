@@ -310,7 +310,22 @@ pub fn render(
     } else {
         Vec::new()
     };
-    for y in 0..b.height {
+    if b.width == 0 || b.height == 0 {
+        return Ok(());
+    }
+    let layout = olm_core::Layout {
+        width: b.width,
+        height: b.height,
+        stride: b.row_bytes,
+        origin: b.origin,
+        depth: match b.bytes_per_pixel {
+            4 => olm_core::Depth::U8,
+            8 => olm_core::Depth::U16,
+            _ => olm_core::Depth::F32,
+        },
+    };
+    let mut destination = olm_core::ViewMut::new(output, layout).map_err(|_| "output layout")?;
+    destination.for_each_row(|y, row| {
         for x in 0..b.width {
             let sx = x as i64 + b.origin.0 as i64 - a.origin.0 as i64;
             let sy = y as i64 + b.origin.1 as i64 - a.origin.1 as i64;
@@ -369,14 +384,14 @@ pub fn render(
                 }
             }
             for (ch, channel) in out.iter().enumerate() {
-                let at = y * b.row_bytes + x * bytes + ch * (bytes / 4);
+                let at = x * bytes + ch * (bytes / 4);
                 match bytes {
-                    4 => output[at] = *channel as u8,
-                    8 => output[at..at + 2].copy_from_slice(&(*channel as u16).to_ne_bytes()),
-                    _ => output[at..at + 4].copy_from_slice(&channel.to_ne_bytes()),
+                    4 => row[at] = *channel as u8,
+                    8 => row[at..at + 2].copy_from_slice(&(*channel as u16).to_ne_bytes()),
+                    _ => row[at..at + 4].copy_from_slice(&channel.to_ne_bytes()),
                 }
             }
         }
-    }
+    });
     Ok(())
 }

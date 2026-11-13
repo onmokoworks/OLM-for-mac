@@ -1,5 +1,24 @@
 # DistanceGradation — integrated 2026-11-12 release
 
+## Performance (S-misc, 2026-11-13)
+
+EDT's independent column recurrences now traverse contiguous rows in the same per-column order; independent envelope rows and Gaussian horizontal rows run in bounded workers. Gaussian columns use runtime AVX2/FMA dispatch with the original eight-lane FMA boundary and scalar tails; other CPUs retain the scalar path. Composition uses bounded row workers. Canonical sqrt alignment, RSQRT profiles, and documented original stack-state behavior are unchanged.
+
+Final frozen DLL oracle: 204/204/201 exact at 8/16/32 bpc, out of 206 attempts per depth across seeds 20261130 and 20261201. Downsample 1, 1/2, 1/4; resident batches with per-process authority for every non-exact result; at most two render jobs. The declared corpus bounds thresholds to 0-128 and blur size to 0-12, with 1x1/3x7/11x7 inputs and full remaining parameter ranges. Six comparisons retain original Smart Render error 512 (two cases at all depths). Three final Smart32 comparisons retain original output instability: each original has two observed hashes, each candidate one, and all nine non-exact cases match the previous Rust build exactly. Fixed additional replays remain separate from baseline totals. The row-parallel candidate is also compared byte-for-byte with the earlier candidate across the entire unchanged 618-case DistanceGradation corpus. Canonical sqrt behavior is preserved; there is no new exclusion.
+
+Workspace release tests: **123 passed, 2 existing opt-in tests ignored**; all **616 original-verified golden hashes** pass, retaining the 14 historical RadialBlur exclusions. Owned-crate fmt and release Clippy pass (existing Clippy warnings retained). Workspace-wide fmt still reports 25 unchanged files outside this job's ownership. Shared row tests preserve padding/short final rows and compare serial/parallel results; the SIMD column test checks 53,592 scalar/vector lane results bit-for-bit.
+
+1080p median selector-time ratio (Rust/original; lower is faster), measured serially against the same originals with the previous Rust build and this build in one session. Each cell has one warm-up and five timed frames; all benchmark output pairs are exact. Shared-machine timings are not native AE measurements.
+
+| bpc | Before default | After default | Before heavy | After heavy |
+|---:|---:|---:|---:|---:|
+| 8 | 2.541 | 0.959 | 2.576 | 0.768 |
+| 16 | 2.125 | 0.927 | 2.586 | 0.698 |
+| 32 | 1.726 | 0.687 | 2.482 | 0.555 |
+
+Local-only identities, requests, outputs, logs, fixed replays, and before/after timing samples are retained under `D:/olm-rs-target/misc-evidence/`; `qualification.json` indexes the final evidence and frozen DLL hashes. Rust 1.88.0, Windows x64, ordinary headless AEXCompat; no original binary or run output is committed, and no AE installation is changed.
+
+
 ## Current direct qualification (2026-11-13)
 
 The final twelve-plug-in workspace candidate passes the **ordinary direct oracle**

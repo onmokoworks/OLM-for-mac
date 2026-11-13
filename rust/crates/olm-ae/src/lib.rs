@@ -598,7 +598,11 @@ mod tests {
             i.inter.checkin_param = Some(param_checkin);
             let mut p = Box::new(std::mem::zeroed());
             PARAM_ADDRESS.with(|a| a.set((&mut *p as *mut PF_ParamDef) as usize));
-            let guard = CheckedParam { i: &i, p, active: true };
+            let guard = CheckedParam {
+                i: &i,
+                p,
+                active: true,
+            };
             // Exercise a move into and out of another allocation, as in held checkouts.
             let mut guards = vec![guard];
             let mut moved = std::hint::black_box(guards.pop().unwrap());

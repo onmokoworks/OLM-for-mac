@@ -155,3 +155,28 @@ fn cpp_distance_scans() {
         }
     }
 }
+
+#[test]
+fn smart_rejects_mixed_depth_without_writing() {
+    use olm_core::{Depth, Layout, View, ViewMut};
+    let a = Layout {
+        width: 1,
+        height: 1,
+        stride: 4,
+        depth: Depth::U8,
+        origin: (0, 0),
+    };
+    let b = Layout {
+        stride: 16,
+        depth: Depth::F32,
+        ..a
+    };
+    let mut dst = [0x55u8; 16];
+    assert!(crate::algorithm::render_smart(
+        &View::new(&[0; 4], a).unwrap(),
+        &mut ViewMut::new(&mut dst, b).unwrap(),
+        &Default::default()
+    )
+    .is_err());
+    assert_eq!(dst, [0x55; 16]);
+}

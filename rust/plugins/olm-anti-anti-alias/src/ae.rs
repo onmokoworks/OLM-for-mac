@@ -321,24 +321,33 @@ mod checkout_tests {
     use super::*;
     use std::cell::Cell;
     thread_local! { static ADDRESS: Cell<usize> = const { Cell::new(0) }; }
-    unsafe extern "C" fn checkout_mock(_: PF_ProgPtr, _: i32, _: i32, _: i32, _: u32, p: *mut PF_ParamDef) -> PF_Err {
-        ADDRESS.with(|a| { assert_eq!(a.replace(p as usize),0); });
-        (*p).u.sd.value=17;
+    unsafe extern "C" fn checkout_mock(
+        _: PF_ProgPtr,
+        _: i32,
+        _: i32,
+        _: i32,
+        _: u32,
+        p: *mut PF_ParamDef,
+    ) -> PF_Err {
+        ADDRESS.with(|a| {
+            assert_eq!(a.replace(p as usize), 0);
+        });
+        (*p).u.sd.value = 17;
         0
     }
-    unsafe extern "C" fn checkin_mock(_: PF_ProgPtr,p: *mut PF_ParamDef) -> PF_Err {
-        ADDRESS.with(|a| if a.replace(0)==p as usize {0} else {BAD})
+    unsafe extern "C" fn checkin_mock(_: PF_ProgPtr, p: *mut PF_ParamDef) -> PF_Err {
+        ADDRESS.with(|a| if a.replace(0) == p as usize { 0 } else { BAD })
     }
     #[test]
     fn checkout_preserves_host_owned_address() {
         unsafe {
-            let mut i: PF_InData=std::mem::zeroed();
-            i.inter.checkout_param=Some(checkout_mock);
-            i.inter.checkin_param=Some(checkin_mock);
-            let mut definition=std::mem::zeroed();
-            checkout(&i,1,&mut definition).unwrap();
-            assert_eq!(definition.u.sd.value,17);
-            check(checkin_mock(i.effect_ref,&mut definition)).unwrap();
+            let mut i: PF_InData = std::mem::zeroed();
+            i.inter.checkout_param = Some(checkout_mock);
+            i.inter.checkin_param = Some(checkin_mock);
+            let mut definition = std::mem::zeroed();
+            checkout(&i, 1, &mut definition).unwrap();
+            assert_eq!(definition.u.sd.value, 17);
+            check(checkin_mock(i.effect_ref, &mut definition)).unwrap();
         }
     }
 }

@@ -15,31 +15,41 @@ pub fn edt(mask: &[u8], w: usize, h: usize) -> Vec<f32> {
     edt_impl(mask, w, h, true)
 }
 fn edt_impl(mask: &[u8], w: usize, h: usize, native: bool) -> Vec<f32> {
+    edt_with_threads(mask, w, h, native, olm_core::row_workers(h, w))
+}
+fn edt_with_threads(mask: &[u8], w: usize, h: usize, native: bool, threads: usize) -> Vec<f32> {
     let inf = (w + h) as i64;
     let mut g = vec![0i64; w * h];
     for x in 0..w {
         g[x] = if mask[x] != 0 { inf } else { 0 };
-        for y in 1..h {
-            let i = y * w + x;
-            g[i] = if mask[i] == 0 {
+    }
+    // Columns are independent: walk contiguous rows while retaining each
+    // column's forward/backward recurrence exactly.
+    for y in 1..h {
+        let (before, after) = g.split_at_mut(y * w);
+        let previous = &before[(y - 1) * w..y * w];
+        for (x, value) in after[..w].iter_mut().enumerate() {
+            *value = if mask[y * w + x] == 0 {
                 0
-            } else if g[i - w] == inf {
+            } else if previous[x] == inf {
                 inf
             } else {
-                g[i - w] + 1
+                previous[x] + 1
             };
         }
-        for y in (0..h - 1).rev() {
-            let i = y * w + x;
-            if g[i + w] != inf && g[i + w] + 1 < g[i] {
-                g[i] = g[i + w] + 1;
+    }
+    for y in (0..h - 1).rev() {
+        let (before, after) = g.split_at_mut((y + 1) * w);
+        for (x, value) in before[y * w..].iter_mut().enumerate() {
+            if after[x] != inf && after[x] + 1 < *value {
+                *value = after[x] + 1;
             }
         }
     }
-    let mut s = vec![0usize; w];
-    let mut t = vec![0i64; w];
     let mut dst = vec![0.; w * h];
-    for y in 0..h {
+    olm_core::parallel_rows(&mut dst, w, threads, |y, output| {
+        let mut s = vec![0usize; w];
+        let mut t = vec![0i64; w];
         let row = &g[y * w..(y + 1) * w];
         let mut q = 0isize;
         s[0] = 0;
@@ -69,7 +79,7 @@ fn edt_impl(mask: &[u8], w: usize, h: usize, native: bool) -> Vec<f32> {
             }
         }
         for u in (0..w).rev() {
-            dst[y * w + u] = val(u as i64, s[q as usize]);
+            output[u] = val(u as i64, s[q as usize]);
             if u as i64 == t[q as usize] {
                 q -= 1;
             }
@@ -86,7 +96,7 @@ fn edt_impl(mask: &[u8], w: usize, h: usize, native: bool) -> Vec<f32> {
                 } else {
                     (w - x).min(16)
                 };
-                let group = &mut dst[y * w + x..y * w + x + n];
+                let group = &mut output[x..x + n];
                 let regular = group.iter().all(|v| *v > 0.);
                 for v in group {
                     *v = if regular {
@@ -102,19 +112,19 @@ fn edt_impl(mask: &[u8], w: usize, h: usize, native: bool) -> Vec<f32> {
                 }
                 x += n;
             }
-            continue;
+            return;
         }
         let mut x = 0;
         while x < w && (y * w + x) % 4 != 0 {
-            dst[y * w + x] = dst[y * w + x].sqrt();
+            output[x] = output[x].sqrt();
             x += 1;
         }
         while x + 16 <= w {
-            let regular = dst[y * w + x..y * w + x + 16].iter().all(|v| *v > 0.);
+            let regular = output[x..x + 16].iter().all(|v| *v > 0.);
             for k in 0..16 {
-                let v = dst[y * w + x + k];
+                let v = output[x + k];
                 let root = v.sqrt();
-                dst[y * w + x + k] = if regular {
+                output[x + k] = if regular {
                     let inv = 1. / root;
                     let prod = v * inv;
                     (inv * prod - 3.) * (prod * -0.5)
@@ -125,10 +135,11 @@ fn edt_impl(mask: &[u8], w: usize, h: usize, native: bool) -> Vec<f32> {
             x += 16;
         }
         while x < w {
-            dst[y * w + x] = dst[y * w + x].sqrt();
+            output[x] = output[x].sqrt();
             x += 1;
         }
-    }
+    })
+    .expect("validated distance plane");
     dst
 }
 pub fn normalized(
@@ -277,4 +288,28 @@ fn normalized_impl(
 }
 pub fn pack(v: f32, max: f32) -> f32 {
     (v * max).clamp(0., max).round_ties_even() / max
+}
+
+#[cfg(test)]
+mod parallel_tests {
+    use super::*;
+    #[test]
+    fn distance_rows_preserve_canonical_groups_across_threads() {
+        for (w, h) in [(257, 521), (511, 257)] {
+            for kind in 0..3 {
+                let mask: Vec<u8> = (0..w * h)
+                    .map(|i| match kind {
+                        0 => 0,
+                        1 => 1,
+                        _ => ((i * 7919 + i / w * 17) % 37 > 2) as u8,
+                    })
+                    .collect();
+                for native in [false, true] {
+                    let a = edt_with_threads(&mask, w, h, native, 1);
+                    let b = edt_with_threads(&mask, w, h, native, 7);
+                    assert!(a.iter().zip(b).all(|(a, b)| a.to_bits() == b.to_bits()));
+                }
+            }
+        }
+    }
 }
