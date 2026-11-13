@@ -270,3 +270,74 @@ ignored by Git. Compact root-level JSON reports, source/test vectors and rerun
 scripts are retained for version control. Historical source/binary hashes bind
 the original job's snapshot, not the later integrated build; see
 [workspace integration](../../INTEGRATION.md) for the fresh staged cross-check.
+
+
+## Performance - S-blurs (2026-11-13)
+
+Zero zoom/rotation lengths and tails now bypass checked pixel loops. Matching
+worlds copy active rows verbatim (alpha and hidden RGB included), preserving
+padding. Different geometry uses the original legacy `PF_COPY` utility callback;
+cropped no-op SmartPreRender requests now return the requested intersection while
+keeping the full maximum extent. This reproduces the original's whole-input
+resampling into a smaller requested output. No parameter IDs, PiPL or flags change.
+
+Polar preparation traverses contiguous rows; preparation, independent kernels
+and inverse sampling use bounded scoped row workers. Ordered output publication
+preserves error-prefix behavior. The extra result buffer is charged to the existing
+1 GiB allocation budget. Existing weight/offset tables and every pixel's arithmetic
+order remain unchanged. Crucially, `math.rs` and the Zen 3 RCPSS capture profile are
+unchanged: host-native reciprocal instructions are not substituted. The exhaustive
+reciprocal-profile test passes; profile regeneration remains intentionally ignored.
+
+1080p median selector-time Rust/original ratios, one warmup and five samples:
+
+| Depth | Default before | Default after |
+|---|---:|---:|
+| 8 | 7.289 | 0.926 |
+| 16 | 5.966 | 0.939 |
+| 32 | 7.015 | 1.137 |
+
+The original cannot complete heavy Rotation through the resident protocol.
+`perf_bench.py` instead runs one warmup plus five measured fresh processes per
+side/depth, alternates original/before/after ordering, uses normal priority and a
+120-second per-process bound, and verifies complete native output hashes. Its
+clock is oracle process wall time including startup and image IO, **not selector
+time**. All 54 warmup/measured output hashes agree within their depth.
+
+| Depth | Original ms | Before ms | After ms | Before/original | After/original |
+|---|---:|---:|---:|---:|---:|
+| 8 | 1375 | 2875 | 969 | 2.091 | 0.705 |
+| 16 | 1500 | 2890 | 1015 | 1.927 | 0.677 |
+| 32 | 2109 | 3250 | 1469 | 1.541 | 0.697 |
+
+
+Baseline is commit `5033dd45`. Resident before/after campaigns were separate;
+heavy per-process runs interleave all three binaries. Shared-machine contention
+limits precision. Remaining costs include checked output publication and scalar
+coordinate/reciprocal emulation; any future SIMD must match the captured scalar
+profile, not native RCPSS. Local row/thread helpers are shared-hoisting candidates.
+
+Release tests, rustfmt and Clippy pass (warnings); all 40 admitted golden hashes
+match, with 14 historical exclusions unchanged. Seeds 20261114/20261115 each have
+103 admitted cases/depth (101 random plus two fixed), sizes 1x1,3x7,11x7,17x9 and
+scales 1,1/2,1/4. Existing Type-3 noise refusal is retained by `validate.py` with
+all excluded generated plans saved. All cases ran per-process with at most two
+concurrent renders and 600-second bounds. Baseline exact counts were 200/204/200
+at 8/16/32 bpc; the other 6/2/6 cases qualify as original nondeterminism, not exact
+passes. Every residual received three fixed replay pairs. Two unresolved cases
+then received a predeclared additional ten pairs each (all retained): all renders
+succeeded, original hashes varied, candidate hashes stayed fixed and at least one
+original/candidate pair matched exactly for every exclusion. No reference failure,
+timeout, candidate failure, tool error or unexplained stable mismatch remained.
+
+The shared `../olm-directional-blur/perf_noop.py` passed 66 targeted original
+comparisons across both plugins, including ancillary extremes, three scales,
+cropped demands and padded native fixtures with nonzero origins/extents. Arbitrary
+bit-pattern and padding unit tests pass at all depths. Native AE/macOS and arbitrary
+HDR native-host qualification remain outside these Windows CPU-harness results.
+
+Local-only evidence under `D:/olm-rs-target/blurs`: `bench-before`, `bench-final5`,
+`perf-final-audit.json`, `radial-process-wall-final6`, `oracle4-OLMRadialBlur-*`,
+`triage-final4`, `triage-radial-additional10`, `noop-final4`, `tests-final6.log`.
+Candidate SHA-256: `5d8c36120122c37a7007e721938ab799811d2a9bb939ea9f5a4a95dc09077653`.
+Raw outputs, originals and binaries are not committed.
