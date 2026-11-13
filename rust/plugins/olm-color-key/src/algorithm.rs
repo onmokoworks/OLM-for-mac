@@ -216,20 +216,23 @@ fn render_impl(
     let mut matched = allocate(n, 0u8, &mut budget)?;
     let mut indices = allocate(n, None, &mut budget)?;
     let mut expanded = allocate(n, false, &mut budget)?;
-    for y in 0..h {
-        for x in 0..w {
-            let i = y * w + x;
-            let src = input.get_global(
-                (l.origin.0 as i64 + x as i64) as i32,
-                (l.origin.1 as i64 + y as i64) as i32,
-            )?;
-            source[i] = src;
-            if x >= classify.0 || y >= classify.1 {
-                continue;
-            }
-            indices[i] = classify_pixel(src, p, &converted, epsilon);
-            matched[i] = indices[i].is_some() as u8;
+    // The neighborhood path has already required identical input/output geometry.
+    // Decode and classify disjoint rows; retain every key comparison within a pixel.
+    olm_core::parallel_rows_auto(&mut source, w, |y, row| {
+        for (dst, src) in row.iter_mut().zip(input.pixels(y).expect("validated row")) {
+            *dst = src;
         }
+    })?;
+    olm_core::parallel_rows_auto(&mut indices, w, |y, row| {
+        if y >= classify.1 {
+            return;
+        }
+        for (x, index) in row.iter_mut().take(classify.0).enumerate() {
+            *index = classify_pixel(source[y * w + x], p, &converted, epsilon);
+        }
+    })?;
+    for (value, index) in matched.iter_mut().zip(&indices) {
+        *value = index.is_some() as u8;
     }
     let edge = p.thin != 0 || p.blur > 0.0;
     if edge {

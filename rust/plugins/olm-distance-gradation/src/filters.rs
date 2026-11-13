@@ -65,6 +65,17 @@ pub fn gaussian_native(mat: &mut [f32], w: usize, h: usize, kx: usize, ky: usize
     gaussian_mode(mat, w, h, kx, ky, true);
 }
 fn gaussian_mode(mat: &mut [f32], w: usize, h: usize, kx: usize, ky: usize, native: bool) {
+    gaussian_mode_threads(mat, w, h, kx, ky, native, olm_core::row_workers(h, w));
+}
+fn gaussian_mode_threads(
+    mat: &mut [f32],
+    w: usize,
+    h: usize,
+    kx: usize,
+    ky: usize,
+    native: bool,
+    threads: usize,
+) {
     #[cfg(feature = "stage-dump")]
     let native = crate::stage_dump::native_mode(native);
     #[cfg(feature = "stage-dump")]
@@ -72,7 +83,7 @@ fn gaussian_mode(mat: &mut [f32], w: usize, h: usize, kx: usize, ky: usize, nati
     let a = kernel(kx);
     let b = kernel(ky);
     let mut tmp = vec![0.; w * h];
-    for y in 0..h {
+    olm_core::parallel_rows(&mut tmp, w, threads, |y, row| {
         for x in 0..w {
             let at = |dx: isize| mat[y * w + cl(x as isize + dx, w)];
             let fused = native && x < w / 8 * 8;
@@ -98,9 +109,10 @@ fn gaussian_mode(mat: &mut [f32], w: usize, h: usize, kx: usize, ky: usize, nati
                 }
                 v
             };
-            tmp[y * w + x] = v;
+            row[x] = v;
         }
-    }
+    })
+    .expect("validated Gaussian plane");
     #[cfg(feature = "stage-dump")]
     crate::stage_dump::middle(&mut tmp, &capture);
     for y in 0..h {
@@ -363,6 +375,27 @@ mod simd_tests {
                         assert!(dst[y * w + end..(y + 1) * w].iter().all(|&v| v == 123.0));
                     }
                 }
+            }
+        }
+    }
+}
+
+#[cfg(test)]
+mod parallel_tests {
+    use super::*;
+    #[test]
+    fn gaussian_rows_match_one_and_seven_workers() {
+        let (w, h) = (257, 521);
+        let source: Vec<f32> = (0..w * h)
+            .map(|i| ((i * 7919 % 65536) as f32 - 32768.0) / 32768.0)
+            .collect();
+        for native in [false, true] {
+            for (kx, ky) in [(3, 3), (5, 7), (13, 9)] {
+                let mut a = source.clone();
+                let mut b = source.clone();
+                gaussian_mode_threads(&mut a, w, h, kx, ky, native, 1);
+                gaussian_mode_threads(&mut b, w, h, kx, ky, native, 7);
+                assert!(a.iter().zip(b).all(|(a, b)| a.to_bits() == b.to_bits()));
             }
         }
     }

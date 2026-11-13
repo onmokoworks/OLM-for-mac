@@ -21,11 +21,11 @@ pub fn effective_radius(radius: f64, numerator: i32, denominator: u32) -> Result
     Ok(rounded as u32)
 }
 
-fn seed(p: &[u8], depth: Depth) -> bool {
-    match depth {
-        Depth::U8 => p[0] == 255,
-        Depth::U16 => u16::from_ne_bytes(p[..2].try_into().unwrap()) == 32768,
-        Depth::F32 => {
+fn seed<const PIXEL_BYTES: usize>(p: &[u8]) -> bool {
+    match PIXEL_BYTES {
+        4 => p[0] == 255,
+        8 => u16::from_ne_bytes(p[..2].try_into().unwrap()) == 32768,
+        _ => {
             let a = f32::from_ne_bytes(p[..4].try_into().unwrap());
             a == 1.0 || a.is_nan()
         }
@@ -54,6 +54,22 @@ pub(crate) fn render_staged(
     ol: Layout,
     radius: u32,
 ) -> Result<()> {
+    match il.depth {
+        Depth::U8 => render_staged_depth::<4>(input, il, output, ol, radius),
+        Depth::U16 => render_staged_depth::<8>(input, il, output, ol, radius),
+        Depth::F32 => render_staged_depth::<16>(input, il, output, ol, radius),
+    }
+}
+
+// Fixed pixel widths let the ordered propagation copy use inline loads/stores
+// instead of a variable-length memmove for every winning neighbor.
+fn render_staged_depth<const PIXEL_BYTES: usize>(
+    input: &[u8],
+    il: Layout,
+    output: &mut [u8],
+    ol: Layout,
+    radius: u32,
+) -> Result<()> {
     let ni = il.span()?;
     let no = ol.span()?;
     if input.len() < ni || output.len() < no || il.depth != ol.depth {
@@ -66,7 +82,7 @@ pub(crate) fn render_staged(
     let staged = &mut output[..no];
     let w = il.width;
     let h = il.height;
-    let pixel_bytes = il.depth.pixel_bytes();
+    let pixel_bytes = PIXEL_BYTES;
     let mut dist = if radius > 0 {
         allocate(image_len(w, h)?, u32::MAX, &mut budget)?
     } else {
@@ -83,7 +99,7 @@ pub(crate) fn render_staged(
             for (d, p) in row.iter_mut().zip(
                 input[y * il.stride..y * il.stride + w * pixel_bytes].chunks_exact(pixel_bytes),
             ) {
-                if seed(p, il.depth) {
+                if seed::<PIXEL_BYTES>(p) {
                     *d = 0;
                 }
             }
