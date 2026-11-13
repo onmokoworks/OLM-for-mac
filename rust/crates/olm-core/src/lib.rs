@@ -172,6 +172,7 @@ pub enum Pixel {
     F32([f32; 4]),
 }
 impl Pixel {
+    #[inline]
     pub fn normalized(self) -> [f32; 4] {
         match self {
             Self::U8(p) => p.map(|v| v as f32 * 0.003921568859368563f32),
@@ -179,6 +180,7 @@ impl Pixel {
             Self::F32(p) => p,
         }
     }
+    #[inline]
     pub fn alpha(self) -> f32 {
         match self {
             Self::U8(p) => p[0] as f32,
@@ -186,6 +188,7 @@ impl Pixel {
             Self::F32(p) => p[0],
         }
     }
+    #[inline]
     pub fn with_alpha(mut self, a: f32) -> Self {
         match &mut self {
             Self::U8(p) => p[0] = a as u8,
@@ -263,10 +266,29 @@ impl<'a> View<'a> {
         }
         Ok(Self { data, layout })
     }
+    /// Active row bytes only; supports unaligned storage and a short final row.
+    #[inline]
+    pub fn row(&self, y: usize) -> Result<&[u8]> {
+        if y >= self.layout.height {
+            return Err(Error::Bounds);
+        }
+        let start = y * self.layout.stride;
+        Ok(&self.data[start..start + self.layout.width * self.layout.depth.pixel_bytes()])
+    }
+    /// Decode an active row without repeating geometry checks for each pixel.
+    pub fn pixels(&self, y: usize) -> Result<impl ExactSizeIterator<Item = Pixel> + '_> {
+        let depth = self.layout.depth;
+        Ok(self
+            .row(y)?
+            .chunks_exact(depth.pixel_bytes())
+            .map(move |p| read_pixel(p, depth)))
+    }
+    #[inline]
     pub fn get(&self, x: usize, y: usize) -> Result<Pixel> {
         let i = self.layout.offset(x, y)?;
         Ok(read_pixel(&self.data[i..], self.layout.depth))
     }
+    #[inline]
     pub fn get_global(&self, x: i32, y: i32) -> Result<Pixel> {
         let x = usize::try_from(i64::from(x) - i64::from(self.layout.origin.0))
             .map_err(|_| Error::Bounds)?;
@@ -285,6 +307,42 @@ impl<'a> ViewMut<'a> {
         }
         Ok(Self { data, layout })
     }
+    /// Mutable active row bytes. Padding is never included.
+    #[inline]
+    pub fn row_mut(&mut self, y: usize) -> Result<&mut [u8]> {
+        if y >= self.layout.height {
+            return Err(Error::Bounds);
+        }
+        let start = y * self.layout.stride;
+        Ok(&mut self.data[start..start + self.layout.width * self.layout.depth.pixel_bytes()])
+    }
+    /// Visit independent active rows, retaining padding and short final rows.
+    /// At most available_parallelism workers; small worlds execute inline.
+    pub fn for_each_row<F: Fn(usize, &mut [u8]) + Sync>(&mut self, f: F) {
+        let l = self.layout;
+        let active = l.width * l.depth.pixel_bytes();
+        let workers = row_workers(l.height, active);
+        let rows_per = l.height.div_ceil(workers);
+        let span = l.span().expect("validated layout");
+        let chunk = rows_per.saturating_mul(l.stride);
+        if workers == 1 {
+            for (y, row) in self.data[..span].chunks_mut(l.stride).enumerate() {
+                f(y, &mut row[..active]);
+            }
+        } else {
+            std::thread::scope(|scope| {
+                for (part, bytes) in self.data[..span].chunks_mut(chunk).enumerate() {
+                    let f = &f;
+                    scope.spawn(move || {
+                        for (y, row) in bytes.chunks_mut(l.stride).enumerate() {
+                            f(part * rows_per + y, &mut row[..active]);
+                        }
+                    });
+                }
+            });
+        }
+    }
+    #[inline]
     pub fn set(&mut self, x: usize, y: usize, p: Pixel) -> Result<()> {
         let i = self.layout.offset(x, y)?;
         write_pixel(&mut self.data[i..], self.layout.depth, p)
@@ -328,7 +386,9 @@ pub fn checkout_plan(footprint: Footprint, request: Rect, frame: Rect) -> Result
         input,
     })
 }
-fn read_pixel(d: &[u8], depth: Depth) -> Pixel {
+#[inline]
+/// Decode one native ARGB pixel; `d` must contain at least pixel_bytes bytes.
+pub fn read_pixel(d: &[u8], depth: Depth) -> Pixel {
     match depth {
         Depth::U8 => Pixel::U8(d[..4].try_into().unwrap()),
         Depth::U16 => Pixel::U16(std::array::from_fn(|i| {
@@ -339,7 +399,9 @@ fn read_pixel(d: &[u8], depth: Depth) -> Pixel {
         })),
     }
 }
-fn write_pixel(d: &mut [u8], depth: Depth, p: Pixel) -> Result<()> {
+#[inline]
+/// Encode one native ARGB pixel; `d` must contain at least pixel_bytes bytes.
+pub fn write_pixel(d: &mut [u8], depth: Depth, p: Pixel) -> Result<()> {
     match (depth, p) {
         (Depth::U8, Pixel::U8(p)) => d[..4].copy_from_slice(&p),
         (Depth::U16, Pixel::U16(p)) => {
@@ -357,6 +419,26 @@ fn write_pixel(d: &mut [u8], depth: Depth, p: Pixel) -> Result<()> {
     Ok(())
 }
 
+/// Conservative grain size avoids thread startup on preview-sized buffers.
+pub fn row_workers(rows: usize, row_elements: usize) -> usize {
+    std::thread::available_parallelism()
+        .map_or(1, usize::from)
+        .min(rows.max(1))
+        .min((rows.saturating_mul(row_elements) / 65536).max(1))
+}
+
+/// Bounded row scheduling for packed scratch planes, without global pool state.
+pub fn parallel_rows_auto<T: Send, F: Fn(usize, &mut [T]) + Sync>(
+    data: &mut [T],
+    stride: usize,
+    f: F,
+) -> Result<()> {
+    if stride == 0 {
+        return Err(Error::Geometry);
+    }
+    parallel_rows(data, stride, row_workers(data.len() / stride, stride), f)
+}
+
 /// Disjoint row ownership; fixed row indices and no cross-row reductions.
 /// The callback must itself be deterministic and independent of invocation order.
 pub fn parallel_rows<T: Send, F: Fn(usize, &mut [T]) + Sync>(
@@ -370,6 +452,13 @@ pub fn parallel_rows<T: Send, F: Fn(usize, &mut [T]) + Sync>(
     }
     let rows = data.len() / stride;
     if rows == 0 {
+        return Ok(());
+    }
+    let threads = threads.min(std::thread::available_parallelism().map_or(1, usize::from));
+    if threads == 1 {
+        for (y, row) in data.chunks_mut(stride).enumerate() {
+            f(y, row);
+        }
         return Ok(());
     }
     let chunk = rows
@@ -426,5 +515,59 @@ mod tests {
         parallel_rows(&mut a, 3, 1, |y, r| r.fill(y)).unwrap();
         parallel_rows(&mut b, 3, 7, |y, r| r.fill(y)).unwrap();
         assert_eq!(a, b);
+    }
+}
+
+#[cfg(test)]
+mod row_tests {
+    use super::*;
+    #[test]
+    fn rows_preserve_padding_and_payloads() {
+        for depth in [Depth::U8, Depth::U16, Depth::F32] {
+            let l = Layout {
+                width: 1031,
+                height: 71,
+                stride: 1031 * depth.pixel_bytes() + 3,
+                depth,
+                origin: (-7, 4),
+            };
+            let bytes: Vec<u8> = (0..l.span().unwrap()).map(|i| (i * 71) as u8).collect();
+            let input = View::new(&bytes, l).unwrap();
+            let mut copied = vec![0x55; bytes.len()];
+            let mut output = ViewMut::new(&mut copied, l).unwrap();
+            output.for_each_row(|y, row| row.copy_from_slice(input.row(y).unwrap()));
+            for y in 0..l.height {
+                assert_eq!(input.row(y).unwrap(), output.row_mut(y).unwrap());
+                for (x, p) in input.pixels(y).unwrap().enumerate() {
+                    let mut encoded = [0u8; 16];
+                    write_pixel(&mut encoded, depth, p).unwrap();
+                    assert_eq!(
+                        &encoded[..depth.pixel_bytes()],
+                        &input.row(y).unwrap()
+                            [x * depth.pixel_bytes()..(x + 1) * depth.pixel_bytes()]
+                    );
+                }
+            }
+            assert!(input.row(l.height).is_err());
+            for y in 0..l.height - 1 {
+                assert_eq!(
+                    &copied[y * l.stride + l.width * depth.pixel_bytes()..(y + 1) * l.stride],
+                    &[0x55; 3]
+                );
+            }
+        }
+    }
+    #[test]
+    fn large_row_schedule_is_identical() {
+        let mut serial = vec![0u32; 1031 * 257];
+        let mut parallel = serial.clone();
+        let fill = |y: usize, row: &mut [u32]| {
+            for (x, v) in row.iter_mut().enumerate() {
+                *v = (y * 997 + x) as u32;
+            }
+        };
+        parallel_rows(&mut serial, 1031, 1, fill).unwrap();
+        parallel_rows_auto(&mut parallel, 1031, fill).unwrap();
+        assert_eq!(serial, parallel);
     }
 }
