@@ -139,8 +139,8 @@ fn production_cpp_reference_matrix() {
 }
 #[test]
 fn concurrent_frames_are_independent() {
-    // The raster passes must be serial within a frame; independent frames may
-    // run concurrently. Compare 1, 2 and 7 scheduling threads on identical jobs.
+    // Cropped-world raster passes remain serial; independent frames may run
+    // concurrently. Compare 1, 2 and 7 scheduling threads on identical jobs.
     let jobs = 42;
     let run = |threads| {
         let mut rows = vec![Vec::<u8>::new(); jobs];

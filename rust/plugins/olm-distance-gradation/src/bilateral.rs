@@ -151,8 +151,8 @@ pub fn blur_mode(mat: &mut [f32], w: usize, h: usize, r: usize, scalar: bool, fm
                         nums[g] = n;
                     } else {
                         // Scalar AVX pairs R/L and B/T, then fuses spatial groups.
-                        nums[g] = wt[1].mul_add(v[1], wt[2] * v[2])
-                            + wt[0].mul_add(v[0], wt[3] * v[3]);
+                        nums[g] =
+                            wt[1].mul_add(v[1], wt[2] * v[2]) + wt[0].mul_add(v[0], wt[3] * v[3]);
                     }
                     dens[g] = ((wt[0] + wt[1]) + wt[2]) + wt[3];
                 }

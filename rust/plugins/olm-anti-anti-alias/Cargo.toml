@@ -6,6 +6,7 @@ publish = false
 [lib]
 crate-type = ["cdylib", "rlib"]
 [dependencies]
+olm-core = { path = "../../crates/olm-core" }
 after-effects-sys = { git = "https://github.com/virtualritz/after-effects.git", rev = "0e0b197850f28c1bb24e8c82fce2e3d4c120d1e9" }
 [build-dependencies]
 winres = "=0.1.12"

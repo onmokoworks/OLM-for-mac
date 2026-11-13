@@ -297,13 +297,13 @@ pub fn render(input: &View<'_>, output: &mut ViewMut<'_>, params: &Params) -> Re
             _ => (),
         }
     }
-    for y in 0..o.height {
+    output.for_each_row(|y, row| {
         for x in 0..o.width {
             let i = y * o.width + x;
             // Upstream callbacks subtract the preview-space border from the
             // output coordinate; out-of-source samples are transparent black.
             let src = if x >= px && y >= py && x - px < iw && y - py < ih {
-                normalized(input.get(x - px, y - py)?)
+                normalized(input.get(x - px, y - py).expect("validated source"))
             } else {
                 [0.; 4]
             };
@@ -320,9 +320,11 @@ pub fn render(input: &View<'_>, output: &mut ViewMut<'_>, params: &Params) -> Re
                 Depth::U16 => Pixel::U16(v.map(|v| olm_math::x86::cvttss2si(v * 32768.) as u16)),
                 Depth::F32 => Pixel::F32(v),
             };
-            output.set(x, y, pixel)?;
+            let bytes = l.depth.pixel_bytes();
+            olm_core::write_pixel(&mut row[x * bytes..(x + 1) * bytes], l.depth, pixel)
+                .expect("same depth");
         }
-    }
+    });
     Ok(())
 }
 

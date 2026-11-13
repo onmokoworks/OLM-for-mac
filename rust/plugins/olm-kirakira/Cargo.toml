@@ -19,3 +19,7 @@ winres = "0.1"
 
 
 cc.workspace = true
+
+[[example]]
+name = "kirakira-profile"
+path = "examples/profile.rs"
