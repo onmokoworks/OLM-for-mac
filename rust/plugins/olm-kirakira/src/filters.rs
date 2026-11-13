@@ -1,4 +1,4 @@
-//! Ordered scalar filters from KiraFilters.inc and core/kirakira_*.h.
+//! Ordered filters from KiraFilters.inc and core/kirakira_*.h.
 use olm_math::{self as math, Mode::Fma};
 pub fn reflect(mut x: i32, n: i32) -> usize {
     if n <= 1 {
@@ -243,6 +243,24 @@ fn gaussian_rows(
     fused: bool,
     color: bool,
 ) -> Vec<f32> {
+    if w > 0 && h > 0 && !(highlight && w == 1) && !(small && radius <= 2) {
+        return crate::gaussian::rows(src, w, h, k, fused, color);
+    }
+    gaussian_rows_scalar(src, w, h, radius, k, small, highlight, fused, color)
+}
+
+#[allow(clippy::too_many_arguments)] // Retained reference signature matches gaussian_rows.
+fn gaussian_rows_scalar(
+    src: &[f32],
+    w: usize,
+    h: usize,
+    radius: i32,
+    k: &[f32],
+    small: bool,
+    highlight: bool,
+    fused: bool,
+    color: bool,
+) -> Vec<f32> {
     let mut out = vec![0.0; src.len()];
     for y in 0..h {
         for x in 0..w {
@@ -290,6 +308,53 @@ fn gaussian_rows(
 }
 pub fn gaussian_highlight(src: &[f32], w: usize, h: usize, radius: i32) -> Vec<f32> {
     gaussian_highlight_profile(src, w, h, radius, false, false)
+}
+
+#[cfg(test)]
+mod gaussian_tests {
+    use super::*;
+
+    #[test]
+    fn ordered_rows_match_scalar_bits_and_thread_counts() {
+        let mut rng = 0x82371491u32;
+        for w in [
+            1, 2, 3, 5, 7, 8, 9, 15, 16, 17, 31, 32, 33, 63, 97, 257, 1023, 1024, 1025,
+        ] {
+            let h = 9;
+            let src: Vec<_> = (0..w * h)
+                .map(|i| {
+                    rng ^= rng << 13;
+                    rng ^= rng >> 17;
+                    rng ^= rng << 5;
+                    match i % 13 {
+                        0 => 0.0,
+                        1 => -0.0,
+                        2 => f32::from_bits(1),
+                        3 => -f32::from_bits(0x007fffff),
+                        4 => f32::MAX,
+                        5 => -f32::MAX,
+                        _ => f32::from_bits((rng & 0x807fffff) | ((rng % 254 + 1) << 23)),
+                    }
+                })
+                .collect();
+            for radius in [0, 1, 2, 3, 4, 12, 200, 600] {
+                let k = gaussian_kernel(radius, (radius.max(1) as f64) * 0.25, false);
+                for fused in [false, true] {
+                    for color in [false, true] {
+                        let expected = gaussian_rows_scalar(
+                            &src, w, h, radius, &k, false, false, fused, color,
+                        );
+                        for workers in [1, 4] {
+                            let actual = crate::gaussian::rows_with_workers(
+                                &src, w, h, &k, fused, color, workers,
+                            );
+                            assert_eq!(actual.iter().map(|v| v.to_bits()).collect::<Vec<_>>(), expected.iter().map(|v| v.to_bits()).collect::<Vec<_>>(), "w={w} radius={radius} fused={fused} color={color} workers={workers}");
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 pub fn gaussian_highlight_profile(
     src: &[f32],

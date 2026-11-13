@@ -5,6 +5,7 @@ mod adapter;
 mod ae;
 pub mod algorithm;
 pub mod filters;
+mod gaussian;
 #[cfg(any(target_os = "windows", target_os = "macos"))]
 mod params;
 pub mod ramp;

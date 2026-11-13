@@ -1,5 +1,97 @@
 # P-kira — OLMKiraKira Rust validation
 
+## Performance (S-kira, 2026-11-13)
+
+General Gaussian rows now reflect into reusable per-worker row padding, then
+convolve adjacent pixels with runtime-dispatched AVX2/FMA. Four independent
+eight-float accumulators hide instruction latency without changing any pixel's
+tap order. The initial multiply, native fused width (`w/8*8` for scalar owners,
+`w/2*2` for color owners), nonfused tail and special three/five-tap ordering are
+preserved. Small kernels and the one-column highlight retain the scalar path.
+Other CPUs use the same ordered scalar arithmetic with padded input.
+
+Large row passes use scoped, joined row chunks with at most
+`min(8, available_parallelism)` workers; smaller passes stay serial. Each worker
+owns one padded row, sources are immutable, and no render-global state or
+detached helper is introduced. No parameter, saved-project or shared-crate
+changes are included.
+
+The pre-change release microbenchmark (`examples/profile.rs`, 1920x1080) measured
+the length-100 Gaussian at 1548/1647/1919 ms and the heavy pipeline at
+11789/14220/14950 ms. After optimization these were 6.38/6.36/5.61 ms and
+600/609/622 ms respectively. Highlight remained 88–105 ms; its vertical pass,
+rotation/resampling and the default box path remain optimization candidates.
+These are three sequential wall-clock observations on a shared machine, not
+isolated CPU profiling or native AE measurements.
+
+The original arithmetic evidence is the retained `validation/gaussian-avx2-disassembly.txt`
+from P-kira: `opt_AVX2::RowVec_32f` around RVA `0x1319472` loads adjacent pixels
+and broadcasts successive coefficients into `VFMADD231PS`; the RowFilter tail
+uses separate multiply/add. This change reproduces the already-qualified
+profile rather than inferring new arithmetic from timing.
+
+At 1920x1080, `bench.py --only OLMKiraKira --sizes 1920x1080` compared each
+staged build with the original, serially, with one warmup and five measured
+frames per cell. Both full matrices and their offline audits passed: 72 exact
+frame pairs including warmups, 60 timed pairs. Ratios are Rust/original selector
+time; below one is faster. Before/after were separate consecutive campaigns,
+not interleaved frames. Other jobs can load this shared machine.
+
+| Depth | Preset | Before Rust ms | After Rust ms | Before ratio | After ratio | Rust speedup |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| 8 | Default | 802.78 | 846.21 | 1.869 | 1.991 | 0.95x |
+| 16 | Default | 681.59 | 825.17 | 1.799 | 2.011 | 0.83x |
+| 32 | Default | 844.35 | 723.22 | 1.799 | 1.806 | 1.17x |
+| 8 | Heavy | 15988.08 | 733.85 | 16.580 | 0.757 | 21.79x |
+| 16 | Heavy | 16766.35 | 742.97 | 16.008 | 0.764 | 22.57x |
+| 32 | Heavy | 16629.93 | 598.00 | 14.841 | 0.627 | 27.81x |
+
+Defaults use the unchanged box path; their roughly +/-20% timing variation is
+not evidence of an algorithmic improvement or regression. Heavy now beats the
+original on this Windows host. A serial director rerun remains appropriate.
+
+Local-only evidence is retained outside the worktree under `D:/olm-rs-target/kira/`:
+`bench-before`, `bench-after`, `audit-before.json`, `audit-after.json`,
+`tests.log`, `golden.log`, and `clippy-final.log`.
+The tested staged AEX SHA-256 is
+`70cb64d17abf236438da85f6e91f83798901a9a51c34f75af488231c58246388`;
+the unchanged baseline build is
+`d40946d9d957e25373ab11d6320c0dc6e01ac15191c47e946ded4b165151b9cd`.
+
+Release tests pass (eight existing C++ reference/UI tests plus the new ordered
+Gaussian test; the original-only ramp callback test remains explicitly ignored).
+The new test compares raw float bits with the retained scalar reference over
+19 widths from 1 to 1025, eight radii through 600, both fused/color flags, and
+one/four workers. Inputs cover randomized finite exponents/signs, signed zeros,
+subnormals and extreme finite values. All 54 original-verified golden hashes
+pass. Formatting and release Clippy pass; existing crate warnings remain.
+
+Fresh original-vs-staged oracle runs also pass, with identical inventories:
+
+| Seed / transport | Cases per depth (8/16/32) | Exact total | Mismatches / failures |
+| --- | --- | ---: | --- |
+| 20261114 / resident | 120 / 120 / 120 | 360 | 0 / 0 |
+| 20261115 / resident | 120 / 120 / 120 | 360 | 0 / 0 |
+| 20261116 / per-process, cropped output | 12 / 12 / 12 | 36 | 0 / 0 |
+
+The two full-range seeds include 234 random cases per depth plus defaults and
+min/max cases, sizes 5x5/11x7/31x19/97x61, and downsample 1, 1/2, 1/4.
+Resident runs needed no per-process mismatch/failure replays. The independent
+per-process extent run uses 31x19/97x61 input, output request `[1,1,30,18]`,
+the same three scales, and default/min/max/random settings. All runs use two
+jobs maximum and a 120-second per-frame deadline. Exact raw summaries remain
+in `oracle-20261114`, `oracle-20261115`, and `oracle-extent` under the local
+evidence directory above. No original error or timeout was excluded.
+
+All owned build and oracle sessions exited. The oracle's private Windows Jobs
+verify zero active descendants before closing, and a final PID-specific check
+verifies owned render processes have exited. No AE, GUI, installation, detached
+service or persistent thread pool was started.
+
+The SIMD implementation is currently x86_64-only. ARM64 retains padded scalar
+rows and row parallelism; no new native macOS performance or NEON qualification
+is claimed. Existing admission limits below remain in force.
+
 **Completed:** the verified Rust AEX is bit-exact on all **720/720 SmartFX route-cases** against the retained original outputs. Inventory and the complete Windows PiPL match. Eight C++ reference tests and both native ramp-callback runs pass.
 
 ## Deliverables and scope
