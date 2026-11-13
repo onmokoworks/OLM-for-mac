@@ -102,7 +102,21 @@ impl Effect for Plugin {
             legacy: v[4].number != 0.0,
             scale: ctx.downsample_x.numerator as f32 / ctx.downsample_x.denominator as f32,
         };
-        algorithm::render(input, output, &p, 1)
+        algorithm::render(
+            input,
+            output,
+            &p,
+            render_threads(input.layout().width, input.layout().height),
+        )
     }
 }
 crate::export_blur_effect!(Plugin, entryPointFunc);
+
+// Small worlds do not amortize row-worker startup. No process-global pool/state.
+fn render_threads(width: usize, height: usize) -> usize {
+    if width.saturating_mul(height) < 65536 {
+        1
+    } else {
+        std::thread::available_parallelism().map_or(1, usize::from)
+    }
+}

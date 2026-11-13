@@ -31,7 +31,7 @@ pub fn integer_store(value: f32) -> i32 {
     x86::cvttss2si(x86::add(value, 0.5).floor())
 }
 
-fn nonlegacy_pass(
+fn nonlegacy_pass<const FINITE: bool>(
     flags: &[u8],
     src: &[[f32; 3]],
     dst: &mut [[f32; 3]],
@@ -43,7 +43,16 @@ fn nonlegacy_pass(
 ) -> Result<()> {
     let radius = weights.len() - 1;
     olm_core::parallel_rows(dst, w, threads, |y, row| {
-        for (x, out) in row.iter_mut().enumerate() {
+        #[cfg(not(target_arch = "x86_64"))]
+        let prefix = 0;
+        #[cfg(target_arch = "x86_64")]
+        let prefix = if FINITE && weights.len() <= 6 && std::is_x86_feature_detected!("sse2") {
+            // Four independent output pixels; taps stay in scalar order per lane.
+            unsafe { finite_row_sse2(flags, src, row, weights, w, h, y, vertical) }
+        } else {
+            0
+        };
+        for (x, out) in row.iter_mut().enumerate().skip(prefix) {
             let center = y * w + x;
             if flags[center] == 0 {
                 *out = src[center];
@@ -53,9 +62,10 @@ fn nonlegacy_pass(
             let mut sum = 0.0;
             let mut rgb = [0.0; 3];
             let mut add = |index: usize, weight: f32| {
-                sum = x86::add(sum, weight);
+                sum = ordered_add::<FINITE>(sum, weight);
                 for c in 0..3 {
-                    rgb[c] = x86::add(rgb[c], x86::mul(weight, src[index][c]));
+                    rgb[c] =
+                        ordered_add::<FINITE>(rgb[c], ordered_mul::<FINITE>(weight, src[index][c]));
                 }
             };
             for d in 0..=radius.min(coordinate) {
@@ -74,13 +84,13 @@ fn nonlegacy_pass(
             }
             let scale = if sum == 0.0 { 0.0 } else { x86::div(1.0, sum) };
             for c in 0..3 {
-                out[c] = x86::mul(scale, rgb[c]);
+                out[c] = ordered_mul::<FINITE>(scale, rgb[c]);
             }
         }
     })
 }
 
-fn legacy_pass(
+fn legacy_pass<const FINITE: bool>(
     flags: &[u8],
     src: &[[f32; 3]],
     dst: &mut [[f32; 3]],
@@ -118,9 +128,10 @@ fn legacy_pass(
                 let mut unchanged = true;
                 let mut add = |index: usize, weight: f32| {
                     let pixel = src[index];
-                    sum = x86::add(sum, weight);
+                    sum = ordered_add::<FINITE>(sum, weight);
                     for c in 0..3 {
-                        rgb[c] = x86::add(rgb[c], x86::mul(pixel[c], weight));
+                        rgb[c] =
+                            ordered_add::<FINITE>(rgb[c], ordered_mul::<FINITE>(pixel[c], weight));
                         if pixel[c] != carry[c] {
                             unchanged = false;
                         }
@@ -152,7 +163,7 @@ fn legacy_pass(
                 dst[center] = if unchanged {
                     src[center]
                 } else {
-                    rgb.map(|c| x86::mul(scale, c))
+                    rgb.map(|c| ordered_mul::<FINITE>(scale, c))
                 };
             }
         }
@@ -214,6 +225,12 @@ pub fn render(
             flags[y * w + x] = (argb[0] != 0.0) as u8;
         }
     }
+    // Bounded finite RGB cannot overflow these positive weighted averages.
+    // Keep the explicit x86 NaN/payload path for all exceptional/HDR extremes.
+    let finite = a
+        .iter()
+        .flatten()
+        .all(|v| v.is_finite() && v.abs() <= 1.0e10);
     let amount = p.amount * p.scale;
     if !amount.is_finite() {
         return Err(Error::Unsupported);
@@ -237,8 +254,13 @@ pub fn render(
                 weights[radius - d] = weight;
                 weights[radius + d] = weight;
             }
-            legacy_pass(&flags, &a, &mut b, &weights, w, h, p.bias == 2);
-            legacy_pass(&flags, &b, &mut a, &weights, w, h, p.bias == 1);
+            if finite {
+                legacy_pass::<true>(&flags, &a, &mut b, &weights, w, h, p.bias == 2);
+                legacy_pass::<true>(&flags, &b, &mut a, &weights, w, h, p.bias == 1);
+            } else {
+                legacy_pass::<false>(&flags, &a, &mut b, &weights, w, h, p.bias == 2);
+                legacy_pass::<false>(&flags, &b, &mut a, &weights, w, h, p.bias == 1);
+            }
         }
     } else {
         let decay = if p.repeat > 1 {
@@ -262,8 +284,13 @@ pub fn render(
                 let square = k.checked_mul(k).ok_or(Error::Overflow)? as f32;
                 *weight = olm_math::expf(-square / denominator, Mode::Fma);
             }
-            nonlegacy_pass(&flags, &a, &mut b, &weights, w, h, p.bias == 2, threads)?;
-            nonlegacy_pass(&flags, &b, &mut a, &weights, w, h, p.bias == 1, threads)?;
+            if finite {
+                nonlegacy_pass::<true>(&flags, &a, &mut b, &weights, w, h, p.bias == 2, threads)?;
+                nonlegacy_pass::<true>(&flags, &b, &mut a, &weights, w, h, p.bias == 1, threads)?;
+            } else {
+                nonlegacy_pass::<false>(&flags, &a, &mut b, &weights, w, h, p.bias == 2, threads)?;
+                nonlegacy_pass::<false>(&flags, &b, &mut a, &weights, w, h, p.bias == 1, threads)?;
+            }
         }
     }
     for y in 0..h {
@@ -288,4 +315,167 @@ pub fn render(
         }
     }
     Ok(())
+}
+
+#[inline(always)]
+fn ordered_add<const FINITE: bool>(a: f32, b: f32) -> f32 {
+    if FINITE {
+        a + b
+    } else {
+        x86::add(a, b)
+    }
+}
+#[inline(always)]
+fn ordered_mul<const FINITE: bool>(a: f32, b: f32) -> f32 {
+    if FINITE {
+        a * b
+    } else {
+        x86::mul(a, b)
+    }
+}
+
+/// Bounded finite RGB only. SSE2 is mandatory on x86-64; dispatch still checks it.
+/// Each vector lane is one output pixel, never a partial reduction of a pixel.
+#[cfg(target_arch = "x86_64")]
+#[target_feature(enable = "sse2")]
+unsafe fn finite_row_sse2(
+    flags: &[u8],
+    src: &[[f32; 3]],
+    row: &mut [[f32; 3]],
+    weights: &[f32],
+    w: usize,
+    h: usize,
+    y: usize,
+    vertical: bool,
+) -> usize {
+    use std::arch::x86_64::*;
+    let end = w / 4 * 4;
+    let step = if vertical { w } else { 1 };
+    for x in (0..end).step_by(4) {
+        let centers = std::array::from_fn::<_, 4, _>(|lane| y * w + x + lane);
+        let enabled = centers.map(|i| flags[i] != 0);
+        let mut sums = _mm_setzero_ps();
+        let mut rgb = [_mm_setzero_ps(); 3];
+        for forward in [false, true] {
+            let mut active = enabled;
+            for (d, &weight) in weights.iter().enumerate().skip(usize::from(forward)) {
+                let mut values = [[0.0f32; 4]; 3];
+                let mut ws = [0.0f32; 4];
+                for lane in 0..4 {
+                    let coordinate = if vertical { y } else { x + lane };
+                    let dimension = if vertical { h } else { w };
+                    active[lane] &= if forward {
+                        d < dimension - coordinate
+                    } else {
+                        d <= coordinate
+                    };
+                    if active[lane] {
+                        let index = if forward {
+                            centers[lane] + d * step
+                        } else {
+                            centers[lane] - d * step
+                        };
+                        active[lane] = flags[index] != 0;
+                        if active[lane] {
+                            ws[lane] = weight;
+                            for c in 0..3 {
+                                values[c][lane] = src[index][c];
+                            }
+                        }
+                    }
+                }
+                if !active.iter().any(|&v| v) {
+                    break;
+                }
+                let weight = _mm_loadu_ps(ws.as_ptr());
+                sums = _mm_add_ps(sums, weight);
+                for c in 0..3 {
+                    rgb[c] =
+                        _mm_add_ps(rgb[c], _mm_mul_ps(weight, _mm_loadu_ps(values[c].as_ptr())));
+                }
+            }
+        }
+        let nonzero = _mm_cmpneq_ps(sums, _mm_setzero_ps());
+        let scale = _mm_and_ps(nonzero, _mm_div_ps(_mm_set1_ps(1.0), sums));
+        let mut channels = [[0.0f32; 4]; 3];
+        for c in 0..3 {
+            _mm_storeu_ps(channels[c].as_mut_ptr(), _mm_mul_ps(scale, rgb[c]));
+        }
+        for lane in 0..4 {
+            row[x + lane] = if enabled[lane] {
+                std::array::from_fn(|c| channels[c][lane])
+            } else {
+                src[centers[lane]]
+            };
+        }
+    }
+    end
+}
+
+#[cfg(all(test, target_arch = "x86_64"))]
+mod simd_tests {
+    use super::*;
+    #[test]
+    fn four_pixels_equal_scalar_order() {
+        let mut state = 0x13b17u32;
+        for w in [4, 5, 17, 64] {
+            for h in [1, 7, 33] {
+                let mut flags = vec![1; w * h];
+                let mut source = vec![[0.0; 3]; w * h];
+                for (i, rgb) in source.iter_mut().enumerate() {
+                    for value in rgb.iter_mut() {
+                        state ^= state << 13;
+                        state ^= state >> 17;
+                        state ^= state << 5;
+                        *value = ((state as i32) as f32) * 0.125;
+                    }
+                    if i % 7 == 0 {
+                        *rgb = [f32::from_bits(1), -0.0, -f32::from_bits(1)];
+                    }
+                    if i % 5 == 0 {
+                        flags[i] = 0;
+                    }
+                }
+                for vertical in [false, true] {
+                    for radius in [1, 4, 19, 127] {
+                        let weights: Vec<_> = (0..=radius).map(|i| 1.0 / (i + 1) as f32).collect();
+                        let mut scalar = vec![[0.0; 3]; w * h];
+                        let mut vector = scalar.clone();
+                        nonlegacy_pass::<false>(
+                            &flags,
+                            &source,
+                            &mut scalar,
+                            &weights,
+                            w,
+                            h,
+                            vertical,
+                            1,
+                        )
+                        .unwrap();
+                        nonlegacy_pass::<true>(
+                            &flags,
+                            &source,
+                            &mut vector,
+                            &weights,
+                            w,
+                            h,
+                            vertical,
+                            3,
+                        )
+                        .unwrap();
+                        assert_eq!(
+                            scalar
+                                .iter()
+                                .map(|v| v.map(f32::to_bits))
+                                .collect::<Vec<_>>(),
+                            vector
+                                .iter()
+                                .map(|v| v.map(f32::to_bits))
+                                .collect::<Vec<_>>()
+                        );
+                    }
+                }
+            }
+        }
+    }
 }
