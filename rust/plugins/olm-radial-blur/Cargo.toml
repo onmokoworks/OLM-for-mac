@@ -17,3 +17,7 @@ olm-ae.workspace = true
 pipl.workspace = true
 winres = "0.1"
 cc = "1"
+
+[[example]]
+name = "radial-profile"
+path = "examples/profile.rs"

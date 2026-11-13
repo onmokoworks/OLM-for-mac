@@ -93,15 +93,13 @@ impl Effect for Plugin {
             param(21, "Thickness", Kind::GroupEnd),
         ]
     }
-    const COPY_VALUES: &'static [usize] = &[4, 5, 9, 10];
-    fn copy_only(v: &[Value], ctx: RenderContext) -> bool {
+    const COPY_INTEGER_SLOTS: &'static [i32] = &[5, 6, 10, 11];
+    fn copy_lengths(v: &[i32], ctx: RenderContext) -> bool {
         let scale = ctx.downsample_x.numerator as f32 / ctx.downsample_x.denominator as f32;
         scale > 0.0
             && scale <= 1.0
             && ctx.downsample_y.numerator as u32 <= ctx.downsample_y.denominator
-            && [4, 5, 9, 10]
-                .iter()
-                .all(|&i| ((v[i].number as i32) as f32 * scale) as i32 == 0)
+            && v.iter().all(|&length| (length as f32 * scale) as i32 == 0)
     }
     fn render(
         v: &[Value],

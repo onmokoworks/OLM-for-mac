@@ -21,3 +21,7 @@ cc.workspace = true
 
 [features]
 profile = []
+
+[[example]]
+name = "blur-profile"
+path = "examples/profile.rs"

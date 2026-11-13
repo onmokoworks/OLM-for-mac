@@ -15,16 +15,17 @@ def main():
     p.add_argument('--staged', type=Path, required=True)
     p.add_argument('--originals', type=Path, required=True)
     p.add_argument('--out', type=Path, required=True)
+    p.add_argument('--scaled-only', action='store_true', help='18 Directional nonzero-length identity checks')
     args = p.parse_args()
     args.out.mkdir(parents=True, exist_ok=False)
     rows = []
-    for name in ['OLMDirectionalBlur', 'OLMRadialBlur']:
+    for name in (['OLMDirectionalBlur'] if args.scaled_only else ['OLMDirectionalBlur', 'OLMRadialBlur']):
         out = args.out / name
         out.mkdir()
         ids = {'reference': o.identity(args.originals / (name + '.aex')),
                'candidate': o.identity(args.staged / (name + '.aex')),
                'harness': o.identity(o.DEFAULT_HARNESS), 'tool': o.identity(__file__)}
-        for index in range(9):
+        for index in (range(9,15) if args.scaled_only else range(9)):
             edits = []
             if index >= 3:
                 if name == 'OLMDirectionalBlur':
@@ -33,14 +34,17 @@ def main():
                 else:
                     edits = [{'slot': 1, 'value': 2}, {'slot': 21, 'value': 10},
                              {'slot': 22, 'value': 100}, {'slot': 20, 'value': 50}]
+            if args.scaled_only:
+                length = 3 if (index-9)%3 == 2 else 1
+                edits = [{'slot':slot,'value':length} for slot in [5,6,10,11]]
             case = {'index': index, 'size': [11, 7], 'input_seed': 15901 + index,
-                    'downsample': ['1', '1/2', '1/4'][index % 3], 'assignments': edits}
+                    'downsample': (['1/2','1/4','1/4'][(index-9)%3] if args.scaled_only else ['1', '1/2', '1/4'][index % 3]), 'assignments': edits}
             for route in ['smart8', 'smart16', 'smart32']:
-                row = o.run_case(out, case, route, ids, (), [1, 1, 6, 5] if index >= 6 else None, 120)
+                row = o.run_case(out, case, route, ids, (), [1, 1, 6, 5] if (index >= 12 if args.scaled_only else index >= 6) else None, 120)
                 rows.append({'plugin': name, **row})
                 print(name, index, route, row['status'], flush=True)
                 o.write_json(args.out / 'summary.json', {'results': rows})
-    rows.extend(fixtures(args))
+    if not args.scaled_only: rows.extend(fixtures(args))
     o.write_json(args.out / 'summary.json', {'results': rows})
     return 0 if all(row['status'] == 'exact' for row in rows) else 1
 
