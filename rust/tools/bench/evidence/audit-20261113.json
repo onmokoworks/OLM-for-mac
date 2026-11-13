@@ -1,0 +1,20 @@
+{
+  "evidence": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\bench\\evidence\\speed-20261113.json",
+    "sha256": "d077bd17914716437c48df6892a4fe25f2e5e2d78b356364e97962d83f8ea563"
+  },
+  "counts": {
+    "exact_cells": 201,
+    "raw_reports_verified": 420,
+    "png_files_verified": 2466,
+    "exact_frame_pairs_including_warmup": 1206,
+    "exact_timed_frame_pairs": 1005,
+    "deep_files_verified": 1620,
+    "incomplete_cells": 9
+  },
+  "loaded_worker_hashes": [
+    "7a6598974b903fd4b068587b726d41c8adb8b198a294add88d544582482c71cf"
+  ],
+  "executables_unchanged": 26,
+  "passed": true
+}
