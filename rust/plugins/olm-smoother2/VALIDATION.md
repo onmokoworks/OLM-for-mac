@@ -421,3 +421,143 @@ The `campaign-*`, `inventory-*`, `original-inventory-run`, `oracle-*` and
 `standalone/` directories are also **local-only evidence/build workspaces**.
 Root-level campaign-summary, geometry-generation, rebuild-equivalence,
 rebuild-sections, process records and validation-report JSON are retained.
+
+## Performance implementation (S-smoother, 2026-11-13)
+
+The AE adapter now requests available CPU parallelism instead of hardcoding one
+worker. Setup (copy, color key, transfer LUT and Oklab), classification and
+smoothing operate on independent row chunks. The crate-local row scheduler caps
+workers at available_parallelism and uses at least 16K pixels per worker; small
+frames and explicit one-worker calls execute inline. Every scope joins before
+returning, with no global mutable state or persistent worker pool. Floating-point
+operations and per-pixel sample accumulation order are unchanged. `olm-math`
+and its scalar cbrtf are unchanged; no local or vector cube root is substituted.
+
+`examples/profile.rs` provides reproducible 1080p phase timings. In the bounded
+24-logical-CPU diagnostic, serial v2 setup took 22-31 ms and Oklab setup 106-121
+ms. Three scalar cbrtf calls per pixel took 71-82 ms; serial class planes took
+15-26 ms. Complete pure pipelines took 435-583 ms with one worker and 68-95 ms
+with the available workers. These are diagnostic samples on a shared machine,
+not the host benchmark medians or a claim of exclusive CPU attribution.
+
+The added 257x193 full-frame test crosses the parallel threshold with uneven
+chunks and compares exact float words for requested workers 1/2/3/usize::MAX,
+all three versions, all gamma modes, fractional range, color key/inversion,
+extra smoothing and premultiplied output. The existing C++ and adapter tests
+remain active. No parameter or host-contract changes are introduced.
+
+### Measured result and incomplete ROI gate
+
+1080p Rust/original wall-time ratios (lower is better), baseline -> optimized:
+
+| Depth | Default | Heavy |
+|---|---|---|
+| 8 | 1.153 -> 0.302 | 1.339 -> 0.187 |
+| 16 | 1.191 -> 0.355 | 1.152 -> 0.196 |
+| 32 | 1.357 -> 0.276 | 1.199 -> 0.181 |
+
+Separate baseline/final sweeps on a shared machine; no exclusive CPU claim.
+The final sweep had no overlapping build from this task. All six cells were
+exact. Scalar UCRT cbrtf remains a major setup cost; parallel rows avoid any
+unproven replacement. Output packing/copying is another remaining cost.
+
+Release tests: 21 passed; fmt check passed; release clippy completed successfully
+with warnings. Golden: 54 exact. Two seeds (20261121/20261122), 103 cases per
+depth per seed, including 100 randomized cases and all three downsample factors:
+618 exact, zero errors within the existing full-world boundary contract.
+
+The extra per-process cropped-output campaign is NOT passing. Extent 1,1,7,5
+with 11x9/31x19 inputs produces 6x4 output worlds. All 27 optimized cases failed
+with smart_render_error 516; all 9 baseline repro cases also failed with 516.
+The adapter already requires equal input/output dimensions and origin. This is
+a preexisting compatibility gap, not evidence that ROI support is complete.
+
+Bounded investigation rejected full-pipeline cropping, host resizing after the
+pipeline, and host resizing before the pipeline. The original visibly resizes
+the whole image; the exact processing/resampling order and float/color domain
+remain unresolved. All experimental boundary changes were reverted. Self-review
+(no agents authorized) separated this existing host-contract issue from the
+validated speed changes after three rejected principal hypotheses. Further work
+needs an original-side call/order trace or a small discriminating resampling
+fixture, rather than another guessed boundary implementation. The job's required
+ROI gate is unmet, so no PR is opened; the pushed branch is a review checkpoint.
+
+Local-only evidence under D:\olm-rs-target\smoother: accepted-tests.log,
+accepted-fmt.log, accepted-clippy.log, accepted-golden-v2.log, oracle/,
+oracle-roi/, roi-baseline/, roi-fixed/, roi-host-check/, roi-resize2-check/,
+bench-before/evidence.json and bench-serial/evidence.json. serial-audit.json
+passed all 10 combined benchmark cells, 60 frame pairs, 120 PNGs and 72 deep
+files. Tested accepted/OLMSmoother2.aex SHA256:
+a209bff96fe6c8d66d3d06a0fbefc79788e9934ff46c18cab8bfc245a6fc97a5.
+Rebuild DLL hashes can differ; the benchmark binds the staged binary above.
+
+### Round 2 ROI classification: (b), preexisting port defect
+
+The bounded recheck on 2026-11-13 establishes a candidate boundary defect in
+AEXCompat, not an incorrect expected image or an observed original defect.
+On identical generated requests, the original succeeds; original-vs-original
+is exact in all 9 cases (3 per Smart8/16/32). Both perf commit 5e73f15d and a
+fresh origin/main 201885611eb89e3ea6b2f69fc3354d95fffc36bf build fail all 9
+cases with smart_render_error 516. The pre-perf baseline previously failed the
+same 9 cases. Source boundary ae_boundary.rs explicitly rejects unequal input
+and output width, height or origin before the pipeline. No performance change
+modifies that check. Main binary SHA256:
+67a1df1aecae5fe9ea1d49175b81fd8c68e9ab74d07fbde9ee52436e08516f95.
+
+Minimal reproduction from repository root (substitute absolute binary paths):
+
+```powershell
+python -X utf8 rust/tools/oracle/olm_oracle.py render --reference ORIGINAL.aex --candidate RUST.aex --routes smart8 --cases 1 --seed 20261123 --jobs 1 --downsample 1 --sizes 11x9 --extent 1,1,7,5 --out NEW_DIRECTORY
+```
+
+For the recorded 9-case check use --routes smart8,smart16,smart32 --cases 3
+--downsample 1,1/2,1/4 --jobs 2. Repeat with ORIGINAL.aex as candidate to
+check original determinism. Case zero has untouched defaults, 11x9 input and
+6x4 output; input PNG SHA256 is
+5573ff307a3908a7c90ccd9647c0ce911e7c650bbe98527df19136ff35de8018;
+successful original PNG SHA256 is
+fa9595f0a715e16a712f670987ab70c78c044ed8f9d07f310755efce8db1c010
+in each campaign. Full requests, deep outputs, errors and binary identities:
+D:\olm-rs-target\smoother\round2-roi-{main,perf,original}/summary.json
+and case-* subdirectories. No reference render failed in these campaigns.
+
+This is deferred to a separate compatibility job: prior crop/resize hypotheses
+did not reproduce the original processing order, so a small verified fix is
+not available. Per the Round 2 instruction, this unchanged documented defect
+does not block the performance PR. The previous no-PR decision is superseded.
+
+### Round 2 final evidence and lint cleanup
+
+Fresh final 1080p benchmark (Rust/original):
+
+| Depth | Default | Heavy |
+|---|---:|---:|
+| 8 | 0.342 | 0.179 |
+| 16 | 0.329 | 0.186 |
+| 32 | 0.265 | 0.153 |
+
+All six cells remain below 1 and exact. This is a separate shared-machine sweep;
+the changes since Round 1 are lint cleanup, not further math/parallel algorithm
+optimization. Scalar cbrtf and shared olm-math remain untouched. Clippy fixes
+make unordered float comparisons explicit with partial_cmp, retain exact
+binary64 literal rounding, remove redundant casts, and name a fixture tuple.
+Generated geometry has narrow documented style allowances; source clamps retain
+branch order for NaN payloads and signed zero. Test/example lints are also fixed.
+
+Final release tests: 21 passed; 54 goldens exact; 618 two-seed full-world oracle
+comparisons exact with no errors/mismatches (103 per depth per seed, all three
+downsamples). Formatting passes; all-target release Clippy reports zero owned
+Rust warnings. Shared dependency and native C++ reference warnings remain.
+The combined benchmark audit verifies all 10 cells / 60 frame pairs exactly.
+
+The final candidate repeats the same ROI failure: round2-roi-final has 9/9
+candidate failures with error 516 and no original failures. All nine reference
+PNGs were also identical across the main/perf/original classification campaigns.
+The defect remains classified (b), unchanged and deferred; no failing case is
+counted as an exact comparison.
+
+Local evidence under D:\olm-rs-target\smoother: round2-byte-bench/evidence.json,
+round2-final-{report,audit}.json, round2-clean2-tests.log,
+round2-clean2-clippy.jsonl, round2-final-golden-olm-smoother2.log,
+round2-oracle/ and round2-roi-final/. Final benchmark/oracle AEX SHA256:
+dad3a101117257fa0ded1cec3f19011264359ab7d6c1fc9328b6131173dc49d2.

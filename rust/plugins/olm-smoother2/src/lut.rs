@@ -3,7 +3,7 @@ static DECODE: &[u8; 40000] = include_bytes!(concat!(env!("OUT_DIR"), "/decode.b
 static ENCODE: &[u8; 40000] = include_bytes!(concat!(env!("OUT_DIR"), "/encode.bin"));
 
 fn interpolate(table: &[u8; 40000], v: f32) -> f32 {
-    if !(v > 0.0) {
+    if v.partial_cmp(&0.0) != Some(std::cmp::Ordering::Greater) {
         return 0.0;
     }
     if v >= 1.0 {

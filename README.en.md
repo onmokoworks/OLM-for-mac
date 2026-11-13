@@ -34,7 +34,11 @@ The current release, v1.0.0, is based on OLM Tools as they were before the 2026-
 
 - For all 12 plugins, we compared the output with the latest original plugins running in an emulator. At every bit depth each plugin supports, the output is bit-for-bit identical wherever the original can render.
 - It builds for Windows (x64) and Mac (Apple Silicon and Intel), and automated tests confirm the same results on each.
-- It has not yet been tested inside After Effects, so it is not distributed yet. It will be published as a release once it is ready.
+- It has not yet been tested inside After Effects, so it is not distributed yet. It will be released, replacing v1.0.0, when all of the following are met:
+  - All 12 plugins work in After Effects on Windows and on Mac (Apple Silicon and Intel), and their exported frames match the original plugins.
+  - Projects saved with the original plugins or with v1.0.0 open with their settings intact.
+  - The output also matches the originals at Draft render quality.
+  - Release ZIP files for Mac and Windows, install guides and known-limitation notes are ready.
 
 For validation details and build instructions, see the [Rust README](rust/README.md).
 

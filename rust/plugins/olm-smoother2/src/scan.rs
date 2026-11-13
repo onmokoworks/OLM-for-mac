@@ -223,7 +223,7 @@ impl<'a> Grid<'a> {
         }
         let lim_h = self.height - y1;
         let lim_w = self.width - x;
-        let steps = if lim_h <= lim_w - 1 { lim_h } else { lim_w };
+        let steps = if lim_h < lim_w { lim_h } else { lim_w };
         if steps != 1 && self.b(x + 1, y1, 0) {
             let (mut cx, mut cy) = (x, y1);
             for _ in 0..steps - 1 {
@@ -323,7 +323,7 @@ pub fn trapezoid(width: f32, position: i32, edge: f32) -> f32 {
         return 0.0;
     }
     let pos = position as f32;
-    if !(pos < width) {
+    if pos.partial_cmp(&width) != Some(std::cmp::Ordering::Less) {
         return 0.0;
     }
     let f2 = (1.0 - pos / width) * edge;
