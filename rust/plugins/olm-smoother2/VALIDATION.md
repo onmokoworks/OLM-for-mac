@@ -490,3 +490,38 @@ passed all 10 combined benchmark cells, 60 frame pairs, 120 PNGs and 72 deep
 files. Tested accepted/OLMSmoother2.aex SHA256:
 a209bff96fe6c8d66d3d06a0fbefc79788e9934ff46c18cab8bfc245a6fc97a5.
 Rebuild DLL hashes can differ; the benchmark binds the staged binary above.
+
+### Round 2 ROI classification: (b), preexisting port defect
+
+The bounded recheck on 2026-11-13 establishes a candidate boundary defect in
+AEXCompat, not an incorrect expected image or an observed original defect.
+On identical generated requests, the original succeeds; original-vs-original
+is exact in all 9 cases (3 per Smart8/16/32). Both perf commit 5e73f15d and a
+fresh origin/main 201885611eb89e3ea6b2f69fc3354d95fffc36bf build fail all 9
+cases with smart_render_error 516. The pre-perf baseline previously failed the
+same 9 cases. Source boundary ae_boundary.rs explicitly rejects unequal input
+and output width, height or origin before the pipeline. No performance change
+modifies that check. Main binary SHA256:
+67a1df1aecae5fe9ea1d49175b81fd8c68e9ab74d07fbde9ee52436e08516f95.
+
+Minimal reproduction from repository root (substitute absolute binary paths):
+
+```powershell
+python -X utf8 rust/tools/oracle/olm_oracle.py render --reference ORIGINAL.aex --candidate RUST.aex --routes smart8 --cases 1 --seed 20261123 --jobs 1 --downsample 1 --sizes 11x9 --extent 1,1,7,5 --out NEW_DIRECTORY
+```
+
+For the recorded 9-case check use --routes smart8,smart16,smart32 --cases 3
+--downsample 1,1/2,1/4 --jobs 2. Repeat with ORIGINAL.aex as candidate to
+check original determinism. Case zero has untouched defaults, 11x9 input and
+6x4 output; input PNG SHA256 is
+5573ff307a3908a7c90ccd9647c0ce911e7c650bbe98527df19136ff35de8018;
+successful original PNG SHA256 is
+fa9595f0a715e16a712f670987ab70c78c044ed8f9d07f310755efce8db1c010
+in each campaign. Full requests, deep outputs, errors and binary identities:
+D:\olm-rs-target\smoother\round2-roi-{main,perf,original}/summary.json
+and case-* subdirectories. No reference render failed in these campaigns.
+
+This is deferred to a separate compatibility job: prior crop/resize hypotheses
+did not reproduce the original processing order, so a small verified fix is
+not available. Per the Round 2 instruction, this unchanged documented defect
+does not block the performance PR. The previous no-PR decision is superseded.
