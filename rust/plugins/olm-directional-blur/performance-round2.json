@@ -16,118 +16,7 @@
     "rust": {
       "path": "D:\\olm-rs-target\\blurs\\staged\\OLMDirectionalBlur.aex",
       "sha256": "5c2a775e6281e5afed247c5e8b95260c7c28c883d2193fd1e6986a90177ea40c"
-    },
-    "heavy": [
-      {
-        "slot": 1,
-        "components": [
-          35
-        ]
-      },
-      {
-        "slot": 5,
-        "value": 80
-      },
-      {
-        "slot": 10,
-        "value": 40
-      }
-    ],
-    "edited_parameter_metadata": [
-      {
-        "slot": 1,
-        "name": "Angle",
-        "kind": "angle",
-        "minimum": 0.0,
-        "maximum": 0.0,
-        "value": 0.0,
-        "choices": [],
-        "color": [
-          255,
-          0,
-          0,
-          0
-        ],
-        "components": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "component_count": 1,
-        "layer_path": null,
-        "enabled": true,
-        "visible": true,
-        "supervised": false,
-        "debug_summary": null,
-        "custom_ui_events": 0,
-        "control_size": [
-          0,
-          0
-        ]
-      },
-      {
-        "slot": 5,
-        "name": "Blur Strength",
-        "kind": "integer",
-        "minimum": 0.0,
-        "maximum": 4000.0,
-        "value": 0.0,
-        "choices": [],
-        "color": [
-          255,
-          0,
-          0,
-          0
-        ],
-        "components": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "component_count": 0,
-        "layer_path": null,
-        "enabled": true,
-        "visible": true,
-        "supervised": false,
-        "debug_summary": null,
-        "custom_ui_events": 0,
-        "control_size": [
-          0,
-          0
-        ]
-      },
-      {
-        "slot": 10,
-        "name": "Blur Strength",
-        "kind": "integer",
-        "minimum": 0.0,
-        "maximum": 4000.0,
-        "value": 0.0,
-        "choices": [],
-        "color": [
-          255,
-          0,
-          0,
-          0
-        ],
-        "components": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "component_count": 0,
-        "layer_path": null,
-        "enabled": true,
-        "visible": true,
-        "supervised": false,
-        "debug_summary": null,
-        "custom_ui_events": 0,
-        "control_size": [
-          0,
-          0
-        ]
-      }
-    ]
+    }
   },
   "harness": {
     "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
@@ -165,56 +54,20 @@
       "output_hashes": {
         "original": [
           {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
+            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
+            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
           }
         ],
         "rust": [
           {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
+            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
+            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
           }
         ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "rust": 6
       }
     },
     {
@@ -247,56 +100,20 @@
       "output_hashes": {
         "original": [
           {
-            "png": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a",
-            "native": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a"
-          },
-          {
-            "png": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a",
-            "native": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a"
-          },
-          {
-            "png": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a",
-            "native": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a"
-          },
-          {
-            "png": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a",
-            "native": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a"
-          },
-          {
-            "png": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a",
-            "native": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a"
-          },
-          {
-            "png": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a",
-            "native": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a"
+            "native": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a",
+            "png": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a"
           }
         ],
         "rust": [
           {
-            "png": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a",
-            "native": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a"
-          },
-          {
-            "png": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a",
-            "native": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a"
-          },
-          {
-            "png": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a",
-            "native": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a"
-          },
-          {
-            "png": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a",
-            "native": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a"
-          },
-          {
-            "png": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a",
-            "native": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a"
-          },
-          {
-            "png": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a",
-            "native": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a"
+            "native": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a",
+            "png": "bb31e55833b3e1b0587f0e84846238231bb65fc22c50ea6ada756e7ead9d501a"
           }
         ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "rust": 6
       }
     },
     {
@@ -329,56 +146,20 @@
       "output_hashes": {
         "original": [
           {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
+            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12",
+            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
           }
         ],
         "rust": [
           {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
+            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12",
+            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
           }
         ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "rust": 6
       }
     },
     {
@@ -411,56 +192,20 @@
       "output_hashes": {
         "original": [
           {
-            "png": "d6c1c80b88404ad60dd06591eebdd7a85ef30e53e57beb390ad4d4eb23b3a173",
-            "native": "d164c6b437bfde54220e03b6fbfe858e293cfcb1535958d5a2a4dcc47f0ab2a9"
-          },
-          {
-            "png": "d6c1c80b88404ad60dd06591eebdd7a85ef30e53e57beb390ad4d4eb23b3a173",
-            "native": "d164c6b437bfde54220e03b6fbfe858e293cfcb1535958d5a2a4dcc47f0ab2a9"
-          },
-          {
-            "png": "d6c1c80b88404ad60dd06591eebdd7a85ef30e53e57beb390ad4d4eb23b3a173",
-            "native": "d164c6b437bfde54220e03b6fbfe858e293cfcb1535958d5a2a4dcc47f0ab2a9"
-          },
-          {
-            "png": "d6c1c80b88404ad60dd06591eebdd7a85ef30e53e57beb390ad4d4eb23b3a173",
-            "native": "d164c6b437bfde54220e03b6fbfe858e293cfcb1535958d5a2a4dcc47f0ab2a9"
-          },
-          {
-            "png": "d6c1c80b88404ad60dd06591eebdd7a85ef30e53e57beb390ad4d4eb23b3a173",
-            "native": "d164c6b437bfde54220e03b6fbfe858e293cfcb1535958d5a2a4dcc47f0ab2a9"
-          },
-          {
-            "png": "d6c1c80b88404ad60dd06591eebdd7a85ef30e53e57beb390ad4d4eb23b3a173",
-            "native": "d164c6b437bfde54220e03b6fbfe858e293cfcb1535958d5a2a4dcc47f0ab2a9"
+            "native": "d164c6b437bfde54220e03b6fbfe858e293cfcb1535958d5a2a4dcc47f0ab2a9",
+            "png": "d6c1c80b88404ad60dd06591eebdd7a85ef30e53e57beb390ad4d4eb23b3a173"
           }
         ],
         "rust": [
           {
-            "png": "d6c1c80b88404ad60dd06591eebdd7a85ef30e53e57beb390ad4d4eb23b3a173",
-            "native": "d164c6b437bfde54220e03b6fbfe858e293cfcb1535958d5a2a4dcc47f0ab2a9"
-          },
-          {
-            "png": "d6c1c80b88404ad60dd06591eebdd7a85ef30e53e57beb390ad4d4eb23b3a173",
-            "native": "d164c6b437bfde54220e03b6fbfe858e293cfcb1535958d5a2a4dcc47f0ab2a9"
-          },
-          {
-            "png": "d6c1c80b88404ad60dd06591eebdd7a85ef30e53e57beb390ad4d4eb23b3a173",
-            "native": "d164c6b437bfde54220e03b6fbfe858e293cfcb1535958d5a2a4dcc47f0ab2a9"
-          },
-          {
-            "png": "d6c1c80b88404ad60dd06591eebdd7a85ef30e53e57beb390ad4d4eb23b3a173",
-            "native": "d164c6b437bfde54220e03b6fbfe858e293cfcb1535958d5a2a4dcc47f0ab2a9"
-          },
-          {
-            "png": "d6c1c80b88404ad60dd06591eebdd7a85ef30e53e57beb390ad4d4eb23b3a173",
-            "native": "d164c6b437bfde54220e03b6fbfe858e293cfcb1535958d5a2a4dcc47f0ab2a9"
-          },
-          {
-            "png": "d6c1c80b88404ad60dd06591eebdd7a85ef30e53e57beb390ad4d4eb23b3a173",
-            "native": "d164c6b437bfde54220e03b6fbfe858e293cfcb1535958d5a2a4dcc47f0ab2a9"
+            "native": "d164c6b437bfde54220e03b6fbfe858e293cfcb1535958d5a2a4dcc47f0ab2a9",
+            "png": "d6c1c80b88404ad60dd06591eebdd7a85ef30e53e57beb390ad4d4eb23b3a173"
           }
         ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "rust": 6
       }
     },
     {
@@ -493,56 +238,20 @@
       "output_hashes": {
         "original": [
           {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
+            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637",
+            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
           }
         ],
         "rust": [
           {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
+            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637",
+            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
           }
         ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "rust": 6
       }
     },
     {
@@ -575,56 +284,20 @@
       "output_hashes": {
         "original": [
           {
-            "png": "d9bc4140699a84b55200ff216960502f1919acbeace876d59c0611b8fe05b466",
-            "native": "2db5a3b0e654cdd860fc4e2ba0574a18977558db4699a7109e328556dfcd4c18"
-          },
-          {
-            "png": "d9bc4140699a84b55200ff216960502f1919acbeace876d59c0611b8fe05b466",
-            "native": "2db5a3b0e654cdd860fc4e2ba0574a18977558db4699a7109e328556dfcd4c18"
-          },
-          {
-            "png": "d9bc4140699a84b55200ff216960502f1919acbeace876d59c0611b8fe05b466",
-            "native": "2db5a3b0e654cdd860fc4e2ba0574a18977558db4699a7109e328556dfcd4c18"
-          },
-          {
-            "png": "d9bc4140699a84b55200ff216960502f1919acbeace876d59c0611b8fe05b466",
-            "native": "2db5a3b0e654cdd860fc4e2ba0574a18977558db4699a7109e328556dfcd4c18"
-          },
-          {
-            "png": "d9bc4140699a84b55200ff216960502f1919acbeace876d59c0611b8fe05b466",
-            "native": "2db5a3b0e654cdd860fc4e2ba0574a18977558db4699a7109e328556dfcd4c18"
-          },
-          {
-            "png": "d9bc4140699a84b55200ff216960502f1919acbeace876d59c0611b8fe05b466",
-            "native": "2db5a3b0e654cdd860fc4e2ba0574a18977558db4699a7109e328556dfcd4c18"
+            "native": "2db5a3b0e654cdd860fc4e2ba0574a18977558db4699a7109e328556dfcd4c18",
+            "png": "d9bc4140699a84b55200ff216960502f1919acbeace876d59c0611b8fe05b466"
           }
         ],
         "rust": [
           {
-            "png": "d9bc4140699a84b55200ff216960502f1919acbeace876d59c0611b8fe05b466",
-            "native": "2db5a3b0e654cdd860fc4e2ba0574a18977558db4699a7109e328556dfcd4c18"
-          },
-          {
-            "png": "d9bc4140699a84b55200ff216960502f1919acbeace876d59c0611b8fe05b466",
-            "native": "2db5a3b0e654cdd860fc4e2ba0574a18977558db4699a7109e328556dfcd4c18"
-          },
-          {
-            "png": "d9bc4140699a84b55200ff216960502f1919acbeace876d59c0611b8fe05b466",
-            "native": "2db5a3b0e654cdd860fc4e2ba0574a18977558db4699a7109e328556dfcd4c18"
-          },
-          {
-            "png": "d9bc4140699a84b55200ff216960502f1919acbeace876d59c0611b8fe05b466",
-            "native": "2db5a3b0e654cdd860fc4e2ba0574a18977558db4699a7109e328556dfcd4c18"
-          },
-          {
-            "png": "d9bc4140699a84b55200ff216960502f1919acbeace876d59c0611b8fe05b466",
-            "native": "2db5a3b0e654cdd860fc4e2ba0574a18977558db4699a7109e328556dfcd4c18"
-          },
-          {
-            "png": "d9bc4140699a84b55200ff216960502f1919acbeace876d59c0611b8fe05b466",
-            "native": "2db5a3b0e654cdd860fc4e2ba0574a18977558db4699a7109e328556dfcd4c18"
+            "native": "2db5a3b0e654cdd860fc4e2ba0574a18977558db4699a7109e328556dfcd4c18",
+            "png": "d9bc4140699a84b55200ff216960502f1919acbeace876d59c0611b8fe05b466"
           }
         ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "rust": 6
       }
     }
   ],
@@ -796,139 +469,7 @@
             "slot": 20,
             "value": 100.0
           }
-        ],
-        "unassigned": [
-          {
-            "slot": 4,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 8,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 9,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 13,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 14,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 21,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          }
-        ],
-        "untouched_defaults": [
-          {
-            "slot": 2,
-            "value": 1.0,
-            "kind": "float",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 3,
-            "value": 0.0,
-            "kind": "float",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 6,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 7,
-            "value": 0.0,
-            "kind": "float",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 12,
-            "value": 0.0,
-            "kind": "float",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 16,
-            "value": 1.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          }
-        ],
-        "numeric_ranges": {
-          "2": {
-            "minimum": 0.0,
-            "maximum": 10.0,
-            "kind": "float"
-          },
-          "3": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "5": {
-            "minimum": 0.0,
-            "maximum": 4000.0,
-            "kind": "integer"
-          },
-          "6": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "integer"
-          },
-          "7": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "10": {
-            "minimum": 0.0,
-            "maximum": 4000.0,
-            "kind": "integer"
-          },
-          "11": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "integer"
-          },
-          "12": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "15": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "16": {
-            "minimum": 1.0,
-            "maximum": 2.0,
-            "kind": "integer"
-          },
-          "18": {
-            "minimum": 1.0,
-            "maximum": 1000.0,
-            "kind": "integer"
-          },
-          "20": {
-            "minimum": 1.0,
-            "maximum": 100.0,
-            "kind": "float"
-          }
-        }
+        ]
       },
       "fixed_replays": 3,
       "directional_controls": {
@@ -1014,139 +555,7 @@
               -141.11318705726057
             ]
           }
-        ],
-        "unassigned": [
-          {
-            "slot": 4,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 8,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 9,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 13,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 14,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 21,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          }
-        ],
-        "untouched_defaults": [
-          {
-            "slot": 10,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 11,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 12,
-            "value": 0.0,
-            "kind": "float",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 16,
-            "value": 1.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 18,
-            "value": 1.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 20,
-            "value": 10.0,
-            "kind": "float",
-            "reason": "untouched default"
-          }
-        ],
-        "numeric_ranges": {
-          "2": {
-            "minimum": 0.0,
-            "maximum": 10.0,
-            "kind": "float"
-          },
-          "3": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "5": {
-            "minimum": 0.0,
-            "maximum": 4000.0,
-            "kind": "integer"
-          },
-          "6": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "integer"
-          },
-          "7": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "10": {
-            "minimum": 0.0,
-            "maximum": 4000.0,
-            "kind": "integer"
-          },
-          "11": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "integer"
-          },
-          "12": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "15": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "16": {
-            "minimum": 1.0,
-            "maximum": 2.0,
-            "kind": "integer"
-          },
-          "18": {
-            "minimum": 1.0,
-            "maximum": 1000.0,
-            "kind": "integer"
-          },
-          "20": {
-            "minimum": 1.0,
-            "maximum": 100.0,
-            "kind": "float"
-          }
-        }
+        ]
       },
       "fixed_replays": 3,
       "directional_controls": {
@@ -1232,139 +641,7 @@
               -120.71933753778177
             ]
           }
-        ],
-        "unassigned": [
-          {
-            "slot": 4,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 8,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 9,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 13,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 14,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 21,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          }
-        ],
-        "untouched_defaults": [
-          {
-            "slot": 3,
-            "value": 0.0,
-            "kind": "float",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 5,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 6,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 11,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 16,
-            "value": 1,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 20,
-            "value": 10.0,
-            "kind": "float",
-            "reason": "untouched default"
-          }
-        ],
-        "numeric_ranges": {
-          "2": {
-            "minimum": 0.0,
-            "maximum": 10.0,
-            "kind": "float"
-          },
-          "3": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "5": {
-            "minimum": 0.0,
-            "maximum": 4000.0,
-            "kind": "integer"
-          },
-          "6": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "integer"
-          },
-          "7": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "10": {
-            "minimum": 0.0,
-            "maximum": 4000.0,
-            "kind": "integer"
-          },
-          "11": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "integer"
-          },
-          "12": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "15": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "16": {
-            "minimum": 1.0,
-            "maximum": 2.0,
-            "kind": "integer"
-          },
-          "18": {
-            "minimum": 1.0,
-            "maximum": 1000.0,
-            "kind": "integer"
-          },
-          "20": {
-            "minimum": 1.0,
-            "maximum": 100.0,
-            "kind": "float"
-          }
-        }
+        ]
       },
       "fixed_replays": 3,
       "directional_controls": {
@@ -1450,139 +727,7 @@
               -120.71933753778177
             ]
           }
-        ],
-        "unassigned": [
-          {
-            "slot": 4,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 8,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 9,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 13,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 14,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 21,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          }
-        ],
-        "untouched_defaults": [
-          {
-            "slot": 3,
-            "value": 0.0,
-            "kind": "float",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 5,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 6,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 11,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 16,
-            "value": 1,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 20,
-            "value": 10.0,
-            "kind": "float",
-            "reason": "untouched default"
-          }
-        ],
-        "numeric_ranges": {
-          "2": {
-            "minimum": 0.0,
-            "maximum": 10.0,
-            "kind": "float"
-          },
-          "3": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "5": {
-            "minimum": 0.0,
-            "maximum": 4000.0,
-            "kind": "integer"
-          },
-          "6": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "integer"
-          },
-          "7": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "10": {
-            "minimum": 0.0,
-            "maximum": 4000.0,
-            "kind": "integer"
-          },
-          "11": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "integer"
-          },
-          "12": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "15": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "16": {
-            "minimum": 1.0,
-            "maximum": 2.0,
-            "kind": "integer"
-          },
-          "18": {
-            "minimum": 1.0,
-            "maximum": 1000.0,
-            "kind": "integer"
-          },
-          "20": {
-            "minimum": 1.0,
-            "maximum": 100.0,
-            "kind": "float"
-          }
-        }
+        ]
       },
       "fixed_replays": 3,
       "directional_controls": {

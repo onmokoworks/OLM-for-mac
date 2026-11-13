@@ -16,154 +16,7 @@
     "rust": {
       "path": "D:\\olm-rs-target\\blurs\\staged\\OLMRadialBlur.aex",
       "sha256": "7fa58290490c675970357e16981fd7e9947b335d6ca130029b0a566ea5c19c46"
-    },
-    "heavy": [
-      {
-        "slot": 1,
-        "value": 2
-      },
-      {
-        "slot": 4,
-        "value": 30
-      },
-      {
-        "slot": 10,
-        "value": 15
-      },
-      {
-        "slot": 20,
-        "value": 10
-      }
-    ],
-    "edited_parameter_metadata": [
-      {
-        "slot": 1,
-        "name": "Blur Type",
-        "kind": "integer",
-        "minimum": 1.0,
-        "maximum": 2.0,
-        "value": 1.0,
-        "choices": [
-          "Zoom ",
-          " Rotation"
-        ],
-        "color": [
-          255,
-          0,
-          0,
-          0
-        ],
-        "components": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "component_count": 0,
-        "layer_path": null,
-        "enabled": true,
-        "visible": true,
-        "supervised": true,
-        "debug_summary": null,
-        "custom_ui_events": 0,
-        "control_size": [
-          0,
-          0
-        ]
-      },
-      {
-        "slot": 4,
-        "name": "Strength",
-        "kind": "integer",
-        "minimum": 0.0,
-        "maximum": 2000.0,
-        "value": 0.0,
-        "choices": [],
-        "color": [
-          255,
-          0,
-          0,
-          0
-        ],
-        "components": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "component_count": 0,
-        "layer_path": null,
-        "enabled": true,
-        "visible": true,
-        "supervised": false,
-        "debug_summary": null,
-        "custom_ui_events": 0,
-        "control_size": [
-          0,
-          0
-        ]
-      },
-      {
-        "slot": 10,
-        "name": "Strength",
-        "kind": "integer",
-        "minimum": 0.0,
-        "maximum": 2000.0,
-        "value": 0.0,
-        "choices": [],
-        "color": [
-          255,
-          0,
-          0,
-          0
-        ],
-        "components": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "component_count": 0,
-        "layer_path": null,
-        "enabled": true,
-        "visible": true,
-        "supervised": false,
-        "debug_summary": null,
-        "custom_ui_events": 0,
-        "control_size": [
-          0,
-          0
-        ]
-      },
-      {
-        "slot": 20,
-        "name": "Quality",
-        "kind": "float",
-        "minimum": 1.0,
-        "maximum": 50.0,
-        "value": 5.0,
-        "choices": [],
-        "color": [
-          255,
-          0,
-          0,
-          0
-        ],
-        "components": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "component_count": 0,
-        "layer_path": null,
-        "enabled": true,
-        "visible": true,
-        "supervised": true,
-        "debug_summary": null,
-        "custom_ui_events": 0,
-        "control_size": [
-          0,
-          0
-        ]
-      }
-    ]
+    }
   },
   "harness": {
     "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
@@ -201,56 +54,20 @@
       "output_hashes": {
         "original": [
           {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
+            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
+            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
           }
         ],
         "rust": [
           {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
+            "native": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
+            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
           }
         ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "rust": 6
       }
     },
     {
@@ -283,21 +100,15 @@
       },
       "output_hashes": {
         "original": [
-          "7f28157a3677f1da7ad3eabd1a5aa25b1de0a06ea3ab2b892efd1e9d26668c18",
-          "7f28157a3677f1da7ad3eabd1a5aa25b1de0a06ea3ab2b892efd1e9d26668c18",
-          "7f28157a3677f1da7ad3eabd1a5aa25b1de0a06ea3ab2b892efd1e9d26668c18",
-          "7f28157a3677f1da7ad3eabd1a5aa25b1de0a06ea3ab2b892efd1e9d26668c18",
-          "7f28157a3677f1da7ad3eabd1a5aa25b1de0a06ea3ab2b892efd1e9d26668c18",
           "7f28157a3677f1da7ad3eabd1a5aa25b1de0a06ea3ab2b892efd1e9d26668c18"
         ],
         "after": [
-          "7f28157a3677f1da7ad3eabd1a5aa25b1de0a06ea3ab2b892efd1e9d26668c18",
-          "7f28157a3677f1da7ad3eabd1a5aa25b1de0a06ea3ab2b892efd1e9d26668c18",
-          "7f28157a3677f1da7ad3eabd1a5aa25b1de0a06ea3ab2b892efd1e9d26668c18",
-          "7f28157a3677f1da7ad3eabd1a5aa25b1de0a06ea3ab2b892efd1e9d26668c18",
-          "7f28157a3677f1da7ad3eabd1a5aa25b1de0a06ea3ab2b892efd1e9d26668c18",
           "7f28157a3677f1da7ad3eabd1a5aa25b1de0a06ea3ab2b892efd1e9d26668c18"
         ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "after": 6
       }
     },
     {
@@ -330,56 +141,20 @@
       "output_hashes": {
         "original": [
           {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
+            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12",
+            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
           }
         ],
         "rust": [
           {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12"
+            "native": "cafd14c7df4e7354934148128e85c435d9e0e784c925bd0798f8e44a2fa2ae12",
+            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
           }
         ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "rust": 6
       }
     },
     {
@@ -412,21 +187,15 @@
       },
       "output_hashes": {
         "original": [
-          "5572338830c00268f33ff2fce3149ceade15eee30edddcd30187ec209fd8d8a4",
-          "5572338830c00268f33ff2fce3149ceade15eee30edddcd30187ec209fd8d8a4",
-          "5572338830c00268f33ff2fce3149ceade15eee30edddcd30187ec209fd8d8a4",
-          "5572338830c00268f33ff2fce3149ceade15eee30edddcd30187ec209fd8d8a4",
-          "5572338830c00268f33ff2fce3149ceade15eee30edddcd30187ec209fd8d8a4",
           "5572338830c00268f33ff2fce3149ceade15eee30edddcd30187ec209fd8d8a4"
         ],
         "after": [
-          "5572338830c00268f33ff2fce3149ceade15eee30edddcd30187ec209fd8d8a4",
-          "5572338830c00268f33ff2fce3149ceade15eee30edddcd30187ec209fd8d8a4",
-          "5572338830c00268f33ff2fce3149ceade15eee30edddcd30187ec209fd8d8a4",
-          "5572338830c00268f33ff2fce3149ceade15eee30edddcd30187ec209fd8d8a4",
-          "5572338830c00268f33ff2fce3149ceade15eee30edddcd30187ec209fd8d8a4",
           "5572338830c00268f33ff2fce3149ceade15eee30edddcd30187ec209fd8d8a4"
         ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "after": 6
       }
     },
     {
@@ -459,56 +228,20 @@
       "output_hashes": {
         "original": [
           {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
+            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637",
+            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
           }
         ],
         "rust": [
           {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
-          },
-          {
-            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858",
-            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637"
+            "native": "59203ef86028e8aea491c2744c30a6abb6f5047f1fcd032a1f48b61257e34637",
+            "png": "fba097d65c088985958e274b414e444251a6d70b7c3584149657f9accb46c858"
           }
         ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "rust": 6
       }
     },
     {
@@ -541,21 +274,15 @@
       },
       "output_hashes": {
         "original": [
-          "07963cdcc139f5ee3f6146273038ce6ea20420873243e3c1e9012fcde6d955a4",
-          "07963cdcc139f5ee3f6146273038ce6ea20420873243e3c1e9012fcde6d955a4",
-          "07963cdcc139f5ee3f6146273038ce6ea20420873243e3c1e9012fcde6d955a4",
-          "07963cdcc139f5ee3f6146273038ce6ea20420873243e3c1e9012fcde6d955a4",
-          "07963cdcc139f5ee3f6146273038ce6ea20420873243e3c1e9012fcde6d955a4",
           "07963cdcc139f5ee3f6146273038ce6ea20420873243e3c1e9012fcde6d955a4"
         ],
         "after": [
-          "07963cdcc139f5ee3f6146273038ce6ea20420873243e3c1e9012fcde6d955a4",
-          "07963cdcc139f5ee3f6146273038ce6ea20420873243e3c1e9012fcde6d955a4",
-          "07963cdcc139f5ee3f6146273038ce6ea20420873243e3c1e9012fcde6d955a4",
-          "07963cdcc139f5ee3f6146273038ce6ea20420873243e3c1e9012fcde6d955a4",
-          "07963cdcc139f5ee3f6146273038ce6ea20420873243e3c1e9012fcde6d955a4",
           "07963cdcc139f5ee3f6146273038ce6ea20420873243e3c1e9012fcde6d955a4"
         ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "after": 6
       }
     }
   ],
@@ -731,191 +458,7 @@
             "slot": 29,
             "value": 1.0
           }
-        ],
-        "unassigned": [
-          {
-            "slot": 3,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 8,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 9,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 14,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 16,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 19,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 23,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 30,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          }
-        ],
-        "untouched_defaults": [
-          {
-            "slot": 1,
-            "value": 1,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 4,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 6,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 7,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 11,
-            "value": 1.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 12,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 15,
-            "value": 1.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 21,
-            "value": 1.0,
-            "kind": "float",
-            "reason": "untouched default"
-          }
-        ],
-        "numeric_ranges": {
-          "1": {
-            "minimum": 1.0,
-            "maximum": 2.0,
-            "kind": "integer"
-          },
-          "4": {
-            "minimum": 0.0,
-            "maximum": 2000.0,
-            "kind": "integer"
-          },
-          "5": {
-            "minimum": 1.0,
-            "maximum": 3.0,
-            "kind": "integer"
-          },
-          "6": {
-            "minimum": 0.0,
-            "maximum": 500.0,
-            "kind": "integer"
-          },
-          "7": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "integer"
-          },
-          "10": {
-            "minimum": 0.0,
-            "maximum": 2000.0,
-            "kind": "integer"
-          },
-          "11": {
-            "minimum": 1.0,
-            "maximum": 3.0,
-            "kind": "integer"
-          },
-          "12": {
-            "minimum": 0.0,
-            "maximum": 500.0,
-            "kind": "integer"
-          },
-          "13": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "integer"
-          },
-          "15": {
-            "minimum": 0.0,
-            "maximum": 1.0,
-            "kind": "integer"
-          },
-          "17": {
-            "minimum": 1.0,
-            "maximum": 5.0,
-            "kind": "float"
-          },
-          "20": {
-            "minimum": 1.0,
-            "maximum": 50.0,
-            "kind": "float"
-          },
-          "21": {
-            "minimum": 0.0,
-            "maximum": 10.0,
-            "kind": "float"
-          },
-          "22": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "24": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "25": {
-            "minimum": 1.0,
-            "maximum": 3.0,
-            "kind": "integer"
-          },
-          "27": {
-            "minimum": 1.0,
-            "maximum": 1000.0,
-            "kind": "integer"
-          },
-          "29": {
-            "minimum": 1.0,
-            "maximum": 100.0,
-            "kind": "float"
-          }
-        }
+        ]
       },
       "fixed_replays": 3
     },
@@ -1018,179 +561,7 @@
             "slot": 29,
             "value": 1.0
           }
-        ],
-        "unassigned": [
-          {
-            "slot": 3,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 8,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 9,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 14,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 16,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 19,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 23,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 30,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          }
-        ],
-        "untouched_defaults": [
-          {
-            "slot": 5,
-            "value": 1.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 7,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 12,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 13,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 25,
-            "value": 1.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 27,
-            "value": 1.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          }
-        ],
-        "numeric_ranges": {
-          "1": {
-            "minimum": 1.0,
-            "maximum": 2.0,
-            "kind": "integer"
-          },
-          "4": {
-            "minimum": 0.0,
-            "maximum": 2000.0,
-            "kind": "integer"
-          },
-          "5": {
-            "minimum": 1.0,
-            "maximum": 3.0,
-            "kind": "integer"
-          },
-          "6": {
-            "minimum": 0.0,
-            "maximum": 500.0,
-            "kind": "integer"
-          },
-          "7": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "integer"
-          },
-          "10": {
-            "minimum": 0.0,
-            "maximum": 2000.0,
-            "kind": "integer"
-          },
-          "11": {
-            "minimum": 1.0,
-            "maximum": 3.0,
-            "kind": "integer"
-          },
-          "12": {
-            "minimum": 0.0,
-            "maximum": 500.0,
-            "kind": "integer"
-          },
-          "13": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "integer"
-          },
-          "15": {
-            "minimum": 0.0,
-            "maximum": 1.0,
-            "kind": "integer"
-          },
-          "17": {
-            "minimum": 1.0,
-            "maximum": 5.0,
-            "kind": "float"
-          },
-          "20": {
-            "minimum": 1.0,
-            "maximum": 50.0,
-            "kind": "float"
-          },
-          "21": {
-            "minimum": 0.0,
-            "maximum": 10.0,
-            "kind": "float"
-          },
-          "22": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "24": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "25": {
-            "minimum": 1.0,
-            "maximum": 3.0,
-            "kind": "integer"
-          },
-          "27": {
-            "minimum": 1.0,
-            "maximum": 1000.0,
-            "kind": "integer"
-          },
-          "29": {
-            "minimum": 1.0,
-            "maximum": 100.0,
-            "kind": "float"
-          }
-        }
+        ]
       },
       "fixed_replays": 3
     },
@@ -1293,179 +664,7 @@
             "slot": 29,
             "value": 1.0
           }
-        ],
-        "unassigned": [
-          {
-            "slot": 3,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 8,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 9,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 14,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 16,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 19,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 23,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 30,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          }
-        ],
-        "untouched_defaults": [
-          {
-            "slot": 1,
-            "value": 1,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 6,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 7,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 22,
-            "value": 0.0,
-            "kind": "float",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 25,
-            "value": 1.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 27,
-            "value": 1.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          }
-        ],
-        "numeric_ranges": {
-          "1": {
-            "minimum": 1.0,
-            "maximum": 2.0,
-            "kind": "integer"
-          },
-          "4": {
-            "minimum": 0.0,
-            "maximum": 2000.0,
-            "kind": "integer"
-          },
-          "5": {
-            "minimum": 1.0,
-            "maximum": 3.0,
-            "kind": "integer"
-          },
-          "6": {
-            "minimum": 0.0,
-            "maximum": 500.0,
-            "kind": "integer"
-          },
-          "7": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "integer"
-          },
-          "10": {
-            "minimum": 0.0,
-            "maximum": 2000.0,
-            "kind": "integer"
-          },
-          "11": {
-            "minimum": 1.0,
-            "maximum": 3.0,
-            "kind": "integer"
-          },
-          "12": {
-            "minimum": 0.0,
-            "maximum": 500.0,
-            "kind": "integer"
-          },
-          "13": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "integer"
-          },
-          "15": {
-            "minimum": 0.0,
-            "maximum": 1.0,
-            "kind": "integer"
-          },
-          "17": {
-            "minimum": 1.0,
-            "maximum": 5.0,
-            "kind": "float"
-          },
-          "20": {
-            "minimum": 1.0,
-            "maximum": 50.0,
-            "kind": "float"
-          },
-          "21": {
-            "minimum": 0.0,
-            "maximum": 10.0,
-            "kind": "float"
-          },
-          "22": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "24": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "25": {
-            "minimum": 1.0,
-            "maximum": 3.0,
-            "kind": "integer"
-          },
-          "27": {
-            "minimum": 1.0,
-            "maximum": 1000.0,
-            "kind": "integer"
-          },
-          "29": {
-            "minimum": 1.0,
-            "maximum": 100.0,
-            "kind": "float"
-          }
-        }
+        ]
       },
       "fixed_replays": 3
     },
@@ -1560,191 +759,7 @@
               -111.00644634157368
             ]
           }
-        ],
-        "unassigned": [
-          {
-            "slot": 3,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 8,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 9,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 14,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 16,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 19,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 23,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 30,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          }
-        ],
-        "untouched_defaults": [
-          {
-            "slot": 1,
-            "value": 1.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 10,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 13,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 15,
-            "value": 1.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 21,
-            "value": 1.0,
-            "kind": "float",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 25,
-            "value": 1.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 27,
-            "value": 1.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 29,
-            "value": 10.0,
-            "kind": "float",
-            "reason": "untouched default"
-          }
-        ],
-        "numeric_ranges": {
-          "1": {
-            "minimum": 1.0,
-            "maximum": 2.0,
-            "kind": "integer"
-          },
-          "4": {
-            "minimum": 0.0,
-            "maximum": 2000.0,
-            "kind": "integer"
-          },
-          "5": {
-            "minimum": 1.0,
-            "maximum": 3.0,
-            "kind": "integer"
-          },
-          "6": {
-            "minimum": 0.0,
-            "maximum": 500.0,
-            "kind": "integer"
-          },
-          "7": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "integer"
-          },
-          "10": {
-            "minimum": 0.0,
-            "maximum": 2000.0,
-            "kind": "integer"
-          },
-          "11": {
-            "minimum": 1.0,
-            "maximum": 3.0,
-            "kind": "integer"
-          },
-          "12": {
-            "minimum": 0.0,
-            "maximum": 500.0,
-            "kind": "integer"
-          },
-          "13": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "integer"
-          },
-          "15": {
-            "minimum": 0.0,
-            "maximum": 1.0,
-            "kind": "integer"
-          },
-          "17": {
-            "minimum": 1.0,
-            "maximum": 5.0,
-            "kind": "float"
-          },
-          "20": {
-            "minimum": 1.0,
-            "maximum": 50.0,
-            "kind": "float"
-          },
-          "21": {
-            "minimum": 0.0,
-            "maximum": 10.0,
-            "kind": "float"
-          },
-          "22": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "24": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "25": {
-            "minimum": 1.0,
-            "maximum": 3.0,
-            "kind": "integer"
-          },
-          "27": {
-            "minimum": 1.0,
-            "maximum": 1000.0,
-            "kind": "integer"
-          },
-          "29": {
-            "minimum": 1.0,
-            "maximum": 100.0,
-            "kind": "float"
-          }
-        }
+        ]
       },
       "fixed_replays": 3
     },
@@ -1827,209 +842,7 @@
             "slot": 29,
             "value": 1.0
           }
-        ],
-        "unassigned": [
-          {
-            "slot": 3,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 8,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 9,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 14,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 16,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 19,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 23,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 30,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          }
-        ],
-        "untouched_defaults": [
-          {
-            "slot": 5,
-            "value": 1.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 6,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 11,
-            "value": 1.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 13,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 15,
-            "value": 1,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 17,
-            "value": 1.0,
-            "kind": "float",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 20,
-            "value": 5.0,
-            "kind": "float",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 21,
-            "value": 1.0,
-            "kind": "float",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 22,
-            "value": 0.0,
-            "kind": "float",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 25,
-            "value": 1.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 27,
-            "value": 1.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          }
-        ],
-        "numeric_ranges": {
-          "1": {
-            "minimum": 1.0,
-            "maximum": 2.0,
-            "kind": "integer"
-          },
-          "4": {
-            "minimum": 0.0,
-            "maximum": 2000.0,
-            "kind": "integer"
-          },
-          "5": {
-            "minimum": 1.0,
-            "maximum": 3.0,
-            "kind": "integer"
-          },
-          "6": {
-            "minimum": 0.0,
-            "maximum": 500.0,
-            "kind": "integer"
-          },
-          "7": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "integer"
-          },
-          "10": {
-            "minimum": 0.0,
-            "maximum": 2000.0,
-            "kind": "integer"
-          },
-          "11": {
-            "minimum": 1.0,
-            "maximum": 3.0,
-            "kind": "integer"
-          },
-          "12": {
-            "minimum": 0.0,
-            "maximum": 500.0,
-            "kind": "integer"
-          },
-          "13": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "integer"
-          },
-          "15": {
-            "minimum": 0.0,
-            "maximum": 1.0,
-            "kind": "integer"
-          },
-          "17": {
-            "minimum": 1.0,
-            "maximum": 5.0,
-            "kind": "float"
-          },
-          "20": {
-            "minimum": 1.0,
-            "maximum": 50.0,
-            "kind": "float"
-          },
-          "21": {
-            "minimum": 0.0,
-            "maximum": 10.0,
-            "kind": "float"
-          },
-          "22": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "24": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "25": {
-            "minimum": 1.0,
-            "maximum": 3.0,
-            "kind": "integer"
-          },
-          "27": {
-            "minimum": 1.0,
-            "maximum": 1000.0,
-            "kind": "integer"
-          },
-          "29": {
-            "minimum": 1.0,
-            "maximum": 100.0,
-            "kind": "float"
-          }
-        }
+        ]
       },
       "fixed_replays": 3
     },
@@ -2112,209 +925,7 @@
             "slot": 29,
             "value": 1.0
           }
-        ],
-        "unassigned": [
-          {
-            "slot": 3,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 8,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 9,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 14,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 16,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 19,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 23,
-            "kind": "group_start",
-            "reason": "retained declared default; no generic authored payload"
-          },
-          {
-            "slot": 30,
-            "kind": "group_end",
-            "reason": "retained declared default; no generic authored payload"
-          }
-        ],
-        "untouched_defaults": [
-          {
-            "slot": 5,
-            "value": 1.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 6,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 11,
-            "value": 1.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 13,
-            "value": 0.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 15,
-            "value": 1,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 17,
-            "value": 1.0,
-            "kind": "float",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 20,
-            "value": 5.0,
-            "kind": "float",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 21,
-            "value": 1.0,
-            "kind": "float",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 22,
-            "value": 0.0,
-            "kind": "float",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 25,
-            "value": 1.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          },
-          {
-            "slot": 27,
-            "value": 1.0,
-            "kind": "integer",
-            "reason": "untouched default"
-          }
-        ],
-        "numeric_ranges": {
-          "1": {
-            "minimum": 1.0,
-            "maximum": 2.0,
-            "kind": "integer"
-          },
-          "4": {
-            "minimum": 0.0,
-            "maximum": 2000.0,
-            "kind": "integer"
-          },
-          "5": {
-            "minimum": 1.0,
-            "maximum": 3.0,
-            "kind": "integer"
-          },
-          "6": {
-            "minimum": 0.0,
-            "maximum": 500.0,
-            "kind": "integer"
-          },
-          "7": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "integer"
-          },
-          "10": {
-            "minimum": 0.0,
-            "maximum": 2000.0,
-            "kind": "integer"
-          },
-          "11": {
-            "minimum": 1.0,
-            "maximum": 3.0,
-            "kind": "integer"
-          },
-          "12": {
-            "minimum": 0.0,
-            "maximum": 500.0,
-            "kind": "integer"
-          },
-          "13": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "integer"
-          },
-          "15": {
-            "minimum": 0.0,
-            "maximum": 1.0,
-            "kind": "integer"
-          },
-          "17": {
-            "minimum": 1.0,
-            "maximum": 5.0,
-            "kind": "float"
-          },
-          "20": {
-            "minimum": 1.0,
-            "maximum": 50.0,
-            "kind": "float"
-          },
-          "21": {
-            "minimum": 0.0,
-            "maximum": 10.0,
-            "kind": "float"
-          },
-          "22": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "24": {
-            "minimum": 0.0,
-            "maximum": 100.0,
-            "kind": "float"
-          },
-          "25": {
-            "minimum": 1.0,
-            "maximum": 3.0,
-            "kind": "integer"
-          },
-          "27": {
-            "minimum": 1.0,
-            "maximum": 1000.0,
-            "kind": "integer"
-          },
-          "29": {
-            "minimum": 1.0,
-            "maximum": 100.0,
-            "kind": "float"
-          }
-        }
+        ]
       },
       "fixed_replays": 3,
       "additional_fixed_replays": {

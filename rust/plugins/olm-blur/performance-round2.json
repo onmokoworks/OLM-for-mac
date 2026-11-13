@@ -16,81 +16,7 @@
     "rust": {
       "path": "D:\\olm-rs-target\\blurs\\staged\\OLMBlur.aex",
       "sha256": "479b552eb28b487654ea497f28ecd94c8e4f693f572ea114e710f54da22909ae"
-    },
-    "heavy": [
-      {
-        "slot": 1,
-        "value": 40
-      },
-      {
-        "slot": 3,
-        "value": 6
-      }
-    ],
-    "edited_parameter_metadata": [
-      {
-        "slot": 1,
-        "name": "Blur Amount",
-        "kind": "float",
-        "minimum": 1.0,
-        "maximum": 1000.0,
-        "value": 5.0,
-        "choices": [],
-        "color": [
-          255,
-          0,
-          0,
-          0
-        ],
-        "components": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "component_count": 0,
-        "layer_path": null,
-        "enabled": true,
-        "visible": true,
-        "supervised": false,
-        "debug_summary": null,
-        "custom_ui_events": 0,
-        "control_size": [
-          0,
-          0
-        ]
-      },
-      {
-        "slot": 3,
-        "name": "Number of Repeat",
-        "kind": "integer",
-        "minimum": 1.0,
-        "maximum": 10.0,
-        "value": 2.0,
-        "choices": [],
-        "color": [
-          255,
-          0,
-          0,
-          0
-        ],
-        "components": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "component_count": 0,
-        "layer_path": null,
-        "enabled": true,
-        "visible": true,
-        "supervised": false,
-        "debug_summary": null,
-        "custom_ui_events": 0,
-        "control_size": [
-          0,
-          0
-        ]
-      }
-    ]
+    }
   },
   "harness": {
     "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
@@ -128,56 +54,20 @@
       "output_hashes": {
         "original": [
           {
-            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
-            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
-          },
-          {
-            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
-            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
-          },
-          {
-            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
-            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
-          },
-          {
-            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
-            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
-          },
-          {
-            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
-            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
-          },
-          {
-            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
-            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
+            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
+            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
           }
         ],
         "rust": [
           {
-            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
-            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
-          },
-          {
-            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
-            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
-          },
-          {
-            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
-            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
-          },
-          {
-            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
-            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
-          },
-          {
-            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
-            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
-          },
-          {
-            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
-            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
+            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
+            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
           }
         ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "rust": 6
       }
     },
     {
@@ -210,56 +100,20 @@
       "output_hashes": {
         "original": [
           {
-            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
-            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
-          },
-          {
-            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
-            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
-          },
-          {
-            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
-            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
-          },
-          {
-            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
-            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
-          },
-          {
-            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
-            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
-          },
-          {
-            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
-            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
+            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
+            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
           }
         ],
         "rust": [
           {
-            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
-            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
-          },
-          {
-            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
-            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
-          },
-          {
-            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
-            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
-          },
-          {
-            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
-            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
-          },
-          {
-            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
-            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
-          },
-          {
-            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
-            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
+            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
+            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
           }
         ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "rust": 6
       }
     },
     {
@@ -292,56 +146,20 @@
       "output_hashes": {
         "original": [
           {
-            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
-            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
-          },
-          {
-            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
-            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
-          },
-          {
-            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
-            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
-          },
-          {
-            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
-            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
-          },
-          {
-            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
-            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
-          },
-          {
-            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
-            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
+            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075",
+            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e"
           }
         ],
         "rust": [
           {
-            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
-            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
-          },
-          {
-            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
-            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
-          },
-          {
-            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
-            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
-          },
-          {
-            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
-            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
-          },
-          {
-            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
-            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
-          },
-          {
-            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
-            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
+            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075",
+            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e"
           }
         ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "rust": 6
       }
     },
     {
@@ -374,56 +192,20 @@
       "output_hashes": {
         "original": [
           {
-            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
-            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
-          },
-          {
-            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
-            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
-          },
-          {
-            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
-            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
-          },
-          {
-            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
-            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
-          },
-          {
-            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
-            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
-          },
-          {
-            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
-            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
+            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97",
+            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6"
           }
         ],
         "rust": [
           {
-            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
-            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
-          },
-          {
-            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
-            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
-          },
-          {
-            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
-            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
-          },
-          {
-            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
-            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
-          },
-          {
-            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
-            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
-          },
-          {
-            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
-            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
+            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97",
+            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6"
           }
         ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "rust": 6
       }
     },
     {
@@ -456,56 +238,20 @@
       "output_hashes": {
         "original": [
           {
-            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
-            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
-          },
-          {
-            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
-            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
-          },
-          {
-            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
-            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
-          },
-          {
-            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
-            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
-          },
-          {
-            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
-            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
-          },
-          {
-            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
-            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
+            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9",
+            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb"
           }
         ],
         "rust": [
           {
-            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
-            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
-          },
-          {
-            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
-            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
-          },
-          {
-            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
-            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
-          },
-          {
-            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
-            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
-          },
-          {
-            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
-            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
-          },
-          {
-            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
-            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
+            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9",
+            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb"
           }
         ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "rust": 6
       }
     },
     {
@@ -538,56 +284,20 @@
       "output_hashes": {
         "original": [
           {
-            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
-            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
-          },
-          {
-            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
-            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
-          },
-          {
-            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
-            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
-          },
-          {
-            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
-            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
-          },
-          {
-            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
-            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
-          },
-          {
-            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
-            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
+            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62",
+            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f"
           }
         ],
         "rust": [
           {
-            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
-            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
-          },
-          {
-            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
-            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
-          },
-          {
-            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
-            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
-          },
-          {
-            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
-            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
-          },
-          {
-            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
-            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
-          },
-          {
-            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
-            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
+            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62",
+            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f"
           }
         ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "rust": 6
       }
     }
   ],
