@@ -152,3 +152,42 @@ ignored by Git. Compact root-level JSON reports, source/test vectors and rerun
 scripts are retained for version control. Historical source/binary hashes bind
 the original job's snapshot, not the later integrated build; see
 [workspace integration](../../INTEGRATION.md) for the fresh staged cross-check.
+
+## Performance implementation (S-smoother, 2026-11-13)
+
+The production hot pixel routines now use structured Rust for color comparison,
+3x3 neighbor extraction, ordered direction iteration, and the 8-bit classifier
+prefix. Every integer input makes the color metric's float intermediates finite
+and bounded (including the full uint16 range). The original order of multiplies,
+adds and divisions is retained; absolute luminance rounded up is equivalent to
+the original signed floor/ceil selection. No reciprocal approximation or FMA is
+introduced. The 16-bit classifier rejects inactive directions before constructing
+its virtual register/stack carrier.
+
+`tools/structure.py` additionally removes runtime dispatch from both classifiers,
+direction dispatch, subhandlers, main interpolation and alternate handlers. It
+checks every selected CFG for cycles after extracting single-block self loops,
+orders all remaining edges topologically, and expresses forward transfers as
+lexical block exits. Each original block appears once, with its operations,
+condition, successors and return unchanged. This avoids exponential code
+expansion and exposes register assignments to LLVM. These large structured
+kernels are still mechanically derived; this is not a complete handwritten
+replacement of the contour algorithm. Retained walkers and blend/executor loops
+are in `kernels.rs`. `generated.rs` is byte-for-byte unchanged and compiled only
+under `cfg(all(test, feature = "generated-reference"))`.
+
+Additional reference comparisons (`cargo test --release -p olm-smoother
+--features generated-reference`):
+
+- All 256x256 single-channel pairs at four alpha values and four channels;
+  all 65,536 uint16 single-channel values against four endpoints, at four
+  channels; 1,000,000 random full-range uint16 pixel pairs (also checked as u8).
+- All 19,683 three-color 3x3 neighborhoods, four directions, three tolerances,
+  both depths: 472,392 classifier comparisons.
+- 2,048 complete generated/optimized frame comparisons covering every tolerance,
+  both depths, color keys, odd sizes, cropped extents, nonzero layout origins and
+  padding. Existing C++ frame/helper/walker/directional tests also remain active.
+
+The finite input bound and the CFG-preserving transformation support the
+implementation argument; enumerated/random tests do not exhaust all images.
+The v1 traversal remains serial. No parameter, PiPL, depth or route changes.
