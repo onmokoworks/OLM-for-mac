@@ -1,5 +1,23 @@
 # OLMRadialBlur Rust validation — P-radial
 
+## Performance (S-last, 2026-11-13)
+
+The no-op probe now checks six integer controls with stack SDK records, avoiding
+parameter metadata/value allocations. The existing contiguous copy and legacy
+PF_COPY geometry fallback remain. Active kernels and all NaN/reciprocal behavior
+are unchanged. 11 release tests, 40 goldens (14 historical exclusions), fmt,
+Clippy and 33 targeted no-op/geometry comparisons pass. Two seeds and three scales
+cover more than 100 random exact comparisons per depth; original instability,
+resident failures and the initial timeout are retained separately.
+
+The 40-sample alternating 1080p 8-bpc ratio is 0.9399, with all eight paired blocks
+below 1. The unrepeated five-sample final sweep is **1.011**, so the strict
+all-final-cells-below-1 goal is **not met**. 16/32 bpc final ratios are 0.907/0.841.
+Original active resident heavy rows remain incomplete, without invented ratios.
+See [full evidence and limitations](../olm-distance-gradation/PERFORMANCE_LAST.md)
+and [compact evidence](../olm-distance-gradation/performance-last.json).
+
+
 Integration follow-up: [Smart32 negative-offset witness](OFFSET_WITNESS.md) is
 resolved as original nondeterminism with exact 0°/+1° controls, all ten additional
 replays, and C++/pixel-localization evidence. The integrated candidate differs

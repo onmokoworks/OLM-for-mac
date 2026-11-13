@@ -73,9 +73,6 @@ pub trait Effect {
     fn params() -> Vec<Param>;
     /// Full-size byte-copy shortcut; host retains stride and checkout ownership.
     const COPY_VALUES: &'static [usize] = &[];
-    fn copy_only(_values: &[Value], _ctx: RenderContext) -> bool {
-        false
-    }
     fn render(
         values: &[Value],
         ctx: RenderContext,
@@ -314,6 +311,40 @@ unsafe fn world_depth(
     freed?;
     Ok(d)
 }
+// Only integer controls needed to establish no-op. Each SDK record remains at
+// one stack address from checkout through checkin; no parameter Vec/Box/strings.
+unsafe fn probe_copy<E: Effect>(i: &PF_InData, params: PF_ParamList, smart: bool) -> Result<bool> {
+    if E::COPY_VALUES.len() != 6 {
+        return Ok(false);
+    }
+    let mut lengths = [0; 6];
+    for (value, &index) in lengths.iter_mut().zip(E::COPY_VALUES) {
+        let slot = index as i32 + 1;
+        if smart {
+            let checkout = i.inter.checkout_param.ok_or(BAD)?;
+            let checkin = i.inter.checkin_param.ok_or(BAD)?;
+            let mut parameter: PF_ParamDef = std::mem::zeroed();
+            check(checkout(
+                i.effect_ref,
+                slot,
+                i.current_time,
+                i.time_step,
+                i.time_scale,
+                &mut parameter,
+            ))?;
+            *value = parameter.u.sd.value;
+            // No fallible operation or allocation between successful checkout and checkin.
+            check(checkin(i.effect_ref, &mut parameter))?;
+        } else {
+            if params.is_null() || slot < 1 {
+                return Err(BAD);
+            }
+            *value = (*params.add(slot as usize)).as_ref().ok_or(BAD)?.u.sd.value;
+        }
+    }
+    Ok(lengths.iter().all(|&value| value == 0))
+}
+
 unsafe fn render<E: Effect>(
     i: &PF_InData,
     params: PF_ParamList,
@@ -351,19 +382,10 @@ unsafe fn render<E: Effect>(
         )
         .map_err(|_| BAD)?,
     };
-    let probe = values::<E>(i, params, smart, Some(E::COPY_VALUES))?;
-    let v = if E::copy_only(&probe, ctx) {
-        probe
-    } else {
-        values::<E>(i, params, smart, None)?
-    };
+    let copy = probe_copy::<E>(i, params, smart)?;
     let input = View::new(std::slice::from_raw_parts(a.data.cast(), na), la).map_err(|_| BAD)?;
     let destination = std::slice::from_raw_parts_mut(b.data.cast::<u8>(), nb);
-    if la.width == lb.width
-        && la.height == lb.height
-        && la.origin == lb.origin
-        && E::copy_only(&v, ctx)
-    {
+    if la.width == lb.width && la.height == lb.height && la.origin == lb.origin && copy {
         copy_rows(
             std::slice::from_raw_parts(a.data.cast::<u8>(), na),
             la,
@@ -371,10 +393,11 @@ unsafe fn render<E: Effect>(
             lb,
         );
         Ok(())
-    } else if E::copy_only(&v, ctx) {
+    } else if copy {
         // Match the original host copy's resampling for a smaller Smart output.
         host_copy(i, a, output)
     } else {
+        let v = values::<E>(i, params, smart, None)?;
         let mut output = ViewMut::new(destination, lb).map_err(|_| BAD)?;
         E::render(&v, ctx, &input, &mut output).map_err(|_| BAD)
     }
@@ -472,20 +495,7 @@ pub unsafe fn entry<E: Effect>(
                 {
                     // The original no-op preserves the requested output dimensions;
                     // its PF_COPY then scales the complete checked-out input into them.
-                    let v = values::<E>(i, params, true, None)?;
-                    let ctx = RenderContext {
-                        downsample_x: Downsample::new(i.downsample_x.num, i.downsample_x.den)?,
-                        downsample_y: Downsample::new(i.downsample_y.num, i.downsample_y.den)?,
-                        smart: true,
-                        output_extent: olm_core::Rect::new(
-                            requested.left,
-                            requested.top,
-                            requested.right,
-                            requested.bottom,
-                        )
-                        .map_err(|_| BAD)?,
-                    };
-                    if E::copy_only(&v, ctx) {
+                    if probe_copy::<E>(i, params, true)? {
                         eo.result_rect.left = requested.left.max(r.result_rect.left);
                         eo.result_rect.top = requested.top.max(r.result_rect.top);
                         eo.result_rect.right = requested.right.min(r.result_rect.right);
@@ -649,4 +659,112 @@ unsafe fn host_copy(i: &PF_InData, input: &PF_LayerDef, output: *mut PF_LayerDef
         ptr::null_mut(),
         ptr::null_mut(),
     ))
+}
+
+#[cfg(test)]
+mod probe_tests {
+    use super::*;
+    struct State {
+        slots: Vec<i32>,
+        checked_in: usize,
+        address: usize,
+        fail_checkout: i32,
+        fail_checkin: usize,
+    }
+    unsafe extern "C" fn checkout(
+        effect: PF_ProgPtr,
+        slot: i32,
+        _: i32,
+        _: i32,
+        _: u32,
+        parameter: *mut PF_ParamDef,
+    ) -> PF_Err {
+        let state = &mut *(effect as *mut State);
+        state.slots.push(slot);
+        if slot == state.fail_checkout {
+            return 41;
+        }
+        state.address = parameter as usize;
+        (*parameter).u.sd.value = 0;
+        0
+    }
+    unsafe extern "C" fn checkin(effect: PF_ProgPtr, parameter: *mut PF_ParamDef) -> PF_Err {
+        let state = &mut *(effect as *mut State);
+        assert_eq!(state.address, parameter as usize);
+        state.checked_in += 1;
+        if state.checked_in == state.fail_checkin {
+            42
+        } else {
+            0
+        }
+    }
+    struct Probe;
+    impl Effect for Probe {
+        const NAME: &'static str = "probe";
+        const VERSION: u32 = 0;
+        const FLAGS: u32 = 0;
+        const COPY_VALUES: &'static [usize] = &[3, 5, 6, 9, 11, 12];
+        fn params() -> Vec<Param> {
+            panic!("no-op probe must not allocate metadata")
+        }
+        fn render(
+            _: &[Value],
+            _: RenderContext,
+            _: &View<'_>,
+            _: &mut ViewMut<'_>,
+        ) -> olm_core::Result<()> {
+            unreachable!()
+        }
+    }
+    #[test]
+    fn every_noop_control_must_be_zero() {
+        unsafe {
+            let i: PF_InData = std::mem::zeroed();
+            let mut parameters: Vec<PF_ParamDef> = (0..14).map(|_| std::mem::zeroed()).collect();
+            let mut pointers: Vec<*mut PF_ParamDef> =
+                parameters.iter_mut().map(|p| p as *mut _).collect();
+            assert_eq!(
+                probe_copy::<Probe>(&i, pointers.as_mut_ptr(), false),
+                Ok(true)
+            );
+            for slot in [4, 6, 7, 10, 12, 13] {
+                for value in [-1, 1, 2000] {
+                    parameters[slot].u.sd.value = value;
+                    assert_eq!(
+                        probe_copy::<Probe>(&i, pointers.as_mut_ptr(), false),
+                        Ok(false)
+                    );
+                }
+                parameters[slot].u.sd.value = 0;
+            }
+            assert_eq!(
+                probe_copy::<Probe>(&i, pointers.as_mut_ptr(), false),
+                Ok(true)
+            );
+        }
+    }
+
+    #[test]
+    fn probe_preserves_checkout_address_and_failure_checkins() {
+        for (fail_checkout, fail_checkin, want, checks) in
+            [(0, 0, Ok(true), 6), (7, 0, Err(41), 2), (0, 2, Err(42), 2)]
+        {
+            let mut state = State {
+                slots: vec![],
+                checked_in: 0,
+                address: 0,
+                fail_checkout,
+                fail_checkin,
+            };
+            unsafe {
+                let mut i: PF_InData = std::mem::zeroed();
+                i.effect_ref = (&mut state as *mut State).cast();
+                i.inter.checkout_param = Some(checkout);
+                i.inter.checkin_param = Some(checkin);
+                assert_eq!(probe_copy::<Probe>(&i, ptr::null_mut(), true), want);
+            }
+            assert_eq!(state.checked_in, checks);
+            assert_eq!(state.slots, &[4, 6, 7, 10, 12, 13][..state.slots.len()]);
+        }
+    }
 }

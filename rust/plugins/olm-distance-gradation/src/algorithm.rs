@@ -179,24 +179,45 @@ pub fn render(input: &View<'_>, output: &mut ViewMut<'_>, params: &Params) -> Re
     let mut any = false;
     let mut any_not = px != 0 || py != 0;
     for y in 0..ih {
-        for x in 0..iw {
-            let src = normalized(input.get(x, y)?);
-            if l.depth == Depth::F32 {
-                let nonfinite = !blurred || p.blur_mode == 5;
-                let extended = nonfinite || p.blur_mode != 4;
-                if (!nonfinite && src[0] * 255. >= 2147483648.)
-                    || src.iter().any(|v| {
-                        (!v.is_finite() && !nonfinite) || ((*v < 0. || *v > 1.) && !extended)
-                    })
-                {
-                    return Err(Error::Unsupported);
+        let row = input.row(y)?;
+        let dst = &mut mask[(y + py) * w + px..(y + py) * w + px + iw];
+        match l.depth {
+            Depth::U8 => {
+                for (m, pixel) in dst.iter_mut().zip(row.chunks_exact(4)) {
+                    let owns = pixel[0] >= 2;
+                    *m = owns as u8;
+                    any |= owns;
+                    any_not |= !owns;
                 }
             }
-            let scaled = src[0] * if l.depth == Depth::U16 { 256. } else { 255. };
-            let owns = scaled >= 1.5 && scaled < 2147483648.;
-            mask[(y + py) * w + x + px] = owns as u8;
-            any |= owns;
-            any_not |= !owns;
+            Depth::U16 => {
+                for (m, pixel) in dst.iter_mut().zip(row.chunks_exact(8)) {
+                    // (alpha / 32768) * 256 >= 1.5, both powers of two.
+                    let owns = u16::from_ne_bytes([pixel[0], pixel[1]]) >= 192;
+                    *m = owns as u8;
+                    any |= owns;
+                    any_not |= !owns;
+                }
+            }
+            Depth::F32 => {
+                for (m, pixel) in dst.iter_mut().zip(row.chunks_exact(16)) {
+                    let src = normalized(olm_core::read_pixel(pixel, Depth::F32));
+                    let nonfinite = !blurred || p.blur_mode == 5;
+                    let extended = nonfinite || p.blur_mode != 4;
+                    if (!nonfinite && src[0] * 255. >= 2147483648.)
+                        || src.iter().any(|v| {
+                            (!v.is_finite() && !nonfinite) || ((*v < 0. || *v > 1.) && !extended)
+                        })
+                    {
+                        return Err(Error::Unsupported);
+                    }
+                    let scaled = src[0] * 255.;
+                    let owns = scaled >= 1.5 && scaled < 2147483648.;
+                    *m = owns as u8;
+                    any |= owns;
+                    any_not |= !owns;
+                }
+            }
         }
     }
     let degenerate = !any || !any_not;
@@ -298,12 +319,21 @@ pub fn render(input: &View<'_>, output: &mut ViewMut<'_>, params: &Params) -> Re
         }
     }
     output.for_each_row(|y, row| {
+        let source = if y >= py && y - py < ih {
+            input.row(y - py).ok()
+        } else {
+            None
+        };
+        let bytes = l.depth.pixel_bytes();
         for x in 0..o.width {
             let i = y * o.width + x;
             // Upstream callbacks subtract the preview-space border from the
             // output coordinate; out-of-source samples are transparent black.
             let src = if x >= px && y >= py && x - px < iw && y - py < ih {
-                normalized(input.get(x - px, y - py).expect("validated source"))
+                normalized(olm_core::read_pixel(
+                    &source.expect("validated source")[(x - px) * bytes..(x - px + 1) * bytes],
+                    l.depth,
+                ))
             } else {
                 [0.; 4]
             };
@@ -354,5 +384,20 @@ fn normalized(p: Pixel) -> [f32; 4] {
         Pixel::U8(v) => v.map(|x| x as f32 / 255.),
         Pixel::U16(v) => v.map(|x| x as f32 / 32768.),
         Pixel::F32(v) => v,
+    }
+}
+
+#[cfg(test)]
+mod mask_tests {
+    #[test]
+    fn integer_ownership_matches_float_reference_exhaustively() {
+        for alpha in 0..=255u8 {
+            let scaled = (alpha as f32 / 255.) * 255.;
+            assert_eq!(alpha >= 2, scaled >= 1.5 && scaled < 2147483648.);
+        }
+        for alpha in 0..=65535u16 {
+            let scaled = (alpha as f32 / 32768.) * 256.;
+            assert_eq!(alpha >= 192, scaled >= 1.5 && scaled < 2147483648.);
+        }
     }
 }
