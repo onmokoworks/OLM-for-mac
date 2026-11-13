@@ -28,6 +28,16 @@ We are developing this port by analyzing the original plugins, aiming for output
 
 We compare the results of the original plugin running in an emulator with those of the Mac version across thousands of random combinations of footage, settings, sizes and preview resolutions. In every case the Windows version can render, the outputs match. Please see [How we verify](docs/BETA_SUPPORT.en.md) for details, and [Known limitations](KNOWN_LIMITATIONS.en.md) for known limitations.
 
+## Rust version (in development)
+
+The current release, v1.0.0, is based on OLM Tools as they were before the 2026-11-12 update. That update added OLM UV Map and OLM Anti Anti Alias and updated ColorKeep, OLMColorKey, OLMDistanceGradation and OLMSmoother2. The Rust version under [`rust/`](rust/README.md) supports it.
+
+- For all 12 plugins, we compared the output with the latest original plugins running in an emulator. At every bit depth each plugin supports, the output is bit-for-bit identical wherever the original can render.
+- It builds for Windows (x64) and Mac (Apple Silicon and Intel), and automated tests confirm the same results on each.
+- It has not yet been tested inside After Effects, so it is not distributed yet. It will be published as a release once it is ready.
+
+For validation details and build instructions, see the [Rust README](rust/README.md).
+
 ## Requirements
 
 - macOS 11 or later is supported.
