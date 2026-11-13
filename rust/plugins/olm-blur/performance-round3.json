@@ -1,0 +1,1462 @@
+{
+  "schema_version": 1,
+  "plugin": "OLMBlur",
+  "identity": {
+    "original": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+      "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+    },
+    "rust": {
+      "path": "D:\\olm-rs-target\\blurs\\round3-bulk\\OLMBlur.aex",
+      "sha256": "8b8c731bc94de10f4cc07aae36f7bdcc8b094733ffdb77644327e1d163deaa7b"
+    },
+    "heavy": [
+      {
+        "slot": 1,
+        "value": 40
+      },
+      {
+        "slot": 3,
+        "value": 6
+      }
+    ],
+    "edited_parameter_metadata": [
+      {
+        "slot": 1,
+        "name": "Blur Amount",
+        "kind": "float",
+        "minimum": 1.0,
+        "maximum": 1000.0,
+        "value": 5.0,
+        "choices": [],
+        "color": [
+          255,
+          0,
+          0,
+          0
+        ],
+        "components": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "component_count": 0,
+        "layer_path": null,
+        "enabled": true,
+        "visible": true,
+        "supervised": false,
+        "debug_summary": null,
+        "custom_ui_events": 0,
+        "control_size": [
+          0,
+          0
+        ]
+      },
+      {
+        "slot": 3,
+        "name": "Number of Repeat",
+        "kind": "integer",
+        "minimum": 1.0,
+        "maximum": 10.0,
+        "value": 2.0,
+        "choices": [],
+        "color": [
+          255,
+          0,
+          0,
+          0
+        ],
+        "components": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "component_count": 0,
+        "layer_path": null,
+        "enabled": true,
+        "visible": true,
+        "supervised": false,
+        "debug_summary": null,
+        "custom_ui_events": 0,
+        "control_size": [
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  "environment": {
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+    },
+    "worker_file": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\target\\minihost-build\\aex_worker.exe",
+      "sha256": "7a6598974b903fd4b068587b726d41c8adb8b198a294add88d544582482c71cf"
+    },
+    "platform": "Windows-10-10.0.26300-SP0",
+    "processor": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+    "logical_cpus": 24,
+    "priority": "NORMAL_PRIORITY_CLASS",
+    "seed": 20261113,
+    "warmup": 1,
+    "timed_frames": 5
+  },
+  "resident_benchmark": [
+    {
+      "depth": 8,
+      "preset": "default",
+      "request": {
+        "schema_version": 1,
+        "assignments": [],
+        "host_context": {
+          "mask_scene": {
+            "masks": []
+          },
+          "spatial": {
+            "downsample_x": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "downsample_y": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "pixel_aspect_ratio": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "full_resolution_width": 1920,
+            "full_resolution_height": 1080
+          }
+        },
+        "render_settings": {
+          "premultiplication": "straight",
+          "color_management": {
+            "enabled": false,
+            "working_space": null
+          },
+          "linear_light": false,
+          "renderer": "software"
+        }
+      },
+      "order": [
+        "original",
+        "rust"
+      ],
+      "status": "exact",
+      "ratio": 0.477710937464459,
+      "original": {
+        "process": {
+          "pid": 44944,
+          "returncode": 0,
+          "timeout": false,
+          "elapsed_seconds": 1.8430000000007567
+        },
+        "cleanup": "oracle private Job active count verified zero; child waited",
+        "samples_ms": [
+          {
+            "render_selector_ns": 65.5633,
+            "worker_render_ns": 162.9508,
+            "broker_frame_wall_ns": 175.853
+          },
+          {
+            "render_selector_ns": 65.3487,
+            "worker_render_ns": 161.2776,
+            "broker_frame_wall_ns": 174.9245
+          },
+          {
+            "render_selector_ns": 66.911,
+            "worker_render_ns": 165.7939,
+            "broker_frame_wall_ns": 179.6716
+          },
+          {
+            "render_selector_ns": 65.9449,
+            "worker_render_ns": 164.4131,
+            "broker_frame_wall_ns": 178.0629
+          },
+          {
+            "render_selector_ns": 67.0463,
+            "worker_render_ns": 163.5001,
+            "broker_frame_wall_ns": 177.2077
+          }
+        ],
+        "warmup_ms": {
+          "render_selector_ns": 64.6723,
+          "worker_render_ns": 160.807,
+          "broker_frame_wall_ns": 183.747
+        },
+        "statistics": {
+          "render_selector_ns": {
+            "n": 5,
+            "median_ms": 65.9449,
+            "min_ms": 65.3487
+          },
+          "worker_render_ns": {
+            "n": 5,
+            "median_ms": 163.5001,
+            "min_ms": 161.2776
+          },
+          "broker_frame_wall_ns": {
+            "n": 5,
+            "median_ms": 177.2077,
+            "min_ms": 174.9245
+          }
+        },
+        "outputs": [
+          {
+            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
+            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
+          },
+          {
+            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
+            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
+          },
+          {
+            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
+            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
+          },
+          {
+            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
+            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
+          },
+          {
+            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
+            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
+          },
+          {
+            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
+            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
+          }
+        ],
+        "status": "ok"
+      },
+      "rust": {
+        "process": {
+          "pid": 3260,
+          "returncode": 0,
+          "timeout": false,
+          "elapsed_seconds": 1.5460000000002765
+        },
+        "cleanup": "oracle private Job active count verified zero; child waited",
+        "samples_ms": [
+          {
+            "render_selector_ns": 34.3305,
+            "worker_render_ns": 132.6612,
+            "broker_frame_wall_ns": 146.0431
+          },
+          {
+            "render_selector_ns": 31.5026,
+            "worker_render_ns": 129.4813,
+            "broker_frame_wall_ns": 142.4947
+          },
+          {
+            "render_selector_ns": 31.8634,
+            "worker_render_ns": 129.0851,
+            "broker_frame_wall_ns": 142.5908
+          },
+          {
+            "render_selector_ns": 30.2976,
+            "worker_render_ns": 128.7535,
+            "broker_frame_wall_ns": 141.2538
+          },
+          {
+            "render_selector_ns": 30.5858,
+            "worker_render_ns": 126.8365,
+            "broker_frame_wall_ns": 139.4622
+          }
+        ],
+        "warmup_ms": {
+          "render_selector_ns": 30.8868,
+          "worker_render_ns": 127.0664,
+          "broker_frame_wall_ns": 148.4171
+        },
+        "statistics": {
+          "render_selector_ns": {
+            "n": 5,
+            "median_ms": 31.5026,
+            "min_ms": 30.2976
+          },
+          "worker_render_ns": {
+            "n": 5,
+            "median_ms": 129.0851,
+            "min_ms": 126.8365
+          },
+          "broker_frame_wall_ns": {
+            "n": 5,
+            "median_ms": 142.4947,
+            "min_ms": 139.4622
+          }
+        },
+        "outputs": [
+          {
+            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
+            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
+          },
+          {
+            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
+            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
+          },
+          {
+            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
+            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
+          },
+          {
+            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
+            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
+          },
+          {
+            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
+            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
+          },
+          {
+            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
+            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
+          }
+        ],
+        "status": "ok"
+      }
+    },
+    {
+      "depth": 8,
+      "preset": "heavy",
+      "request": {
+        "schema_version": 1,
+        "assignments": [
+          {
+            "slot": 1,
+            "value": 40
+          },
+          {
+            "slot": 3,
+            "value": 6
+          }
+        ],
+        "host_context": {
+          "mask_scene": {
+            "masks": []
+          },
+          "spatial": {
+            "downsample_x": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "downsample_y": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "pixel_aspect_ratio": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "full_resolution_width": 1920,
+            "full_resolution_height": 1080
+          }
+        },
+        "render_settings": {
+          "premultiplication": "straight",
+          "color_management": {
+            "enabled": false,
+            "working_space": null
+          },
+          "linear_light": false,
+          "renderer": "software"
+        }
+      },
+      "order": [
+        "rust",
+        "original"
+      ],
+      "status": "exact",
+      "ratio": 0.23042658796957005,
+      "original": {
+        "process": {
+          "pid": 54756,
+          "returncode": 0,
+          "timeout": false,
+          "elapsed_seconds": 3.563000000000102
+        },
+        "cleanup": "oracle private Job active count verified zero; child waited",
+        "samples_ms": [
+          {
+            "render_selector_ns": 365.3502,
+            "worker_render_ns": 462.6607,
+            "broker_frame_wall_ns": 476.0369
+          },
+          {
+            "render_selector_ns": 363.1559,
+            "worker_render_ns": 459.134,
+            "broker_frame_wall_ns": 472.9084
+          },
+          {
+            "render_selector_ns": 363.229,
+            "worker_render_ns": 459.7026,
+            "broker_frame_wall_ns": 472.3217
+          },
+          {
+            "render_selector_ns": 365.5618,
+            "worker_render_ns": 461.2553,
+            "broker_frame_wall_ns": 473.6093
+          },
+          {
+            "render_selector_ns": 371.8058,
+            "worker_render_ns": 468.9851,
+            "broker_frame_wall_ns": 482.7467
+          }
+        ],
+        "warmup_ms": {
+          "render_selector_ns": 377.3296,
+          "worker_render_ns": 474.6071,
+          "broker_frame_wall_ns": 496.2277
+        },
+        "statistics": {
+          "render_selector_ns": {
+            "n": 5,
+            "median_ms": 365.3502,
+            "min_ms": 363.1559
+          },
+          "worker_render_ns": {
+            "n": 5,
+            "median_ms": 461.2553,
+            "min_ms": 459.134
+          },
+          "broker_frame_wall_ns": {
+            "n": 5,
+            "median_ms": 473.6093,
+            "min_ms": 472.3217
+          }
+        },
+        "outputs": [
+          {
+            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
+            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
+          },
+          {
+            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
+            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
+          },
+          {
+            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
+            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
+          },
+          {
+            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
+            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
+          },
+          {
+            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
+            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
+          },
+          {
+            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
+            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
+          }
+        ],
+        "status": "ok"
+      },
+      "rust": {
+        "process": {
+          "pid": 13580,
+          "returncode": 0,
+          "timeout": false,
+          "elapsed_seconds": 1.8430000000007567
+        },
+        "cleanup": "oracle private Job active count verified zero; child waited",
+        "samples_ms": [
+          {
+            "render_selector_ns": 81.8186,
+            "worker_render_ns": 179.1264,
+            "broker_frame_wall_ns": 192.7773
+          },
+          {
+            "render_selector_ns": 79.1374,
+            "worker_render_ns": 175.2953,
+            "broker_frame_wall_ns": 188.6334
+          },
+          {
+            "render_selector_ns": 85.1469,
+            "worker_render_ns": 182.5186,
+            "broker_frame_wall_ns": 195.9898
+          },
+          {
+            "render_selector_ns": 84.1864,
+            "worker_render_ns": 182.8877,
+            "broker_frame_wall_ns": 195.1153
+          },
+          {
+            "render_selector_ns": 88.9038,
+            "worker_render_ns": 188.569,
+            "broker_frame_wall_ns": 200.19
+          }
+        ],
+        "warmup_ms": {
+          "render_selector_ns": 83.5185,
+          "worker_render_ns": 186.7979,
+          "broker_frame_wall_ns": 210.0181
+        },
+        "statistics": {
+          "render_selector_ns": {
+            "n": 5,
+            "median_ms": 84.1864,
+            "min_ms": 79.1374
+          },
+          "worker_render_ns": {
+            "n": 5,
+            "median_ms": 182.5186,
+            "min_ms": 175.2953
+          },
+          "broker_frame_wall_ns": {
+            "n": 5,
+            "median_ms": 195.1153,
+            "min_ms": 188.6334
+          }
+        },
+        "outputs": [
+          {
+            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
+            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
+          },
+          {
+            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
+            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
+          },
+          {
+            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
+            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
+          },
+          {
+            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
+            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
+          },
+          {
+            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
+            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
+          },
+          {
+            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
+            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
+          }
+        ],
+        "status": "ok"
+      }
+    },
+    {
+      "depth": 16,
+      "preset": "default",
+      "request": {
+        "schema_version": 1,
+        "assignments": [],
+        "host_context": {
+          "mask_scene": {
+            "masks": []
+          },
+          "spatial": {
+            "downsample_x": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "downsample_y": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "pixel_aspect_ratio": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "full_resolution_width": 1920,
+            "full_resolution_height": 1080
+          }
+        },
+        "render_settings": {
+          "premultiplication": "straight",
+          "color_management": {
+            "enabled": false,
+            "working_space": null
+          },
+          "linear_light": false,
+          "renderer": "software"
+        }
+      },
+      "order": [
+        "original",
+        "rust"
+      ],
+      "status": "exact",
+      "ratio": 0.4870787957717169,
+      "original": {
+        "process": {
+          "pid": 52860,
+          "returncode": 0,
+          "timeout": false,
+          "elapsed_seconds": 2.1559999999990396
+        },
+        "cleanup": "oracle private Job active count verified zero; child waited",
+        "samples_ms": [
+          {
+            "render_selector_ns": 65.1139,
+            "worker_render_ns": 198.0619,
+            "broker_frame_wall_ns": 211.3002
+          },
+          {
+            "render_selector_ns": 63.7188,
+            "worker_render_ns": 201.229,
+            "broker_frame_wall_ns": 217.4905
+          },
+          {
+            "render_selector_ns": 64.8556,
+            "worker_render_ns": 201.4731,
+            "broker_frame_wall_ns": 215.054
+          },
+          {
+            "render_selector_ns": 70.6525,
+            "worker_render_ns": 206.6111,
+            "broker_frame_wall_ns": 219.5557
+          },
+          {
+            "render_selector_ns": 65.7636,
+            "worker_render_ns": 200.5741,
+            "broker_frame_wall_ns": 213.6797
+          }
+        ],
+        "warmup_ms": {
+          "render_selector_ns": 64.2797,
+          "worker_render_ns": 198.3726,
+          "broker_frame_wall_ns": 224.5516
+        },
+        "statistics": {
+          "render_selector_ns": {
+            "n": 5,
+            "median_ms": 65.1139,
+            "min_ms": 63.7188
+          },
+          "worker_render_ns": {
+            "n": 5,
+            "median_ms": 201.229,
+            "min_ms": 198.0619
+          },
+          "broker_frame_wall_ns": {
+            "n": 5,
+            "median_ms": 215.054,
+            "min_ms": 211.3002
+          }
+        },
+        "outputs": [
+          {
+            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
+            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
+          },
+          {
+            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
+            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
+          },
+          {
+            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
+            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
+          },
+          {
+            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
+            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
+          },
+          {
+            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
+            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
+          },
+          {
+            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
+            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
+          }
+        ],
+        "status": "ok"
+      },
+      "rust": {
+        "process": {
+          "pid": 54536,
+          "returncode": 0,
+          "timeout": false,
+          "elapsed_seconds": 1.8440000000009604
+        },
+        "cleanup": "oracle private Job active count verified zero; child waited",
+        "samples_ms": [
+          {
+            "render_selector_ns": 31.7156,
+            "worker_render_ns": 166.2405,
+            "broker_frame_wall_ns": 179.7359
+          },
+          {
+            "render_selector_ns": 32.4481,
+            "worker_render_ns": 168.4649,
+            "broker_frame_wall_ns": 182.0468
+          },
+          {
+            "render_selector_ns": 30.5662,
+            "worker_render_ns": 165.0815,
+            "broker_frame_wall_ns": 177.8448
+          },
+          {
+            "render_selector_ns": 31.7151,
+            "worker_render_ns": 167.9207,
+            "broker_frame_wall_ns": 181.2248
+          },
+          {
+            "render_selector_ns": 32.3934,
+            "worker_render_ns": 166.2725,
+            "broker_frame_wall_ns": 180.2236
+          }
+        ],
+        "warmup_ms": {
+          "render_selector_ns": 31.8523,
+          "worker_render_ns": 163.4458,
+          "broker_frame_wall_ns": 190.3808
+        },
+        "statistics": {
+          "render_selector_ns": {
+            "n": 5,
+            "median_ms": 31.7156,
+            "min_ms": 30.5662
+          },
+          "worker_render_ns": {
+            "n": 5,
+            "median_ms": 166.2725,
+            "min_ms": 165.0815
+          },
+          "broker_frame_wall_ns": {
+            "n": 5,
+            "median_ms": 180.2236,
+            "min_ms": 177.8448
+          }
+        },
+        "outputs": [
+          {
+            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
+            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
+          },
+          {
+            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
+            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
+          },
+          {
+            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
+            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
+          },
+          {
+            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
+            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
+          },
+          {
+            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
+            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
+          },
+          {
+            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e",
+            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075"
+          }
+        ],
+        "status": "ok"
+      }
+    },
+    {
+      "depth": 16,
+      "preset": "heavy",
+      "request": {
+        "schema_version": 1,
+        "assignments": [
+          {
+            "slot": 1,
+            "value": 40
+          },
+          {
+            "slot": 3,
+            "value": 6
+          }
+        ],
+        "host_context": {
+          "mask_scene": {
+            "masks": []
+          },
+          "spatial": {
+            "downsample_x": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "downsample_y": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "pixel_aspect_ratio": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "full_resolution_width": 1920,
+            "full_resolution_height": 1080
+          }
+        },
+        "render_settings": {
+          "premultiplication": "straight",
+          "color_management": {
+            "enabled": false,
+            "working_space": null
+          },
+          "linear_light": false,
+          "renderer": "software"
+        }
+      },
+      "order": [
+        "rust",
+        "original"
+      ],
+      "status": "exact",
+      "ratio": 0.24802036567115623,
+      "original": {
+        "process": {
+          "pid": 25352,
+          "returncode": 0,
+          "timeout": false,
+          "elapsed_seconds": 3.9539999999997235
+        },
+        "cleanup": "oracle private Job active count verified zero; child waited",
+        "samples_ms": [
+          {
+            "render_selector_ns": 368.856,
+            "worker_render_ns": 503.9699,
+            "broker_frame_wall_ns": 519.2636
+          },
+          {
+            "render_selector_ns": 367.1149,
+            "worker_render_ns": 501.0762,
+            "broker_frame_wall_ns": 514.1897
+          },
+          {
+            "render_selector_ns": 365.7936,
+            "worker_render_ns": 502.4376,
+            "broker_frame_wall_ns": 515.5915
+          },
+          {
+            "render_selector_ns": 371.7409,
+            "worker_render_ns": 506.9314,
+            "broker_frame_wall_ns": 520.4115
+          },
+          {
+            "render_selector_ns": 392.1353,
+            "worker_render_ns": 527.0402,
+            "broker_frame_wall_ns": 540.8324
+          }
+        ],
+        "warmup_ms": {
+          "render_selector_ns": 380.7243,
+          "worker_render_ns": 516.3533,
+          "broker_frame_wall_ns": 543.5711
+        },
+        "statistics": {
+          "render_selector_ns": {
+            "n": 5,
+            "median_ms": 368.856,
+            "min_ms": 365.7936
+          },
+          "worker_render_ns": {
+            "n": 5,
+            "median_ms": 503.9699,
+            "min_ms": 501.0762
+          },
+          "broker_frame_wall_ns": {
+            "n": 5,
+            "median_ms": 519.2636,
+            "min_ms": 514.1897
+          }
+        },
+        "outputs": [
+          {
+            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
+            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
+          },
+          {
+            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
+            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
+          },
+          {
+            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
+            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
+          },
+          {
+            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
+            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
+          },
+          {
+            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
+            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
+          },
+          {
+            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
+            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
+          }
+        ],
+        "status": "ok"
+      },
+      "rust": {
+        "process": {
+          "pid": 7524,
+          "returncode": 0,
+          "timeout": false,
+          "elapsed_seconds": 2.265000000001237
+        },
+        "cleanup": "oracle private Job active count verified zero; child waited",
+        "samples_ms": [
+          {
+            "render_selector_ns": 91.8596,
+            "worker_render_ns": 230.3558,
+            "broker_frame_wall_ns": 251.703
+          },
+          {
+            "render_selector_ns": 92.1648,
+            "worker_render_ns": 234.164,
+            "broker_frame_wall_ns": 249.0247
+          },
+          {
+            "render_selector_ns": 88.4424,
+            "worker_render_ns": 230.6188,
+            "broker_frame_wall_ns": 245.4579
+          },
+          {
+            "render_selector_ns": 91.4838,
+            "worker_render_ns": 233.7105,
+            "broker_frame_wall_ns": 247.1496
+          },
+          {
+            "render_selector_ns": 88.578,
+            "worker_render_ns": 239.0186,
+            "broker_frame_wall_ns": 252.7197
+          }
+        ],
+        "warmup_ms": {
+          "render_selector_ns": 82.6019,
+          "worker_render_ns": 216.3627,
+          "broker_frame_wall_ns": 242.8009
+        },
+        "statistics": {
+          "render_selector_ns": {
+            "n": 5,
+            "median_ms": 91.4838,
+            "min_ms": 88.4424
+          },
+          "worker_render_ns": {
+            "n": 5,
+            "median_ms": 233.7105,
+            "min_ms": 230.3558
+          },
+          "broker_frame_wall_ns": {
+            "n": 5,
+            "median_ms": 249.0247,
+            "min_ms": 245.4579
+          }
+        },
+        "outputs": [
+          {
+            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
+            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
+          },
+          {
+            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
+            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
+          },
+          {
+            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
+            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
+          },
+          {
+            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
+            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
+          },
+          {
+            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
+            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
+          },
+          {
+            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6",
+            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97"
+          }
+        ],
+        "status": "ok"
+      }
+    },
+    {
+      "depth": 32,
+      "preset": "default",
+      "request": {
+        "schema_version": 1,
+        "assignments": [],
+        "host_context": {
+          "mask_scene": {
+            "masks": []
+          },
+          "spatial": {
+            "downsample_x": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "downsample_y": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "pixel_aspect_ratio": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "full_resolution_width": 1920,
+            "full_resolution_height": 1080
+          }
+        },
+        "render_settings": {
+          "premultiplication": "straight",
+          "color_management": {
+            "enabled": false,
+            "working_space": null
+          },
+          "linear_light": false,
+          "renderer": "software"
+        }
+      },
+      "order": [
+        "original",
+        "rust"
+      ],
+      "status": "exact",
+      "ratio": 0.5239875022294698,
+      "original": {
+        "process": {
+          "pid": 39136,
+          "returncode": 0,
+          "timeout": false,
+          "elapsed_seconds": 2.875
+        },
+        "cleanup": "oracle private Job active count verified zero; child waited",
+        "samples_ms": [
+          {
+            "render_selector_ns": 62.7952,
+            "worker_render_ns": 270.8763,
+            "broker_frame_wall_ns": 287.9976
+          },
+          {
+            "render_selector_ns": 63.4144,
+            "worker_render_ns": 269.1427,
+            "broker_frame_wall_ns": 285.8872
+          },
+          {
+            "render_selector_ns": 62.7057,
+            "worker_render_ns": 270.4772,
+            "broker_frame_wall_ns": 287.7328
+          },
+          {
+            "render_selector_ns": 60.7784,
+            "worker_render_ns": 267.245,
+            "broker_frame_wall_ns": 282.8606
+          },
+          {
+            "render_selector_ns": 65.3935,
+            "worker_render_ns": 281.2044,
+            "broker_frame_wall_ns": 296.8918
+          }
+        ],
+        "warmup_ms": {
+          "render_selector_ns": 73.1738,
+          "worker_render_ns": 280.5215,
+          "broker_frame_wall_ns": 318.1343
+        },
+        "statistics": {
+          "render_selector_ns": {
+            "n": 5,
+            "median_ms": 62.7952,
+            "min_ms": 60.7784
+          },
+          "worker_render_ns": {
+            "n": 5,
+            "median_ms": 270.4772,
+            "min_ms": 267.245
+          },
+          "broker_frame_wall_ns": {
+            "n": 5,
+            "median_ms": 287.7328,
+            "min_ms": 282.8606
+          }
+        },
+        "outputs": [
+          {
+            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
+            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
+          },
+          {
+            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
+            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
+          },
+          {
+            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
+            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
+          },
+          {
+            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
+            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
+          },
+          {
+            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
+            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
+          },
+          {
+            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
+            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
+          }
+        ],
+        "status": "ok"
+      },
+      "rust": {
+        "process": {
+          "pid": 64104,
+          "returncode": 0,
+          "timeout": false,
+          "elapsed_seconds": 2.6569999999992433
+        },
+        "cleanup": "oracle private Job active count verified zero; child waited",
+        "samples_ms": [
+          {
+            "render_selector_ns": 32.4909,
+            "worker_render_ns": 237.2698,
+            "broker_frame_wall_ns": 253.5677
+          },
+          {
+            "render_selector_ns": 31.8768,
+            "worker_render_ns": 237.2943,
+            "broker_frame_wall_ns": 253.845
+          },
+          {
+            "render_selector_ns": 32.9039,
+            "worker_render_ns": 252.292,
+            "broker_frame_wall_ns": 267.9809
+          },
+          {
+            "render_selector_ns": 33.8934,
+            "worker_render_ns": 237.4759,
+            "broker_frame_wall_ns": 252.8394
+          },
+          {
+            "render_selector_ns": 33.5297,
+            "worker_render_ns": 238.2375,
+            "broker_frame_wall_ns": 253.7952
+          }
+        ],
+        "warmup_ms": {
+          "render_selector_ns": 38.5579,
+          "worker_render_ns": 248.7651,
+          "broker_frame_wall_ns": 285.121
+        },
+        "statistics": {
+          "render_selector_ns": {
+            "n": 5,
+            "median_ms": 32.9039,
+            "min_ms": 31.8768
+          },
+          "worker_render_ns": {
+            "n": 5,
+            "median_ms": 237.4759,
+            "min_ms": 237.2698
+          },
+          "broker_frame_wall_ns": {
+            "n": 5,
+            "median_ms": 253.7952,
+            "min_ms": 252.8394
+          }
+        },
+        "outputs": [
+          {
+            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
+            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
+          },
+          {
+            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
+            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
+          },
+          {
+            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
+            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
+          },
+          {
+            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
+            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
+          },
+          {
+            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
+            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
+          },
+          {
+            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb",
+            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9"
+          }
+        ],
+        "status": "ok"
+      }
+    },
+    {
+      "depth": 32,
+      "preset": "heavy",
+      "request": {
+        "schema_version": 1,
+        "assignments": [
+          {
+            "slot": 1,
+            "value": 40
+          },
+          {
+            "slot": 3,
+            "value": 6
+          }
+        ],
+        "host_context": {
+          "mask_scene": {
+            "masks": []
+          },
+          "spatial": {
+            "downsample_x": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "downsample_y": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "pixel_aspect_ratio": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "full_resolution_width": 1920,
+            "full_resolution_height": 1080
+          }
+        },
+        "render_settings": {
+          "premultiplication": "straight",
+          "color_management": {
+            "enabled": false,
+            "working_space": null
+          },
+          "linear_light": false,
+          "renderer": "software"
+        }
+      },
+      "order": [
+        "rust",
+        "original"
+      ],
+      "status": "exact",
+      "ratio": 0.23114990524119655,
+      "original": {
+        "process": {
+          "pid": 16412,
+          "returncode": 0,
+          "timeout": false,
+          "elapsed_seconds": 4.766000000001441
+        },
+        "cleanup": "oracle private Job active count verified zero; child waited",
+        "samples_ms": [
+          {
+            "render_selector_ns": 365.4253,
+            "worker_render_ns": 572.461,
+            "broker_frame_wall_ns": 589.0687
+          },
+          {
+            "render_selector_ns": 373.5273,
+            "worker_render_ns": 579.4946,
+            "broker_frame_wall_ns": 595.9604
+          },
+          {
+            "render_selector_ns": 367.5446,
+            "worker_render_ns": 576.8076,
+            "broker_frame_wall_ns": 592.5719
+          },
+          {
+            "render_selector_ns": 387.5533,
+            "worker_render_ns": 594.1337,
+            "broker_frame_wall_ns": 610.5144
+          },
+          {
+            "render_selector_ns": 413.7433,
+            "worker_render_ns": 632.6126,
+            "broker_frame_wall_ns": 649.7788
+          }
+        ],
+        "warmup_ms": {
+          "render_selector_ns": 371.3469,
+          "worker_render_ns": 578.4334,
+          "broker_frame_wall_ns": 615.3542
+        },
+        "statistics": {
+          "render_selector_ns": {
+            "n": 5,
+            "median_ms": 373.5273,
+            "min_ms": 365.4253
+          },
+          "worker_render_ns": {
+            "n": 5,
+            "median_ms": 579.4946,
+            "min_ms": 572.461
+          },
+          "broker_frame_wall_ns": {
+            "n": 5,
+            "median_ms": 595.9604,
+            "min_ms": 589.0687
+          }
+        },
+        "outputs": [
+          {
+            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
+            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
+          },
+          {
+            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
+            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
+          },
+          {
+            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
+            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
+          },
+          {
+            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
+            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
+          },
+          {
+            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
+            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
+          },
+          {
+            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
+            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
+          }
+        ],
+        "status": "ok"
+      },
+      "rust": {
+        "process": {
+          "pid": 14308,
+          "returncode": 0,
+          "timeout": false,
+          "elapsed_seconds": 2.860000000000582
+        },
+        "cleanup": "oracle private Job active count verified zero; child waited",
+        "samples_ms": [
+          {
+            "render_selector_ns": 89.058,
+            "worker_render_ns": 300.2037,
+            "broker_frame_wall_ns": 317.1364
+          },
+          {
+            "render_selector_ns": 82.4665,
+            "worker_render_ns": 287.3013,
+            "broker_frame_wall_ns": 304.1687
+          },
+          {
+            "render_selector_ns": 90.4681,
+            "worker_render_ns": 300.3554,
+            "broker_frame_wall_ns": 316.8107
+          },
+          {
+            "render_selector_ns": 83.5363,
+            "worker_render_ns": 288.784,
+            "broker_frame_wall_ns": 303.4026
+          },
+          {
+            "render_selector_ns": 86.3408,
+            "worker_render_ns": 291.3122,
+            "broker_frame_wall_ns": 306.0843
+          }
+        ],
+        "warmup_ms": {
+          "render_selector_ns": 81.7939,
+          "worker_render_ns": 288.6513,
+          "broker_frame_wall_ns": 325.5836
+        },
+        "statistics": {
+          "render_selector_ns": {
+            "n": 5,
+            "median_ms": 86.3408,
+            "min_ms": 82.4665
+          },
+          "worker_render_ns": {
+            "n": 5,
+            "median_ms": 291.3122,
+            "min_ms": 287.3013
+          },
+          "broker_frame_wall_ns": {
+            "n": 5,
+            "median_ms": 306.0843,
+            "min_ms": 303.4026
+          }
+        },
+        "outputs": [
+          {
+            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
+            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
+          },
+          {
+            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
+            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
+          },
+          {
+            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
+            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
+          },
+          {
+            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
+            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
+          },
+          {
+            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
+            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
+          },
+          {
+            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f",
+            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62"
+          }
+        ],
+        "status": "ok"
+      }
+    }
+  ],
+  "audit": {
+    "evidence": {
+      "path": "D:\\olm-rs-target\\blurs\\round3-bench-final\\evidence.json",
+      "sha256": "692d0b7d6e6a561176cde28faa020952d921fb2399db56fd796a40bf1185cf68"
+    },
+    "counts": {
+      "exact_cells": 15,
+      "raw_reports_verified": 36,
+      "frames_deleted_digest_only": 198,
+      "exact_frame_pairs_including_warmup": 90,
+      "exact_timed_frame_pairs": 75,
+      "incomplete_cells": 3
+    },
+    "loaded_worker_hashes": [
+      "7a6598974b903fd4b068587b726d41c8adb8b198a294add88d544582482c71cf"
+    ],
+    "executables_unchanged": 8,
+    "passed": true
+  },
+  "oracle": {
+    "seeds": [
+      20261114,
+      20261115
+    ],
+    "exact_by_depth": {
+      "8": 206,
+      "16": 206,
+      "32": 206
+    },
+    "qualified_exclusions": [],
+    "triage_complete": true,
+    "fixed_repeats": 3,
+    "additional_fixed_repeats": 10
+  },
+  "verification": {
+    "release_owned_tests": 23,
+    "release_shared_tests": 8,
+    "ignored_profile_regeneration": 1,
+    "golden_exact": 148,
+    "historical_golden_exclusions": 14,
+    "targeted_noop_exact": 84,
+    "fmt": "pass",
+    "clippy": "pass with warnings"
+  }
+}

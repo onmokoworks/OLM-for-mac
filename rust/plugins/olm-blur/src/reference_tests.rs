@@ -114,6 +114,12 @@ fn six_workers_match_cpp_and_thread_counts() {
                     threads,
                 )
                 .unwrap();
+                let mut bytes = vec![0xa5; size];
+                super::algorithm::render_bytes(&view, &mut bytes, layout, &p, threads).unwrap();
+                assert_eq!(
+                    bytes, candidate,
+                    "byte writer depth={depth:?} case={case} threads={threads}"
+                );
                 if candidate != reference {
                     let first = candidate
                         .iter()
@@ -287,4 +293,49 @@ fn uniform_legacy_carry_partitions_match_cpp() {
         }
     }
     assert_eq!(count, 144);
+}
+
+#[test]
+fn byte_output_preserves_odd_padding_and_short_final_row() {
+    for depth in [Depth::U8, Depth::U16, Depth::F32] {
+        let layout = Layout {
+            width: 7,
+            height: 5,
+            stride: 7 * depth.pixel_bytes() + 3,
+            depth,
+            origin: (0, 0),
+        };
+        let mut input = vec![0u8; layout.span().unwrap()];
+        let mut view = ViewMut::new(&mut input, layout).unwrap();
+        for y in 0..5 {
+            for x in 0..7 {
+                let p = match depth {
+                    Depth::U8 => olm_core::Pixel::U8([255, 31, 17, 9]),
+                    Depth::U16 => olm_core::Pixel::U16([32768, 32769, 65535, 1]),
+                    Depth::F32 => olm_core::Pixel::F32([
+                        f32::from_bits(0x80000000),
+                        f32::from_bits(0x7fc01234),
+                        1.,
+                        -0.,
+                    ]),
+                };
+                view.set(x, y, p).unwrap();
+            }
+        }
+        let view = View::new(&input, layout).unwrap();
+        let mut expected = vec![0xa5; input.len()];
+        render(
+            &view,
+            &mut ViewMut::new(&mut expected, layout).unwrap(),
+            &Params::default(),
+            1,
+        )
+        .unwrap();
+        for threads in [1, 4] {
+            let mut actual = vec![0xa5; input.len()];
+            super::algorithm::render_bytes(&view, &mut actual, layout, &Params::default(), threads)
+                .unwrap();
+            assert_eq!(actual, expected);
+        }
+    }
 }

@@ -270,3 +270,173 @@ ignored by Git. Compact root-level JSON reports, source/test vectors and rerun
 scripts are retained for version control. Historical source/binary hashes bind
 the original job's snapshot, not the later integrated build; see
 [workspace integration](../../INTEGRATION.md) for the fresh staged cross-check.
+
+
+## Performance - S-blurs (2026-11-13)
+
+Zero zoom/rotation lengths and tails now bypass checked pixel loops. Matching
+worlds copy active rows verbatim (alpha and hidden RGB included), preserving
+padding. Different geometry uses the original legacy `PF_COPY` utility callback;
+cropped no-op SmartPreRender requests now return the requested intersection while
+keeping the full maximum extent. This reproduces the original's whole-input
+resampling into a smaller requested output. No parameter IDs, PiPL or flags change.
+
+Polar preparation traverses contiguous rows; preparation, independent kernels
+and inverse sampling use bounded scoped row workers. Ordered output publication
+preserves error-prefix behavior. The extra result buffer is charged to the existing
+1 GiB allocation budget. Existing weight/offset tables and every pixel's arithmetic
+order remain unchanged. Crucially, `math.rs` and the Zen 3 RCPSS capture profile are
+unchanged: host-native reciprocal instructions are not substituted. The exhaustive
+reciprocal-profile test passes; profile regeneration remains intentionally ignored.
+
+1080p median selector-time Rust/original ratios, one warmup and five samples:
+
+| Depth | Default before | Default after |
+|---|---:|---:|
+| 8 | 7.289 | 0.926 |
+| 16 | 5.966 | 0.939 |
+| 32 | 7.015 | 1.137 |
+
+The original cannot complete heavy Rotation through the resident protocol.
+`perf_bench.py` instead runs one warmup plus five measured fresh processes per
+side/depth, alternates original/before/after ordering, uses normal priority and a
+120-second per-process bound, and verifies complete native output hashes. Its
+clock is oracle process wall time including startup and image IO, **not selector
+time**. All 54 warmup/measured output hashes agree within their depth.
+
+| Depth | Original ms | Before ms | After ms | Before/original | After/original |
+|---|---:|---:|---:|---:|---:|
+| 8 | 1375 | 2875 | 969 | 2.091 | 0.705 |
+| 16 | 1500 | 2890 | 1015 | 1.927 | 0.677 |
+| 32 | 2109 | 3250 | 1469 | 1.541 | 0.697 |
+
+
+Baseline is commit `5033dd45`. Resident before/after campaigns were separate;
+heavy per-process runs interleave all three binaries. Shared-machine contention
+limits precision. Remaining costs include checked output publication and scalar
+coordinate/reciprocal emulation; any future SIMD must match the captured scalar
+profile, not native RCPSS. Local row/thread helpers are shared-hoisting candidates.
+
+Release tests, rustfmt and Clippy pass (warnings); all 40 admitted golden hashes
+match, with 14 historical exclusions unchanged. Seeds 20261114/20261115 each have
+103 admitted cases/depth (101 random plus two fixed), sizes 1x1,3x7,11x7,17x9 and
+scales 1,1/2,1/4. Existing Type-3 noise refusal is retained by `validate.py` with
+all excluded generated plans saved. All cases ran per-process with at most two
+concurrent renders and 600-second bounds. Baseline exact counts were 200/204/200
+at 8/16/32 bpc; the other 6/2/6 cases qualify as original nondeterminism, not exact
+passes. Every residual received three fixed replay pairs. Two unresolved cases
+then received a predeclared additional ten pairs each (all retained): all renders
+succeeded, original hashes varied, candidate hashes stayed fixed and at least one
+original/candidate pair matched exactly for every exclusion. No reference failure,
+timeout, candidate failure, tool error or unexplained stable mismatch remained.
+
+The shared `../olm-directional-blur/perf_noop.py` passed 66 targeted original
+comparisons across both plugins, including ancillary extremes, three scales,
+cropped demands and padded native fixtures with nonzero origins/extents. Arbitrary
+bit-pattern and padding unit tests pass at all depths. Native AE/macOS and arbitrary
+HDR native-host qualification remain outside these Windows CPU-harness results.
+
+Local-only evidence under `D:/olm-rs-target/blurs`: `bench-before`, `bench-final5`,
+`perf-final-audit.json`, `radial-process-wall-final6`, `oracle4-OLMRadialBlur-*`,
+`triage-final4`, `triage-radial-additional10`, `noop-final4`, `tests-final6.log`.
+Candidate SHA-256: `5d8c36120122c37a7007e721938ab799811d2a9bb939ea9f5a4a95dc09077653`.
+Raw outputs, originals and binaries are not committed.
+
+
+## Performance round two - S-blurs
+
+Round two checks only the six controlling values before a no-op. Matching,
+tightly packed worlds use one contiguous copy; padded worlds retain active-row
+copies, and different geometry retains legacy PF_COPY. The 32-bpc default pure
+copy profile at 960x540 (`examples/profile.rs`) compared row/bulk/two/four/eight
+worker copies. Warm row copies measured 0.14 ms versus bulk 0.30 ms; with eight
+rotating buffers exceeding cache, bulk measured 0.46 ms versus rows 0.73 ms.
+Thread startup lost at this size. A bounded host-callback variant tied the
+original at 540p and was not selected. Active kernels and Zen 3 reciprocal
+emulation are unchanged from round one.
+
+Merged `origin/main` before revalidation. Historical round-one raw run directories
+were deleted at the user's request; compact summaries remain under
+`D:/olm-rs-target/blurs-evidence/round1`. Round-two exact-case pixels are deleted
+after hashing; only mismatches remain temporarily for triage. No shared source
+was authored by this job. Final results and compact evidence follow below.
+
+Final 1080p median Rust/original ratios, one warmup plus five samples:
+
+| Depth | Default round 1 | Default round 2 | Heavy round 1 | Heavy round 2 |
+|---|---:|---:|---:|---:|
+| 8 | 0.926 | 0.866 | 0.705 | 0.633 |
+| 16 | 0.939 | 0.936 | 0.677 | 0.705 |
+| 32 | 1.137 | 0.928 | 0.697 | 0.719 |
+
+Defaults use resident selector time. Heavy uses fresh-process wall time including
+startup/IO because the original still fails the resident Rotation protocol.
+Original/after medians at 8/16/32 bpc are 1359/860, 1375/969, 1500/1078 ms;
+all 36 output hashes agree within depth. The prior binary was deleted per the
+round-two cleanup instruction; round-one ratios are historical separate-run data.
+
+Verification: 22 release tests across the three crates pass (one explicit profile
+regeneration ignored), rustfmt and release Clippy pass (warnings), and 148 admitted
+golden hashes match (14 historical Radial exclusions unchanged). Two cleanup-helper
+tests pass. Both seeds include 103 admitted cases/depth at scales 1, 1/2, 1/4.
+This plugin retained 205 exact at 8 bpc, 204 exact at 16 bpc, 203 exact at 32 bpc.
+Its 6 remaining cases qualified under the existing original-nondeterminism
+rule; they are exclusions, not exact passes. All received three fixed pairs.
+One case also received the predeclared ten-pair block: changing original, stable
+candidate, successful renders and at least one exact replay were required.
+No unexplained stable mismatch, render failure or timeout remained. The 66 targeted
+Directional/Radial no-op and fixture comparisons passed again. No native AE/macOS
+performance qualification is claimed.
+
+[Compact round-two evidence](performance-round2.json) records samples, hashes,
+case plans, exclusion proofs and counts. The resident audit verified 15 exact cells
+and 90 frame pairs; its three incomplete cells are original Radial heavy. Raw
+run folders were deleted after compaction; local compact summaries/logs are under
+`D:/olm-rs-target/blurs-evidence`.
+
+## Performance round three - S-blurs
+
+Merged origin/main (74bcd6ae, including shared core/AE changes) and reverified.
+No shared source was authored. Blur/Radial profile examples have unique names.
+Directional now probes four integer controls on the stack, avoiding metadata,
+Vec and Box allocations. Packed full equal-sized worlds with matching origins
+use one contiguous copy with no staging or threads; other layouts use the original
+legacy PF_COPY callback. [Static/ABI/runtime witness](../olm-directional-blur/NOOP_PROOF.md)
+records the original call and repeated default measurements. Active kernels and
+Radial's Zen 3 reciprocal profile are unchanged in this round.
+
+1080p median Rust/original ratios (lower is faster; historical R2 is a separate run):
+
+| bpc | Default R2 -> R3 | Heavy R2 -> R3 |
+|---|---:|---:|
+| 8 | 0.866 -> 1.094 | 0.633 -> 0.636 |
+| 16 | 0.936 -> 0.982 | 0.705 -> 0.727 |
+| 32 | 0.928 -> 0.902 | 0.719 -> 0.733 |
+
+Resident timing uses one warmup and five measured selector samples. Radial heavy
+is measured in bounded fresh processes (one warmup, five samples, alternating
+side order), including process startup and I/O: its original fails the resident
+protocol. All 54 per-process outputs match. Radial before/after binaries in that
+control are identical; their variation is not a code speedup.
+
+The all-cells <1 acceptance bar is **not fully met**: the single final sweep has
+Directional defaults 16=1.059, 32=1.001 and Radial defaults 8=1.094. The separate
+40-sample alternating Directional campaign has ratios 0.9520/0.9645/0.8565;
+5/8, 5/8 and 8/8 block medians win respectively. Timing overlap remains, and no
+observations were dropped or final sweep rerun.
+
+Verification: 23 owned + 8 shared release tests pass (one profile-regeneration
+test ignored), fmt and Clippy pass (warnings). Golden: 148 exact, 14 historical
+Radial exclusions unchanged. Targeted no-op/geometry: 84 exact, including 18
+scaled integer-to-zero cases. Oracle: 1,835 exact across the three plugins and
+two seeds; 19 qualified original-nondeterminism exclusions, not passes (2
+Directional, 17 Radial). Three fixed replay pairs each, one additional ten-pair
+block and existing Directional original-original/zero-offset controls establish
+those exclusions. No unexplained stable mismatch, failure or timeout remains.
+Resident audit passes: 15 exact cells / 90 frame pairs, three incomplete original
+Radial heavy cells covered by the separate process measurement. Two cleanup-helper
+tests pass. Native AE/macOS performance remains untested.
+
+[Compact round-three evidence](performance-round3.json) preserves samples,
+identities and exclusion proofs. Per user instruction, no manual run-directory
+or worktree cleanup was performed; local task artifacts are retained for review.

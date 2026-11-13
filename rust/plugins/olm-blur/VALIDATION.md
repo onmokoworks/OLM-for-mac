@@ -132,3 +132,155 @@ ignored by Git. Compact root-level JSON reports, source/test vectors and rerun
 scripts are retained for version control. Historical source/binary hashes bind
 the original job's snapshot, not the later integrated build; see
 [workspace integration](../../INTEGRATION.md) for the fresh staged cross-check.
+
+
+## Performance - S-blurs (2026-11-13)
+
+The AE adapter now schedules independent non-Legacy rows using at most
+`available_parallelism()` workers (one worker below 65,536 input pixels).
+Bounded finite RGB uses ordered native arithmetic; exceptional/extreme RGB keeps
+the scalar x86 NaN/payload implementation. Short non-Legacy kernels use four
+independent pixel lanes on SSE2 x86-64; other targets and wider kernels retain the
+scalar path. Wide-kernel SIMD was measured slower and is deliberately not selected.
+Input staging and finite-range classification also run in independent row chunks.
+Legacy's six carry partitions and all coefficient/accumulation orders are unchanged.
+
+1080p median selector-time Rust/original ratios (lower is faster), one warmup
+plus five samples per cell, both sides bit-exact:
+
+| Depth | Default before | Default after | Heavy before | Heavy after |
+|---|---:|---:|---:|---:|
+| 8 | 3.951 | 0.834 | 5.503 | 0.311 |
+| 16 | 4.421 | 0.920 | 5.771 | 0.298 |
+| 32 | 5.403 | 1.030 | 5.954 | 0.257 |
+
+Baseline is commit `5033dd45`; both builds used this job's isolated target.
+Other jobs can contend for the machine; these are bounded samples, not isolated
+hardware measurements. Remaining costs include checked pixel staging and Legacy's
+serial carries. The crate-local thread-selection helper is a possible shared-code
+candidate; no shared crate or project metadata was changed.
+
+Final qualification: release tests and Clippy pass (warnings), rustfmt
+passes, all 54 original-backed golden hashes match. The new four-pixel/scalar test
+includes short/tail rows, transparency barriers, negative values, signed zero and
+subnormals; existing C++ tests retain nonfinite payload and 1/N-worker coverage.
+Seeds `20261114` and `20261115` each passed 103 cases at every Smart depth,
+including 100 random cases per seed; sizes `1x1,3x7,11x7,31x19,97x61`, downsample
+`1,1/2,1/4`, jobs 2. Inventory is identical. Resident batches had no mismatches or
+failures; the runner retains mandatory per-process replay for any non-exact case.
+
+Local-only evidence: `D:/olm-rs-target/blurs/oracle6-OLMBlur-*`,
+`bench-before`, `bench-final6-blur`, and `tests-final6.log`.
+Candidate SHA-256: `4b62401dc0e9220275515e8a0bff3ebdfdaf4abdb3e286de8ff53962f96862c1`.
+The benchmark offline audit passed. No originals, raw run outputs or binaries are
+committed. Native AE and macOS performance were not tested.
+
+
+## Performance round two - S-blurs
+
+Round two profiles 32-bpc defaults at 960x540 using `examples/profile.rs`
+(`--features profile`; timers are absent from ordinary builds). The initial
+phase measurements were roughly 3.5 ms input staging, 7 ms filtering and 9 ms
+checked output writes. The new crate-local byte boundary writes disjoint row
+chunks directly into the host output: output time falls to about 1.6 ms. The
+checked ViewMut writer remains the reference API. All 432 C++ comparison cases
+now also compare the byte writer at one/four threads, including exceptional
+floats; an additional test covers odd padding and a short final row. Default
+Legacy is false; serial Legacy carries were not the measured default bottleneck.
+
+Merged `origin/main` before revalidation. Historical round-one raw run directories
+were deleted at the user's request; compact summaries remain under
+`D:/olm-rs-target/blurs-evidence/round1`. Round-two exact-case pixels are deleted
+after hashing; only mismatches remain temporarily for triage. No shared source
+was authored by this job. Final results and compact evidence follow below.
+
+Final 1080p median Rust/original ratios, one warmup plus five samples:
+
+| Depth | Default round 1 | Default round 2 | Heavy round 1 | Heavy round 2 |
+|---|---:|---:|---:|---:|
+| 8 | 0.834 | 0.502 | 0.311 | 0.225 |
+| 16 | 0.920 | 0.459 | 0.298 | 0.220 |
+| 32 | 1.030 | 0.530 | 0.257 | 0.224 |
+
+Verification: 22 release tests across the three crates pass (one explicit profile
+regeneration ignored), rustfmt and release Clippy pass (warnings), and 148 admitted
+golden hashes match (14 historical Radial exclusions unchanged). Two cleanup-helper
+tests pass. Both seeds include 103 admitted cases/depth at scales 1, 1/2, 1/4.
+This plugin retained 206 exact at 8 bpc, 206 exact at 16 bpc, 206 exact at 32 bpc.
+No unexplained stable mismatch, render failure or timeout remained. The 66 targeted
+Directional/Radial no-op and fixture comparisons passed again. No native AE/macOS
+performance qualification is claimed.
+
+[Compact round-two evidence](performance-round2.json) records samples, hashes,
+case plans, exclusion proofs and counts. The resident audit verified 15 exact cells
+and 90 frame pairs; its three incomplete cells are original Radial heavy. Raw
+run folders were deleted after compaction; local compact summaries/logs are under
+`D:/olm-rs-target/blurs-evidence`.
+
+## Performance round three - S-blurs
+
+Merged origin/main (74bcd6ae, including shared core/AE changes) and reverified.
+No shared source was authored. Blur/Radial profile examples have unique names.
+Directional now probes four integer controls on the stack, avoiding metadata,
+Vec and Box allocations. Packed full equal-sized worlds with matching origins
+use one contiguous copy with no staging or threads; other layouts use the original
+legacy PF_COPY callback. [Static/ABI/runtime witness](../olm-directional-blur/NOOP_PROOF.md)
+records the original call and repeated default measurements. Active kernels and
+Radial's Zen 3 reciprocal profile are unchanged in this round.
+
+1080p median Rust/original ratios (lower is faster; historical R2 is a separate run):
+
+| bpc | Default R2 -> R3 | Heavy R2 -> R3 |
+|---|---:|---:|
+| 8 | 0.502 -> 0.478 | 0.225 -> 0.230 |
+| 16 | 0.459 -> 0.487 | 0.220 -> 0.248 |
+| 32 | 0.530 -> 0.524 | 0.224 -> 0.231 |
+
+Resident timing uses one warmup and five measured selector samples. Radial heavy
+is measured in bounded fresh processes (one warmup, five samples, alternating
+side order), including process startup and I/O: its original fails the resident
+protocol. All 54 per-process outputs match. Radial before/after binaries in that
+control are identical; their variation is not a code speedup.
+
+The all-cells <1 acceptance bar is **not fully met**: the single final sweep has
+Directional defaults 16=1.059, 32=1.001 and Radial defaults 8=1.094. The separate
+40-sample alternating Directional campaign has ratios 0.9520/0.9645/0.8565;
+5/8, 5/8 and 8/8 block medians win respectively. Timing overlap remains, and no
+observations were dropped or final sweep rerun.
+
+Verification: 23 owned + 8 shared release tests pass (one profile-regeneration
+test ignored), fmt and Clippy pass (warnings). Golden: 148 exact, 14 historical
+Radial exclusions unchanged. Targeted no-op/geometry: 84 exact, including 18
+scaled integer-to-zero cases. Oracle: 1,835 exact across the three plugins and
+two seeds; 19 qualified original-nondeterminism exclusions, not passes (2
+Directional, 17 Radial). Three fixed replay pairs each, one additional ten-pair
+block and existing Directional original-original/zero-offset controls establish
+those exclusions. No unexplained stable mismatch, failure or timeout remains.
+Resident audit passes: 15 exact cells / 90 frame pairs, three incomplete original
+Radial heavy cells covered by the separate process measurement. Two cleanup-helper
+tests pass. Native AE/macOS performance remains untested.
+
+[Compact round-three evidence](performance-round3.json) preserves samples,
+identities and exclusion proofs. Per user instruction, no manual run-directory
+or worktree cleanup was performed; local task artifacts are retained for review.
+
+## Round four: portable NaN semantics
+
+The finite-input fast path could still generate nonfinite intermediates: Legacy
+border taps may have a subnormal weight sum, whose reciprocal overflows. A later
+zero-times-infinity produces a hardware default NaN. AArch64 makes that positive,
+whereas the x86 original requires 0xffc00000. Main's unconditional x86 helpers
+previously handled this; the new FINITE specialization bypassed them.
+
+Non-x86 fast add/multiply now inspect the result and call the existing
+olm_math::x86::result only for NaNs, preserving the first operand's quieted payload
+(or the second if only it is NaN), and using the negative default for generated
+NaNs. Finite results keep their original arithmetic; x86-64 code and SIMD are
+unchanged. Copied pixel/alpha bits are not canonicalized. No shared code changed.
+
+Two architecture-independent regression tests assert exact generated NaN bits,
+first-operand payload/sign quieting, signed zero, and the Legacy subnormal-border
+case. Local Windows release tests for all three blur crates pass (25 tests,
+one explicitly ignored reciprocal-profile regeneration). The existing complete
+C++ comparison and thread-count tests are retained. Native aarch64 execution is
+verified by the PR CI, not by pretending Windows can run that target.

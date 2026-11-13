@@ -4,7 +4,7 @@
 //! checked byte views. All host pointers and checkout lifetimes stay here.
 #![allow(non_upper_case_globals, dead_code)] // Adobe SDK selector names are ABI constants.
 pub use olm_ae::sys;
-use olm_core::{Depth, Layout, View, ViewMut};
+use olm_core::{Depth, Layout, View};
 use std::{
     ffi::{c_void, CString},
     ptr,
@@ -114,7 +114,8 @@ pub trait Effect {
         values: &[Value],
         ctx: RenderContext,
         input: &View<'_>,
-        output: &mut ViewMut<'_>,
+        output: &mut [u8],
+        layout: Layout,
     ) -> olm_core::Result<()>;
 }
 
@@ -405,9 +406,8 @@ unsafe fn render<E: Effect>(
     };
     let v = values::<E>(i, params, smart)?;
     let input = View::new(std::slice::from_raw_parts(a.data.cast(), na), la).map_err(|_| BAD)?;
-    let mut output =
-        ViewMut::new(std::slice::from_raw_parts_mut(b.data.cast(), nb), lb).map_err(|_| BAD)?;
-    E::render(&v, ctx, &input, &mut output).map_err(|_| BAD)
+    let output = std::slice::from_raw_parts_mut(b.data.cast(), nb);
+    E::render(&v, ctx, &input, output, lb).map_err(|_| BAD)
 }
 
 struct CheckedPixels<'a> {

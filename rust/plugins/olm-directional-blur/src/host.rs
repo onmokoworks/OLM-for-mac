@@ -101,6 +101,11 @@ pub trait Effect {
     unsafe fn update_ui(_: &PF_InData) -> Result<()> {
         Ok(())
     }
+    /// Full-size byte-copy shortcut; host retains stride and checkout ownership.
+    const COPY_INTEGER_SLOTS: &'static [i32] = &[];
+    fn copy_lengths(_values: &[i32], _ctx: RenderContext) -> bool {
+        false
+    }
     fn render(
         values: &[Value],
         ctx: RenderContext,
@@ -279,6 +284,44 @@ unsafe fn values<'a, E: Effect>(
     Ok((out, guards))
 }
 
+// Only integer controls needed to establish no-op. Each SDK record remains at
+// one stack address from checkout through checkin; no parameter Vec/Box/strings.
+unsafe fn probe_copy<E: Effect>(
+    i: &PF_InData,
+    params: PF_ParamList,
+    smart: bool,
+    ctx: RenderContext,
+) -> Result<bool> {
+    if E::COPY_INTEGER_SLOTS.len() != 4 {
+        return Ok(false);
+    }
+    let mut lengths = [0; 4];
+    for (value, &slot) in lengths.iter_mut().zip(E::COPY_INTEGER_SLOTS) {
+        if smart {
+            let checkout = i.inter.checkout_param.ok_or(BAD)?;
+            let checkin = i.inter.checkin_param.ok_or(BAD)?;
+            let mut parameter: PF_ParamDef = std::mem::zeroed();
+            check(checkout(
+                i.effect_ref,
+                slot,
+                i.current_time,
+                i.time_step,
+                i.time_scale,
+                &mut parameter,
+            ))?;
+            *value = parameter.u.sd.value;
+            // No fallible operation or allocation between successful checkout and checkin.
+            check(checkin(i.effect_ref, &mut parameter))?;
+        } else {
+            if params.is_null() || slot < 1 {
+                return Err(BAD);
+            }
+            *value = (*params.add(slot as usize)).as_ref().ok_or(BAD)?.u.sd.value;
+        }
+    }
+    Ok(E::copy_lengths(&lengths, ctx))
+}
+
 pub(crate) unsafe fn world_layout(w: &PF_LayerDef, depth: Depth) -> Result<Layout> {
     if w.width <= 0 || w.height <= 0 || w.rowbytes <= 0 || w.data.is_null() {
         return Err(BAD);
@@ -332,7 +375,7 @@ unsafe fn render<E: Effect>(
     output: *mut PF_LayerDef,
     depth: Depth,
     smart: bool,
-) -> Result<(Vec<u8>, Layout)> {
+) -> Result<Option<(Vec<u8>, Layout)>> {
     let a = input.as_ref().ok_or(BAD)?;
     let b = output.as_ref().ok_or(BAD)?;
     if world_depth(i, input, output)? != depth {
@@ -366,6 +409,32 @@ unsafe fn render<E: Effect>(
             b.extent_hint.bottom,
         ],
     };
+    if probe_copy::<E>(i, params, smart, ctx)? {
+        // The original calls PF_UtilCallbacks::copy with null rectangles. For
+        // packed full worlds this is exactly an active-byte copy. Preserve
+        // host-defined padding/crop/origin behavior by using its callback otherwise.
+        let full_input = [0, 0, la.width as i32, la.height as i32];
+        let full_output = [0, 0, lb.width as i32, lb.height as i32];
+        let active = la.width * depth.pixel_bytes();
+        if la.width == lb.width
+            && la.height == lb.height
+            && la.origin == lb.origin
+            && la.stride == active
+            && lb.stride == active
+            && ctx.input_extent == full_input
+            && ctx.output_extent == full_output
+        {
+            copy_rows(
+                std::slice::from_raw_parts(a.data.cast::<u8>(), na),
+                la,
+                std::slice::from_raw_parts_mut(b.data.cast::<u8>(), nb),
+                lb,
+            );
+        } else {
+            host_copy(i, a, output)?;
+        }
+        return Ok(None);
+    }
     let (v, mut guards) = values::<E>(i, params, smart)?;
     for value in &v {
         if let Some(layer) = &value.layer {
@@ -385,14 +454,14 @@ unsafe fn render<E: Effect>(
     }
 
     let input = View::new(std::slice::from_raw_parts(a.data.cast(), na), la).map_err(|_| BAD)?;
-    // Stage output until all parameter checkins have succeeded.
+    // Active kernels retain transactional publication on checkin failures.
     let mut storage = vec![0u8; nb];
     let mut staged = ViewMut::new(&mut storage, lb).map_err(|_| BAD)?;
     E::render(&v, ctx, &input, &mut staged).map_err(|_| BAD)?;
     for g in &mut guards {
         g.finish()?;
     }
-    Ok((storage, lb))
+    Ok(Some((storage, lb)))
 }
 
 unsafe fn publish(data: &[u8], layout: Layout, output: *mut PF_LayerDef) {
@@ -459,8 +528,10 @@ pub unsafe fn entry<E: Effect>(
                 if d == Depth::F32 {
                     return Err(BAD);
                 }
-                let (storage, layout) = render::<E>(i, params, &p.u.ld, output, d, false)?;
-                publish(&storage, layout, output);
+                if let Some((storage, layout)) = render::<E>(i, params, &p.u.ld, output, d, false)?
+                {
+                    publish(&storage, layout, output);
+                }
             }
             PF_Cmd_SMART_PRE_RENDER => {
                 let e = (extra as *mut PF_PreRenderExtra).as_mut().ok_or(BAD)?;
@@ -509,9 +580,11 @@ pub unsafe fn entry<E: Effect>(
                 };
                 let mut output = ptr::null_mut();
                 check(cb.checkout_output.ok_or(BAD)?(i.effect_ref, &mut output))?;
-                let (storage, layout) = render::<E>(i, params, input, output, depth, true)?;
+                let staged = render::<E>(i, params, input, output, depth, true)?;
                 guard.finish()?;
-                publish(&storage, layout, output);
+                if let Some((storage, layout)) = staged {
+                    publish(&storage, layout, output);
+                }
             }
             _ => {}
         }
@@ -598,5 +671,160 @@ mod tests {
     fn downsample_overflow() {
         assert!(Downsample::new(0, 1).is_err());
         assert!(Downsample::new(1, 0).is_err());
+    }
+}
+
+// Original typed copy writes active pixels only, preserving destination padding.
+fn copy_rows(source: &[u8], input: Layout, destination: &mut [u8], output: Layout) {
+    let active = output.width * output.depth.pixel_bytes();
+    if input.stride == active && output.stride == active {
+        let size = active * output.height;
+        destination[..size].copy_from_slice(&source[..size]);
+        return;
+    }
+    for y in 0..output.height {
+        destination[y * output.stride..y * output.stride + active]
+            .copy_from_slice(&source[y * input.stride..y * input.stride + active]);
+    }
+}
+
+#[cfg(test)]
+mod copy_tests {
+    use super::*;
+    #[test]
+    fn active_rows_preserve_every_bit_and_padding() {
+        for depth in [Depth::U8, Depth::U16, Depth::F32] {
+            for padding in [0, 5] {
+                let active = 7 * depth.pixel_bytes();
+                let input = Layout {
+                    width: 7,
+                    height: 3,
+                    stride: active + padding,
+                    depth,
+                    origin: (0, 0),
+                };
+                let output = Layout {
+                    stride: active + if padding == 0 { 0 } else { 9 },
+                    ..input
+                };
+                let source: Vec<u8> = (0..input.span().unwrap())
+                    .map(|i| (i * 73 + 19) as u8)
+                    .collect();
+                let mut actual = vec![0xa5; output.span().unwrap()];
+                let mut expected = actual.clone();
+                let view = View::new(&source, input).unwrap();
+                let mut out = ViewMut::new(&mut expected, output).unwrap();
+                for y in 0..input.height {
+                    for x in 0..input.width {
+                        out.set(x, y, view.get(x, y).unwrap()).unwrap();
+                    }
+                }
+                copy_rows(&source, input, &mut actual, output);
+                assert_eq!(actual, expected);
+            }
+        }
+    }
+}
+
+unsafe fn host_copy(i: &PF_InData, input: &PF_LayerDef, output: *mut PF_LayerDef) -> Result<()> {
+    // PF_COPY uses the legacy utility callback, whose resampling differs from
+    // WorldTransformSuite::copy in the captured host. Match the original route.
+    let copy = i.utils.as_ref().ok_or(BAD)?.copy.ok_or(BAD)?;
+    check(copy(
+        i.effect_ref,
+        input as *const _ as *mut _,
+        output,
+        ptr::null_mut(),
+        ptr::null_mut(),
+    ))
+}
+
+#[cfg(test)]
+mod probe_tests {
+    use super::*;
+    struct State {
+        slots: Vec<i32>,
+        checked_in: usize,
+        address: usize,
+        fail_checkout: i32,
+        fail_checkin: usize,
+    }
+    unsafe extern "C" fn checkout(
+        effect: PF_ProgPtr,
+        slot: i32,
+        _: i32,
+        _: i32,
+        _: u32,
+        parameter: *mut PF_ParamDef,
+    ) -> PF_Err {
+        let state = &mut *(effect as *mut State);
+        state.slots.push(slot);
+        if slot == state.fail_checkout {
+            return 41;
+        }
+        state.address = parameter as usize;
+        (*parameter).u.sd.value = 0;
+        0
+    }
+    unsafe extern "C" fn checkin(effect: PF_ProgPtr, parameter: *mut PF_ParamDef) -> PF_Err {
+        let state = &mut *(effect as *mut State);
+        assert_eq!(state.address, parameter as usize);
+        state.checked_in += 1;
+        if state.checked_in == state.fail_checkin {
+            42
+        } else {
+            0
+        }
+    }
+    struct Probe;
+    impl Effect for Probe {
+        const NAME: &'static str = "probe";
+        const VERSION: u32 = 0;
+        const FLAGS: u32 = 0;
+        const COPY_INTEGER_SLOTS: &'static [i32] = &[5, 6, 10, 11];
+        fn params() -> Vec<Param> {
+            panic!("no-op probe must not allocate metadata")
+        }
+        fn copy_lengths(v: &[i32], _: RenderContext) -> bool {
+            v == [0, 0, 0, 0]
+        }
+        fn render(
+            _: &[Value],
+            _: RenderContext,
+            _: &View<'_>,
+            _: &mut ViewMut<'_>,
+        ) -> olm_core::Result<()> {
+            unreachable!()
+        }
+    }
+    #[test]
+    fn probe_preserves_checkout_address_and_failure_checkins() {
+        for (fail_checkout, fail_checkin, want, checks) in
+            [(0, 0, Ok(true), 4), (10, 0, Err(41), 2), (0, 2, Err(42), 2)]
+        {
+            let mut state = State {
+                slots: vec![],
+                checked_in: 0,
+                address: 0,
+                fail_checkout,
+                fail_checkin,
+            };
+            unsafe {
+                let mut i: PF_InData = std::mem::zeroed();
+                i.effect_ref = (&mut state as *mut State).cast();
+                i.inter.checkout_param = Some(checkout);
+                i.inter.checkin_param = Some(checkin);
+                let ctx = RenderContext {
+                    downsample_x: Downsample::new(1, 1).unwrap(),
+                    downsample_y: Downsample::new(1, 1).unwrap(),
+                    smart: true,
+                    input_extent: [0; 4],
+                    output_extent: [0; 4],
+                };
+                assert_eq!(probe_copy::<Probe>(&i, ptr::null_mut(), true, ctx), want);
+            }
+            assert_eq!(state.checked_in, checks);
+            assert_eq!(state.slots, &[5, 6, 10, 11][..state.slots.len()]);
+        }
     }
 }

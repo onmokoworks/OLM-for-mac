@@ -71,6 +71,11 @@ pub trait Effect {
     /// None preserves the host request; Some matches an explicit original override.
     const PRESERVE_ZERO_ALPHA_RGB: Option<bool> = None;
     fn params() -> Vec<Param>;
+    /// Full-size byte-copy shortcut; host retains stride and checkout ownership.
+    const COPY_VALUES: &'static [usize] = &[];
+    fn copy_only(_values: &[Value], _ctx: RenderContext) -> bool {
+        false
+    }
     fn render(
         values: &[Value],
         ctx: RenderContext,
@@ -195,10 +200,18 @@ unsafe fn values<E: Effect>(
     i: &PF_InData,
     params: PF_ParamList,
     smart: bool,
+    only: Option<&[usize]>,
 ) -> Result<Vec<Value>> {
     let specs = E::params();
     let mut out = Vec::with_capacity(specs.len());
     for (n, s) in specs.iter().enumerate() {
+        if only.is_some_and(|indices| !indices.contains(&n)) {
+            out.push(Value {
+                number: 0.0,
+                point: [0.0; 2],
+            });
+            continue;
+        }
         let mut checked = None;
         // Topics carry no stream and must not be checked out in SmartRender.
         if matches!(s.kind, Kind::GroupStart | Kind::GroupEnd | Kind::Layer) {
@@ -338,11 +351,33 @@ unsafe fn render<E: Effect>(
         )
         .map_err(|_| BAD)?,
     };
-    let v = values::<E>(i, params, smart)?;
+    let probe = values::<E>(i, params, smart, Some(E::COPY_VALUES))?;
+    let v = if E::copy_only(&probe, ctx) {
+        probe
+    } else {
+        values::<E>(i, params, smart, None)?
+    };
     let input = View::new(std::slice::from_raw_parts(a.data.cast(), na), la).map_err(|_| BAD)?;
-    let mut output =
-        ViewMut::new(std::slice::from_raw_parts_mut(b.data.cast(), nb), lb).map_err(|_| BAD)?;
-    E::render(&v, ctx, &input, &mut output).map_err(|_| BAD)
+    let destination = std::slice::from_raw_parts_mut(b.data.cast::<u8>(), nb);
+    if la.width == lb.width
+        && la.height == lb.height
+        && la.origin == lb.origin
+        && E::copy_only(&v, ctx)
+    {
+        copy_rows(
+            std::slice::from_raw_parts(a.data.cast::<u8>(), na),
+            la,
+            destination,
+            lb,
+        );
+        Ok(())
+    } else if E::copy_only(&v, ctx) {
+        // Match the original host copy's resampling for a smaller Smart output.
+        host_copy(i, a, output)
+    } else {
+        let mut output = ViewMut::new(destination, lb).map_err(|_| BAD)?;
+        E::render(&v, ctx, &input, &mut output).map_err(|_| BAD)
+    }
 }
 
 struct CheckedPixels<'a> {
@@ -429,6 +464,34 @@ pub unsafe fn entry<E: Effect>(
                 ))?;
                 eo.result_rect = r.result_rect;
                 eo.max_result_rect = r.max_result_rect;
+                let requested = ei.output_request.rect;
+                if requested.left > r.result_rect.left
+                    || requested.top > r.result_rect.top
+                    || requested.right < r.result_rect.right
+                    || requested.bottom < r.result_rect.bottom
+                {
+                    // The original no-op preserves the requested output dimensions;
+                    // its PF_COPY then scales the complete checked-out input into them.
+                    let v = values::<E>(i, params, true, None)?;
+                    let ctx = RenderContext {
+                        downsample_x: Downsample::new(i.downsample_x.num, i.downsample_x.den)?,
+                        downsample_y: Downsample::new(i.downsample_y.num, i.downsample_y.den)?,
+                        smart: true,
+                        output_extent: olm_core::Rect::new(
+                            requested.left,
+                            requested.top,
+                            requested.right,
+                            requested.bottom,
+                        )
+                        .map_err(|_| BAD)?,
+                    };
+                    if E::copy_only(&v, ctx) {
+                        eo.result_rect.left = requested.left.max(r.result_rect.left);
+                        eo.result_rect.top = requested.top.max(r.result_rect.top);
+                        eo.result_rect.right = requested.right.min(r.result_rect.right);
+                        eo.result_rect.bottom = requested.bottom.min(r.result_rect.bottom);
+                    }
+                }
             }
             PF_Cmd_SMART_RENDER => {
                 let e = (extra as *mut PF_SmartRenderExtra).as_ref().ok_or(BAD)?;
@@ -521,4 +584,69 @@ mod tests {
             assert_eq!(CHECKINS.load(Ordering::SeqCst), 2);
         }
     }
+}
+
+// Original typed copy writes active pixels only, preserving destination padding.
+fn copy_rows(source: &[u8], input: Layout, destination: &mut [u8], output: Layout) {
+    let active = output.width * output.depth.pixel_bytes();
+    if input.stride == active && output.stride == active {
+        let size = active * output.height;
+        destination[..size].copy_from_slice(&source[..size]);
+        return;
+    }
+    for y in 0..output.height {
+        destination[y * output.stride..y * output.stride + active]
+            .copy_from_slice(&source[y * input.stride..y * input.stride + active]);
+    }
+}
+
+#[cfg(test)]
+mod copy_tests {
+    use super::*;
+    #[test]
+    fn active_rows_preserve_every_bit_and_padding() {
+        for depth in [Depth::U8, Depth::U16, Depth::F32] {
+            for padding in [0, 5] {
+                let active = 7 * depth.pixel_bytes();
+                let input = Layout {
+                    width: 7,
+                    height: 3,
+                    stride: active + padding,
+                    depth,
+                    origin: (0, 0),
+                };
+                let output = Layout {
+                    stride: active + if padding == 0 { 0 } else { 9 },
+                    ..input
+                };
+                let source: Vec<u8> = (0..input.span().unwrap())
+                    .map(|i| (i * 73 + 19) as u8)
+                    .collect();
+                let mut actual = vec![0xa5; output.span().unwrap()];
+                let mut expected = actual.clone();
+                let view = View::new(&source, input).unwrap();
+                let mut out = ViewMut::new(&mut expected, output).unwrap();
+                for y in 0..input.height {
+                    for x in 0..input.width {
+                        out.set(x, y, view.get(x, y).unwrap()).unwrap();
+                    }
+                }
+                copy_rows(&source, input, &mut actual, output);
+                assert_eq!(actual, expected);
+            }
+        }
+    }
+}
+
+unsafe fn host_copy(i: &PF_InData, input: &PF_LayerDef, output: *mut PF_LayerDef) -> Result<()> {
+    // PF_COPY uses the legacy utility callback, whose resampling differs from
+    // WorldTransformSuite::copy in the captured host. Match the original route.
+    let copy = i.utils.as_ref().ok_or(BAD)?.copy.ok_or(BAD)?;
+    check(copy(
+        i.effect_ref,
+        input as *const _ as *mut _,
+        output,
+        ptr::null_mut(),
+        ptr::null_mut(),
+    ))
 }

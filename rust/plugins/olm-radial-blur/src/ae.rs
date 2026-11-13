@@ -109,6 +109,12 @@ impl Effect for Plugin {
             end(25),
         ]
     }
+    const COPY_VALUES: &'static [usize] = &[3, 5, 6, 9, 11, 12];
+    fn copy_only(v: &[Value], _ctx: RenderContext) -> bool {
+        [4, 6, 7, 10, 12, 13]
+            .iter()
+            .all(|&slot| v[slot - 1].number as i32 == 0)
+    }
     fn render(
         v: &[Value],
         ctx: RenderContext,
@@ -144,7 +150,12 @@ impl Effect for Plugin {
             thickness: n(29),
             downsample: scale,
         };
-        algorithm::render(&p, input, output, 1)
+        algorithm::render(
+            &p,
+            input,
+            output,
+            render_threads(input.layout().width, input.layout().height),
+        )
     }
 }
 #[no_mangle]
@@ -192,4 +203,13 @@ pub unsafe extern "C" fn PluginDataEntryFunction2(
         0,
         b"https://olm.co.jp/\0".as_ptr(),
     )
+}
+
+// Small worlds do not amortize row-worker startup. No process-global pool/state.
+fn render_threads(width: usize, height: usize) -> usize {
+    if width.saturating_mul(height) < 65536 {
+        1
+    } else {
+        std::thread::available_parallelism().map_or(1, usize::from)
+    }
 }

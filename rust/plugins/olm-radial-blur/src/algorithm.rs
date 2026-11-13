@@ -350,30 +350,41 @@ pub fn render(
     let mut valid = vec![false; count];
     let mut spans = vec![0.0; count];
     let mut fades = vec![1.0; count];
-    for a in 0..angular {
-        for r in 0..radii {
-            let radius = (min_r + r as i32) as f32;
-            let (s, c) = trig[a];
-            let sx0 = mul(radius, c);
-            let sy0 = if p.rotation {
-                mul(mul(radius, p.ratio as f32), s)
-            } else {
-                mul(radius, mul(s, p.ratio as f32))
-            };
-            let sx = add(sub(mul(ca, sx0), mul(sa, sy0)), p.center[0] as f32);
-            let sy = add(add(mul(sa, sx0), mul(ca, sy0)), p.center[1] as f32);
-            let cell = if p.rotation {
-                r * angular + a
-            } else {
-                a * radii + r
-            };
-            (polar[cell], valid[cell]) = sample_rgba(&src, w, h, sx, sy, p.repeat);
-            spans[cell] = sample_scalar(&span, w, h, sx, sy, p.repeat);
-            if size_active {
-                fades[cell] = sample_scalar(&size, w, h, sx, sy, p.repeat);
+    let stride = if p.rotation { angular } else { radii };
+    parallel_planes(
+        &mut polar,
+        &mut valid,
+        &mut spans,
+        &mut fades,
+        stride,
+        threads,
+        |row, colors, validity, row_spans, row_fades| {
+            for (col, (((color, is_valid), cell_span), cell_fade)) in colors
+                .iter_mut()
+                .zip(validity)
+                .zip(row_spans)
+                .zip(row_fades)
+                .enumerate()
+            {
+                let (a, r) = if p.rotation { (col, row) } else { (row, col) };
+                let radius = (min_r + r as i32) as f32;
+                let (s, c) = trig[a];
+                let sx0 = mul(radius, c);
+                let sy0 = if p.rotation {
+                    mul(mul(radius, p.ratio as f32), s)
+                } else {
+                    mul(radius, mul(s, p.ratio as f32))
+                };
+                let sx = add(sub(mul(ca, sx0), mul(sa, sy0)), p.center[0] as f32);
+                let sy = add(add(mul(sa, sx0), mul(ca, sy0)), p.center[1] as f32);
+                (*color, *is_valid) = sample_rgba(&src, w, h, sx, sy, p.repeat);
+                *cell_span = sample_scalar(&span, w, h, sx, sy, p.repeat);
+                if size_active {
+                    *cell_fade = sample_scalar(&size, w, h, sx, sy, p.repeat);
+                }
             }
-        }
-    }
+        },
+    );
     let blurred = if p.rotation {
         rotation(
             p, step, angular, radii, &polar, &valid, &spans, &fades, threads,
@@ -390,115 +401,123 @@ pub fn render(
             threads,
         )?
     };
-    for y in 0..o.height {
-        for x in 0..o.width {
-            let dx = sub((x + crop_x as usize) as f32, p.center[0] as f32);
-            let dy = sub((y + crop_y as usize) as f32, p.center[1] as f32);
-            let ex = if p.rotation {
-                add(mul(ca, dx), mul(sa, dy))
-            } else {
-                add(mul(sa, dy), mul(ca, dx))
-            };
-            let ey = div(sub(mul(ca, dy), mul(sa, dx)), p.ratio as f32);
-            let radius = sub(add(mul(ey, ey), mul(ex, ex)).sqrt(), min_r as f32);
-            let mut angle = olm_math::atan2f(ey, ex, olm_math::Mode::Fma);
-            if angle < 0.0 {
-                angle = (angle as f64 + TURN) as f32;
-            }
-            let mut ai = if p.rotation {
-                mul(
-                    angle,
-                    div(
-                        1.0,
-                        ((1.0 / (p.quality as f32 as f64)) as f32 as f64 * RAD) as f32,
-                    ),
-                )
-            } else if angle < 0.0 {
-                0.0
-            } else {
-                div(angle, radians)
-            };
-            if !p.rotation && ai >= angular as f32 {
-                ai = sub(ai, angular as f32);
-            }
-            let (xx, yy) = if p.rotation {
-                (ai, radius)
-            } else {
-                (radius, ai)
-            };
-            let floor = p.rotation || l.depth == Depth::U8;
-            let xi = if floor { int(xx.floor()) } else { int(xx) };
-            let yi = if floor { int(yy.floor()) } else { int(yy) };
-            let fx = sub(xx, xi as f32);
-            let fy = sub(yy, yi as f32);
-            let (x0, x1, y0, y1, pw) = if p.rotation {
-                (
-                    xi.rem_euclid(angular as i32),
-                    (xi + 1).rem_euclid(angular as i32),
-                    yi.clamp(0, radii as i32 - 1),
-                    (yi + 1).clamp(0, radii as i32 - 1),
-                    angular,
-                )
-            } else {
-                let a = yi.rem_euclid(angular as i32);
-                let b = (a + 1) % angular as i32;
-                if l.depth == Depth::U8 {
+    let mut pixels = allocate(o.width * o.height, Ok(pack([0.0; 4], l.depth)), &mut budget)?;
+    olm_core::parallel_rows(&mut pixels, o.width, threads, |y, row| {
+        for (x, pixel) in row.iter_mut().enumerate() {
+            *pixel = (|| {
+                let dx = sub((x + crop_x as usize) as f32, p.center[0] as f32);
+                let dy = sub((y + crop_y as usize) as f32, p.center[1] as f32);
+                let ex = if p.rotation {
+                    add(mul(ca, dx), mul(sa, dy))
+                } else {
+                    add(mul(sa, dy), mul(ca, dx))
+                };
+                let ey = div(sub(mul(ca, dy), mul(sa, dx)), p.ratio as f32);
+                let radius = sub(add(mul(ey, ey), mul(ex, ex)).sqrt(), min_r as f32);
+                let mut angle = olm_math::atan2f(ey, ex, olm_math::Mode::Fma);
+                if angle < 0.0 {
+                    angle = (angle as f64 + TURN) as f32;
+                }
+                let mut ai = if p.rotation {
+                    mul(
+                        angle,
+                        div(
+                            1.0,
+                            ((1.0 / (p.quality as f32 as f64)) as f32 as f64 * RAD) as f32,
+                        ),
+                    )
+                } else if angle < 0.0 {
+                    0.0
+                } else {
+                    div(angle, radians)
+                };
+                if !p.rotation && ai >= angular as f32 {
+                    ai = sub(ai, angular as f32);
+                }
+                let (xx, yy) = if p.rotation {
+                    (ai, radius)
+                } else {
+                    (radius, ai)
+                };
+                let floor = p.rotation || l.depth == Depth::U8;
+                let xi = if floor { int(xx.floor()) } else { int(xx) };
+                let yi = if floor { int(yy.floor()) } else { int(yy) };
+                let fx = sub(xx, xi as f32);
+                let fy = sub(yy, yi as f32);
+                let (x0, x1, y0, y1, pw) = if p.rotation {
                     (
-                        xi.clamp(0, radii as i32 - 1),
-                        (xi + 1).clamp(0, radii as i32 - 1),
-                        a,
-                        b,
-                        radii,
+                        xi.rem_euclid(angular as i32),
+                        (xi + 1).rem_euclid(angular as i32),
+                        yi.clamp(0, radii as i32 - 1),
+                        (yi + 1).clamp(0, radii as i32 - 1),
+                        angular,
                     )
                 } else {
-                    (xi, xi + 1, a, b, radii)
-                }
-            };
-            let coords = [(x0, y0), (x1, y0), (x0, y1), (x1, y1)];
-            let weights = [
-                mul(sub(1.0, fx), sub(1.0, fy)),
-                mul(sub(1.0, fy), fx),
-                mul(sub(1.0, fx), fy),
-                mul(fy, fx),
-            ];
-            let mut taps = [[0.0; 4]; 4];
-            for (i, (tx, ty)) in coords.into_iter().enumerate() {
-                let idx = ty as i64 * pw as i64 + tx as i64;
-                if idx < 0 || idx >= count as i64 {
-                    return Err(Error::Bounds);
-                }
-                taps[i] = blurred[idx as usize];
-            }
-            let order = if p.rotation {
-                [0, 2, 1, 3]
-            } else {
-                [0, 1, 2, 3]
-            };
-            let aw = std::array::from_fn::<_, 4, _>(|i| mul(weights[i], taps[i][3]));
-            let mut alpha = 0.0;
-            let mut result = [0.0; 4];
-            for i in order {
-                alpha = add(aw[i], alpha);
-                for c in 0..3 {
-                    result[c] = add(mul(aw[i], taps[i][c]), result[c]);
-                }
-            }
-            let inverse = if alpha != 0.0 && !alpha.is_nan() {
-                div(1.0, alpha)
-            } else {
-                1.0
-            };
-            for c in 0..3 {
-                let normalized = if c == 2 {
-                    mul(inverse, result[c])
-                } else {
-                    mul(result[c], inverse)
+                    let a = yi.rem_euclid(angular as i32);
+                    let b = (a + 1) % angular as i32;
+                    if l.depth == Depth::U8 {
+                        (
+                            xi.clamp(0, radii as i32 - 1),
+                            (xi + 1).clamp(0, radii as i32 - 1),
+                            a,
+                            b,
+                            radii,
+                        )
+                    } else {
+                        (xi, xi + 1, a, b, radii)
+                    }
                 };
-                let gain = mul(normalized, p.gain as f32);
-                result[c] = if gain < 1.0 { gain } else { 1.0 };
-            }
-            result[3] = alpha;
-            output.set(x, y, pack(result, l.depth))?;
+                let coords = [(x0, y0), (x1, y0), (x0, y1), (x1, y1)];
+                let weights = [
+                    mul(sub(1.0, fx), sub(1.0, fy)),
+                    mul(sub(1.0, fy), fx),
+                    mul(sub(1.0, fx), fy),
+                    mul(fy, fx),
+                ];
+                let mut taps = [[0.0; 4]; 4];
+                for (i, (tx, ty)) in coords.into_iter().enumerate() {
+                    let idx = ty as i64 * pw as i64 + tx as i64;
+                    if idx < 0 || idx >= count as i64 {
+                        return Err(Error::Bounds);
+                    }
+                    taps[i] = blurred[idx as usize];
+                }
+                let order = if p.rotation {
+                    [0, 2, 1, 3]
+                } else {
+                    [0, 1, 2, 3]
+                };
+                let aw = std::array::from_fn::<_, 4, _>(|i| mul(weights[i], taps[i][3]));
+                let mut alpha = 0.0;
+                let mut result = [0.0; 4];
+                for i in order {
+                    alpha = add(aw[i], alpha);
+                    for c in 0..3 {
+                        result[c] = add(mul(aw[i], taps[i][c]), result[c]);
+                    }
+                }
+                let inverse = if alpha != 0.0 && !alpha.is_nan() {
+                    div(1.0, alpha)
+                } else {
+                    1.0
+                };
+                for c in 0..3 {
+                    let normalized = if c == 2 {
+                        mul(inverse, result[c])
+                    } else {
+                        mul(result[c], inverse)
+                    };
+                    let gain = mul(normalized, p.gain as f32);
+                    result[c] = if gain < 1.0 { gain } else { 1.0 };
+                }
+                result[3] = alpha;
+                Ok(pack(result, l.depth))
+            })();
+        }
+    })?;
+    for (y, row) in pixels.chunks(o.width).enumerate() {
+        for (x, pixel) in row.iter().enumerate() {
+            output.set(x, y, (*pixel)?)?;
         }
     }
     Ok(())
@@ -739,4 +758,49 @@ fn rotation(
         }
     })?;
     Ok(out)
+}
+
+/// Disjoint contiguous planes; each row keeps its original scalar operation order.
+fn parallel_planes<A: Send, B: Send, C: Send, D: Send>(
+    a: &mut [A],
+    b: &mut [B],
+    c: &mut [C],
+    d: &mut [D],
+    stride: usize,
+    threads: usize,
+    f: impl Fn(usize, &mut [A], &mut [B], &mut [C], &mut [D]) + Sync,
+) {
+    let rows = a.len() / stride;
+    let workers = threads
+        .max(1)
+        .min(rows.max(1))
+        .min(std::thread::available_parallelism().map_or(1, usize::from));
+    let chunk = rows.div_ceil(workers).max(1) * stride;
+    std::thread::scope(|scope| {
+        for (part, (((aa, bb), cc), dd)) in a
+            .chunks_mut(chunk)
+            .zip(b.chunks_mut(chunk))
+            .zip(c.chunks_mut(chunk))
+            .zip(d.chunks_mut(chunk))
+            .enumerate()
+        {
+            let f = &f;
+            let mut work = move || {
+                for (row, (((aa, bb), cc), dd)) in aa
+                    .chunks_mut(stride)
+                    .zip(bb.chunks_mut(stride))
+                    .zip(cc.chunks_mut(stride))
+                    .zip(dd.chunks_mut(stride))
+                    .enumerate()
+                {
+                    f(part * (chunk / stride) + row, aa, bb, cc, dd);
+                }
+            };
+            if workers == 1 {
+                work();
+            } else {
+                scope.spawn(work);
+            }
+        }
+    });
 }

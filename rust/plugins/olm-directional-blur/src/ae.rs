@@ -93,6 +93,14 @@ impl Effect for Plugin {
             param(21, "Thickness", Kind::GroupEnd),
         ]
     }
+    const COPY_INTEGER_SLOTS: &'static [i32] = &[5, 6, 10, 11];
+    fn copy_lengths(v: &[i32], ctx: RenderContext) -> bool {
+        let scale = ctx.downsample_x.numerator as f32 / ctx.downsample_x.denominator as f32;
+        scale > 0.0
+            && scale <= 1.0
+            && ctx.downsample_y.numerator as u32 <= ctx.downsample_y.denominator
+            && v.iter().all(|&length| (length as f32 * scale) as i32 == 0)
+    }
     fn render(
         v: &[Value],
         ctx: RenderContext,
@@ -180,8 +188,16 @@ impl Effect for Plugin {
         } else {
             None
         };
-        let result = algorithm::render(&source, a.width, a.height, &p, depth, layer.as_deref(), 1)
-            .map_err(|_| Error::Geometry)?;
+        let result = algorithm::render(
+            &source,
+            a.width,
+            a.height,
+            &p,
+            depth,
+            layer.as_deref(),
+            render_threads(a.width, a.height),
+        )
+        .map_err(|_| Error::Geometry)?;
         for y in 0..b.height {
             for x in 0..b.width {
                 let v = result[y * a.width + x];
@@ -252,4 +268,13 @@ pub unsafe extern "C" fn PluginDataEntryFunction2(
         0,
         b"https://olm.co.jp/\0".as_ptr(),
     )
+}
+
+// Small worlds do not amortize row-worker startup. No process-global pool/state.
+fn render_threads(width: usize, height: usize) -> usize {
+    if width.saturating_mul(height) < 65536 {
+        1
+    } else {
+        std::thread::available_parallelism().map_or(1, usize::from)
+    }
 }

@@ -1,0 +1,512 @@
+{
+  "job": "blurs",
+  "round": 2,
+  "plugin": "OLMBlur",
+  "size": [
+    1920,
+    1080
+  ],
+  "timing_samples": 5,
+  "warmup": 1,
+  "identity": {
+    "original": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+      "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+    },
+    "rust": {
+      "path": "D:\\olm-rs-target\\blurs\\staged\\OLMBlur.aex",
+      "sha256": "479b552eb28b487654ea497f28ecd94c8e4f693f572ea114e710f54da22909ae"
+    }
+  },
+  "harness": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+    "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+  },
+  "timing_note": "Separate shared-machine round-one/round-two runs; resident selector clock except Radial heavy process wall clock including startup/IO.",
+  "cells": [
+    {
+      "depth": 8,
+      "preset": "default",
+      "clock": "render_selector_ns",
+      "status": "exact",
+      "round1_ratio": 0.8338649274810371,
+      "round2_ratio": 0.5018806186117957,
+      "samples_ms": {
+        "original": [
+          64.2758,
+          65.5405,
+          63.9949,
+          63.6895,
+          63.7196
+        ],
+        "rust": [
+          35.9966,
+          30.8078,
+          32.2115,
+          30.5906,
+          32.1178
+        ]
+      },
+      "median_ms": {
+        "original": 63.9949,
+        "rust": 32.1178
+      },
+      "output_hashes": {
+        "original": [
+          {
+            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
+            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
+          }
+        ],
+        "rust": [
+          {
+            "native": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2",
+            "png": "39e8fe0e9339979e0065eec4824a1e235aa2e88d2ac549b7b185dacaed0eacf2"
+          }
+        ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "rust": 6
+      }
+    },
+    {
+      "depth": 8,
+      "preset": "heavy",
+      "clock": "render_selector_ns",
+      "status": "exact",
+      "round1_ratio": 0.31120913734520667,
+      "round2_ratio": 0.22491597550984604,
+      "samples_ms": {
+        "original": [
+          369.3566,
+          373.1877,
+          366.7538,
+          369.7145,
+          367.9629
+        ],
+        "rust": [
+          83.0742,
+          81.3907,
+          90.179,
+          94.1501,
+          80.4988
+        ]
+      },
+      "median_ms": {
+        "original": 369.3566,
+        "rust": 83.0742
+      },
+      "output_hashes": {
+        "original": [
+          {
+            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
+            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
+          }
+        ],
+        "rust": [
+          {
+            "native": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196",
+            "png": "1c79ca6d539be1089d53516bb752fb8e888939260eec302dda0586b3bdd7c196"
+          }
+        ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "rust": 6
+      }
+    },
+    {
+      "depth": 16,
+      "preset": "default",
+      "clock": "render_selector_ns",
+      "status": "exact",
+      "round1_ratio": 0.9204003852278262,
+      "round2_ratio": 0.45932774303160895,
+      "samples_ms": {
+        "original": [
+          65.6731,
+          69.3177,
+          67.4238,
+          67.5694,
+          67.9484
+        ],
+        "rust": [
+          32.029,
+          30.8989,
+          30.69,
+          41.6839,
+          31.0365
+        ]
+      },
+      "median_ms": {
+        "original": 67.5694,
+        "rust": 31.0365
+      },
+      "output_hashes": {
+        "original": [
+          {
+            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075",
+            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e"
+          }
+        ],
+        "rust": [
+          {
+            "native": "0e46827434bc4c2b42075e8f373b527bdd933e91ae4cec5d3b385daf95f71075",
+            "png": "b0f8bddb8c71c5df4b0109b4aff48e56919e6d7c893b744819fc1258b3c0e14e"
+          }
+        ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "rust": 6
+      }
+    },
+    {
+      "depth": 16,
+      "preset": "heavy",
+      "clock": "render_selector_ns",
+      "status": "exact",
+      "round1_ratio": 0.2981379696346239,
+      "round2_ratio": 0.22042348667684644,
+      "samples_ms": {
+        "original": [
+          371.3964,
+          367.639,
+          369.5559,
+          363.8333,
+          378.9869
+        ],
+        "rust": [
+          80.0606,
+          90.6242,
+          86.6514,
+          80.1693,
+          81.4588
+        ]
+      },
+      "median_ms": {
+        "original": 369.5559,
+        "rust": 81.4588
+      },
+      "output_hashes": {
+        "original": [
+          {
+            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97",
+            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6"
+          }
+        ],
+        "rust": [
+          {
+            "native": "d994eb63eaa488e83d2743541d5f1e6a442111ef462972b7d8ee98eb191d7c97",
+            "png": "9c3b8fef8b9670006f1496b6eb65e5e00072a132b811d368098c02c64e6826e6"
+          }
+        ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "rust": 6
+      }
+    },
+    {
+      "depth": 32,
+      "preset": "default",
+      "clock": "render_selector_ns",
+      "status": "exact",
+      "round1_ratio": 1.0298750033978128,
+      "round2_ratio": 0.530324775837216,
+      "samples_ms": {
+        "original": [
+          64.6821,
+          60.8581,
+          64.1506,
+          62.108,
+          63.8933
+        ],
+        "rust": [
+          33.8842,
+          32.3895,
+          31.9151,
+          34.2694,
+          35.758
+        ]
+      },
+      "median_ms": {
+        "original": 63.8933,
+        "rust": 33.8842
+      },
+      "output_hashes": {
+        "original": [
+          {
+            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9",
+            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb"
+          }
+        ],
+        "rust": [
+          {
+            "native": "adb960ff11ec04fc12add17a20c9fd3523b21b31f14d863f09c555cbe26f16b9",
+            "png": "319ba9126ab0b1f8b2ada13a586ef474929f206e122c1581496d5a9304ea54bb"
+          }
+        ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "rust": 6
+      }
+    },
+    {
+      "depth": 32,
+      "preset": "heavy",
+      "clock": "render_selector_ns",
+      "status": "exact",
+      "round1_ratio": 0.2574172075244527,
+      "round2_ratio": 0.224155739454935,
+      "samples_ms": {
+        "original": [
+          362.9082,
+          363.9309,
+          360.7747,
+          384.915,
+          377.1403
+        ],
+        "rust": [
+          81.5772,
+          80.6234,
+          85.8328,
+          81.0137,
+          92.1878
+        ]
+      },
+      "median_ms": {
+        "original": 363.9309,
+        "rust": 81.5772
+      },
+      "output_hashes": {
+        "original": [
+          {
+            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62",
+            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f"
+          }
+        ],
+        "rust": [
+          {
+            "native": "6a51866c14e2a3765e38b3507261e8f2b3c714021803a0b301e929224c527b62",
+            "png": "7d47eae8d61e96a3293cdd0d7d98789fe2bfc4366c3026120e0f0a2cc9d5ec3f"
+          }
+        ]
+      },
+      "output_hash_counts": {
+        "original": 6,
+        "rust": 6
+      }
+    }
+  ],
+  "oracle": [
+    {
+      "seed": 20261114,
+      "cases_per_depth": 103,
+      "random_cases_per_depth": 100,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          97,
+          61
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "jobs": 2,
+      "candidate_sha256": "479b552eb28b487654ea497f28ecd94c8e4f693f572ea114e710f54da22909ae",
+      "resident_counts": {
+        "smart16:exact": 103,
+        "smart32:exact": 103,
+        "smart8:exact": 103
+      },
+      "per_process_authority_counts": {
+        "smart16:exact": 103,
+        "smart32:exact": 103,
+        "smart8:exact": 103
+      },
+      "summary_sha256": "bb6e19a42ef03113a36d9d95b833b4069cdd86f6dbaa50d8f2e8cc4703a0e58c"
+    },
+    {
+      "seed": 20261115,
+      "cases_per_depth": 103,
+      "random_cases_per_depth": 100,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          97,
+          61
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "jobs": 2,
+      "candidate_sha256": "479b552eb28b487654ea497f28ecd94c8e4f693f572ea114e710f54da22909ae",
+      "resident_counts": {
+        "smart16:exact": 103,
+        "smart32:exact": 103,
+        "smart8:exact": 103
+      },
+      "per_process_authority_counts": {
+        "smart16:exact": 103,
+        "smart32:exact": 103,
+        "smart8:exact": 103
+      },
+      "summary_sha256": "03f5e61ebca1dc1c16affc6300e98b556b4d3a0ac7c2ebf5daaae6dbc262b741"
+    }
+  ],
+  "exclusions": [],
+  "native_ae_macos_tested": false,
+  "verification": {
+    "release_tests_total_all_three_crates": 22,
+    "ignored_profile_regeneration": 1,
+    "fmt": "pass",
+    "clippy": "pass with warnings",
+    "golden_exact": 54,
+    "golden_historical_exclusions": 0,
+    "targeted_noop_both_plugins": null
+  },
+  "profile_540p_f32": {
+    "before": {
+      "discarded_warmup": [
+        [
+          3.549,
+          6.631,
+          8.594
+        ]
+      ],
+      "samples": [
+        [
+          3.498,
+          7.629,
+          8.735
+        ],
+        [
+          3.542,
+          7.684,
+          8.977
+        ],
+        [
+          3.796,
+          6.399,
+          8.741
+        ],
+        [
+          3.479,
+          7.026,
+          8.807
+        ],
+        [
+          3.667,
+          6.946,
+          9.137
+        ],
+        [
+          3.57,
+          7.282,
+          9.223
+        ],
+        [
+          3.558,
+          6.75,
+          8.636
+        ]
+      ],
+      "median_ms": {
+        "stage": 3.558,
+        "filter": 7.026,
+        "output": 8.807
+      }
+    },
+    "after": {
+      "discarded_warmup": [
+        [
+          3.616,
+          6.056,
+          1.577
+        ]
+      ],
+      "samples": [
+        [
+          3.551,
+          6.917,
+          1.642
+        ],
+        [
+          3.317,
+          6.583,
+          1.632
+        ],
+        [
+          3.371,
+          6.986,
+          1.565
+        ],
+        [
+          3.668,
+          6.958,
+          1.556
+        ],
+        [
+          3.424,
+          7.838,
+          1.765
+        ],
+        [
+          3.375,
+          6.716,
+          1.592
+        ],
+        [
+          3.351,
+          6.08,
+          1.594
+        ]
+      ],
+      "median_ms": {
+        "stage": 3.375,
+        "filter": 6.917,
+        "output": 1.594
+      }
+    }
+  },
+  "acceptance_met": true
+}

@@ -18,3 +18,10 @@ pipl.workspace = true
 winres = "0.1"
 cc.workspace = true
 
+
+[features]
+profile = []
+
+[[example]]
+name = "blur-profile"
+path = "examples/profile.rs"
