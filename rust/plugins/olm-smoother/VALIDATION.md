@@ -191,3 +191,34 @@ Additional reference comparisons (`cargo test --release -p olm-smoother
 The finite input bound and the CFG-preserving transformation support the
 implementation argument; enumerated/random tests do not exhaust all images.
 The v1 traversal remains serial. No parameter, PiPL, depth or route changes.
+
+### Measured result and release gate
+
+1080p Rust/original wall-time ratios (lower is better), baseline -> optimized:
+
+| Depth | Default | Heavy |
+|---|---|---|
+| Classic8 | 5.294 -> 2.011 | 6.055 -> 1.672 |
+| Classic16 | 9.862 -> 3.527 | 9.410 -> 2.282 |
+
+Baseline and final sweeps were separate on a shared machine; this is not a
+controlled simultaneous before/after speedup. The final sweep had no overlapping
+build from this task. All four cells were exact. The original-speed target is
+not yet reached: contour walkers/executor dispatch and checked pixel staging
+remain candidates for a subsequent measured optimization.
+
+Release tests: 9 passed with generated-reference; fmt check passed; release
+clippy completed successfully with existing/mechanical-code warnings. Golden:
+36 exact. Two oracle seeds (20261121/20261122), 103 cases per depth per seed,
+including 100 randomized cases, all three downsample factors: 412 exact, zero
+errors. Structured-source regeneration reproduced the checked-in files exactly.
+
+Local-only evidence is under D:\olm-rs-target\smoother: accepted-tests.log,
+accepted-fmt.log, accepted-clippy.log, accepted-golden-v1.log, oracle/,
+bench-before/evidence.json, bench-serial/evidence.json, serial-report.json and
+serial-audit.json. The combined benchmark audit passed: 10 exact cells, 60
+frame pairs, 120 PNGs and 72 deep files verified. Tested OLMSmoother.aex SHA256:
+d116782f0c49ddcd0f23b8d12755902a77c4b157498c10cd9a77aadd29b5485a.
+
+The combined job is not PR-ready because Smoother2's cropped-output oracle gate
+fails on both the baseline and optimized builds; see its validation note.

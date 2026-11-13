@@ -445,3 +445,48 @@ chunks and compares exact float words for requested workers 1/2/3/usize::MAX,
 all three versions, all gamma modes, fractional range, color key/inversion,
 extra smoothing and premultiplied output. The existing C++ and adapter tests
 remain active. No parameter or host-contract changes are introduced.
+
+### Measured result and incomplete ROI gate
+
+1080p Rust/original wall-time ratios (lower is better), baseline -> optimized:
+
+| Depth | Default | Heavy |
+|---|---|---|
+| 8 | 1.153 -> 0.302 | 1.339 -> 0.187 |
+| 16 | 1.191 -> 0.355 | 1.152 -> 0.196 |
+| 32 | 1.357 -> 0.276 | 1.199 -> 0.181 |
+
+Separate baseline/final sweeps on a shared machine; no exclusive CPU claim.
+The final sweep had no overlapping build from this task. All six cells were
+exact. Scalar UCRT cbrtf remains a major setup cost; parallel rows avoid any
+unproven replacement. Output packing/copying is another remaining cost.
+
+Release tests: 21 passed; fmt check passed; release clippy completed successfully
+with warnings. Golden: 54 exact. Two seeds (20261121/20261122), 103 cases per
+depth per seed, including 100 randomized cases and all three downsample factors:
+618 exact, zero errors within the existing full-world boundary contract.
+
+The extra per-process cropped-output campaign is NOT passing. Extent 1,1,7,5
+with 11x9/31x19 inputs produces 6x4 output worlds. All 27 optimized cases failed
+with smart_render_error 516; all 9 baseline repro cases also failed with 516.
+The adapter already requires equal input/output dimensions and origin. This is
+a preexisting compatibility gap, not evidence that ROI support is complete.
+
+Bounded investigation rejected full-pipeline cropping, host resizing after the
+pipeline, and host resizing before the pipeline. The original visibly resizes
+the whole image; the exact processing/resampling order and float/color domain
+remain unresolved. All experimental boundary changes were reverted. Self-review
+(no agents authorized) separated this existing host-contract issue from the
+validated speed changes after three rejected principal hypotheses. Further work
+needs an original-side call/order trace or a small discriminating resampling
+fixture, rather than another guessed boundary implementation. The job's required
+ROI gate is unmet, so no PR is opened; the pushed branch is a review checkpoint.
+
+Local-only evidence under D:\olm-rs-target\smoother: accepted-tests.log,
+accepted-fmt.log, accepted-clippy.log, accepted-golden-v2.log, oracle/,
+oracle-roi/, roi-baseline/, roi-fixed/, roi-host-check/, roi-resize2-check/,
+bench-before/evidence.json and bench-serial/evidence.json. serial-audit.json
+passed all 10 combined benchmark cells, 60 frame pairs, 120 PNGs and 72 deep
+files. Tested accepted/OLMSmoother2.aex SHA256:
+a209bff96fe6c8d66d3d06a0fbefc79788e9934ff46c18cab8bfc245a6fc97a5.
+Rebuild DLL hashes can differ; the benchmark binds the staged binary above.
