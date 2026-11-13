@@ -61,10 +61,10 @@ impl Effect for Plugin {
         v: &[Value],
         ctx: RenderContext,
         input: &View<'_>,
-        output: &mut ViewMut<'_>,
+        output: &mut [u8],
+        o: olm_core::Layout,
     ) -> Result<()> {
         let l = input.layout();
-        let o = output.layout();
         if !ctx.smart {
             if l.depth == Depth::F32
                 || l.width != o.width
@@ -78,6 +78,7 @@ impl Effect for Plugin {
             {
                 return Err(Error::Unsupported);
             }
+            let mut output = ViewMut::new(output, o)?;
             for y in 0..l.height {
                 for x in 0..l.width {
                     output.set(x, y, input.get(x, y)?)?;
@@ -102,9 +103,10 @@ impl Effect for Plugin {
             legacy: v[4].number != 0.0,
             scale: ctx.downsample_x.numerator as f32 / ctx.downsample_x.denominator as f32,
         };
-        algorithm::render(
+        algorithm::render_bytes(
             input,
             output,
+            o,
             &p,
             render_threads(input.layout().width, input.layout().height),
         )

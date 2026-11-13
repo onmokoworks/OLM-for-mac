@@ -174,3 +174,45 @@ Local-only evidence: `D:/olm-rs-target/blurs/oracle6-OLMBlur-*`,
 Candidate SHA-256: `4b62401dc0e9220275515e8a0bff3ebdfdaf4abdb3e286de8ff53962f96862c1`.
 The benchmark offline audit passed. No originals, raw run outputs or binaries are
 committed. Native AE and macOS performance were not tested.
+
+
+## Performance round two - S-blurs
+
+Round two profiles 32-bpc defaults at 960x540 using `examples/profile.rs`
+(`--features profile`; timers are absent from ordinary builds). The initial
+phase measurements were roughly 3.5 ms input staging, 7 ms filtering and 9 ms
+checked output writes. The new crate-local byte boundary writes disjoint row
+chunks directly into the host output: output time falls to about 1.6 ms. The
+checked ViewMut writer remains the reference API. All 432 C++ comparison cases
+now also compare the byte writer at one/four threads, including exceptional
+floats; an additional test covers odd padding and a short final row. Default
+Legacy is false; serial Legacy carries were not the measured default bottleneck.
+
+Merged `origin/main` before revalidation. Historical round-one raw run directories
+were deleted at the user's request; compact summaries remain under
+`D:/olm-rs-target/blurs-evidence/round1`. Round-two exact-case pixels are deleted
+after hashing; only mismatches remain temporarily for triage. No shared source
+was authored by this job. Final results and compact evidence follow below.
+
+Final 1080p median Rust/original ratios, one warmup plus five samples:
+
+| Depth | Default round 1 | Default round 2 | Heavy round 1 | Heavy round 2 |
+|---|---:|---:|---:|---:|
+| 8 | 0.834 | 0.502 | 0.311 | 0.225 |
+| 16 | 0.920 | 0.459 | 0.298 | 0.220 |
+| 32 | 1.030 | 0.530 | 0.257 | 0.224 |
+
+Verification: 22 release tests across the three crates pass (one explicit profile
+regeneration ignored), rustfmt and release Clippy pass (warnings), and 148 admitted
+golden hashes match (14 historical Radial exclusions unchanged). Two cleanup-helper
+tests pass. Both seeds include 103 admitted cases/depth at scales 1, 1/2, 1/4.
+This plugin retained 206 exact at 8 bpc, 206 exact at 16 bpc, 206 exact at 32 bpc.
+No unexplained stable mismatch, render failure or timeout remained. The 66 targeted
+Directional/Radial no-op and fixture comparisons passed again. No native AE/macOS
+performance qualification is claimed.
+
+[Compact round-two evidence](performance-round2.json) records samples, hashes,
+case plans, exclusion proofs and counts. The resident audit verified 15 exact cells
+and 90 frame pairs; its three incomplete cells are original Radial heavy. Raw
+run folders were deleted after compaction; local compact summaries/logs are under
+`D:/olm-rs-target/blurs-evidence`.

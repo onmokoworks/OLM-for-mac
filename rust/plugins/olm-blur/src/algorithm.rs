@@ -179,8 +179,102 @@ pub fn render(
     p: &Params,
     threads: usize,
 ) -> Result<()> {
+    render_impl(input, output.layout(), p, threads, |a| {
+        let (w, h) = (input.layout().width, input.layout().height);
+        for y in 0..h {
+            for x in 0..w {
+                output.set(x, y, output_pixel(input.get(x, y)?, a[y * w + x]))?;
+            }
+        }
+        Ok(())
+    })
+}
+
+fn output_pixel(pixel: Pixel, rgb: [f32; 3]) -> Pixel {
+    match pixel {
+        Pixel::U8(v) => Pixel::U8([
+            v[0],
+            integer_store(rgb[0]) as u8,
+            integer_store(rgb[1]) as u8,
+            integer_store(rgb[2]) as u8,
+        ]),
+        Pixel::U16(v) => Pixel::U16([
+            v[0],
+            integer_store(rgb[0]) as u16,
+            integer_store(rgb[1]) as u16,
+            integer_store(rgb[2]) as u16,
+        ]),
+        Pixel::F32(v) => Pixel::F32([v[0], rgb[0], rgb[1], rgb[2]]),
+    }
+}
+
+/// Crate-local host byte boundary: checked once, disjoint rows, padding untouched.
+pub fn render_bytes(
+    input: &View<'_>,
+    output: &mut [u8],
+    layout: olm_core::Layout,
+    p: &Params,
+    threads: usize,
+) -> Result<()> {
+    let span = layout.span()?;
+    if output.len() < span {
+        return Err(Error::Bounds);
+    }
+    render_impl(input, layout, p, threads, |a| {
+        let workers = threads
+            .max(1)
+            .min(layout.height)
+            .min(std::thread::available_parallelism().map_or(1, usize::from));
+        let rows = layout.height.div_ceil(workers);
+        let chunk = rows.checked_mul(layout.stride).ok_or(Error::Overflow)?;
+        std::thread::scope(|scope| {
+            for (part, bytes) in output[..span].chunks_mut(chunk).enumerate() {
+                let mut work = move || {
+                    for (row, bytes) in bytes.chunks_mut(layout.stride).enumerate() {
+                        let y = part * rows + row;
+                        for (x, pixel) in bytes[..layout.width * layout.depth.pixel_bytes()]
+                            .chunks_exact_mut(layout.depth.pixel_bytes())
+                            .enumerate()
+                        {
+                            let value = output_pixel(
+                                input.get(x, y).expect("validated input coordinates"),
+                                a[y * layout.width + x],
+                            );
+                            match value {
+                                Pixel::U8(v) => pixel.copy_from_slice(&v),
+                                Pixel::U16(v) => {
+                                    for (dst, c) in pixel.chunks_exact_mut(2).zip(v) {
+                                        dst.copy_from_slice(&c.to_ne_bytes());
+                                    }
+                                }
+                                Pixel::F32(v) => {
+                                    for (dst, c) in pixel.chunks_exact_mut(4).zip(v) {
+                                        dst.copy_from_slice(&c.to_ne_bytes());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                };
+                if workers == 1 {
+                    work();
+                } else {
+                    scope.spawn(work);
+                }
+            }
+        });
+        Ok(())
+    })
+}
+
+fn render_impl(
+    input: &View<'_>,
+    o: olm_core::Layout,
+    p: &Params,
+    threads: usize,
+    publish: impl FnOnce(&[[f32; 3]]) -> Result<()>,
+) -> Result<()> {
     let l = input.layout();
-    let o = output.layout();
     if l.width != o.width
         || l.height != o.height
         || l.depth != o.depth
@@ -201,6 +295,8 @@ pub fn render(
     }
     let (w, h) = (l.width, l.height);
     let n = image_len(w, h)?;
+    #[cfg(feature = "profile")]
+    let clock = std::time::Instant::now();
     let mut budget = Budget::new(isize::MAX as usize);
     let mut a = allocate(n, [0.0; 3], &mut budget)?;
     let mut b = allocate(n, [0.0; 3], &mut budget)?;
@@ -256,6 +352,8 @@ pub fn render(
     };
     // Bounded finite RGB cannot overflow these positive weighted averages.
     // Keep the explicit x86 NaN/payload path for all exceptional/HDR extremes.
+    #[cfg(feature = "profile")]
+    let staged_at = clock.elapsed();
     let amount = p.amount * p.scale;
     if !amount.is_finite() {
         return Err(Error::Unsupported);
@@ -318,27 +416,16 @@ pub fn render(
             }
         }
     }
-    for y in 0..h {
-        for x in 0..w {
-            let rgb = a[y * w + x];
-            let pixel = match input.get(x, y)? {
-                Pixel::U8(v) => Pixel::U8([
-                    v[0],
-                    integer_store(rgb[0]) as u8,
-                    integer_store(rgb[1]) as u8,
-                    integer_store(rgb[2]) as u8,
-                ]),
-                Pixel::U16(v) => Pixel::U16([
-                    v[0],
-                    integer_store(rgb[0]) as u16,
-                    integer_store(rgb[1]) as u16,
-                    integer_store(rgb[2]) as u16,
-                ]),
-                Pixel::F32(v) => Pixel::F32([v[0], rgb[0], rgb[1], rgb[2]]),
-            };
-            output.set(x, y, pixel)?;
-        }
-    }
+    #[cfg(feature = "profile")]
+    let filtered_at = clock.elapsed();
+    publish(&a)?;
+    #[cfg(feature = "profile")]
+    eprintln!(
+        "stage_ms={:.3} filter_ms={:.3} output_ms={:.3}",
+        staged_at.as_secs_f64() * 1000.,
+        (filtered_at - staged_at).as_secs_f64() * 1000.,
+        (clock.elapsed() - filtered_at).as_secs_f64() * 1000.
+    );
     Ok(())
 }
 
