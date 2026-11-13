@@ -1,0 +1,2 @@
+# Preserve the byte hashes recorded by the artifact audit on every platform.
+evidence/*.json text eol=lf
