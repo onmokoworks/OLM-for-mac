@@ -14,7 +14,7 @@ files. The default is the main-build staging directory supplied for Job B-speed.
 `--harness` selects the already-built AEXCompat harness. Six originals are
 selected uniquely from `upstream_20261112/extracted/*/*/Plugins/64/2025/`;
 the unchanged six come from `ghidra_windows_aex`. No originals are copied.
-Every executable is SHA-256 bound. `--only OLMBlur` and `--sizes 1x1,960x540`
+Every executable is SHA-256 bound. Rendered frames are deleted right after hashing (their digests are the evidence); pass `--keep-frames` to retain them for diagnosis. `--only OLMBlur` and `--sizes 1x1,960x540`
 allow bounded subsets. Always use a new output directory.
 
 Each cell uses one resident `--render-request-batch` per side: one discarded

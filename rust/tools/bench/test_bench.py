@@ -1,8 +1,21 @@
 import copy
 import unittest
 
-from bench import assignments, parse_report, stats
+from bench import assignments, drop_frames, parse_report, stats
 from report import adjusted
+
+
+class FrameCleanupTests(unittest.TestCase):
+    def test_drop_frames_removes_png_and_native_only(self):
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as d:
+            d = Path(d)
+            for name in ('rust-0.png', 'rust-0.rgba16le', 'rust-0.rgba32f-le', 'keep.json'):
+                (d / name).write_bytes(b'x')
+            manifest = {'cases': [{'output': str(d / 'rust-0.png')}, {'output': str(d / 'rust-1.png')}]}
+            self.assertEqual(drop_frames(manifest), 3)
+            self.assertEqual(sorted(p.name for p in d.iterdir()), ['keep.json'])
 
 
 class StatisticsTests(unittest.TestCase):
