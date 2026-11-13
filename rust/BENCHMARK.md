@@ -297,3 +297,90 @@ sanity check on this corpus, not new native AE qualification.
 | OLMAntiAntiAlias | 16 | heavy | 188.66 (187.79) | 99.75 (99.49) | 0.529 | 186.05 / 96.90 | 0.521 | exact |
 | OLMAntiAntiAlias | 32 | default | 9.65 (8.66) | 8.81 (8.54) | 0.913 | 6.55 / 5.66 | 0.865 | exact |
 | OLMAntiAntiAlias | 32 | heavy | 185.67 (184.79) | 89.74 (88.39) | 0.483 | 182.91 / 86.92 | 0.475 | exact |
+
+## After optimisation — 2026-11-13 (main c91bf2b8)
+
+Same harness (AEXCompat 032a1876, harness SHA-256 92280aa7…), same originals, inputs, presets and
+protocol as above; run serially on the same machine with no other jobs. Rendered frames were
+deleted after hashing (`--keep-frames` not used). Median `render_selector` ms at 1920×1080.
+"First Rust" is the Rust median from the table above. Ratio = now / original (< 1 is faster).
+Every completed cell is byte-identical to the original.
+
+| Plug-in | bpc | Preset | Original ms | First Rust ms | Rust now ms | Now / original |
+|---|---:|---|---:|---:|---:|---:|
+| ColorKeep | 8 | default | 11.43 | 52.79 | 5.69 | 0.497 |
+| ColorKeep | 8 | heavy | 40.05 | 72.36 | 7.26 | 0.181 |
+| ColorKeep | 16 | default | 12.00 | 60.78 | 5.67 | 0.472 |
+| ColorKeep | 16 | heavy | 41.59 | 87.48 | 6.38 | 0.153 |
+| ColorKeep | 32 | default | 12.99 | 40.40 | 5.77 | 0.444 |
+| ColorKeep | 32 | heavy | 41.11 | 66.46 | 6.31 | 0.153 |
+| DistanceGradation | 8 | default | 54.56 | 156.75 | 70.08 | 1.284 |
+| DistanceGradation | 8 | heavy | 104.52 | 320.75 | 95.59 | 0.915 |
+| DistanceGradation | 16 | default | 60.18 | 143.20 | 63.06 | 1.048 |
+| DistanceGradation | 16 | heavy | 111.45 | 317.36 | 86.36 | 0.775 |
+| DistanceGradation | 32 | default | 72.73 | 143.61 | 57.15 | 0.786 |
+| DistanceGradation | 32 | heavy | 114.70 | 303.25 | 85.27 | 0.743 |
+| OLMBlur | 8 | default | 64.07 | 275.83 | 31.02 | 0.484 |
+| OLMBlur | 8 | heavy | 369.69 | 1712.02 | 81.79 | 0.221 |
+| OLMBlur | 16 | default | 64.96 | 287.89 | 33.02 | 0.508 |
+| OLMBlur | 16 | heavy | 367.16 | 1746.54 | 81.01 | 0.221 |
+| OLMBlur | 32 | default | 61.98 | 291.27 | 32.12 | 0.518 |
+| OLMBlur | 32 | heavy | 365.11 | 1713.90 | 80.44 | 0.220 |
+| OLMColorKey | 8 | default | 32.03 | 141.61 | 10.30 | 0.322 |
+| OLMColorKey | 8 | heavy | 996.59 | 1818.91 | 195.04 | 0.196 |
+| OLMColorKey | 16 | default | 33.24 | 124.80 | 12.24 | 0.368 |
+| OLMColorKey | 16 | heavy | 1001.19 | 1785.30 | 181.24 | 0.181 |
+| OLMColorKey | 32 | default | 34.17 | 136.74 | 15.38 | 0.450 |
+| OLMColorKey | 32 | heavy | 1023.62 | 1824.79 | 191.02 | 0.187 |
+| OLMDirectionalBlur | 8 | default | 3.47 | 34.75 | 3.32 | 0.956 |
+| OLMDirectionalBlur | 8 | heavy | 645.14 | 2497.02 | 324.92 | 0.504 |
+| OLMDirectionalBlur | 16 | default | 4.21 | 37.71 | 3.83 | 0.910 |
+| OLMDirectionalBlur | 16 | heavy | 650.66 | 2463.11 | 321.78 | 0.495 |
+| OLMDirectionalBlur | 32 | default | 5.79 | 54.49 | 5.10 | 0.881 |
+| OLMDirectionalBlur | 32 | heavy | 649.82 | 2436.89 | 313.36 | 0.482 |
+| OLMKiraKira | 8 | default | 327.14 | 670.52 | 195.11 | 0.596 |
+| OLMKiraKira | 8 | heavy | 807.18 | 12953.76 | 277.82 | 0.344 |
+| OLMKiraKira | 16 | default | 332.50 | 668.81 | 202.82 | 0.610 |
+| OLMKiraKira | 16 | heavy | 807.37 | 13024.11 | 277.98 | 0.344 |
+| OLMKiraKira | 32 | default | 328.78 | 629.13 | 201.05 | 0.611 |
+| OLMKiraKira | 32 | heavy | 808.57 | 12003.13 | 275.45 | 0.341 |
+| OLMRadialBlur | 8 | default | 3.42 | 33.99 | 3.45 | 1.010 |
+| OLMRadialBlur | 8 | heavy | — | — | 327.58 | — |
+| OLMRadialBlur | 16 | default | 3.90 | 31.69 | 3.77 | 0.967 |
+| OLMRadialBlur | 16 | heavy | — | — | 318.15 | — |
+| OLMRadialBlur | 32 | default | 5.52 | 36.84 | 4.85 | 0.879 |
+| OLMRadialBlur | 32 | heavy | — | — | 329.42 | — |
+| OLMSmoother | 8 | default | 249.36 | 1574.84 | 164.95 | 0.662 |
+| OLMSmoother | 8 | heavy | 222.30 | 1246.26 | 175.39 | 0.789 |
+| OLMSmoother | 16 | default | 238.81 | 3010.48 | 163.76 | 0.686 |
+| OLMSmoother | 16 | heavy | 218.04 | 2672.00 | 198.54 | 0.911 |
+| OLMSmoother2 | 8 | default | 356.06 | 481.63 | 75.85 | 0.213 |
+| OLMSmoother2 | 8 | heavy | 779.05 | 1191.98 | 112.08 | 0.144 |
+| OLMSmoother2 | 16 | default | 345.71 | 471.45 | 77.58 | 0.224 |
+| OLMSmoother2 | 16 | heavy | 784.64 | 1085.16 | 119.25 | 0.152 |
+| OLMSmoother2 | 32 | default | 338.80 | 450.81 | 66.89 | 0.197 |
+| OLMSmoother2 | 32 | heavy | 783.14 | 1042.24 | 113.94 | 0.145 |
+| OLMToonDilate | 8 | default | 25.63 | 46.12 | 7.59 | 0.296 |
+| OLMToonDilate | 8 | heavy | 26.75 | 46.58 | 7.80 | 0.291 |
+| OLMToonDilate | 16 | default | 25.74 | 49.38 | 10.76 | 0.418 |
+| OLMToonDilate | 16 | heavy | 26.19 | 50.41 | 10.99 | 0.419 |
+| OLMToonDilate | 32 | default | 27.37 | 58.35 | 19.59 | 0.715 |
+| OLMToonDilate | 32 | heavy | 27.64 | 59.14 | 19.33 | 0.699 |
+| OLMUVMap | 8 | default | 130.23 | 154.11 | 39.24 | 0.301 |
+| OLMUVMap | 8 | heavy | 130.50 | 150.79 | 43.39 | 0.332 |
+| OLMUVMap | 16 | default | 129.37 | 152.50 | 42.06 | 0.325 |
+| OLMUVMap | 16 | heavy | 129.66 | 156.35 | 42.81 | 0.330 |
+| OLMUVMap | 32 | default | 132.46 | 138.86 | 39.36 | 0.297 |
+| OLMUVMap | 32 | heavy | 133.51 | 142.82 | 39.63 | 0.297 |
+| OLMAntiAntiAlias | 8 | default | 21.49 | 25.74 | 5.17 | 0.240 |
+| OLMAntiAntiAlias | 8 | heavy | 717.59 | 387.23 | 356.22 | 0.496 |
+| OLMAntiAntiAlias | 16 | default | 21.65 | 30.41 | 4.91 | 0.227 |
+| OLMAntiAntiAlias | 16 | heavy | 720.20 | 388.78 | 360.44 | 0.500 |
+| OLMAntiAntiAlias | 32 | default | 23.72 | 25.28 | 5.66 | 0.239 |
+| OLMAntiAntiAlias | 32 | heavy | 708.96 | 351.58 | 327.89 | 0.462 |
+
+OLMRadialBlur heavy: the original still fails the resident protocol (incomplete), so no ratio;
+per-process wall timing in PR #13 measured 0.64–0.73. DistanceGradation 8/16 bpc defaults are
+still slower than the original in this serial run (1.28 / 1.05) although the PR #14 run measured
+0.96 / 0.93; tracked as follow-up. Evidence: `tools/bench/evidence/final-20261113.json` and
+`final-20261113-audit.json` (audit passed: 1,005 exact timed frame pairs, 9 incomplete cells).

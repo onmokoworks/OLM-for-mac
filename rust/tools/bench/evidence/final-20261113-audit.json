@@ -1,0 +1,19 @@
+{
+  "evidence": {
+    "path": "D:\\olm-rs-wt-bench\\rust\\tools\\bench\\evidence\\final-20261113.json",
+    "sha256": "2676fbefb03f2b9e4f2d869a4a2bddccd2ec14ce3ddb591542a10e0b53cddfb8"
+  },
+  "counts": {
+    "exact_cells": 201,
+    "raw_reports_verified": 420,
+    "frames_deleted_digest_only": 2466,
+    "exact_frame_pairs_including_warmup": 1206,
+    "exact_timed_frame_pairs": 1005,
+    "incomplete_cells": 9
+  },
+  "loaded_worker_hashes": [
+    "7a6598974b903fd4b068587b726d41c8adb8b198a294add88d544582482c71cf"
+  ],
+  "executables_unchanged": 26,
+  "passed": true
+}
