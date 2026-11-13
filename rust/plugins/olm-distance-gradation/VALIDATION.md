@@ -1,5 +1,22 @@
 # DistanceGradation — integrated 2026-11-12 release
 
+## Performance (S-last, 2026-11-13)
+
+Integer masks now dispatch by depth once per row and read only alpha; composition
+uses checked active rows. Exhaustive U8/U16 threshold tests preserve ownership,
+and float admission/arithmetic, canonical groups and aarch64 NaN handling are unchanged.
+40 alternating 1080p samples per side: default 8/16 ratios 0.3898/0.3326;
+the single final standard sweep is 0.403/0.315 (32 bpc 0.480). All accepted
+benchmark hashes match. PR #14's apparent reversal came primarily from its
+slower original denominator (77.99 versus 54.56 ms at 8 bpc), not a source regression.
+17 release tests, 54 goldens, fmt and Clippy pass. Two seeds/three scales retain
+222/222/220 baseline exact cases, 12 original render errors and two evidenced
+original-unstable Smart32 cases; all details remain separate.
+See [full timing and verification](PERFORMANCE_LAST.md) and
+[hash-bound compact evidence](performance-last.json). Radial's strict final-sweep
+acceptance remains unmet; this record does not claim otherwise.
+
+
 ## Performance (S-misc, 2026-11-13)
 
 EDT's independent column recurrences now traverse contiguous rows in the same per-column order; independent envelope rows and Gaussian horizontal rows run in bounded workers. Gaussian columns use runtime AVX2/FMA dispatch with the original eight-lane FMA boundary and scalar tails; other CPUs retain the scalar path. Composition uses bounded row workers. Canonical sqrt alignment, RSQRT profiles, and documented original stack-state behavior are unchanged.

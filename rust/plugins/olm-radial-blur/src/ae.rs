@@ -110,11 +110,6 @@ impl Effect for Plugin {
         ]
     }
     const COPY_VALUES: &'static [usize] = &[3, 5, 6, 9, 11, 12];
-    fn copy_only(v: &[Value], _ctx: RenderContext) -> bool {
-        [4, 6, 7, 10, 12, 13]
-            .iter()
-            .all(|&slot| v[slot - 1].number as i32 == 0)
-    }
     fn render(
         v: &[Value],
         ctx: RenderContext,
