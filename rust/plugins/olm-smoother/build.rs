@@ -64,22 +64,45 @@ fn main() {
 // Like the pilots, compile an archive whose symbols are referenced only by
 // cfg(test). Production code calls exclusively the translated Rust kernels.
 fn reference() {
-    use std::{fs,path::PathBuf};
-    let root=PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../..");
-    let src=root.join("mac/OLMSmoother/Mac");
-    let out=PathBuf::from(std::env::var_os("OUT_DIR").unwrap());
-    let port=fs::read_to_string(src.join("OLMSmoother_port.cpp")).unwrap().replace("\r\n","\n");
+    use std::{fs, path::PathBuf};
+    let root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../..");
+    let src = root.join("mac/OLMSmoother/Mac");
+    let out = PathBuf::from(std::env::var_os("OUT_DIR").unwrap());
+    let port = fs::read_to_string(src.join("OLMSmoother_port.cpp"))
+        .unwrap()
+        .replace("\r\n", "\n");
     let constants=&port[port.find("static const float DAT_").unwrap()..port.find("// ============================================================================\n// Plugin lifecycle").unwrap()];
-    fs::write(out.join("reference_constants.hpp"),constants).unwrap();
-    let render=fs::read_to_string(src.join("OLMSmoother_render.inc")).unwrap();
-    fs::write(out.join("reference_render.hpp"),&render[..render.find("// 32-bit float").unwrap()]).unwrap();
-    let mut b=cc::Build::new();
-    b.cpp(true).include(&src).include(&out).file("tests/reference.cpp");
-    if std::env::var("CARGO_CFG_TARGET_ENV").as_deref()==Ok("msvc") {
-        b.compiler(std::env::var("CXX").unwrap_or_else(|_|"C:/Program Files/LLVM/bin/clang-cl.exe".into()));
-        b.flag("/std:c++17").flag("/clang:-ffp-contract=off").flag("/clang:-fno-fast-math");
-    } else {b.flag("-std=c++17").flag("-ffp-contract=off").flag("-fno-fast-math");}
+    fs::write(out.join("reference_constants.hpp"), constants).unwrap();
+    let render = fs::read_to_string(src.join("OLMSmoother_render.inc")).unwrap();
+    fs::write(
+        out.join("reference_render.hpp"),
+        &render[..render.find("// 32-bit float").unwrap()],
+    )
+    .unwrap();
+    let mut b = cc::Build::new();
+    b.cpp(true)
+        .include(&src)
+        .include(&out)
+        .file("tests/reference.cpp");
+    if std::env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc") {
+        b.compiler(
+            std::env::var("CXX")
+                .unwrap_or_else(|_| "C:/Program Files/LLVM/bin/clang-cl.exe".into()),
+        );
+        b.flag("/std:c++17")
+            .flag("/clang:-ffp-contract=off")
+            .flag("/clang:-fno-fast-math");
+    } else {
+        b.flag("-std=c++17")
+            .flag("-ffp-contract=off")
+            .flag("-fno-fast-math");
+    }
     b.warnings(false).compile("olm_smoother_cpp_reference");
     println!("cargo:rerun-if-changed=tests/reference.cpp");
-    for file in fs::read_dir(src).unwrap(){let p=file.unwrap().path();if matches!(p.extension().and_then(|s|s.to_str()),Some("inc"|"cpp")){println!("cargo:rerun-if-changed={}",p.display());}}
+    for file in fs::read_dir(src).unwrap() {
+        let p = file.unwrap().path();
+        if matches!(p.extension().and_then(|s| s.to_str()), Some("inc" | "cpp")) {
+            println!("cargo:rerun-if-changed={}", p.display());
+        }
+    }
 }

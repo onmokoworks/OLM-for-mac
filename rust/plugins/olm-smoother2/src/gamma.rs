@@ -142,9 +142,13 @@ pub fn composite(center: Pixel, samples: &[Vertex], scalar: bool) -> Pixel {
 }
 
 pub fn post_unpremultiply(p: &mut Pixel, enable: bool, value: f32) {
-    post_unpremultiply_unclamped(p,enable,value);
+    post_unpremultiply_unclamped(p, enable, value);
     for c in [&mut p.r, &mut p.g, &mut p.b, &mut p.a] {
-        if *c < 0.0 { *c = 0.0; } else if *c > 1.0 { *c = 1.0; }
+        if *c < 0.0 {
+            *c = 0.0;
+        } else if *c > 1.0 {
+            *c = 1.0;
+        }
     }
 }
 

@@ -134,5 +134,8 @@ fn main() {
             source.join(format!("OLMSmoother2_{f}.inc")).display()
         );
     }
-    println!("cargo:rerun-if-changed={}", crate_dir.join("tests/leaf_reference.inc").display());
+    println!(
+        "cargo:rerun-if-changed={}",
+        crate_dir.join("tests/leaf_reference.inc").display()
+    );
 }

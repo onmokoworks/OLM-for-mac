@@ -111,7 +111,9 @@ pub fn setup(pixels: &mut [Pixel], version: i32, key: Option<(Pixel, bool)>) {
             p.r = lut::decode(p.r);
             p.g = lut::decode(p.g);
             p.b = lut::decode(p.b);
-            if version == 3 { *p = crate::oklab::from_linear(*p); }
+            if version == 3 {
+                *p = crate::oklab::from_linear(*p);
+            }
         }
     }
 }
