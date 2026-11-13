@@ -1,5 +1,100 @@
 # OLM Smoother2 — integrated 2026-11-12 release
 
+## Cropped output compatibility ? F-smoother2-roi (2026-11-13)
+
+The historical cropped-output restriction below is removed. Unequal input/output
+sizes now preserve the original's host-copy result; shifted origins no longer
+cause a blanket 516 rejection. The performance pipeline from PR #12 is unchanged.
+
+**Root cause and original behavior.** The Rust boundary rejected unequal world
+width/height/origin, and the pure adapter repeated that restriction. In the 2025
+original (`add776af61499d425f3978f4e5e4c2c8b4062db6d7276db66a22928749227137`),
+SmartRender calls `PF_COPY(input, output, NULL, NULL)` first, at RVAs 0x2000,
+0x2139 and 0x2272 for 8/16/32 bpc. Its intermediate planes use the output size
+(constructor 0x5c60, allocation arguments 0x5d25?0x5d55). The pipeline compares
+all plane dimensions at 0x464d/0x4dad/0x49fd and throws for unequal dimensions;
+the successful rendered result is the initial host copy. Static disassembly
+plus exact original/candidate renders establish this behavior. Applying smoothing
+before or after resizing would change it. World descriptor constructors copy
+data, width, height and rowbytes, without applying world origin offsets.
+
+**Fix.** For unequal dimensions, invoke the same host callback with null source
+and destination rectangles, into staged output. This preserves the host's depth
+and resampling semantics. Equal dimensions retain the existing pipeline. Keep
+validated row spans, matching depth, non-overlap, host-world format queries,
+active-row publication, and one input checkin. Callback failure or late checkin
+failure cannot publish partial output. The mock host regression covers both
+branches, shifted origins, callback failure, checkin failure, input immutability,
+and bytes beyond active output.
+
+Evidence and reproduction are recorded in [roi-validation.json](roi-validation.json)
+and [validate_roi.py](validate_roi.py). The latter runs ten extent campaigns and
+the two-seed normal gate with at most two jobs, retaining summary records before
+deleting successful render directories. Empty host results are separately
+classified, never counted as exact rendered pixels.
+
+### Measured evidence
+
+| Campaign | Smart8 | Smart16 | Smart32 |
+| --- | ---: | ---: | ---: |
+| Ten extent campaigns, fresh processes | 116 exact | 116 exact | 116 exact |
+| Outside-image empty controls (not rendered pixels) | 4 matched | 4 matched | 4 matched |
+| Normal seed 20261125, resident | 103 exact | 103 exact | 103 exact |
+| Normal seed 20261126, resident | 103 exact | 103 exact | 102 exact, **1 mismatch** |
+
+The ROI campaign uses 11x9, 31x19 and 17x13 inputs, all depths, downsample
+1 / 1/2 / 1/4, defaults/minima/maxima/random parameters and ten demand rectangles:
+`1,1,7,5`; `0,0,1,1`; `5,4,11,9`; `0,0,11,9`; `2,1,13,10`;
+`-3,-2,8,7`; `0,0,31,19`; `11,9,15,13`; `1,0,10,9`; `0,1,11,8`.
+All 348 pairs that produced output are byte-exact. The 12 empty controls have
+successful, matching empty-result reports and no SmartRender dispatch; the
+oracle reports absent output artifacts, not a plug-in error. No ROI case has a
+candidate-only failure, timeout or pixel mismatch. The initial 9/9 smoke check
+is additional evidence and is not included in these totals.
+
+**Normal-gate exception, not a pass:** 617/618 comparisons are exact. Both seeds
+contain 100 random parameter tuples per depth plus default/min/max, at the three
+preview scales and sizes 1x1, 3x7, 97x61, 256x144. Seed 20261126 case 23 Smart32
+has one blue-channel word at (187,120): original `0x3f1f523e`, Rust `0x3f1f523f`.
+The automatic fresh-process replay still mismatches. A fresh unchanged
+`origin/main` build at `1b4df7f3` reproduces exactly the same discrepancy, and
+baseline-versus-fixed is byte-exact on that saved input/request. The retained
+JSON includes the full deterministic case, binary/output hashes and both
+comparisons. No exclusion, tolerance, changed seed or passing-case substitution
+is used. The full normal all-exact gate remains unmet because of this pre-existing
+full-frame discrepancy; it is outside the ROI boundary fix.
+
+Release tests: **21 passed** (expanded boundary regression); **54/54 goldens**;
+crate formatting and all-target release Clippy pass. Workspace-wide formatting
+also checked, but reports pre-existing differences outside this owned crate.
+Shared dependency and native reference warnings remain unchanged.
+
+### 960x540 performance check
+
+Both builds were tested serially, normal priority, one warmup plus five measured
+frames per cell. Each sweep has six exact cells / 36 exact frame pairs; both
+offline audits pass. Rendered frames were deleted after hashing.
+
+| Depth / preset | PR #12 baseline ms | Fixed ms | Fixed / original |
+| --- | ---: | ---: | ---: |
+| 8 default | 34.149 | 37.169 | 0.391 |
+| 8 heavy | 43.087 | 44.712 | 0.239 |
+| 16 default | 34.744 | 34.291 | 0.364 |
+| 16 heavy | 45.713 | 44.328 | 0.242 |
+| 32 default | 30.243 | 32.175 | 0.351 |
+| 32 heavy | 41.120 | 41.124 | 0.223 |
+
+The sum of cell medians is 1.0207x baseline; individual ratios span 0.970?1.088.
+The original-relative speed advantage remains, and no algorithm/performance
+implementation changed. A single shared-machine sweep does not prove zero
+slowdown or distinguish this small aggregate difference from timing variation.
+
+This is Windows AEXCompat CPU evidence. Native AE and macOS are not qualified by
+these runs; arbitrary custom world padding/origins beyond host support are covered
+only by boundary tests and static analysis. Historical ROI failures below refer
+to earlier artifacts and are retained for provenance, not current restrictions.
+
+
 ## Current direct qualification (2026-11-13)
 
 The final twelve-plug-in workspace candidate passes the **ordinary direct oracle**
@@ -349,7 +444,7 @@ above is the identity used for final oracle counts.
   suite fetches, source-bound admission, release error propagation, and publishing
   staged output after successful checkin. No shared source was changed.
 - Public classic rendering is refused. Generic Smart admission preserves the
-  C++ 1?8192 dimensions, ranges, versions, finite gamma, matching depth/origin,
+  C++ 1?8192 dimensions, ranges, versions, finite gamma, matching depth (the historical origin restriction is removed by F-smoother2-roi),
   nonoverlap and signed row-span limits. `admission.rs` retains the stronger
   source/parameter fixture union and its world flags/origin/downsample contract.
   `sha256.rs` translates `core/olm_sha256_rows.h` for that source identity check.
@@ -446,7 +541,7 @@ all three versions, all gamma modes, fractional range, color key/inversion,
 extra smoothing and premultiplied output. The existing C++ and adapter tests
 remain active. No parameter or host-contract changes are introduced.
 
-### Measured result and incomplete ROI gate
+### Historical performance result and ROI gate (superseded by F-smoother2-roi)
 
 1080p Rust/original wall-time ratios (lower is better), baseline -> optimized:
 
@@ -491,7 +586,7 @@ files. Tested accepted/OLMSmoother2.aex SHA256:
 a209bff96fe6c8d66d3d06a0fbefc79788e9934ff46c18cab8bfc245a6fc97a5.
 Rebuild DLL hashes can differ; the benchmark binds the staged binary above.
 
-### Round 2 ROI classification: (b), preexisting port defect
+### Historical Round 2 ROI classification (resolved by F-smoother2-roi)
 
 The bounded recheck on 2026-11-13 establishes a candidate boundary defect in
 AEXCompat, not an incorrect expected image or an observed original defect.
