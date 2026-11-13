@@ -1,5 +1,24 @@
 # OLM Anti Anti Alias — integrated 2026-11-12 release
 
+## Performance (S-misc, 2026-11-13)
+
+Bypass renders avoid decoded image planes and preserve input bytes directly. Decode and output rows use bounded workers; palette detection, neighborhood classification, and pair-score order remain unchanged.
+
+Final frozen DLL oracle: 206/206/206 exact at 8/16/32 bpc, out of 206 attempts per depth across seeds 20261130 and 20261201. Downsample 1, 1/2, 1/4; resident batches with per-process authority for every non-exact result; at most two render jobs. No pixel mismatches, failures, or timeouts. Default/min/max plans plus at least 100 random plans per depth; sizes 1x1/3x7/11x7/31x19/97x61.
+
+Workspace release tests: **123 passed, 2 existing opt-in tests ignored**; all **616 original-verified golden hashes** pass, retaining the 14 historical RadialBlur exclusions. Owned-crate fmt and release Clippy pass (existing Clippy warnings retained). Workspace-wide fmt still reports 25 unchanged files outside this job's ownership. Shared row tests preserve padding/short final rows and compare serial/parallel results; the SIMD column test checks 53,592 scalar/vector lane results bit-for-bit.
+
+1080p median selector-time ratio (Rust/original; lower is faster), measured serially against the same originals with the previous Rust build and this build in one session. Each cell has one warm-up and five timed frames; all benchmark output pairs are exact. Shared-machine timings are not native AE measurements.
+
+| bpc | Before default | After default | Before heavy | After heavy |
+|---:|---:|---:|---:|---:|
+| 8 | 1.034 | 0.178 | 0.464 | 0.477 |
+| 16 | 1.178 | 0.193 | 0.569 | 0.482 |
+| 32 | 0.999 | 0.206 | 0.417 | 0.458 |
+
+Local-only identities, requests, outputs, logs, fixed replays, and before/after timing samples are retained under `D:/olm-rs-target/misc-evidence/`; `qualification.json` indexes the final evidence and frozen DLL hashes. Rust 1.88.0, Windows x64, ordinary headless AEXCompat; no original binary or run output is committed, and no AE installation is changed.
+
+
 ## Current direct qualification (2026-11-13)
 
 The final twelve-plug-in workspace candidate passes the **ordinary direct oracle**
