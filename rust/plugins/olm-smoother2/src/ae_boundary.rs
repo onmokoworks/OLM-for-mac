@@ -227,14 +227,15 @@ unsafe fn render<E: Effect>(
     };
     let v = values::<E>(i, params, smart)?;
     if crate::admission::retained(&v, a, depth)? {
-        let flags = if depth == Depth::U8 {
+        // World flag types differ between the Windows and macOS SDK headers (i32 / u32).
+        let flags: i64 = if depth == Depth::U8 {
             0
         } else {
-            PF_WorldFlag_DEEP
+            PF_WorldFlag_DEEP as i64
         };
         if a.rowbytes as usize != la.width * depth.pixel_bytes()
-            || a.world_flags != flags
-            || b.world_flags != flags
+            || a.world_flags as i64 != flags
+            || b.world_flags as i64 != flags
             || i.output_origin_x != 0
             || i.output_origin_y != 0
             || i.downsample_x.num != 1
