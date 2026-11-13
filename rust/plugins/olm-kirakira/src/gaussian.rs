@@ -76,14 +76,74 @@ pub(crate) fn rows_with_workers(
 }
 
 fn convolve(src: &[f32], dst: &mut [f32], k: &[f32], fused_end: usize) {
+    convolve_dispatch(src, dst, k, fused_end, true);
+}
+
+// An explicit argument lets tests exercise the same fallback that machines
+// without AVX2/FMA use, without mutable globals or environment switches.
+fn convolve_dispatch(src: &[f32], dst: &mut [f32], k: &[f32], fused_end: usize, _allow_simd: bool) {
     #[cfg(target_arch = "x86_64")]
-    if std::is_x86_feature_detected!("avx2") && std::is_x86_feature_detected!("fma") {
+    if _allow_simd && std::is_x86_feature_detected!("avx2") && std::is_x86_feature_detected!("fma")
+    {
         // SAFETY: CPU features checked; padded source has dst.len()+k.len()-1
         // elements, so every unaligned vector load stays inside the slice.
         unsafe { avx(src, dst, k, fused_end) };
         return;
     }
     scalar(src, dst, k, 0, fused_end);
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn runtime_dispatch_matches_forced_scalar_fallback() {
+        let mut rng = 0x93819472u32;
+        for w in [1, 2, 5, 7, 8, 9, 31, 32, 33, 97, 1025] {
+            for taps in [1, 3, 5, 25, 401, 1201] {
+                let k: Vec<_> = (0..taps)
+                    .map(|i| (i + 1) as f32 / (taps * taps) as f32)
+                    .collect();
+                for special in [false, true] {
+                    let src: Vec<_> = (0..w + taps - 1)
+                        .map(|i| {
+                            rng ^= rng << 13;
+                            rng ^= rng >> 17;
+                            rng ^= rng << 5;
+                            if special {
+                                [
+                                    0.0,
+                                    -0.0,
+                                    f32::from_bits(1),
+                                    f32::MAX,
+                                    -f32::MAX,
+                                    f32::INFINITY,
+                                    f32::NEG_INFINITY,
+                                    f32::from_bits(0x7fc12345),
+                                    f32::from_bits(0xffc54321),
+                                ][i % 9]
+                            } else {
+                                f32::from_bits((rng & 0x807fffff) | ((rng % 254 + 1) << 23))
+                            }
+                        })
+                        .collect();
+                    for end in [0, w / 8 * 8, w / 2 * 2] {
+                        let mut actual = vec![0.0; w];
+                        let mut expected = vec![0.0; w];
+                        convolve_dispatch(&src, &mut actual, &k, end, true);
+                        convolve_dispatch(&src, &mut expected, &k, end, false);
+                        let bits = |v: &[f32]| v.iter().map(|f| f.to_bits()).collect::<Vec<_>>();
+                        assert_eq!(
+                            bits(&actual),
+                            bits(&expected),
+                            "w={w} taps={taps} end={end} special={special}"
+                        );
+                    }
+                }
+            }
+        }
+    }
 }
 
 fn scalar(src: &[f32], dst: &mut [f32], k: &[f32], start: usize, fused_end: usize) {
