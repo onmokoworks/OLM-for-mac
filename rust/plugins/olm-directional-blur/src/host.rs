@@ -102,6 +102,7 @@ pub trait Effect {
         Ok(())
     }
     /// Full-size byte-copy shortcut; host retains stride and checkout ownership.
+    const COPY_VALUES: &'static [usize] = &[];
     fn copy_only(_values: &[Value], _ctx: RenderContext) -> bool {
         false
     }
@@ -225,11 +226,19 @@ unsafe fn values<'a, E: Effect>(
     i: &'a PF_InData,
     params: PF_ParamList,
     smart: bool,
+    only: Option<&[usize]>,
 ) -> Result<(Vec<Value>, Vec<CheckedParam<'a>>)> {
     let specs = E::params();
     let mut out: Vec<Value> = Vec::with_capacity(specs.len());
     let mut guards = Vec::new();
     for (n, s) in specs.iter().enumerate() {
+        if only.is_some_and(|indices| !indices.contains(&n)) {
+            out.push(Value {
+                number: 0.0,
+                layer: None,
+            });
+            continue;
+        }
         let mut checked = None;
         // Topics carry no stream and must not be checked out in SmartRender.
         if matches!(s.kind, Kind::GroupStart | Kind::GroupEnd)
@@ -336,7 +345,7 @@ unsafe fn render<E: Effect>(
     output: *mut PF_LayerDef,
     depth: Depth,
     smart: bool,
-) -> Result<(Vec<u8>, Layout)> {
+) -> Result<Option<(Vec<u8>, Layout)>> {
     let a = input.as_ref().ok_or(BAD)?;
     let b = output.as_ref().ok_or(BAD)?;
     if world_depth(i, input, output)? != depth {
@@ -370,7 +379,15 @@ unsafe fn render<E: Effect>(
             b.extent_hint.bottom,
         ],
     };
-    let (v, mut guards) = values::<E>(i, params, smart)?;
+    let (probe, mut probe_guards) = values::<E>(i, params, smart, Some(E::COPY_VALUES))?;
+    let (v, mut guards) = if E::copy_only(&probe, ctx) {
+        (probe, probe_guards)
+    } else {
+        for guard in &mut probe_guards {
+            guard.finish()?;
+        }
+        values::<E>(i, params, smart, None)?
+    };
     for value in &v {
         if let Some(layer) = &value.layer {
             if !layer.data.is_null() {
@@ -388,26 +405,32 @@ unsafe fn render<E: Effect>(
         }
     }
 
-    let input = View::new(std::slice::from_raw_parts(a.data.cast(), na), la).map_err(|_| BAD)?;
-    // Stage output until all parameter checkins have succeeded.
-    let mut storage = vec![0u8; nb];
-    if la.width == lb.width && la.height == lb.height && E::copy_only(&v, ctx) {
-        let source = std::slice::from_raw_parts(a.data.cast::<u8>(), na);
-        copy_rows(source, la, &mut storage, lb);
-    } else if E::copy_only(&v, ctx) {
-        // Original PF_COPY scales the complete input when output dimensions differ.
-        // Keep publication transactional: the callback writes our staged world.
-        let mut staged_world = *b;
-        staged_world.data = storage.as_mut_ptr().cast();
-        host_copy(i, a, &mut staged_world)?;
-    } else {
-        let mut staged = ViewMut::new(&mut storage, lb).map_err(|_| BAD)?;
-        E::render(&v, ctx, &input, &mut staged).map_err(|_| BAD)?;
+    if E::copy_only(&v, ctx) {
+        // Primary pixels stay checked out until the caller finishes its guard.
+        for g in &mut guards {
+            g.finish()?;
+        }
+        if la.width == lb.width && la.height == lb.height {
+            copy_rows(
+                std::slice::from_raw_parts(a.data.cast::<u8>(), na),
+                la,
+                std::slice::from_raw_parts_mut(b.data.cast::<u8>(), nb),
+                lb,
+            );
+        } else {
+            host_copy(i, a, output)?;
+        }
+        return Ok(None);
     }
+    let input = View::new(std::slice::from_raw_parts(a.data.cast(), na), la).map_err(|_| BAD)?;
+    // Active kernels retain transactional publication on checkin failures.
+    let mut storage = vec![0u8; nb];
+    let mut staged = ViewMut::new(&mut storage, lb).map_err(|_| BAD)?;
+    E::render(&v, ctx, &input, &mut staged).map_err(|_| BAD)?;
     for g in &mut guards {
         g.finish()?;
     }
-    Ok((storage, lb))
+    Ok(Some((storage, lb)))
 }
 
 unsafe fn publish(data: &[u8], layout: Layout, output: *mut PF_LayerDef) {
@@ -474,8 +497,10 @@ pub unsafe fn entry<E: Effect>(
                 if d == Depth::F32 {
                     return Err(BAD);
                 }
-                let (storage, layout) = render::<E>(i, params, &p.u.ld, output, d, false)?;
-                publish(&storage, layout, output);
+                if let Some((storage, layout)) = render::<E>(i, params, &p.u.ld, output, d, false)?
+                {
+                    publish(&storage, layout, output);
+                }
             }
             PF_Cmd_SMART_PRE_RENDER => {
                 let e = (extra as *mut PF_PreRenderExtra).as_mut().ok_or(BAD)?;
@@ -524,9 +549,11 @@ pub unsafe fn entry<E: Effect>(
                 };
                 let mut output = ptr::null_mut();
                 check(cb.checkout_output.ok_or(BAD)?(i.effect_ref, &mut output))?;
-                let (storage, layout) = render::<E>(i, params, input, output, depth, true)?;
+                let staged = render::<E>(i, params, input, output, depth, true)?;
                 guard.finish()?;
-                publish(&storage, layout, output);
+                if let Some((storage, layout)) = staged {
+                    publish(&storage, layout, output);
+                }
             }
             _ => {}
         }
@@ -619,6 +646,11 @@ mod tests {
 // Original typed copy writes active pixels only, preserving destination padding.
 fn copy_rows(source: &[u8], input: Layout, destination: &mut [u8], output: Layout) {
     let active = output.width * output.depth.pixel_bytes();
+    if input.stride == active && output.stride == active {
+        let size = active * output.height;
+        destination[..size].copy_from_slice(&source[..size]);
+        return;
+    }
     for y in 0..output.height {
         destination[y * output.stride..y * output.stride + active]
             .copy_from_slice(&source[y * input.stride..y * input.stride + active]);
@@ -631,32 +663,34 @@ mod copy_tests {
     #[test]
     fn active_rows_preserve_every_bit_and_padding() {
         for depth in [Depth::U8, Depth::U16, Depth::F32] {
-            let active = 7 * depth.pixel_bytes();
-            let input = Layout {
-                width: 7,
-                height: 3,
-                stride: active + 5,
-                depth,
-                origin: (0, 0),
-            };
-            let output = Layout {
-                stride: active + 9,
-                ..input
-            };
-            let source: Vec<u8> = (0..input.span().unwrap())
-                .map(|i| (i * 73 + 19) as u8)
-                .collect();
-            let mut actual = vec![0xa5; output.span().unwrap()];
-            let mut expected = actual.clone();
-            let view = View::new(&source, input).unwrap();
-            let mut out = ViewMut::new(&mut expected, output).unwrap();
-            for y in 0..input.height {
-                for x in 0..input.width {
-                    out.set(x, y, view.get(x, y).unwrap()).unwrap();
+            for padding in [0, 5] {
+                let active = 7 * depth.pixel_bytes();
+                let input = Layout {
+                    width: 7,
+                    height: 3,
+                    stride: active + padding,
+                    depth,
+                    origin: (0, 0),
+                };
+                let output = Layout {
+                    stride: active + if padding == 0 { 0 } else { 9 },
+                    ..input
+                };
+                let source: Vec<u8> = (0..input.span().unwrap())
+                    .map(|i| (i * 73 + 19) as u8)
+                    .collect();
+                let mut actual = vec![0xa5; output.span().unwrap()];
+                let mut expected = actual.clone();
+                let view = View::new(&source, input).unwrap();
+                let mut out = ViewMut::new(&mut expected, output).unwrap();
+                for y in 0..input.height {
+                    for x in 0..input.width {
+                        out.set(x, y, view.get(x, y).unwrap()).unwrap();
+                    }
                 }
+                copy_rows(&source, input, &mut actual, output);
+                assert_eq!(actual, expected);
             }
-            copy_rows(&source, input, &mut actual, output);
-            assert_eq!(actual, expected);
         }
     }
 }

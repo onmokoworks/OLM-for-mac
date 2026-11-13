@@ -109,6 +109,7 @@ impl Effect for Plugin {
             end(25),
         ]
     }
+    const COPY_VALUES: &'static [usize] = &[3, 5, 6, 9, 11, 12];
     fn copy_only(v: &[Value], _ctx: RenderContext) -> bool {
         [4, 6, 7, 10, 12, 13]
             .iter()

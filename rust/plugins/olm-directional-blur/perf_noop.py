@@ -7,6 +7,9 @@ sys.path.insert(0, str(ROOT / 'rust/tools/oracle'))
 import olm_oracle as o
 
 
+from perf_storage import install, purge
+install(o)
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument('--staged', type=Path, required=True)
@@ -74,6 +77,7 @@ def fixtures(args):
                 exact = len(hashes) == 2 and bool(hashes['reference']) and hashes['reference'] == hashes['candidate']
                 row = {'plugin': name, 'fixture': str(folder), 'depth': depth, 'status': 'exact' if exact else 'incomplete_or_mismatched', 'hashes': hashes}
                 rows.append(row)
+                if exact: purge(folder)
                 print(name, depth, 'fixture', cropped, row['status'], flush=True)
     return rows
 

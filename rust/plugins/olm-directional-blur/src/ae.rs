@@ -93,6 +93,7 @@ impl Effect for Plugin {
             param(21, "Thickness", Kind::GroupEnd),
         ]
     }
+    const COPY_VALUES: &'static [usize] = &[4, 5, 9, 10];
     fn copy_only(v: &[Value], ctx: RenderContext) -> bool {
         let scale = ctx.downsample_x.numerator as f32 / ctx.downsample_x.denominator as f32;
         scale > 0.0

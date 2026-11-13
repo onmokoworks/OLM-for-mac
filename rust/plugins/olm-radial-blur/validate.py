@@ -14,6 +14,9 @@ sys.path.insert(0, str(ROOT/'rust/tools/oracle'))
 spec=importlib.util.spec_from_file_location('radial_oracle',ROOT/'rust/tools/oracle/olm_oracle.py')
 oracle=importlib.util.module_from_spec(spec)
 spec.loader.exec_module(oracle)
+sys.path.insert(0, str(Path(__file__).parent.parent/'olm-directional-blur'))
+from perf_storage import install
+install(oracle)
 original_generate=oracle.generate_cases
 excluded=[]
 

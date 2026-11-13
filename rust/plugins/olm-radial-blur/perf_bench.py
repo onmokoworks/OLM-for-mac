@@ -22,7 +22,7 @@ o = bench.o
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--before', type=Path, required=True)
+    parser.add_argument('--before', type=Path, help='optional preserved previous build')
     parser.add_argument('--after', type=Path, required=True)
     parser.add_argument('--original', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True)
@@ -30,7 +30,7 @@ def main():
     args.out = args.out.resolve()
     args.out.mkdir(parents=True, exist_ok=False)
     o.WindowsJob = bench.AccountingJob
-    plugins = {key: o.identity(getattr(args, key).resolve()) for key in ('original', 'before', 'after')}
+    plugins = {key: o.identity(getattr(args, key).resolve()) for key in ('original', 'before', 'after') if getattr(args, key) is not None}
     image = args.out / 'input.png'
     bench.Image.fromarray(o.input_pixels(1920, 1080, 20261113)).save(image)
     report = {'plugins': plugins, 'harness': o.identity(o.DEFAULT_HARNESS),
@@ -60,15 +60,18 @@ def main():
                 timings = [process['elapsed_seconds'] * 1000]
                 suffix = {8: '.png', 16: '.rgba16le', 32: '.rgba32f-le'}[depth]
                 cell['outputs'][side].append(o.sha256(output.with_suffix(suffix)))
+                bench.drop_frames({'cases':[{'output':str(output)}]})
                 if iteration:
                     cell['samples'][side].append(timings[0])
                 print(depth, iteration, side, round(timings[0], 3), flush=True)
                 o.write_json(args.out / 'evidence.json', report)
         cell['exact'] = len(set(sum(cell['outputs'].values(), []))) == 1
         cell['median_ms'] = {side: statistics.median(values) for side, values in cell['samples'].items()}
-        cell['before_ratio'] = cell['median_ms']['before'] / cell['median_ms']['original']
+        if 'before' in plugins:
+            cell['before_ratio'] = cell['median_ms']['before'] / cell['median_ms']['original']
         cell['after_ratio'] = cell['median_ms']['after'] / cell['median_ms']['original']
         o.write_json(args.out / 'evidence.json', report)
+    image.unlink()
     return 0 if all(c['exact'] for c in report['cells']) else 1
 
 

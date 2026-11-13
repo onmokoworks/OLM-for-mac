@@ -341,3 +341,55 @@ Local-only evidence under `D:/olm-rs-target/blurs`: `bench-before`, `bench-final
 `triage-final4`, `triage-radial-additional10`, `noop-final4`, `tests-final6.log`.
 Candidate SHA-256: `5d8c36120122c37a7007e721938ab799811d2a9bb939ea9f5a4a95dc09077653`.
 Raw outputs, originals and binaries are not committed.
+
+
+## Performance round two - S-blurs
+
+Round two checks only the six controlling values before a no-op. Matching,
+tightly packed worlds use one contiguous copy; padded worlds retain active-row
+copies, and different geometry retains legacy PF_COPY. The 32-bpc default pure
+copy profile at 960x540 (`examples/profile.rs`) compared row/bulk/two/four/eight
+worker copies. Warm row copies measured 0.14 ms versus bulk 0.30 ms; with eight
+rotating buffers exceeding cache, bulk measured 0.46 ms versus rows 0.73 ms.
+Thread startup lost at this size. A bounded host-callback variant tied the
+original at 540p and was not selected. Active kernels and Zen 3 reciprocal
+emulation are unchanged from round one.
+
+Merged `origin/main` before revalidation. Historical round-one raw run directories
+were deleted at the user's request; compact summaries remain under
+`D:/olm-rs-target/blurs-evidence/round1`. Round-two exact-case pixels are deleted
+after hashing; only mismatches remain temporarily for triage. No shared source
+was authored by this job. Final results and compact evidence follow below.
+
+Final 1080p median Rust/original ratios, one warmup plus five samples:
+
+| Depth | Default round 1 | Default round 2 | Heavy round 1 | Heavy round 2 |
+|---|---:|---:|---:|---:|
+| 8 | 0.926 | 0.866 | 0.705 | 0.633 |
+| 16 | 0.939 | 0.936 | 0.677 | 0.705 |
+| 32 | 1.137 | 0.928 | 0.697 | 0.719 |
+
+Defaults use resident selector time. Heavy uses fresh-process wall time including
+startup/IO because the original still fails the resident Rotation protocol.
+Original/after medians at 8/16/32 bpc are 1359/860, 1375/969, 1500/1078 ms;
+all 36 output hashes agree within depth. The prior binary was deleted per the
+round-two cleanup instruction; round-one ratios are historical separate-run data.
+
+Verification: 22 release tests across the three crates pass (one explicit profile
+regeneration ignored), rustfmt and release Clippy pass (warnings), and 148 admitted
+golden hashes match (14 historical Radial exclusions unchanged). Two cleanup-helper
+tests pass. Both seeds include 103 admitted cases/depth at scales 1, 1/2, 1/4.
+This plugin retained 205 exact at 8 bpc, 204 exact at 16 bpc, 203 exact at 32 bpc.
+Its 6 remaining cases qualified under the existing original-nondeterminism
+rule; they are exclusions, not exact passes. All received three fixed pairs.
+One case also received the predeclared ten-pair block: changing original, stable
+candidate, successful renders and at least one exact replay were required.
+No unexplained stable mismatch, render failure or timeout remained. The 66 targeted
+Directional/Radial no-op and fixture comparisons passed again. No native AE/macOS
+performance qualification is claimed.
+
+[Compact round-two evidence](performance-round2.json) records samples, hashes,
+case plans, exclusion proofs and counts. The resident audit verified 15 exact cells
+and 90 frame pairs; its three incomplete cells are original Radial heavy. Raw
+run folders were deleted after compaction; local compact summaries/logs are under
+`D:/olm-rs-target/blurs-evidence`.

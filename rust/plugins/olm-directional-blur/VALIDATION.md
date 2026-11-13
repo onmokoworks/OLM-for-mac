@@ -154,3 +154,57 @@ Local evidence: `D:/olm-rs-target/blurs/bench-before`, `bench-final5`,
 `noop-final4` and `tests-final6.log`. Raw outputs/originals/binaries are not committed.
 
 Performance candidate SHA-256: `67bff3262614191da1e0becd742de776db0da0530489c2ff913c5d8d0765ea31`.
+
+
+## Performance round two - S-blurs
+
+Round two removes the no-op output allocation and second publication copy.
+Only the four controlling values are checked out to establish identity; active
+renders then obtain the full parameter set and retain transactional staging.
+Parameter checkins finish before the no-op copy; primary input pixels stay
+checked out until copying finishes. As in the original direct-copy route, a
+subsequent input-pixel checkin failure can occur after output publication.
+Tightly packed equal-sized worlds use one contiguous byte copy; padded worlds
+copy only active rows; different sizes retain the legacy host PF_COPY callback.
+No-op ancillary controls do not trigger unnecessary secondary-layer checkouts.
+
+Merged `origin/main` before revalidation. Historical round-one raw run directories
+were deleted at the user's request; compact summaries remain under
+`D:/olm-rs-target/blurs-evidence/round1`. Round-two exact-case pixels are deleted
+after hashing; only mismatches remain temporarily for triage. No shared source
+was authored by this job. Final results and compact evidence follow below.
+
+Final 1080p median Rust/original ratios, one warmup plus five samples:
+
+| Depth | Default round 1 | Default round 2 | Heavy round 1 | Heavy round 2 |
+|---|---:|---:|---:|---:|
+| 8 | 1.568 | 1.057 | 0.515 | 0.511 |
+| 16 | 1.747 | 0.880 | 0.455 | 0.474 |
+| 32 | 1.858 | 0.957 | 0.442 | 0.471 |
+
+**Acceptance not fully met:** 8-bpc defaults remain 1.057 (3.521 ms Rust versus
+3.3322 ms original), a 0.1888 ms median gap. Minima were 2.958/3.0578 ms, so
+samples overlap; this is not evidence that the median requirement passed. Staging
+is gone. Remaining work is host dispatch/checkouts and byte copying. The pure
+copy profile suggests cache-sensitive row/bulk selection as the next experiment:
+8-bpc 1080p has the same 8.3 MB payload as the 32-bpc 540p microbenchmark, where
+warm row copies beat bulk copies. That is an inference, not an isolated attribution
+of the host gap. The requested single final 1080p campaign was not repeated.
+
+Verification: 22 release tests across the three crates pass (one explicit profile
+regeneration ignored), rustfmt and release Clippy pass (warnings), and 148 admitted
+golden hashes match (14 historical Radial exclusions unchanged). Two cleanup-helper
+tests pass. Both seeds include 103 admitted cases/depth at scales 1, 1/2, 1/4.
+This plugin retained 205 exact at 8 bpc, 204 exact at 16 bpc, 205 exact at 32 bpc.
+Its 4 remaining cases qualified under the existing original-nondeterminism
+rule; they are exclusions, not exact passes. All received three fixed pairs.
+The existing original-original and exact zero-offset controls also passed.
+No unexplained stable mismatch, render failure or timeout remained. The 66 targeted
+Directional/Radial no-op and fixture comparisons passed again. No native AE/macOS
+performance qualification is claimed.
+
+[Compact round-two evidence](performance-round2.json) records samples, hashes,
+case plans, exclusion proofs and counts. The resident audit verified 15 exact cells
+and 90 frame pairs; its three incomplete cells are original Radial heavy. Raw
+run folders were deleted after compaction; local compact summaries/logs are under
+`D:/olm-rs-target/blurs-evidence`.
