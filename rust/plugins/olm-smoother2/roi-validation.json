@@ -1949,7 +1949,586 @@
         "0x3f1f523f",
         "0x3e5b3c5a"
       ]
-    }
+    },
+    "classification_replay": {
+      "seed": 20261126,
+      "case": {
+        "index": 23,
+        "size": [
+          256,
+          144
+        ],
+        "input_seed": 15135544866034798561,
+        "downsample": "1/4",
+        "assignments": [
+          {
+            "slot": 1,
+            "value": 1
+          },
+          {
+            "slot": 2,
+            "color": [
+              178,
+              132,
+              59,
+              226
+            ]
+          },
+          {
+            "slot": 5,
+            "value": 100
+          },
+          {
+            "slot": 6,
+            "value": 59.12997589555684
+          },
+          {
+            "slot": 9,
+            "value": 1.0
+          },
+          {
+            "slot": 11,
+            "color": [
+              174,
+              173,
+              112,
+              135
+            ]
+          },
+          {
+            "slot": 12,
+            "color": [
+              66,
+              199,
+              119,
+              65
+            ]
+          },
+          {
+            "slot": 13,
+            "color": [
+              238,
+              19,
+              171,
+              77
+            ]
+          },
+          {
+            "slot": 14,
+            "color": [
+              88,
+              218,
+              191,
+              91
+            ]
+          },
+          {
+            "slot": 15,
+            "color": [
+              144,
+              173,
+              233,
+              94
+            ]
+          }
+        ],
+        "unassigned": [],
+        "untouched_defaults": [
+          {
+            "slot": 3,
+            "value": 0,
+            "kind": "integer",
+            "reason": "untouched default"
+          },
+          {
+            "slot": 4,
+            "value": 100.0,
+            "kind": "integer",
+            "reason": "untouched default"
+          },
+          {
+            "slot": 7,
+            "value": 2.0,
+            "kind": "integer",
+            "reason": "untouched default"
+          },
+          {
+            "slot": 8,
+            "value": 1.0,
+            "kind": "integer",
+            "reason": "untouched default"
+          },
+          {
+            "slot": 10,
+            "value": 1.0,
+            "kind": "integer",
+            "reason": "untouched default"
+          }
+        ],
+        "numeric_ranges": {
+          "1": {
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "kind": "integer"
+          },
+          "3": {
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "kind": "integer"
+          },
+          "4": {
+            "minimum": 0.0,
+            "maximum": 100.0,
+            "kind": "integer"
+          },
+          "5": {
+            "minimum": 0.0,
+            "maximum": 100.0,
+            "kind": "integer"
+          },
+          "6": {
+            "minimum": 0.0,
+            "maximum": 100.0,
+            "kind": "float"
+          },
+          "7": {
+            "minimum": 1.0,
+            "maximum": 3.0,
+            "kind": "integer"
+          },
+          "8": {
+            "minimum": 1.0,
+            "maximum": 3.0,
+            "kind": "integer"
+          },
+          "9": {
+            "minimum": 1.0,
+            "maximum": 2.4000000953674316,
+            "kind": "float"
+          },
+          "10": {
+            "minimum": 0.0,
+            "maximum": 5.0,
+            "kind": "integer"
+          }
+        }
+      },
+      "route": "smart32",
+      "pairs_per_binary": 3,
+      "transport": "fresh process, serial, oracle-owned Windows Jobs",
+      "binaries": {
+        "original": {
+          "identity": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMSmoother2AE\\OLMSmoother2AE\\Plugins\\64\\2025\\OLMSmoother2.aex",
+            "sha256": "add776af61499d425f3978f4e5e4c2c8b4062db6d7276db66a22928749227137"
+          },
+          "pairs": [
+            {
+              "case": 23,
+              "route": "smart32",
+              "directory": "case-0023-smart32",
+              "processes": {
+                "reference": {
+                  "pid": 63800,
+                  "returncode": 0,
+                  "environment_overrides": {
+                    "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                  },
+                  "timeout": false,
+                  "cancelled": false,
+                  "elapsed_seconds": 0.4529999999995198,
+                  "harness_frame_timeout": false,
+                  "ok": true
+                },
+                "candidate": {
+                  "pid": 64268,
+                  "returncode": 0,
+                  "environment_overrides": {
+                    "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                  },
+                  "timeout": false,
+                  "cancelled": false,
+                  "elapsed_seconds": 0.43800000000010186,
+                  "harness_frame_timeout": false,
+                  "ok": true
+                }
+              },
+              "comparison": {
+                "exact": true,
+                "mismatching_pixels": 0,
+                "mismatching_samples": 0,
+                "max_abs_diff": 0.0,
+                "nonfinite_difference_samples": 0,
+                "first_coordinates": []
+              },
+              "status": "exact"
+            },
+            {
+              "case": 23,
+              "route": "smart32",
+              "directory": "case-0023-smart32",
+              "processes": {
+                "reference": {
+                  "pid": 64440,
+                  "returncode": 0,
+                  "environment_overrides": {
+                    "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                  },
+                  "timeout": false,
+                  "cancelled": false,
+                  "elapsed_seconds": 0.43699999999989814,
+                  "harness_frame_timeout": false,
+                  "ok": true
+                },
+                "candidate": {
+                  "pid": 32360,
+                  "returncode": 0,
+                  "environment_overrides": {
+                    "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                  },
+                  "timeout": false,
+                  "cancelled": false,
+                  "elapsed_seconds": 0.4849999999987631,
+                  "harness_frame_timeout": false,
+                  "ok": true
+                }
+              },
+              "comparison": {
+                "exact": true,
+                "mismatching_pixels": 0,
+                "mismatching_samples": 0,
+                "max_abs_diff": 0.0,
+                "nonfinite_difference_samples": 0,
+                "first_coordinates": []
+              },
+              "status": "exact"
+            },
+            {
+              "case": 23,
+              "route": "smart32",
+              "directory": "case-0023-smart32",
+              "processes": {
+                "reference": {
+                  "pid": 44040,
+                  "returncode": 0,
+                  "environment_overrides": {
+                    "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                  },
+                  "timeout": false,
+                  "cancelled": false,
+                  "elapsed_seconds": 0.43800000000010186,
+                  "harness_frame_timeout": false,
+                  "ok": true
+                },
+                "candidate": {
+                  "pid": 28560,
+                  "returncode": 0,
+                  "environment_overrides": {
+                    "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                  },
+                  "timeout": false,
+                  "cancelled": false,
+                  "elapsed_seconds": 0.4529999999995198,
+                  "harness_frame_timeout": false,
+                  "ok": true
+                }
+              },
+              "comparison": {
+                "exact": true,
+                "mismatching_pixels": 0,
+                "mismatching_samples": 0,
+                "max_abs_diff": 0.0,
+                "nonfinite_difference_samples": 0,
+                "first_coordinates": []
+              },
+              "status": "exact"
+            }
+          ],
+          "output_sha256": [
+            "53c4492b78ca8207c49667f75e99462cc8e3a2ac5b581c901a5598a304f801d7",
+            "53c4492b78ca8207c49667f75e99462cc8e3a2ac5b581c901a5598a304f801d7",
+            "53c4492b78ca8207c49667f75e99462cc8e3a2ac5b581c901a5598a304f801d7",
+            "53c4492b78ca8207c49667f75e99462cc8e3a2ac5b581c901a5598a304f801d7",
+            "53c4492b78ca8207c49667f75e99462cc8e3a2ac5b581c901a5598a304f801d7",
+            "53c4492b78ca8207c49667f75e99462cc8e3a2ac5b581c901a5598a304f801d7"
+          ]
+        },
+        "rust": {
+          "identity": {
+            "path": "D:\\olm-rs-target\\s2roi\\stage\\OLMSmoother2.aex",
+            "sha256": "069149ed3ea1db9f60904a061eeede1fbbbbf43a784bdd3b3afb07e5e4afa4a0"
+          },
+          "pairs": [
+            {
+              "case": 23,
+              "route": "smart32",
+              "directory": "case-0023-smart32",
+              "processes": {
+                "reference": {
+                  "pid": 60624,
+                  "returncode": 0,
+                  "environment_overrides": {
+                    "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                  },
+                  "timeout": false,
+                  "cancelled": false,
+                  "elapsed_seconds": 0.43800000000010186,
+                  "harness_frame_timeout": false,
+                  "ok": true
+                },
+                "candidate": {
+                  "pid": 62392,
+                  "returncode": 0,
+                  "environment_overrides": {
+                    "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                  },
+                  "timeout": false,
+                  "cancelled": false,
+                  "elapsed_seconds": 0.43800000000010186,
+                  "harness_frame_timeout": false,
+                  "ok": true
+                }
+              },
+              "comparison": {
+                "exact": true,
+                "mismatching_pixels": 0,
+                "mismatching_samples": 0,
+                "max_abs_diff": 0.0,
+                "nonfinite_difference_samples": 0,
+                "first_coordinates": []
+              },
+              "status": "exact"
+            },
+            {
+              "case": 23,
+              "route": "smart32",
+              "directory": "case-0023-smart32",
+              "processes": {
+                "reference": {
+                  "pid": 59412,
+                  "returncode": 0,
+                  "environment_overrides": {
+                    "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                  },
+                  "timeout": false,
+                  "cancelled": false,
+                  "elapsed_seconds": 0.43800000000010186,
+                  "harness_frame_timeout": false,
+                  "ok": true
+                },
+                "candidate": {
+                  "pid": 65928,
+                  "returncode": 0,
+                  "environment_overrides": {
+                    "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                  },
+                  "timeout": false,
+                  "cancelled": false,
+                  "elapsed_seconds": 0.4220000000004802,
+                  "harness_frame_timeout": false,
+                  "ok": true
+                }
+              },
+              "comparison": {
+                "exact": true,
+                "mismatching_pixels": 0,
+                "mismatching_samples": 0,
+                "max_abs_diff": 0.0,
+                "nonfinite_difference_samples": 0,
+                "first_coordinates": []
+              },
+              "status": "exact"
+            },
+            {
+              "case": 23,
+              "route": "smart32",
+              "directory": "case-0023-smart32",
+              "processes": {
+                "reference": {
+                  "pid": 53008,
+                  "returncode": 0,
+                  "environment_overrides": {
+                    "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                  },
+                  "timeout": false,
+                  "cancelled": false,
+                  "elapsed_seconds": 0.4529999999995198,
+                  "harness_frame_timeout": false,
+                  "ok": true
+                },
+                "candidate": {
+                  "pid": 62492,
+                  "returncode": 0,
+                  "environment_overrides": {
+                    "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                  },
+                  "timeout": false,
+                  "cancelled": false,
+                  "elapsed_seconds": 0.4850000000005821,
+                  "harness_frame_timeout": false,
+                  "ok": true
+                }
+              },
+              "comparison": {
+                "exact": true,
+                "mismatching_pixels": 0,
+                "mismatching_samples": 0,
+                "max_abs_diff": 0.0,
+                "nonfinite_difference_samples": 0,
+                "first_coordinates": []
+              },
+              "status": "exact"
+            }
+          ],
+          "output_sha256": [
+            "5ab2c48c4557f48451506cc7d4791e53a41c52e92005fa69e128281a61aef906",
+            "5ab2c48c4557f48451506cc7d4791e53a41c52e92005fa69e128281a61aef906",
+            "5ab2c48c4557f48451506cc7d4791e53a41c52e92005fa69e128281a61aef906",
+            "5ab2c48c4557f48451506cc7d4791e53a41c52e92005fa69e128281a61aef906",
+            "5ab2c48c4557f48451506cc7d4791e53a41c52e92005fa69e128281a61aef906",
+            "5ab2c48c4557f48451506cc7d4791e53a41c52e92005fa69e128281a61aef906"
+          ]
+        },
+        "main": {
+          "identity": {
+            "path": "D:\\olm-rs-target\\s2roi\\baseline\\OLMSmoother2.aex",
+            "sha256": "2985dda1600ca5ec68f89962b876617dbc94825d825b26f0f981cbc3ecdc6718"
+          },
+          "pairs": [
+            {
+              "case": 23,
+              "route": "smart32",
+              "directory": "case-0023-smart32",
+              "processes": {
+                "reference": {
+                  "pid": 39040,
+                  "returncode": 0,
+                  "environment_overrides": {
+                    "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                  },
+                  "timeout": false,
+                  "cancelled": false,
+                  "elapsed_seconds": 0.43699999999989814,
+                  "harness_frame_timeout": false,
+                  "ok": true
+                },
+                "candidate": {
+                  "pid": 61188,
+                  "returncode": 0,
+                  "environment_overrides": {
+                    "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                  },
+                  "timeout": false,
+                  "cancelled": false,
+                  "elapsed_seconds": 0.4530000000013388,
+                  "harness_frame_timeout": false,
+                  "ok": true
+                }
+              },
+              "comparison": {
+                "exact": true,
+                "mismatching_pixels": 0,
+                "mismatching_samples": 0,
+                "max_abs_diff": 0.0,
+                "nonfinite_difference_samples": 0,
+                "first_coordinates": []
+              },
+              "status": "exact"
+            },
+            {
+              "case": 23,
+              "route": "smart32",
+              "directory": "case-0023-smart32",
+              "processes": {
+                "reference": {
+                  "pid": 55492,
+                  "returncode": 0,
+                  "environment_overrides": {
+                    "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                  },
+                  "timeout": false,
+                  "cancelled": false,
+                  "elapsed_seconds": 0.43699999999989814,
+                  "harness_frame_timeout": false,
+                  "ok": true
+                },
+                "candidate": {
+                  "pid": 50272,
+                  "returncode": 0,
+                  "environment_overrides": {
+                    "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                  },
+                  "timeout": false,
+                  "cancelled": false,
+                  "elapsed_seconds": 0.43800000000010186,
+                  "harness_frame_timeout": false,
+                  "ok": true
+                }
+              },
+              "comparison": {
+                "exact": true,
+                "mismatching_pixels": 0,
+                "mismatching_samples": 0,
+                "max_abs_diff": 0.0,
+                "nonfinite_difference_samples": 0,
+                "first_coordinates": []
+              },
+              "status": "exact"
+            },
+            {
+              "case": 23,
+              "route": "smart32",
+              "directory": "case-0023-smart32",
+              "processes": {
+                "reference": {
+                  "pid": 14676,
+                  "returncode": 0,
+                  "environment_overrides": {
+                    "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                  },
+                  "timeout": false,
+                  "cancelled": false,
+                  "elapsed_seconds": 0.4850000000005821,
+                  "harness_frame_timeout": false,
+                  "ok": true
+                },
+                "candidate": {
+                  "pid": 38988,
+                  "returncode": 0,
+                  "environment_overrides": {
+                    "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                  },
+                  "timeout": false,
+                  "cancelled": false,
+                  "elapsed_seconds": 0.43699999999989814,
+                  "harness_frame_timeout": false,
+                  "ok": true
+                }
+              },
+              "comparison": {
+                "exact": true,
+                "mismatching_pixels": 0,
+                "mismatching_samples": 0,
+                "max_abs_diff": 0.0,
+                "nonfinite_difference_samples": 0,
+                "first_coordinates": []
+              },
+              "status": "exact"
+            }
+          ],
+          "output_sha256": [
+            "5ab2c48c4557f48451506cc7d4791e53a41c52e92005fa69e128281a61aef906",
+            "5ab2c48c4557f48451506cc7d4791e53a41c52e92005fa69e128281a61aef906",
+            "5ab2c48c4557f48451506cc7d4791e53a41c52e92005fa69e128281a61aef906",
+            "5ab2c48c4557f48451506cc7d4791e53a41c52e92005fa69e128281a61aef906",
+            "5ab2c48c4557f48451506cc7d4791e53a41c52e92005fa69e128281a61aef906",
+            "5ab2c48c4557f48451506cc7d4791e53a41c52e92005fa69e128281a61aef906"
+          ]
+        }
+      },
+      "classification": "pre-existing port defect; no original or Rust nondeterminism observed in bounded replays"
+    },
+    "gate_exception": "User explicitly approved opening the focused ROI PR with this documented pre-existing defect on 2026-11-13."
   },
   "benchmark": {
     "size": [

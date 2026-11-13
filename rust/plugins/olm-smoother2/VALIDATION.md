@@ -64,6 +64,46 @@ comparisons. No exclusion, tolerance, changed seed or passing-case substitution
 is used. The full normal all-exact gate remains unmet because of this pre-existing
 full-frame discrepancy; it is outside the ROI boundary fix.
 
+
+**Bounded classification: pre-existing port defect.** Three fresh-process
+original-versus-original pairs and three pairs each for fixed Rust and unchanged
+main all pass (9 self-comparisons / 18 renders, run serially). Each binary has
+one stable native-output hash across its six renders. Main and fixed Rust hashes
+are identical and differ from the stable original hash; they also match the
+prior resident and fresh-process discrepancy. No original or Rust nondeterminism
+was observed in this bounded check. The user approved this documented gate
+exception for the focused ROI PR; the failing comparison remains recorded.
+Reproduce with [classify_roi_control.py](classify_roi_control.py), supplying the
+original, fixed Rust and unchanged-main AEX paths plus a new output directory.
+
+Exact case: campaign seed **20261126**, case **23**, input PCG64 seed
+**15135544866034798561**, **256x144**, **Smart32**, downsample **1/4** on both
+axes (full-resolution dimensions 1024x576), full-frame/no cropped extent.
+Parameter assignments below are exact oracle request values; colors are ARGB8:
+
+| Slot | Parameter | Value |
+| --- | --- | --- |
+| 1 | Enable Color Key | 1 |
+| 2 | Color Key | [178,132,59,226] |
+| 3 | Invert Color Key | 0 (untouched default) |
+| 4 | Smoothness | 100 (untouched default) |
+| 5 | Extra Smooth | 100 |
+| 6 | Smooth Range | 59.12997589555684 |
+| 7 | Smoother Version | 2 (untouched default) |
+| 8 | Gamma Correction | 1 / None (untouched default) |
+| 9 | Gamma Value | 1.0 |
+| 10 | Number of Gamma Colors | 1 (untouched default) |
+| 11 | Gamma Color 1 | [174,173,112,135] |
+| 12 | Gamma Color 2 | [66,199,119,65] |
+| 13 | Gamma Color 3 | [238,19,171,77] |
+| 14 | Gamma Color 4 | [88,218,191,91] |
+| 15 | Gamma Color 5 | [144,173,233,94] |
+
+Unchanged main is commit `1b4df7f3` (PR #12 merged). Native RGBA32f output hashes:
+
+- Original: `53c4492b78ca8207c49667f75e99462cc8e3a2ac5b581c901a5598a304f801d7`.
+- Main and fixed Rust: `5ab2c48c4557f48451506cc7d4791e53a41c52e92005fa69e128281a61aef906`.
+
 Release tests: **21 passed** (expanded boundary regression); **54/54 goldens**;
 crate formatting and all-target release Clippy pass. Workspace-wide formatting
 also checked, but reports pre-existing differences outside this owned crate.
