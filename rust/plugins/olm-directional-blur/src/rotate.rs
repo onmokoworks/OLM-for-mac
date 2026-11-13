@@ -4,11 +4,24 @@ use olm_math::{
     x86::{add, cvttss2si, div, mul, sub},
     Mode,
 };
-pub fn rgba(src: &[[f32; 4]], dst: &mut [[f32; 4]], w: usize, h: usize, angle: f32) { #[cfg(feature = "stage-dump")] let capture = crate::stage_dump::begin(src, dst, w, h, angle);
+#[allow(dead_code)] // scalar reference entry
+pub fn rgba(src: &[[f32; 4]], dst: &mut [[f32; 4]], w: usize, h: usize, angle: f32) {
+    rgba_threaded(src, dst, w, h, angle, 1);
+}
+pub fn rgba_threaded(
+    src: &[[f32; 4]],
+    dst: &mut [[f32; 4]],
+    w: usize,
+    h: usize,
+    angle: f32,
+    threads: usize,
+) {
+    #[cfg(feature = "stage-dump")]
+    let capture = crate::stage_dump::begin(src, dst, w, h, angle);
     let co = cosf(angle, Mode::Fma);
     let si = sinf(angle, Mode::Fma);
-    for y in 0..h {
-        for x in 0..w {
+    olm_core::parallel_rows(dst, w, threads, |y, row| {
+        for (x, pixel) in row.iter_mut().enumerate() {
             let cx = (x as i32 - (w / 2) as i32) as f32;
             let cy = (y as i32 - (h / 2) as i32) as f32;
             let sy = add(add(mul(cx, si), mul(cy, co)), (h / 2) as f32);
@@ -56,9 +69,12 @@ pub fn rgba(src: &[[f32; 4]], dst: &mut [[f32; 4]], w: usize, h: usize, angle: f
                 ),
                 mul(src[b + 1][2], br),
             );
-            dst[y * w + x] = [r, g, blue, a];
+            *pixel = [r, g, blue, a];
         }
-    } #[cfg(feature = "stage-dump")] crate::stage_dump::end(dst, capture);
+    })
+    .expect("validated rotation geometry");
+    #[cfg(feature = "stage-dump")]
+    crate::stage_dump::end(dst, capture);
 }
 pub fn scalar(src: &[f32], dst: &mut [f32], w: usize, h: usize, angle: f32) {
     let co = cosf(angle, Mode::Fma);

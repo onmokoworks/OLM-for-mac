@@ -106,3 +106,51 @@ ignored by Git. Compact root-level JSON reports, source/test vectors and rerun
 scripts are retained for version control. Historical source/binary hashes bind
 the original job's snapshot, not the later integrated build; see
 [workspace integration](../../INTEGRATION.md) for the fresh staged cross-check.
+
+
+## Performance - S-blurs (2026-11-13)
+
+The AE adapter takes an exact no-op path when the four scaled front/back and
+tail lengths truncate to zero. Matching worlds copy active byte rows, including
+all alpha/RGB bits, leaving output padding untouched. Smaller output worlds use
+the original legacy `PF_COPY` utility callback: it resamples the entire input,
+not a top-left crop. Output remains staged until parameter/pixel checkins succeed.
+Actual kernels and forward/inverse rotations use bounded independent row chunks;
+small images stay single-threaded. Per-pixel accumulation order is unchanged.
+No shared crates, parameter metadata or saved-project flags changed.
+
+1080p median selector-time Rust/original ratios, one warmup and five samples:
+
+| Depth | Default before | Default after | Heavy before | Heavy after |
+|---|---:|---:|---:|---:|
+| 8 | 8.529 | 1.568 | 4.002 | 0.515 |
+| 16 | 7.914 | 1.747 | 3.710 | 0.455 |
+| 32 | 8.100 | 1.858 | 3.369 | 0.442 |
+
+Baseline is `5033dd45`; before/after resident campaigns were separate runs on a
+shared machine. All measured frame pairs were exact; timing is not isolated
+hardware qualification. Transactional output allocation/publication and checked
+input/output staging remain costs, especially at no-op defaults. The local
+thread-selection and row-copy helpers are candidates for later shared hoisting.
+
+Release tests, rustfmt and release Clippy pass (warnings); all 54 golden hashes
+match. Seeds 20261114/20261115 each contain 103 cases/depth (100 random), sizes
+1x1,3x7,11x7,31x19,97x61 and scales 1,1/2,1/4, at two concurrent renders maximum.
+Resident exact counts summed over seeds were 205/205/202 at 8/16/32 bpc; three
+32-bpc discrepancies became exact under mandatory per-process replay. Per-process
+authority therefore retained 205 exact plus one evidenced original-nondeterministic
+exclusion per depth. All three residuals received three fixed reference/candidate
+replays plus the existing original-original and zero-offset controls: originals
+varied, candidate hashes were stable, all processes succeeded and every zero-offset
+control matched. Exclusions are not counted as exact cases. No errors or timeouts.
+
+`perf_noop.py` passed 66 original comparisons across both Directional and Radial:
+54 parameter/scale/cropped-demand cases and 12 native fixture checks with padded
+rows, nonzero origin and clipped extent. Unit tests separately preserve arbitrary
+pixel bits and padding at every depth. Native AE/macOS remain untested.
+
+Local evidence: `D:/olm-rs-target/blurs/bench-before`, `bench-final5`,
+`perf-final-audit.json`, `oracle4-OLMDirectionalBlur-*`, `triage-final4`,
+`noop-final4` and `tests-final6.log`. Raw outputs/originals/binaries are not committed.
+
+Performance candidate SHA-256: `67bff3262614191da1e0becd742de776db0da0530489c2ff913c5d8d0765ea31`.

@@ -101,6 +101,10 @@ pub trait Effect {
     unsafe fn update_ui(_: &PF_InData) -> Result<()> {
         Ok(())
     }
+    /// Full-size byte-copy shortcut; host retains stride and checkout ownership.
+    fn copy_only(_values: &[Value], _ctx: RenderContext) -> bool {
+        false
+    }
     fn render(
         values: &[Value],
         ctx: RenderContext,
@@ -387,8 +391,19 @@ unsafe fn render<E: Effect>(
     let input = View::new(std::slice::from_raw_parts(a.data.cast(), na), la).map_err(|_| BAD)?;
     // Stage output until all parameter checkins have succeeded.
     let mut storage = vec![0u8; nb];
-    let mut staged = ViewMut::new(&mut storage, lb).map_err(|_| BAD)?;
-    E::render(&v, ctx, &input, &mut staged).map_err(|_| BAD)?;
+    if la.width == lb.width && la.height == lb.height && E::copy_only(&v, ctx) {
+        let source = std::slice::from_raw_parts(a.data.cast::<u8>(), na);
+        copy_rows(source, la, &mut storage, lb);
+    } else if E::copy_only(&v, ctx) {
+        // Original PF_COPY scales the complete input when output dimensions differ.
+        // Keep publication transactional: the callback writes our staged world.
+        let mut staged_world = *b;
+        staged_world.data = storage.as_mut_ptr().cast();
+        host_copy(i, a, &mut staged_world)?;
+    } else {
+        let mut staged = ViewMut::new(&mut storage, lb).map_err(|_| BAD)?;
+        E::render(&v, ctx, &input, &mut staged).map_err(|_| BAD)?;
+    }
     for g in &mut guards {
         g.finish()?;
     }
@@ -599,4 +614,62 @@ mod tests {
         assert!(Downsample::new(0, 1).is_err());
         assert!(Downsample::new(1, 0).is_err());
     }
+}
+
+// Original typed copy writes active pixels only, preserving destination padding.
+fn copy_rows(source: &[u8], input: Layout, destination: &mut [u8], output: Layout) {
+    let active = output.width * output.depth.pixel_bytes();
+    for y in 0..output.height {
+        destination[y * output.stride..y * output.stride + active]
+            .copy_from_slice(&source[y * input.stride..y * input.stride + active]);
+    }
+}
+
+#[cfg(test)]
+mod copy_tests {
+    use super::*;
+    #[test]
+    fn active_rows_preserve_every_bit_and_padding() {
+        for depth in [Depth::U8, Depth::U16, Depth::F32] {
+            let active = 7 * depth.pixel_bytes();
+            let input = Layout {
+                width: 7,
+                height: 3,
+                stride: active + 5,
+                depth,
+                origin: (0, 0),
+            };
+            let output = Layout {
+                stride: active + 9,
+                ..input
+            };
+            let source: Vec<u8> = (0..input.span().unwrap())
+                .map(|i| (i * 73 + 19) as u8)
+                .collect();
+            let mut actual = vec![0xa5; output.span().unwrap()];
+            let mut expected = actual.clone();
+            let view = View::new(&source, input).unwrap();
+            let mut out = ViewMut::new(&mut expected, output).unwrap();
+            for y in 0..input.height {
+                for x in 0..input.width {
+                    out.set(x, y, view.get(x, y).unwrap()).unwrap();
+                }
+            }
+            copy_rows(&source, input, &mut actual, output);
+            assert_eq!(actual, expected);
+        }
+    }
+}
+
+unsafe fn host_copy(i: &PF_InData, input: &PF_LayerDef, output: *mut PF_LayerDef) -> Result<()> {
+    // PF_COPY uses the legacy utility callback, whose resampling differs from
+    // WorldTransformSuite::copy in the captured host. Match the original route.
+    let copy = i.utils.as_ref().ok_or(BAD)?.copy.ok_or(BAD)?;
+    check(copy(
+        i.effect_ref,
+        input as *const _ as *mut _,
+        output,
+        ptr::null_mut(),
+        ptr::null_mut(),
+    ))
 }

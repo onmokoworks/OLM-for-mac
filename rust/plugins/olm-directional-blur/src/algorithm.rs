@@ -186,7 +186,7 @@ pub fn render(
     // Original literal and operation order are part of the numerical contract.
     #[allow(clippy::approx_constant)]
     let angle = (((p.angle as f64 + 90.0) / 180.0) * 3.14159265) as f32;
-    rotate::rgba(&a, &mut b, ww, hh, angle);
+    rotate::rgba_threaded(&a, &mut b, ww, hh, angle, threads.max(1));
     a.copy_from_slice(&b);
     let rows = hh / hh.min(32) * hh.min(32);
     if depth != Depth::U8 {
@@ -291,7 +291,7 @@ pub fn render(
         }
     }
     a.fill([0.0; 4]);
-    rotate::rgba(&b, &mut a, ww, hh, -angle);
+    rotate::rgba_threaded(&b, &mut a, ww, hh, -angle, threads.max(1));
     let mut out = zeros(w * h)?;
     for y in 0..h {
         for x in 0..w {
